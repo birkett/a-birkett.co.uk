@@ -1,0 +1,14 @@
+RewriteEngine on
+RewriteRule ^404/?$ index.php?page=404 [L]
+RewriteRule ^about/?$ index.php?page=about [L]
+RewriteRule ^contact/?$ index.php?page=contact [L]
+RewriteRule ^photos/?$ index.php?page=photos [L]
+RewriteRule ^projects/?$ index.php?page=projects [L]
+RewriteRule ^videos/?$ index.php?page=videos [L]
+RewriteRule ^blog/?$ index.php?page=blog [L]
+RewriteRule ^blog/([^/.]+)/?$ index.php?page=blog&postid=$1 [L]
+RewriteRule ^blog/page/([^/.]+)/?$ index.php?page=blog&offset=$1 [L]
+
+
+ErrorDocument 404 /404/
+ErrorDocument 403 /404/

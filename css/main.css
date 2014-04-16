@@ -1,0 +1,64 @@
+body { margin: 0; background-color: #000; font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; color: #ccc; }
+h1 { font-size: 4rem; font-weight: 300; margin: 12px 0px 0px 16px; color: #ccc; }
+h2 { font-size: 1.75rem; margin: 0; color: #ccc; }
+a, a.visited { text-decoration: none; border-style: none; color: #87c2ed; }
+a img { border: none; }
+a.left { float: left; }
+a.right { float: right; }
+p { font-size: 1rem; color: #ccc; }
+p.tiletitle { font-size: 2.5rem; margin-top: 150px; }
+p.timestamp { color: #ccc; float: right; font-size: 0.75rem; }
+/*AJAX messages*/
+p.success { background-color: #66FF00; color: #000; font-size: 1.5rem; }
+p.failed { background-color: #FF0000; color: #fff; font-size: 1.5rem; }
+/*Layout*/
+.header { width: 100%; height: 125px; background-image:url('../img/header_bg.png'); }
+.headerleft { width: 500px; float: left; margin-top: 0; }
+.headerright { float: right; margin-top: 0; }
+.headernavicon { position: relative; float: right; width: 64px; height: 64px; margin: 17px 17px 0px 0px; }
+.container { width: 100%; height: 100%; margin: 0 auto; overflow: visible; }
+.leftc { float: left; background-repeat: no-repeat; height: 720px; width: 22%; }
+.rightcontainer { float: right; width: 78%; }
+.middlec { float: left; width: 56%; min-width: 480px; max-width: 1000px; }
+.post { overflow: hidden; text-align: justify; width: 80%; }
+.divider { height: 1px; }
+.rightc { float: left; width: 22%; max-width: 320px; margin-left: 32px; }
+.widgetcontainer { float: left; width: 100%; overflow: hidden; }
+.comment { border: 2px; border-color: #fff; }
+.commentbox { text-align: center; }
+.footer { width: 100%; height: 127px; clear: both; background-image:url('../img/footer_bg.png'); }
+.footerleft { width: 210px; float: left; margin: 16px 0px 0px 16px; }
+.advert { margin-top: 32px; }
+/*Tile defaults*/
+.tile, .rectile { padding: 0; margin: 10px; position: relative; float: left; height: 200px; }
+.tile { width: 200px; background-color: #87c2ed; }
+.tile:hover { background-color: #1372BD; }
+.rectile { width: 420px; background-color: #87c2ed; }
+.rectile:hover { background-color: #1372BD; }
+/*Tile overrides*/
+.abouttile {	background-image:url('../img/tile_about_bg.png'); }
+.blogtile { background-image:url('../img/tile_blog_bg.png'); }
+.contacttile { background-image:url('../img/tile_contact_bg.png'); }
+.photostile { background-image:url('../img/tile_photos_bg.png'); }
+.projectstile { background-image:url('../img/tile_projects_bg.png'); }
+.videostile { background-image:url('../img/tile_videos_bg.png'); }
+.commenttile { background-image:url('../img/tile_comment_bg.png'); }
+.exittile { background-image:url('../img/tile_exit_bg.png'); }
+.posttile { background-image:url('../img/tile_post_bg.png'); }
+.pagetile { background-image:url('../img/tile_page_bg.png'); }
+.iptile { background-image:url('../img/tile_ipfilter_bg.png'); }
+.infotile { background-image:url('../img/tile_info_bg.png'); }
+/*Opaque borders*/
+.aero  
+{ 
+	position: relative; border-width: 32px; border-style: solid;
+	border-image: url('../img/aero.png') 32 32 32 32 fill repeat;
+	-moz-border-image: url('../img/aero.png') 32 32 32 32 repeat;
+	-webkit-border-image: url('../img/aero.png') 32 32 32 32 repeat;
+	-o-border-image: url('../img/aero.png') 32 32 32 32 repeat;
+	behavior: url('../js/PIE.htc');
+}
+/*Third party overrides*/
+.pngfix { /*Dummy for IE6 alpha fix*/ }
+.flickr_badge_image { float: left; }
+#recaptcha_area { margin: 0 auto; width: 50%; }
