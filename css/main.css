@@ -16,7 +16,7 @@ p.failed { background-color: #FF0000; color: #fff; font-size: 1.5rem; }
 .headerleft { width: 500px; float: left; margin-top: 0; }
 .headerright { float: right; margin-top: 0; }
 .headernavicon { position: relative; float: right; width: 64px; height: 64px; margin: 17px 17px 0px 0px; }
-.container { width: 100%; height: 100%; margin: 0 auto; overflow: visible; }
+.container { width: 100%; height: 100%; margin: 0 auto; overflow: visible; background-image:url('../img/bg.png'); }
 .leftc { float: left; background-repeat: no-repeat; height: 720px; width: 22%; }
 .rightcontainer { float: right; width: 78%; }
 .middlec { float: left; width: 56%; min-width: 480px; max-width: 1000px; }
