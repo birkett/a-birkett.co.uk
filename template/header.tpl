@@ -19,7 +19,7 @@
 		<![endif]-->
 	</head>
 	<body>
-		<div class="container">
+		<div class="container pngfix">
 			<div class="header pngfix">
 				<div class="headerleft">
 					<a href="/"><h1>Anthony <strong>Birkett</strong></h1></a>
