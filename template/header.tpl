@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
+		<meta name="description" content="Personal website of Anthony Birkett, IT guy, Engineer and Entrepreneur.">
 		<title><?php echo $title; ?></title>
 		<base href="<?php echo BASE_URL ?>" />
 		<link rel="stylesheet" href="css/main.css" />
