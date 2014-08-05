@@ -1,5 +1,5 @@
 					<div class="middlec aero">
-						<h2>Posts</h2>
+						<h2>Pages</h2>
 						<?php
 						$db = GetDatabase();
 						$result = GetAllPages();

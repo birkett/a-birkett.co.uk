@@ -5,7 +5,10 @@
 		<title>Admin Birkett</title>
 		<?php echo '<base href="' . BASE_URL . '" />' . "\n"; ?>
 		<link rel="stylesheet" href="css/main.css" />
-		<style type="text/css">body { background-color: rgb(<?php echo rand(0,255); ?>,<?php echo rand(0,255); ?>,<?php echo rand(0,255); ?>)</style>
+		<style type="text/css">
+			body { background-color: rgb(<?php echo rand(0,255); ?>,<?php echo rand(0,255); ?>,<?php echo rand(0,255); ?>) }
+			.container { background-image: none; }
+		</style>
 	</head>
 	<body>
 		<div class="container">

@@ -68,6 +68,7 @@
 										{
 										case 200:
 											document.getElementById("response").innerHTML='<p class="success">Posted!</p>';
+											tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
 											break;
 										case 400:
 											document.getElementById("response").innerHTML='<p class="failed">Bad request. Something was rejected.</p>';

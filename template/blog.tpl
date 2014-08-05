@@ -53,6 +53,7 @@
 					while($row = GetDatabase()->GetRow($result))
 					{
 						list($id, $timestamp, $title, $content, $draft) = $row;
+						echo '<div class="postavatar"><img src="img/avatar.png"/></div>';
 						echo '<div class="post aero">';
 						echo '<p class="timestamp">' . date(DATE_FORMAT, $timestamp) . '</p>';
 						echo '<a href="/blog/' . $id . '"><h2>' . $title . '</h2></a>';
