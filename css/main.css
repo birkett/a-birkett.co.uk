@@ -6,7 +6,7 @@ a img { border: none; }
 a.left { float: left; }
 a.right { float: right; }
 p { font-size: 1rem; color: #ccc; }
-p.tiletitle { font-size: 2.5rem; margin-top: 150px; }
+p.tiletitle { font-size: 2.5rem; margin-top: 0px; }
 p.timestamp { color: #ccc; float: right; font-size: 0.75rem; margin-top: 0; margin-right: 14%; }
 /*AJAX messages*/
 p.success { background-color: #66FF00; color: #000; font-size: 1.5rem; }
@@ -16,12 +16,13 @@ p.failed { background-color: #FF0000; color: #fff; font-size: 1.5rem; }
 .headerleft { width: 500px; float: left; margin-top: 0; }
 .headerright { float: right; margin-top: 0; }
 .headernavicon { position: relative; float: right; width: 64px; height: 64px; margin: 17px 17px 0px 0px; }
+.headernavicon:hover { width: 70px; height: 70px; transition: 0.5s ease; }
 .main { margin-top: 32px; }
 .container { width: 100%; height: 100%; margin: 0 auto; overflow: visible; background-image:url('../img/bg.png'); }
 .leftc { float: left; background-repeat: no-repeat; height: 720px; width: 22%; }
 .rightcontainer { float: right; width: 78%; }
 .middlec { float: left; width: 56%; min-width: 480px; max-width: 1000px; }
-.post { overflow: hidden; text-align: justify; width: 80%; margin-bottom: 32px; }
+.post { overflow: hidden; width: 80%; margin-bottom: 32px; }
 .post img { width: 80%; height: 80%; }
 .postavatar { position: absolute; left: 54%; margin-top: -32px; z-index: 99; }
 .divider { height: 1px; }
@@ -33,11 +34,14 @@ p.failed { background-color: #FF0000; color: #fff; font-size: 1.5rem; }
 .footerleft { width: 210px; float: left; margin: 16px 0px 0px 16px; }
 .advert { margin-top: 32px; }
 /*Tile defaults*/
-.tile, .rectile { padding: 0; margin: 10px; position: relative; float: left; height: 200px; box-shadow: 0px 0px 20px 6px #000; }
-.tile { width: 200px; background-color: #87c2ed; }
-.tile:hover { background-color: #1372BD; }
-.rectile { width: 420px; background-color: #87c2ed; }
-.rectile:hover { background-color: #1372BD; }
+.tile, .rectile 
+{ 
+	background-color: #87c2ed; padding: 0; margin: 10px; position: relative; float: left; height: 200px; box-shadow: 0px 0px 20px 6px #000; 
+	border: 0 solid rgba(0, 0, 0, 0); box-sizing: border-box; transition: 0.5s ease;
+}
+.tile { width: 200px; }
+.rectile { width: 420px; }
+.tile:hover, .rectile:hover { background-color: #1372BD; border: 20px solid rgba(255, 255, 255, 0.5); }
 /*Tile overrides*/
 .abouttile {	background-image:url('../img/tile_about_bg.png'); }
 .blogtile { background-image:url('../img/tile_blog_bg.png'); }
