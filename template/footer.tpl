@@ -1,6 +1,6 @@
 				</div>
 			</div>
-			<div class="footer pngfix">
+			<div class="footer">
 				<div class="footerleft">
 					<p>&copy; 2007-<?php echo date('Y'); ?> Anthony Birkett</p>
 				</div>
