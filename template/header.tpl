@@ -2,7 +2,6 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
 		<meta name="description" content="Personal website of Anthony Birkett, IT guy, Engineer and Entrepreneur.">
 		<title><?php echo $title; ?></title>
 		<base href="<?php echo BASE_URL ?>" />
@@ -13,10 +12,6 @@
 		.container { background-color: rgb(<?php echo rand(0,255); ?>,<?php echo rand(0,255); ?>,<?php echo rand(0,255); ?>); }
 		.leftc { background-image:url("img/background_figure_<?php echo rand(1,2); ?>.png"); }
 		</style>
-		
-		<!--[if IE 6]>
-		<script src="js/pngfix.js"></script>
-		<![endif]-->
 	</head>
 	<body>
 		<div class="container pngfix">

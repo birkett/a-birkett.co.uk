@@ -63,7 +63,6 @@ p.failed { background-color: #FF0000; color: #fff; font-size: 1.5rem; }
 	-moz-border-image: url('../img/aero.png') 32 32 32 32 repeat;
 	-webkit-border-image: url('../img/aero.png') 32 32 32 32 repeat;
 	-o-border-image: url('../img/aero.png') 32 32 32 32 repeat;
-	behavior: url('../js/PIE.htc');
 }
 /*Third party overrides*/
 .pngfix { /*Dummy for IE6 alpha fix*/ }

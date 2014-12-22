@@ -17,9 +17,5 @@
 				</div>				
 			</div>
 		</div>
-		
-		<!--[if IE 6]>
-		<script>DD_belatedPNG.fix('.pngfix');</script>
-		<![endif]-->
 	</body>
 </html>

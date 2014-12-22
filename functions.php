@@ -60,6 +60,17 @@ function GetAllPosts($drafts = false)
 }
 
 //-----------------------------------------------------------------------------
+// Fetch ID and Title and timestamp of all blog posts in date order
+//		In: none
+//		Out: All post IDs and Titles and timestamps as MySQLi result resource
+// !!! Does not fetch drafts !!!
+//-----------------------------------------------------------------------------
+function GetBlogNavPosts()
+{
+	return GetDatabase()->RunQuery("SELECT post_id, post_timestamp, post_title from blog_posts WHERE post_draft='0' ORDER BY post_timestamp DESC");
+}
+
+//-----------------------------------------------------------------------------
 // Get the total number of blog posts
 //		In: none
 //		Out: Number of posts
@@ -112,16 +123,12 @@ function PostComment($postid, $username, $comment, $clientip)
 //-----------------------------------------------------------------------------
 function GetPageContent($pagename)
 {
-	$db = GetDatabase();
 	if(is_numeric($pagename))
-	{
-		$result = $db->RunQuery("SELECT page_content FROM site_pages WHERE page_id='$pagename'");
-	} 
+		$result = GetDatabase()->RunQuery("SELECT page_content FROM site_pages WHERE page_id='$pagename'");
 	else
-	{
-		$result = $db->RunQuery("SELECT page_content FROM site_pages WHERE page_name='$pagename'");
-	}
-	$row = $db->GetRow($result);
+		$result = GetDatabase()->RunQuery("SELECT page_content FROM site_pages WHERE page_name='$pagename'");
+
+	$row = GetDatabase()->GetRow($result);
 	return $row[0];
 }
 
@@ -134,13 +141,10 @@ function GetPageTitle($pagename)
 {
 	$db = GetDatabase();
 	if(is_numeric($pagename))
-	{
 		$row = $db->GetRow($db->RunQuery("SELECT page_title FROM site_pages WHERE page_id='$pagename'"));
-	}
 	else
-	{
 		$row = $db->GetRow($db->RunQuery("SELECT page_title FROM site_pages WHERE page_name='$pagename'"));
-	}
+
 	return $row[0];
 }
 
