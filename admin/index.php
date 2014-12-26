@@ -43,6 +43,8 @@ if(isset($_GET['action']))
 			IsLoggedIn() ? $page = "ipfilter" : $page = "login"; break;
 		case "serverinfo":
 			IsLoggedIn() ? $page = "serverinfo" : $page = "login"; break;
+		case "password":
+			IsLoggedIn() ? $page = "password" : $page = "login"; break;
 	}
 }
 

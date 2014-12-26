@@ -41,6 +41,12 @@ if(isset($_POST['mode']))
 		if(!isset($_POST['ip'])) { BadRequest("No address specified"); }
 		else { UnblockIP($_POST['ip']); GoodRequest("Address " . $_POST['ip'] . " was unblocked"); }
 		break;
+	//Change the admin password
+	case "password":
+		if(!isset($_POST['cp']) || !isset($_POST['np']) || !isset($_POST['cnp']))
+		{ BadRequest(); }
+		else { if(ChangePassword($_POST['cp'], $_POST['np'], $_POST['cnp'])) GoodRequest("Password changed."); else BadRequest("Failed. Check new passwords match."); }
+		break;
 	}
 }
 BadRequest();

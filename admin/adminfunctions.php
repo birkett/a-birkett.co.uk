@@ -15,9 +15,15 @@
 function CheckCredentials($username, $password)
 {
 	$db = GetDatabase();
-	$password = HashPassword($password);
-	if($db->GetNumRows($db->RunQuery("SELECT user_id FROM site_users WHERE username='$username' AND password='$password'")) == 1) 
-	{ return true; } else { return false; }
+	$result = $db->RunQuery("SELECT password FROM site_users WHERE username='$username'");
+	
+	if($db->GetNumRows($result) == 1) 
+	{
+		$dbhash = $db->GetRow($result);
+		if(password_verify($password, $dbhash[0])) 
+			return true;
+	}
+	return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -42,18 +48,6 @@ function KillSession()
 		unset($_SESSION['user']);
 		session_destroy();
 	}
-}
-
-//-----------------------------------------------------------------------------
-// Securely hash a password (not reversible)
-//		In: Plain text password
-//		Out: Hashed password
-// This uses a random salt for extra security
-//-----------------------------------------------------------------------------
-function HashPassword($password)
-{
-	$salt = "dIgpkLzA71";
-	return hash("sha256", $salt . $password);
 }
 
 //-----------------------------------------------------------------------------
@@ -150,5 +144,41 @@ function GetAllComments($ip = "")
 {
 	if($ip != "") return GetDatabase()->RunQuery("SELECT * FROM blog_comments WHERE client_ip='$ip' ORDER BY comment_timestamp DESC");
 	return GetDatabase()->RunQuery("SELECT * FROM blog_comments ORDER BY comment_timestamp DESC");
+}
+
+//-----------------------------------------------------------------------------
+// Securely hash a password (not reversible)
+//		In: Plain text password
+//		Out: Hashed password
+// This uses a random salt for extra security
+//-----------------------------------------------------------------------------
+function HashPassword($password)
+{
+	$options = [
+		'cost' => 10,
+	];
+	return password_hash($password, PASSWORD_BCRYPT, $options);
+}
+
+//-----------------------------------------------------------------------------
+// Changes the admin password
+//		In: Current password, New password and New password again (confirm)
+//		Out: none
+//-----------------------------------------------------------------------------
+function ChangePassword($currentpassword, $newpassword, $confirmedpassword)
+{
+	if($newpassword != $confirmedpassword)
+		return false; //Passwords dont match
+	
+	$db = GetDatabase();
+	$row = $db->GetRow($db->RunQuery("SELECT username FROM site_users WHERE user_id='1'"));
+	
+	if(!CheckCredentials($row[0], $currentpassword))
+		return false; //Current password is wrong
+	
+	$hash = HashPassword($newpassword);
+	
+	$db->RunQuery("UPDATE site_users SET password='$hash' WHERE user_id='1'");
+	return true;
 }
 ?>
