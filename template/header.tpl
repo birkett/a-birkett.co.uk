@@ -5,7 +5,7 @@
 		<meta name="description" content="Personal website of Anthony Birkett, IT guy, Engineer and Entrepreneur.">
 		<title><?php echo $title; ?></title>
 		<base href="<?php echo BASE_URL ?>" />
-		<link rel="alternate" href="feed.php" title="RSS feed" type="application/rss+xml" />
+		<link rel="alternate" href="/feed/" title="RSS feed" type="application/rss+xml" />
 		<link rel="stylesheet" href="css/main.css" />
 		<?php if(CHRISTMAS) { echo '<link rel="stylesheet" href="css/christmas.css" />' . "\n"; } ?>
 		
@@ -25,6 +25,7 @@
 					<a href="http://www.steamcommunity.com/id/birkett" alt="steam" title="Steam" target="_blank"><img class="headernavicon" src="img/steam.png" alt="steam" /></a>
 					<a href="http://www.youtube.com/birkett26" alt="youtube" title="YouTube" target="_blank"><img class="headernavicon" src="img/youtube.png" alt="youtube" /></a>
 					<a href="http://www.flickr.com/photos/birkett26" alt="flickr" title="Flickr" target="_blank"><img class="headernavicon" src="img/flickr.png" alt="flickr" /></a>
+					<a href="<?php echo BASE_URL ?>/feed" alt="feed" title="Blog Feed" target="_blank"><img class="headernavicon" src="img/rss.png" alt="feed" /></a>
 				</div>
 			</div>
 			<div class="noticebox"></div>

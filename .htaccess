@@ -8,6 +8,7 @@ RewriteRule ^videos/?$ index.php?page=videos [L]
 RewriteRule ^blog/?$ index.php?page=blog [L]
 RewriteRule ^blog/([^/.]+)/?$ index.php?page=blog&postid=$1 [L]
 RewriteRule ^blog/page/([^/.]+)/?$ index.php?page=blog&offset=$1 [L]
+RewriteRule ^feed/?$ feed.php [L]
 
 
 ErrorDocument 404 /404/
