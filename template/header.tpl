@@ -5,6 +5,7 @@
 		<meta name="description" content="Personal website of Anthony Birkett, IT guy, Engineer and Entrepreneur.">
 		<title><?php echo $title; ?></title>
 		<base href="<?php echo BASE_URL ?>" />
+		<link rel="alternate" href="feed.php" title="RSS feed" type="application/rss+xml" />
 		<link rel="stylesheet" href="css/main.css" />
 		<?php if(CHRISTMAS) { echo '<link rel="stylesheet" href="css/christmas.css" />' . "\n"; } ?>
 		
