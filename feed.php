@@ -20,8 +20,8 @@ echo '<description>RSS feed for the personal blog of ' . SITE_TITLE . '</descrip
 echo '<language>en-GB</language>';
 echo '<copyright>&copy; 2007-' . date('Y') . ' Anthony Birkett - ' . BASE_URL . '</copyright>';
 
-$result = GetLatestPosts(1);
-while($row = GetDatabase()->GetRow($result)) //Get first page of posts
+$result = GetLatestPosts(0); //Get first page of posts
+while($row = GetDatabase()->GetRow($result))
 {
 	list($id, $timestamp, $title, $content, $draft) = $row;
 	echo '<item>';
