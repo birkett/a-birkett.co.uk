@@ -21,11 +21,11 @@
 					<a href="/"><h1>Anthony <strong>Birkett</strong></h1></a>
 				</div>
 				<div class="headerright">
-					<a href="http://www.twitter.com/birkett26" alt="twitter" title="Twitter" target="_blank"><img class="headernavicon" src="img/twitter.png" alt="twitter" /></a>
-					<a href="http://www.steamcommunity.com/id/birkett" alt="steam" title="Steam" target="_blank"><img class="headernavicon" src="img/steam.png" alt="steam" /></a>
-					<a href="http://www.youtube.com/birkett26" alt="youtube" title="YouTube" target="_blank"><img class="headernavicon" src="img/youtube.png" alt="youtube" /></a>
-					<a href="http://www.flickr.com/photos/birkett26" alt="flickr" title="Flickr" target="_blank"><img class="headernavicon" src="img/flickr.png" alt="flickr" /></a>
-					<a href="<?php echo BASE_URL ?>feed" alt="feed" title="Blog Feed" target="_blank"><img class="headernavicon" src="img/rss.png" alt="feed" /></a>
+					<a href="http://www.twitter.com/birkett26" title="Twitter" target="_blank"><img class="headernavicon" src="img/twitter.png" alt="twitter" /></a>
+					<a href="http://www.steamcommunity.com/id/birkett" title="Steam" target="_blank"><img class="headernavicon" src="img/steam.png" alt="steam" /></a>
+					<a href="http://www.youtube.com/birkett26" title="YouTube" target="_blank"><img class="headernavicon" src="img/youtube.png" alt="youtube" /></a>
+					<a href="http://www.flickr.com/photos/birkett26" title="Flickr" target="_blank"><img class="headernavicon" src="img/flickr.png" alt="flickr" /></a>
+					<a href="<?php echo BASE_URL ?>feed" title="Blog Feed" target="_blank"><img class="headernavicon" src="img/rss.png" alt="feed" /></a>
 				</div>
 			</div>
 			<div class="noticebox"></div>
