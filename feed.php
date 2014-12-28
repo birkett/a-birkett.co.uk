@@ -11,8 +11,9 @@ require_once("functions.php");
 header("Content-Type: application/xml; charset=utf-8");
 
 echo '<?xml version="1.0" encoding="utf-8"?>';
-echo '<rss version="2.0">';
+echo '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">';
 echo '<channel>';
+echo '<atom:link href="' . BASE_URL . 'feed" rel="self" type="application/rss+xml" />';
 echo '<title>' . SITE_TITLE . ' :: Blog Posts</title>';
 echo '<link>' . BASE_URL . '</link>';
 echo '<description>RSS feed for the personal blog of ' . SITE_TITLE . '</description>';
@@ -25,9 +26,10 @@ while($row = GetDatabase()->GetRow($result))
 	list($id, $timestamp, $title, $content, $draft) = $row;
 	echo '<item>';
 	echo '<title>' . $title . '</title>';
-	echo '<description>' . html_entity_decode($content) . '</description>';
+	echo '<description>' . htmlentities(html_entity_decode($content)) . '</description>';
 	echo '<link>' . BASE_URL . "blog/" . $id . '</link>';
 	echo '<pubDate>' . date("D, d M Y H:i:s O", $timestamp) . '</pubDate>';
+	echo '<guid isPermaLink="false">' . date("D, d M Y H:i:s O", $timestamp) . '</guid>'; //Using the timestamp as a GUID
 	echo '</item>';
 }
 					 
