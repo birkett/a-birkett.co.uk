@@ -26,7 +26,7 @@ while($row = GetDatabase()->GetRow($result))
 	list($id, $timestamp, $title, $content, $draft) = $row;
 	echo '<item>';
 	echo '<title>' . $title . '</title>';
-	echo '<description>' . htmlentities(html_entity_decode($content)) . '</description>';
+	echo '<description><![CDATA[' . html_entity_decode($content) . ']]></description>';
 	echo '<link>' . BASE_URL . "blog/" . $id . '</link>';
 	echo '<pubDate>' . date("D, d M Y H:i:s O", $timestamp) . '</pubDate>';
 	echo '<guid isPermaLink="false">' . date("D, d M Y H:i:s O", $timestamp) . '</guid>'; //Using the timestamp as a GUID
