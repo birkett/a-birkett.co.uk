@@ -19,7 +19,7 @@
 								}
 								echo '<li><span><a href="/blog/' . $row[0] . '">' . $row[2] . '</a></span></li>';
 							}
-							echo '</ul>';
+							echo '</ul></li></ul>';
 							?>
 						</div>
 					</div>
