@@ -12,7 +12,7 @@
 								{
 									if($last_month != NULL)
 									{
-										echo '</li></ul>';
+										echo '</ul></li>';
 									}
 									$last_month = $month;
 									echo '<li><span>' . $month . '</span><ul>';

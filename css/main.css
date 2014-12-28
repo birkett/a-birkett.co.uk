@@ -66,6 +66,7 @@ p.failed { background-color: #FF0000; color: #fff; font-size: 1.5rem; }
 	-o-border-image: url('../img/aero.png') 32 32 32 32 repeat;
 }
 /*Third party overrides*/
+iframe { width: 100%; height: 445px; border: none; }
 .flickr_badge_image { float: left; }
 .adsbygoogle { margin-top: 30px; }
 #recaptcha_area { margin: 0 auto; width: 50%; }
