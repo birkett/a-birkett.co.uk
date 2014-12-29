@@ -1,11 +1,11 @@
 <?php
 //-----------------------------------------------------------------------------
-// Page class
-//
-//  Builds pages using a template.
+// Build the post list widget
+//		In: Unparsed template
+//		Out: Parsed template
+//  TODO: This is the only non pure PHP function. Move the HTML out?
 //-----------------------------------------------------------------------------
-
-function PostsWidgetcontroller(&$output)
+function PostsWidgetController(&$output)
 {
 	$posts = GetPosts("all", 0, false);
 	$last_month = NULL;
@@ -30,6 +30,11 @@ function PostsWidgetcontroller(&$output)
 	$output = str_replace("{POSTLIST}", $postlist, $output);
 }
 
+//-----------------------------------------------------------------------------
+// Build the blog pages
+//		In: Unparsed template
+//		Out: Parsed template
+//-----------------------------------------------------------------------------
 function BlogPageController(&$output)
 {
 	//Pagniation
@@ -128,10 +133,20 @@ function BlogPageController(&$output)
 	$output = str_replace("{NEWCOMMENTBOX}", "", $output); //Clean up any unused COMMENTBOX tags
 }
 
+//-----------------------------------------------------------------------------
+// Build a page using a static template (no database access)
+//		In: Unparsed template
+//		Out: Parsed template
+//-----------------------------------------------------------------------------
 function StaticPageController(&$output)
 {
 }
 
+//-----------------------------------------------------------------------------
+// Build a generic page stored in the database
+//		In: Unparsed template
+//		Out: Parsed template
+//-----------------------------------------------------------------------------
 function GenericPageController(&$output, $name)
 {
 	$page = GetPage($name);
@@ -139,6 +154,11 @@ function GenericPageController(&$output, $name)
 	$output = str_replace("{PAGECONTENT}", $page[1], $output);
 }
 
+//-----------------------------------------------------------------------------
+// Parse essential tags in the basic page template
+//		In: Unparsed template
+//		Out: Parsed template
+//-----------------------------------------------------------------------------
 function BasePageController(&$output, $title)
 {
 	$output = str_replace("{BASEURL}", BASE_URL, $output);
@@ -151,6 +171,11 @@ function BasePageController(&$output, $title)
 	$output = str_replace("{EXTRASTYLESHEET}", (CHRISTMAS ? '<link rel="stylesheet" href="css/christmas.css" />\n' : ""), $output);
 }
 
+//-----------------------------------------------------------------------------
+// Page class
+//
+//  Builds pages using a template.
+//-----------------------------------------------------------------------------
 class Page
 {
 	//-----------------------------------------------------------------------------
@@ -158,27 +183,29 @@ class Page
 	//		In: Database name
 	//		Out: none
 	//-----------------------------------------------------------------------------
-	public function __construct($title = SITE_TITLE, $pagename = "index", $widget = "twitterwidget", $template = "index", $controller = 'static')
+	public function __construct($title = SITE_TITLE, $pagename = "index", $widget = "twitterwidget", $template = 'index')
 	{
-		$output  = file_get_contents("template/header.tpl");
-		$output .= file_get_contents("template/$template.tpl");
-		$output .= file_get_contents("template/$widget.tpl");
-		$output .= file_get_contents("template/footer.tpl");
+		$output = file_get_contents("template/page.tpl");
+		$pagetemplate = file_get_contents("template/$template.tpl");
 		
 		BasePageController($output, $title);
-
-		if($controller == "generic")
-			GenericPageController($output, $pagename);
 		
-		if($controller == "blog")
-			BlogPageController($output);
-			
-		if($controller == "static")
-			StaticPageController($output);
-			
+		switch($template)
+		{
+			case "generic": GenericPageController($pagetemplate, $pagename); break;
+			case "blog": BlogPageController($pagetemplate); break;
+			case "index": StaticPageController($pagetemplate); break;
+		}
+		
+		$output = str_replace("{PAGE}", $pagetemplate, $output);		
+		
+		$widgettemplate = file_get_contents("template/$widget.tpl");
+
 		if($widget == "postswidget")
-			PostsWidgetController($output);
+			PostsWidgetController($widgettemplate);
 			
+		$output = str_replace("{WIDGET}", $widgettemplate, $output);
+
 		print $output;
 	}
 

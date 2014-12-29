@@ -18,7 +18,7 @@ if(isset($_GET['page']))
 	case "photos": new Page(SITE_TITLE . " :: Photos", "photos", "twitterwidget", "generic", 'generic'); break;
 	case "videos": new Page(SITE_TITLE . " :: Videos", "videos", "twitterwidget", "generic", 'generic'); break;
 	case "projects": new Page(SITE_TITLE . " :: Projects", "projects", "twitterwidget", "generic", 'generic'); break;
-	case "404": new Page(SITE_TITLE, "404", "twitterwidget", "404", 'static'); break;
+	case "404": new Page(SITE_TITLE, "error404", "twitterwidget", "generic", 'generic'); break;
 	default: new Page(); break;
 	}
 }
