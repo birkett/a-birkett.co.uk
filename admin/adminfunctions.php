@@ -137,13 +137,12 @@ function GetBlockedAddresses()
 
 //-----------------------------------------------------------------------------
 // Fetch all comments
-//		In: none
+//		In: Optional IP Address
 //		Out: All comment data
 //-----------------------------------------------------------------------------
 function GetAllComments($ip = "")
 {
-	if($ip != "") return GetDatabase()->RunQuery("SELECT * FROM blog_comments WHERE client_ip='$ip' ORDER BY comment_timestamp DESC");
-	return GetDatabase()->RunQuery("SELECT * FROM blog_comments ORDER BY comment_timestamp DESC");
+	return GetDatabase()->RunQuery("SELECT * FROM blog_comments" . ($ip == "" ? " " : " WHERE client_ip='$ip' ") . "ORDER BY comment_timestamp DESC");
 }
 
 //-----------------------------------------------------------------------------

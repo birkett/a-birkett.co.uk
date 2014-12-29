@@ -30,8 +30,6 @@ function GetDatabase()
 //-----------------------------------------------------------------------------
 function GetPosts($mode, $id, $drafts = false)
 {
-	$limit_query = "";
-	
 	if($mode == "single") //Single post
 		return GetDatabase()->RunQuery("SELECT * FROM blog_posts WHERE post_id = $id" . ($drafts ? " " : " AND post_draft='0' "));
 	
@@ -39,10 +37,11 @@ function GetPosts($mode, $id, $drafts = false)
 	{
 		$limit1 = $id * BLOG_POSTS_PER_PAGE;
 		$limit2 = BLOG_POSTS_PER_PAGE;
-		$limit_query = " LIMIT $limit1,$limit2";
+		return GetDatabase()->RunQuery("SELECT * FROM blog_posts" . ($drafts ? " " : " WHERE post_draft='0' ") . "ORDER BY post_timestamp DESC LIMIT $limit1,$limit2");
 	}
-	//Grab the range of posts, or all if range wasnt specified
-	return GetDatabase()->RunQuery("SELECT * FROM blog_posts" . ($drafts ? " " : " WHERE post_draft='0' ") . "ORDER BY post_timestamp DESC" . $limit_query);
+	
+	if($mode == "all") //All posts - only fetch the ID, title, timestamp and Draft status to save query time
+		return GetDatabase()->RunQuery("SELECT post_id, post_timestamp, post_title, post_draft FROM blog_posts" . ($drafts ? " " : " WHERE post_draft='0' ") . "ORDER BY post_timestamp DESC");
 }
 
 //-----------------------------------------------------------------------------
@@ -97,12 +96,8 @@ function PostComment($postid, $username, $comment, $clientip)
 //-----------------------------------------------------------------------------
 function GetPage($pagename)
 {
-	if(is_numeric($pagename))
-		$result = GetDatabase()->RunQuery("SELECT page_title, page_content FROM site_pages WHERE page_id='$pagename'");
-	else
-		$result = GetDatabase()->RunQuery("SELECT page_title, page_content FROM site_pages WHERE page_name='$pagename'");
-
-	return GetDatabase()->GetRow($result);
+	$db = GetDatabase();
+	return $db->GetRow($db->RunQuery("SELECT page_title, page_content FROM site_pages WHERE " . (is_numeric($pagename) ? "page_id='$pagename'" : "page_name='$pagename'")));
 }
 
 //-----------------------------------------------------------------------------
@@ -114,7 +109,7 @@ function CheckIP($ip)
 {
 	$db = GetDatabase();
 	if($db->GetNumRows($db->RunQuery("SELECT * FROM blocked_addresses WHERE address='$ip'")) != 0)
-	{ return true; }
+		return true;
 	return false;
 }
 

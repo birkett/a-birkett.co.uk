@@ -2,7 +2,7 @@
 			</div>
 			<div class="footer">
 				<div class="footerleft">
-					<p>&copy; 2007-<?php echo date('Y'); ?> Anthony Birkett</p>
+					<p>&copy; 2007-{THISYEAR} Anthony Birkett</p>
 				</div>
 				<div class="footerright">
 					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
