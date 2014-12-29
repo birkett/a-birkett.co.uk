@@ -28,7 +28,7 @@ function GetDatabase()
 //		Mode should be one of "single", "page" or "titles"
 // !!! Defaults to not fetching drafts !!!
 //-----------------------------------------------------------------------------
-function GetPosts($mode, $id, $drafts = false)
+function GetPosts($mode, $id = 0, $drafts = false)
 {
 	if($mode == "single") //Single post
 		return GetDatabase()->RunQuery("SELECT * FROM blog_posts WHERE post_id = $id" . ($drafts ? " " : " AND post_draft='0' "));
