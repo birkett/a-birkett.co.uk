@@ -21,6 +21,48 @@ function GetDatabase()
 }
 
 //-----------------------------------------------------------------------------
+// Open a template file for inclusion
+//		In: Filename
+//		Out: Unparsed (sub)template
+//-----------------------------------------------------------------------------
+function OpenTemplate($file)
+{
+	return file_get_contents(TEMPLATE_FOLDER . $file);
+}
+
+//-----------------------------------------------------------------------------
+// Replace a tag with a string (for inserting sub templates into the output)
+//		In: Tag and parsed sub template
+//		Out: Parsed template
+//-----------------------------------------------------------------------------
+function ReplaceTag($tag, $string, &$output)
+{
+	$output = str_replace($tag, $string, $output);
+}
+
+//-----------------------------------------------------------------------------
+// Parse the tags in a given array to the template
+//		In: Tags and Unparsed template
+//		Out: Parsed template
+//-----------------------------------------------------------------------------
+function ParseTags(&$tags, &$output)
+{
+	foreach ($tags as $key => $val)
+		ReplaceTag($key, $val, $output);
+}
+
+//-----------------------------------------------------------------------------
+// Remove any left over tags from the parsed template
+//		In: Tags and Parsed template
+//		Out: Clean Parsed template
+//-----------------------------------------------------------------------------
+function RemoveTags(&$tags, &$output)
+{
+	foreach ($tags as $tag)
+		ReplaceTag($tag, "", $output);
+}
+
+//-----------------------------------------------------------------------------
 // Fetch the specified post or range of posts
 //		In: Mode, ID and Draft lock
 //		Out: Post data

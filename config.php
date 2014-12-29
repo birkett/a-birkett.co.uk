@@ -16,6 +16,9 @@ define('BASE_URL', 'http://localhost/');
 //Allows admin folder to be renamed
 define('ADMIN_FOLDER', 'admin/');
 
+//Allows template folder to be renamed
+define('TEMPLATE_FOLDER', 'template/');
+
 //Base title for web pages
 define('SITE_TITLE', 'Anthony Birkett');
 
