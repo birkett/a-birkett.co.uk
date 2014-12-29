@@ -3,6 +3,8 @@
 // Build the blog pages
 //		In: Unparsed template
 //		Out: Parsed template
+//
+//  !!! This is a custom controller, only used for the Blog pages !!!
 //-----------------------------------------------------------------------------
 class BlogPageController
 {
@@ -46,7 +48,7 @@ class BlogPageController
 				{
 					$tags = [
 						"{COMMENTAUTHOR}" => stripslashes($cusername),
-						"{COMMENTTIMESTAMP}" => date("l dS F Y", $ctimestamp),
+						"{COMMENTTIMESTAMP}" => date(DATE_FORMAT, $ctimestamp),
 						"{COMMENTCONTENT}" => stripslashes($ctext)
 					];
 					$commenttemplate = OpenTemplate("blogcomments.tpl");

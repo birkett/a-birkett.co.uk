@@ -47,7 +47,7 @@ function ReplaceTag($tag, $string, &$output)
 //-----------------------------------------------------------------------------
 function ParseTags(&$tags, &$output)
 {
-	foreach ($tags as $key => $val)
+	foreach($tags as $key => $val)
 		ReplaceTag($key, $val, $output);
 }
 
@@ -58,7 +58,7 @@ function ParseTags(&$tags, &$output)
 //-----------------------------------------------------------------------------
 function RemoveTags(&$tags, &$output)
 {
-	foreach ($tags as $tag)
+	foreach($tags as $tag)
 		ReplaceTag($tag, "", $output);
 }
 

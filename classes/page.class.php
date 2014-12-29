@@ -4,10 +4,8 @@
 //
 //  Builds pages using a template.
 //-----------------------------------------------------------------------------
-foreach (glob("controllers/*controller.php") as $file)
-{
+foreach(glob("controllers/*.controller.php") as $file)
 	require_once($file);
-}
 	
 class Page
 {
@@ -34,13 +32,6 @@ class Page
 		ReplaceTag("{PAGE}", $pagetemplate, $output);
 		ReplaceTag("{WIDGET}", $widgettemplate, $output);
 		print $output;
-	}
-
-	//-----------------------------------------------------------------------------
-	// Destructor
-	//-----------------------------------------------------------------------------
-	public function __destruct()
-	{
 	}
 }
 ?>

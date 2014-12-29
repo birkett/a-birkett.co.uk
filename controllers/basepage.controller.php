@@ -3,6 +3,8 @@
 // Parse essential tags in the basic page template
 //		In: Unparsed template
 //		Out: Parsed template
+//
+//  !!! All pages get parsed through here !!!
 //-----------------------------------------------------------------------------
 class BasePageController
 {
