@@ -1,0 +1,8 @@
+.container { background-image: none; }
+.commenttile { background-image:url('../img/tile_comment_bg.png'); }
+.exittile { background-image:url('../img/tile_exit_bg.png'); }
+.posttile { background-image:url('../img/tile_post_bg.png'); }
+.pagetile { background-image:url('../img/tile_page_bg.png'); }
+.iptile { background-image:url('../img/tile_ipfilter_bg.png'); }
+.infotile { background-image:url('../img/tile_info_bg.png'); }
+.passwordtile { background-image:url('../img/tile_password_bg.png'); }

@@ -5,9 +5,9 @@
 		<title>Admin Birkett</title>
 		<base href="{BASEURL}" />
 		<link rel="stylesheet" href="css/main.css" />
+		<link rel="stylesheet" href="{ADMINFOLDER}css/admin.css" />
 		<style type="text/css">
 			body { background-color: rgb({RAND2551},{RAND2552},{RAND2553}) }
-			.container { background-image: none; }
 		</style>
 	</head>
 	<body>

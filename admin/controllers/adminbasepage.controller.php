@@ -16,7 +16,7 @@ class AdminBasePageController
 		new BasePageController($output, $title);
 		
 		$tags = [
-			"{ADMINFOLDER}" => ADMIN_FOLDER
+			"{ADMINFOLDER}" => ADMIN_FOLDER,
 		];
 		ParseTags($tags, $output);
 	}
