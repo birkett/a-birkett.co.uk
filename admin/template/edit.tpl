@@ -6,7 +6,8 @@
 						{
 							$pageeditmode = true;
 							echo '<h2>Edit Page</h2>';
-							$content = GetPageContent($_GET['pageid']);
+							$page = GetPage($_GET['pageid']);
+							$content = $page[1];
 							
 							echo '<div id="response"></div>';
 							echo '<form>';
@@ -18,7 +19,7 @@
 						{
 							$posteditmode = true;
 							echo '<h2>Edit Post</h2>';
-							list($postid, $timestamp, $title, $content, $draft) = $db->GetRow(GetPostByID($_GET['postid'], true));
+							list($postid, $timestamp, $title, $content, $draft) = $db->GetRow(GetPosts("single", $_GET['postid'], true));
 							if($draft) $draft = "checked";
 							
 							echo '<div id="response"></div>';

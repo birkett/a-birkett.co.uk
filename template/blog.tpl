@@ -9,7 +9,7 @@
 					if(isset($_GET['postid']) && is_numeric($_GET['postid']) && $_GET['postid'] >= 0 && $_GET['postid'] < 500000) 
 					{ 
 						$postid = $_GET['postid'];
-						$result = GetPostByID($postid); 
+						$result = GetPosts("single", $postid, false); 
 						if(GetDatabase()->GetNumRows($result) == 0)
 						{
 							echo '<div class="post aero"><h2>The requested post was not found</h2></div>';						
@@ -18,7 +18,7 @@
 						$singlemode = true;
 					}
 					//Normal mode
-					else { $result = GetLatestPosts($offset); }
+					else { $result = GetPosts("page", $offset, false); }
 						
 					//Rendering code
 					while($row = GetDatabase()->GetRow($result))

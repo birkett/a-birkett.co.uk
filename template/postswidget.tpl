@@ -2,7 +2,7 @@
 						<div class="widgetcontainer">
 							<h2>All Blog Posts</h2>
 							<?php
-							$result = GetBlogNavPosts();
+							$result = GetPosts("all", 0, false);
 							$last_month = NULL;
 							echo '<ul>';
 							while($row = GetDatabase()->GetRow($result))

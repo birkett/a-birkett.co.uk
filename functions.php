@@ -21,53 +21,28 @@ function GetDatabase()
 }
 
 //-----------------------------------------------------------------------------
-// Fetch a single post by ID
-//		In: Post ID
-//		Out: All post data
+// Fetch the specified post or range of posts
+//		In: Mode, ID and Draft lock
+//		Out: Post data
+//
+//		Mode should be one of "single", "page" or "titles"
 // !!! Defaults to not fetching drafts !!!
 //-----------------------------------------------------------------------------
-function GetPostByID($postid, $drafts = false)
+function GetPosts($mode, $id, $drafts = false)
 {
-	if($drafts) return GetDatabase()->RunQuery("SELECT * FROM blog_posts WHERE post_id = $postid");
-	return GetDatabase()->RunQuery("SELECT * FROM blog_posts WHERE post_id = $postid AND post_draft='0'");
-}
-
-//-----------------------------------------------------------------------------
-// Fetch the latest posts (how many is specified in config.php)
-//		In: Page number - for calculating pagination and offset
-//		Out: n posts, 
-//			where n is BLOG_POSTS_PER_PAGE at offset n*BPPP / n*BPPP*5
-// !!! Defaults to not displaying drafts !!!
-//-----------------------------------------------------------------------------
-function GetLatestPosts($page, $drafts = false)
-{
-	$limit1 = $page * BLOG_POSTS_PER_PAGE;
-	$limit2 = BLOG_POSTS_PER_PAGE;
-	if($drafts) return GetDatabase()->RunQuery("SELECT * FROM blog_posts ORDER BY post_timestamp DESC LIMIT $limit1,$limit2");
-	return GetDatabase()->RunQuery("SELECT * FROM blog_posts WHERE post_draft='0' ORDER BY post_timestamp DESC LIMIT $limit1,$limit2");
-}
-
-//-----------------------------------------------------------------------------
-// Fetch ID and Title of all blog posts in date order
-//		In: none
-//		Out: All post IDs and Titles as MySQLi result resource
-// !!! Defaults to not displaying drafts !!!
-//-----------------------------------------------------------------------------
-function GetAllPosts($drafts = false)
-{
-	if($drafts) return GetDatabase()->RunQuery("SELECT post_id, post_title, post_draft from blog_posts ORDER BY post_timestamp DESC");
-	return GetDatabase()->RunQuery("SELECT post_id, post_title from blog_posts WHERE post_draft='0' ORDER BY post_timestamp DESC");
-}
-
-//-----------------------------------------------------------------------------
-// Fetch ID and Title and timestamp of all blog posts in date order
-//		In: none
-//		Out: All post IDs and Titles and timestamps as MySQLi result resource
-// !!! Does not fetch drafts !!!
-//-----------------------------------------------------------------------------
-function GetBlogNavPosts()
-{
-	return GetDatabase()->RunQuery("SELECT post_id, post_timestamp, post_title from blog_posts WHERE post_draft='0' ORDER BY post_timestamp DESC");
+	$limit_query = "";
+	
+	if($mode == "single") //Single post
+		return GetDatabase()->RunQuery("SELECT * FROM blog_posts WHERE post_id = $id" . ($drafts ? " " : " AND post_draft='0' "));
+	
+	if($mode == "page") //Range of posts
+	{
+		$limit1 = $id * BLOG_POSTS_PER_PAGE;
+		$limit2 = BLOG_POSTS_PER_PAGE;
+		$limit_query = " LIMIT $limit1,$limit2";
+	}
+	//Grab the range of posts, or all if range wasnt specified
+	return GetDatabase()->RunQuery("SELECT * FROM blog_posts" . ($drafts ? " " : " WHERE post_draft='0' ") . "ORDER BY post_timestamp DESC" . $limit_query);
 }
 
 //-----------------------------------------------------------------------------
@@ -79,8 +54,7 @@ function GetBlogNavPosts()
 function GetNumberOfPosts($drafts = false)
 {
 	$db = GetDatabase();
-	if($drafts) return $db->GetNumRows($db->RunQuery("SELECT post_id from blog_posts"));
-	return $db->GetNumRows($db->RunQuery("SELECT post_id from blog_posts WHERE post_draft='0'"));
+	return $db->GetNumRows($db->RunQuery("SELECT post_id from blog_posts" . ($drafts ? " " : " WHERE post_draft='0' ")));
 }
 
 //-----------------------------------------------------------------------------
@@ -119,33 +93,16 @@ function PostComment($postid, $username, $comment, $clientip)
 //-----------------------------------------------------------------------------
 // Fetch page content by ID or Name
 //		In: Page name or ID
-//		Out: Page content or NULL
+//		Out: Page title and content or NULL
 //-----------------------------------------------------------------------------
-function GetPageContent($pagename)
+function GetPage($pagename)
 {
 	if(is_numeric($pagename))
-		$result = GetDatabase()->RunQuery("SELECT page_content FROM site_pages WHERE page_id='$pagename'");
+		$result = GetDatabase()->RunQuery("SELECT page_title, page_content FROM site_pages WHERE page_id='$pagename'");
 	else
-		$result = GetDatabase()->RunQuery("SELECT page_content FROM site_pages WHERE page_name='$pagename'");
+		$result = GetDatabase()->RunQuery("SELECT page_title, page_content FROM site_pages WHERE page_name='$pagename'");
 
-	$row = GetDatabase()->GetRow($result);
-	return $row[0];
-}
-
-//-----------------------------------------------------------------------------
-// Fetch page title by ID or name
-//		In: Page ID or name
-//		Out: Page title or NULL
-//-----------------------------------------------------------------------------
-function GetPageTitle($pagename)
-{
-	$db = GetDatabase();
-	if(is_numeric($pagename))
-		$row = $db->GetRow($db->RunQuery("SELECT page_title FROM site_pages WHERE page_id='$pagename'"));
-	else
-		$row = $db->GetRow($db->RunQuery("SELECT page_title FROM site_pages WHERE page_name='$pagename'"));
-
-	return $row[0];
+	return GetDatabase()->GetRow($result);
 }
 
 //-----------------------------------------------------------------------------
