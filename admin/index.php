@@ -11,8 +11,12 @@ require_once("../classes/database.class.php");
 require_once("../functions.php");
 require_once("adminfunctions.php");
 
+foreach(glob("controllers/*.controller.php") as $file)
+	require_once($file);
+
+
 //default to the login page unless already logged in
-IsLoggedIn() ? $page = "admin" : $page = "login";
+IsLoggedIn() ? $page = "index" : $page = "login";
 
 //Decide what to show based on ?action=x
 if(isset($_GET['action']))
@@ -24,13 +28,13 @@ if(isset($_GET['action']))
 			{
 				$u = Sanitize($_POST['username']);
 				$p = Sanitize($_POST['password']);
-				if(CheckCredentials($u, $p)) { $_SESSION['user'] = $u; $page = "admin"; } else { $page = "login"; }
+				if(CheckCredentials($u, $p)) { $_SESSION['user'] = $u; $page = "index"; } else { $page = "login"; }
 			}
 			break;
 		case "logout":
 			KillSession(); $page = "login";	break;
 		case "main":
-			IsLoggedIn() ? $page = "admin" : $page = "login"; break;
+			IsLoggedIn() ? $page = "index" : $page = "login"; break;
 		case "edit":
 			IsLoggedIn() ? $page = "edit" : $page = "login"; break;
 		case "listposts":
@@ -48,7 +52,27 @@ if(isset($_GET['action']))
 	}
 }
 
-require_once("template/header.tpl");
-require_once("template/$page.tpl");
-require_once("template/footer.tpl");
+$output = OpenTemplate("page.tpl");
+$pagetemplate = OpenTemplate("$page.tpl");
+$widgettemplate = OpenTemplate("sidewidget.tpl");
+
+new AdminBasePageController($output, "test");
+
+switch($page)
+{
+case "index": new AdminBasePageController($pagetemplate, "index"); break;
+case "listcomments": new ListCommentsPageController($pagetemplate); break;
+case "listposts": new ListPostsPageController($pagetemplate); break;
+case "listpages": new ListPagesPageController($pagetemplate); break;
+case "serverinfo": new AdminServerInfoController($pagetemplate); break;
+case "password": new AdminBasePageController($pagetemplate, "password"); break;
+case "ipfilter": new AdminIPFilterPageController($pagetemplate); break;
+case "edit": new AdminEditPageController($pagetemplate); break;
+}
+
+new AdminSideWidgetController($widgettemplate);
+
+ReplaceTag("{PAGE}", $pagetemplate, $output);
+ReplaceTag("{WIDGET}", $widgettemplate, $output);
+print $output;
 ?>

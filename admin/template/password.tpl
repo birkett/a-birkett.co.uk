@@ -1,4 +1,3 @@
-					<div class="middlec aero">
 						<script type="text/javascript">
 							function doaction()
 							{		
@@ -19,7 +18,7 @@
 										}
 									}
 								}
-								xmlhttp.open("POST","<?php echo ADMIN_FOLDER; ?>adminactions.php",true);
+								xmlhttp.open("POST","{ADMINFOLDER}adminactions.php",true);
 
 								var cp = document.getElementById("formcp").value;
 								var np = document.getElementById("formnp").value;
@@ -29,16 +28,16 @@
 								xmlhttp.send("mode=password&cp="+cp+"&np="+np+"&cnp="+cnp); 
 							}
 						</script>
-						<h2>Password Reset</h2>
-						<div id="response"></div>
-						<form>
-							<p>Current Password:</p>
-							<input id="formcp" type="password" size="65" value="">
-							<p>New Password:</p>
-							<input id="formnp" type="password" size="65" value="">
-							<p>Confirm New Password:</p>
-							<input id="formcnp" type="password" size="65" value="">
-						</form>
-						<a href="" onClick="doaction(); return false;"><p>Submit</p></a>
-					</div>
-					<?php require_once("template/sidewidget.tpl"); ?>
+						<div class="post aero">
+							<h2>Password Reset</h2>
+							<div id="response"></div>
+							<form>
+								<p>Current Password:</p>
+								<input id="formcp" type="password" size="65" value="">
+								<p>New Password:</p>
+								<input id="formnp" type="password" size="65" value="">
+								<p>Confirm New Password:</p>
+								<input id="formcnp" type="password" size="65" value="">
+							</form>
+							<a href="" onClick="doaction(); return false;"><p>Submit</p></a>
+						</div>

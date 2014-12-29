@@ -3,10 +3,10 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Admin Birkett</title>
-		<?php echo '<base href="' . BASE_URL . '" />' . "\n"; ?>
+		<base href="{BASEURL}" />
 		<link rel="stylesheet" href="css/main.css" />
 		<style type="text/css">
-			body { background-color: rgb(<?php echo rand(0,255); ?>,<?php echo rand(0,255); ?>,<?php echo rand(0,255); ?>) }
+			body { background-color: rgb({RAND2551},{RAND2552},{RAND2553}) }
 			.container { background-image: none; }
 		</style>
 	</head>
@@ -14,10 +14,23 @@
 		<div class="container">
 			<div class="header">
 				<div class="headerleft">
-					<a href="<?php echo ADMIN_FOLDER; ?>"><h1>Admin <b>Birkett</b></h1></a>
+					<a href="{ADMINFOLDER}"><h1>Admin <b>Birkett</b></h1></a>
 				</div>
 			</div>
 			<div class="main">
 				<div class="leftc">
 				</div>
 				<div class="rightcontainer">
+					<div class="middlec">
+						{PAGE}
+					</div>
+					<div class="rightc aero">
+						<div class="widgetcontainer">
+							{WIDGET}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

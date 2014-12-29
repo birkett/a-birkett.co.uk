@@ -1,5 +1,3 @@
-					<div class="middlec aero">
-						<h2>Please log in</h2>
-					</div>
-					<?php require_once("template/sidewidget.tpl"); ?>
-	
+						<div class="post aero">	
+							<h2>Please log in</h2>
+						</div>
