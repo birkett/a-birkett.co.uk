@@ -4,75 +4,51 @@
 //
 //  Page proxy for admin pages
 //-----------------------------------------------------------------------------
+define('ADMINPAGE', 1); //Set so the page class will include admin controllers
+
 session_start();
 
 require_once("../config.php");
 require_once("../classes/database.class.php");
+require_once("../classes/page.class.php");
 require_once("../functions.php");
 require_once("adminfunctions.php");
 
-foreach(glob("controllers/*.controller.php") as $file)
-	require_once($file);
-
-
-//default to the login page unless already logged in
-IsLoggedIn() ? $page = "index" : $page = "login";
-
-//Decide what to show based on ?action=x
-if(isset($_GET['action']))
+if(IsLoggedIn())
 {
-	switch($_GET['action'])
-	{
-		case "login":
-			if(isset($_POST['username']) && isset($_POST['password']))
-			{
-				$u = Sanitize($_POST['username']);
-				$p = Sanitize($_POST['password']);
-				if(CheckCredentials($u, $p)) { $_SESSION['user'] = $u; $page = "index"; } else { $page = "login"; }
-			}
-			break;
-		case "logout":
-			KillSession(); $page = "login";	break;
-		case "main":
-			IsLoggedIn() ? $page = "index" : $page = "login"; break;
-		case "edit":
-			IsLoggedIn() ? $page = "edit" : $page = "login"; break;
-		case "listposts":
-			IsLoggedIn() ? $page = "listposts" : $page = "login"; break;
-		case "listcomments":
-			IsLoggedIn() ? $page = "listcomments" : $page = "login"; break;
-		case "listpages":
-			IsLoggedIn() ? $page = "listpages" : $page = "login"; break;
-		case "ipfilter":
-			IsLoggedIn() ? $page = "ipfilter" : $page = "login"; break;
-		case "serverinfo":
-			IsLoggedIn() ? $page = "serverinfo" : $page = "login"; break;
-		case "password":
-			IsLoggedIn() ? $page = "password" : $page = "login"; break;
+	if(isset($_GET['action'])) 
+	{ 
+		switch($_GET['action'])
+		{
+		//URL						//Page title					//Widget		//Template
+		case "password": 		new Page("Admin :: Password", 		"sidewidget", 	"password"		); break;
+		case "serverinfo": 		new Page("Admin :: Server Info", 	"sidewidget", 	"serverinfo"	); break;
+		case "ipfilter": 		new Page("Admin :: IP Filter", 		"sidewidget", 	"ipfilter"		); break;
+		case "listpages": 		new Page("Admin :: List Pages", 	"sidewidget", 	"listpages"		); break;
+		case "listcomments": 	new Page("Admin :: List Comments", 	"sidewidget", 	"listcomments"	); break;
+		case "listposts": 		new Page("Admin :: List Posts", 	"sidewidget", 	"listposts"		); break;
+		case "edit": 			new Page("Admin :: Editor",			"sidewidget", 	"edit"			); break;
+		case "logout":			KillSession();
+								new Page("Admin :: Login",			"sidewidget", 	"login"			); break;
+		default: 				new Page("Admin :: Main",			"sidewidget", 	"index"  		); break;
+		}
 	}
+	//Default when nothing requested
+	else { new Page("Admin :: Main", "sidewidget", "index" ); }
 }
-
-$output = OpenTemplate("page.tpl");
-$pagetemplate = OpenTemplate("$page.tpl");
-$widgettemplate = OpenTemplate("sidewidget.tpl");
-
-new AdminBasePageController($output, "test");
-
-switch($page)
+else
 {
-case "index": new AdminBasePageController($pagetemplate, "index"); break;
-case "listcomments": new ListCommentsPageController($pagetemplate); break;
-case "listposts": new ListPostsPageController($pagetemplate); break;
-case "listpages": new ListPagesPageController($pagetemplate); break;
-case "serverinfo": new AdminServerInfoController($pagetemplate); break;
-case "password": new AdminBasePageController($pagetemplate, "password"); break;
-case "ipfilter": new AdminIPFilterPageController($pagetemplate); break;
-case "edit": new AdminEditPageController($pagetemplate); break;
+	if(isset($_POST['username']) && isset($_POST['password']))
+	{
+		$u = Sanitize($_POST['username']);
+		$p = Sanitize($_POST['password']);
+		if(CheckCredentials($u, $p)) 
+		{ 
+			$_SESSION['user'] = $u; 
+			new Page("Admin :: Main", "sidewidget", "index");
+			return;
+		}
+	}
+	new Page("Admin :: Login", "sidewidget", "login");
 }
-
-new AdminSideWidgetController($widgettemplate);
-
-ReplaceTag("{PAGE}", $pagetemplate, $output);
-ReplaceTag("{WIDGET}", $widgettemplate, $output);
-print $output;
 ?>

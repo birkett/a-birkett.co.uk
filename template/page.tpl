@@ -7,8 +7,9 @@
 		<base href="{BASEURL}" />
 		<link rel="alternate" href="/feed/" title="RSS feed" type="application/rss+xml" />
 		<link rel="stylesheet" href="css/main.css" />
-		{EXTRASTYLESHEET}
-		
+		{EXTRASTYLESHEETS}
+		<link rel="stylesheet" href="css/christmas.css" />
+		{/EXTRASTYLESHEETS}
 		<style type="text/css">
 		.container { background-color: rgb({RAND2551},{RAND2552},{RAND2553}); }
 		.leftc { background-image:url("img/background_figure_{RAND12}.png"); }

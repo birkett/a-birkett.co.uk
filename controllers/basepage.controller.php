@@ -18,9 +18,16 @@ class BasePageController
 			"{RAND2553}" => rand(0, 255),	
 			"{RAND12}" => rand(1, 2),
 			"{THISYEAR}" => date('Y'),
-			"{EXTRASTYLESHEET}" => (CHRISTMAS ? '<link rel="stylesheet" href="css/christmas.css" />' : "")
 		];
 		ParseTags($tags, $output);
+		
+		if(CHRISTMAS)
+		{
+			$tags = [ "{EXTRASTYLESHEETS}", "{/EXTRASTYLESHEETS}" ];
+			RemoveTags($tags, $output);
+		}
+		else
+			RemoveLogicTag("{EXTRASTYLESHEETS}", "{/EXTRASTYLESHEETS}", $output);
 	}
 }
 ?>

@@ -10,11 +10,8 @@ require_once("../controllers/basepage.controller.php");
 
 class AdminBasePageController
 {
-	public function __construct(&$output, $title)
-	{
-		//Run the admin templates through the public controller first
-		new BasePageController($output, $title);
-		
+	public function __construct(&$output)
+	{	
 		$tags = [
 			"{ADMINFOLDER}" => ADMIN_FOLDER,
 		];

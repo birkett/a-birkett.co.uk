@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>Admin Birkett</title>
+		<title>{TITLE}</title>
 		<base href="{BASEURL}" />
 		<link rel="stylesheet" href="css/main.css" />
 		<link rel="stylesheet" href="{ADMINFOLDER}css/admin.css" />
