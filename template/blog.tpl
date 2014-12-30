@@ -28,7 +28,25 @@
 					{/PAGINATION}
 					
 					{NEWCOMMENT}
-					<script src="js/newcomment.js"></script>
+					<script type="text/javascript" src="js/ajax.js"></script>
+					<script type="text/javascript">
+						function newcomment()
+						{
+							SuccessCallBack = function()
+							{
+								document.getElementById("formusername").value="";
+								document.getElementById("formcomment").value="";
+							}
+							
+							var p = document.getElementById("formpostid").value;
+							var u = document.getElementById("formusername").value;
+							var c = document.getElementById("formcomment").value;
+							var data = "mode=postcomment&postid="+p+"&username="+u+"&comment="+c+"&challenge="+Recaptcha.get_challenge()+"&response="+Recaptcha.get_response();
+
+							AJAXOpen("actions.php", data, SuccessCallBack);
+							Recaptcha.reload();
+						}
+					</script>
 					<div class="post aero commentbox">
 						<h2>New comment</h2>
 						<div id="response"></div>
@@ -42,7 +60,7 @@
 						<p>Verification:</p>
 						<script type="text/javascript">var RecaptchaOptions = { theme : "blackglass" };</script>
 						<script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k={RECAPTCHAKEY}"></script><br />
-						<a href="" onClick="postcomment(); return false;">Submit</a>
+						<a href="" onClick="newcomment(); return false;">Submit</a>
 						<br /><br />
 					</div>
 					{/NEWCOMMENT}

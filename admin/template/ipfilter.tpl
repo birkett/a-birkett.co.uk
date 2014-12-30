@@ -1,32 +1,15 @@
+						<script type="text/javascript" src="js/ajax.js"></script>
 						<script type="text/javascript">
-							function doaction(inip)
+							function ipblock(inip)
 							{
+								SuccessCallBack = function() { return; }
 								if(inip != undefined) { document.getElementById("formip").value=inip; }
-								
-								document.getElementById("response").innerHTML='';
-								if (window.XMLHttpRequest) { xmlhttp=new XMLHttpRequest(); }
-								else { xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); }
-								xmlhttp.onreadystatechange=function()
-								{
-									if (xmlhttp.readyState==4)
-									{
-										switch(xmlhttp.status)
-										{
-										case 200:
-											document.getElementById("response").innerHTML='<p class="success">'+xmlhttp.response+'</p>';
-											break;
-										default:
-											document.getElementById("response").innerHTML='<p class="failed">'+xmlhttp.response+'</p>';
-										}
-									}
-								}
-								xmlhttp.open("POST","{ADMINFOLDER}adminactions.php",true);
-
 								var ip = document.getElementById("formip").value;
-								xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-
-								if(inip != undefined) { xmlhttp.send("mode=removeip&ip="+ip); }
-								else { xmlhttp.send("mode=addip&ip="+ip); }
+								
+								if(inip != undefined) { var data = "mode=removeip&ip="+ip; }
+								else { var data = "mode=addip&ip="+ip; }
+								
+								AJAXOpen("{ADMINFOLDER}adminactions.php", data, SuccessCallBack);
 							}
 						</script>
 						<div class="post aero">
@@ -36,7 +19,7 @@
 								<p>IP Address:</p>
 								<input id="formip" type="text" size="65" value="">
 							</form>
-							<a href="" onClick="doaction(); return false;"><p>Submit</p></a>
+							<a href="" onClick="ipblock(); return false;"><p>Submit</p></a>
 							
 							<table><tr><th>IP</th><th>Time blocked</th><th>Unblock</th><th>Comments</th></tr>
 								{IPFILTERENTRY}
@@ -44,7 +27,7 @@
 								<tr>
 									<td>{IP}</td>
 									<td>{TIMESTAMP}</td>
-									<td><a href="" onClick="doaction('{IP}'); return false;">Unblock</a></td>
+									<td><a href="" onClick="ipblock('{IP}'); return false;">Unblock</a></td>
 									<td><a href="{ADMINFOLDER}index.php?action=listcomments&ip={IP}">Comments</a></td>
 								</tr>
 								{/LOOP}

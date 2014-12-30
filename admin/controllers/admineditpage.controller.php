@@ -9,7 +9,7 @@ class AdminEditPageController
 	public function __construct(&$output)
 	{
 		new AdminBasePageController($output, "edit");
-		$vars1 = ""; $vars2 = "";
+		$vars = "";
 		
 		//Page edit mode
 		if(isset($_GET['pageid']))
@@ -17,8 +17,8 @@ class AdminEditPageController
 			$page = GetPage($_GET['pageid']);
 			$content = $page[1];
 			
-			$vars1 .= 'var pageid = document.getElementById("formpageid").value;';
-			$vars2 .= 'xmlhttp.send("mode=editpage&pageid="+pageid+"&content="+content);';
+			$vars .= 'var pageid = document.getElementById("formpageid").value;';
+			$vars .= 'var data = "mode=editpage&pageid="+pageid+"&content="+content;';
 				
 			ReplaceTag("{POSTID}", $_GET['pageid'], $output);
 			RemoveLogicTag("{POSTEDIT}", "{/POSTEDIT}", $output);
@@ -30,10 +30,10 @@ class AdminEditPageController
 			list($postid, $timestamp, $title, $content, $draft) = GetDatabase()->GetRow(GetPosts("single", $_GET['postid'], true));
 			if($draft) $draft = "checked";
 			
-			$vars1 .= 'var postid = document.getElementById("formpostid").value;';
-			$vars1 .= 'var title = document.getElementById("formtitle").value;';
-			$vars1 .= 'var draft = document.getElementById("formdraft").checked;';
-			$vars2 .= 'xmlhttp.send("mode=editpost&postid="+postid+"&title="+title+"&draft="+draft+"&content="+content);';
+			$vars .= 'var postid = document.getElementById("formpostid").value;';
+			$vars .= 'var title = document.getElementById("formtitle").value;';
+			$vars .= 'var draft = document.getElementById("formdraft").checked;';
+			$vars .= 'var data = "mode=editpost&postid="+postid+"&title="+title+"&draft="+draft+"&content="+content;';
 
 			$tags = [
 				"{POSTID}" => $postid,
@@ -47,15 +47,14 @@ class AdminEditPageController
 		//New post mode
 		else
 		{
-			$vars1 .= 'var title = document.getElementById("formtitle").value;';
-			$vars1 .= 'var draft = document.getElementById("formdraft").checked;';
-			$vars2 .= 'xmlhttp.send("mode=newpost&title="+title+"&draft="+draft+"&content="+content);';
+			$vars .= 'var title = document.getElementById("formtitle").value;';
+			$vars .= 'var draft = document.getElementById("formdraft").checked;';
+			$vars .= 'var data = "mode=newpost&title="+title+"&draft="+draft+"&content="+content;';
 			 
 			RemoveLogicTag("{PAGEEDIT}", "{/PAGEEDIT}", $output);
 			RemoveLogicTag("{POSTEDIT}", "{/POSTEDIT}", $output);
 		}
-		ReplaceTag("{VARS1}", $vars1, $output);
-		ReplaceTag("{VARS2}", $vars2, $output);
+		ReplaceTag("{VARS}", $vars, $output);
 		isset($content) ? $content = $content : $content = "";
 		ReplaceTag("{CONTENT}", $content, $output);
 		//Clean up the tags if not already replaced

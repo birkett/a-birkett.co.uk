@@ -24,7 +24,7 @@ if(isset($_POST['mode']))
 		if(CheckIP($ip)) { BlockedRequest("Your address is blocked. This is most likely due to spam."); }
 		
 		$captcha = recaptcha_check_answer(RECAPTHCA_PRIVATE_KEY, $ip, $ch, $resp);
-		if($captcha->is_valid) { PostComment($p, Sanitize($u), Sanitize($c), $ip); GoodRequest(); } else {	BadRequest("Captcha verification failed"); }
+		if($captcha->is_valid) { PostComment($p, Sanitize($u), Sanitize($c), $ip); GoodRequest("Comment Posted!"); } else {	BadRequest("Captcha verification failed"); }
 	}
 }
 BadRequest();

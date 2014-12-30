@@ -1,31 +1,14 @@
+						<script type="text/javascript" src="js/ajax.js"></script>
 						<script type="text/javascript">
-							function doaction()
-							{		
-								document.getElementById("response").innerHTML='';
-								if (window.XMLHttpRequest) { xmlhttp=new XMLHttpRequest(); }
-								else { xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); }
-								xmlhttp.onreadystatechange=function()
-								{
-									if (xmlhttp.readyState==4)
-									{
-										switch(xmlhttp.status)
-										{
-										case 200:
-											document.getElementById("response").innerHTML='<p class="success">'+xmlhttp.response+'</p>';
-											break;
-										default:
-											document.getElementById("response").innerHTML='<p class="failed">'+xmlhttp.response+'</p>';
-										}
-									}
-								}
-								xmlhttp.open("POST","{ADMINFOLDER}adminactions.php",true);
-
+							function setpassword()
+							{	
+								SuccessCallBack = function() { return; }
 								var cp = document.getElementById("formcp").value;
 								var np = document.getElementById("formnp").value;
-								var cnp = document.getElementById("formcnp").value;
+								var cnp = document.getElementById("formcnp").value;	
+								var data = "mode=password&cp="+cp+"&np="+np+"&cnp="+cnp;
 								
-								xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-								xmlhttp.send("mode=password&cp="+cp+"&np="+np+"&cnp="+cnp); 
+								AJAXOpen("{ADMINFOLDER}adminactions.php", data, SuccessCallBack);
 							}
 						</script>
 						<div class="post aero">
@@ -39,5 +22,5 @@
 								<p>Confirm New Password:</p>
 								<input id="formcnp" type="password" size="65" value="">
 							</form>
-							<a href="" onClick="doaction(); return false;"><p>Submit</p></a>
+							<a href="" onClick="setpassword(); return false;"><p>Submit</p></a>
 						</div>

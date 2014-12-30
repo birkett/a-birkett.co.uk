@@ -16,20 +16,20 @@ if(isset($_POST['mode']))
 	//Edit post mode
 	case "editpost":
 		if(!isset($_POST['postid']) || is_numeric($_POST['postid'] || !isset($_POST['title']) || !isset($_POST['content']) || !isset($_POST['draft'])))
-		{ BadRequest(); } 
-		else { UpdatePost($_POST['postid'], $_POST['title'], $_POST['content'], $_POST['draft']); GoodRequest(); }
+		{ BadRequest("Something was rejected. Check all fields are correct."); } 
+		else { UpdatePost($_POST['postid'], $_POST['title'], $_POST['content'], $_POST['draft']); GoodRequest("Post updated."); }
 		break;
 	//Edit page mode
 	case "editpage":
 		if(!isset($_POST['pageid']) || is_numeric($_POST['pageid'] || !isset($_POST['content'])))
-		{ BadRequest();	}
-		else { UpdatePage($_POST['pageid'], $_POST['content']);	GoodRequest(); }
+		{ BadRequest("Something was rejected. Check all fields are correct.");	}
+		else { UpdatePage($_POST['pageid'], $_POST['content']);	GoodRequest("Page updated."); }
 		break;
 	//New post mode
 	case "newpost":
 		if(!isset($_POST['title']) || !isset($_POST['content']) || !isset($_POST['draft']))
-		{ BadRequest();	}
-		else { NewPost($_POST['title'], $_POST['content'], $_POST['draft']); GoodRequest(); }
+		{ BadRequest("Something was rejected. Check all fields are correct.");	}
+		else { NewPost($_POST['title'], $_POST['content'], $_POST['draft']); GoodRequest("Posted!"); }
 		break;
 	//Add blocked IP mode
 	case "addip":
