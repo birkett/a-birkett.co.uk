@@ -61,12 +61,8 @@ class BlogPageController
 					ReplaceTag("{COMMENTS}", $temp, $output); //Add this comment to the output
 				}
 			}
-			RemoveLogicTag("{COMMENT}", "{/COMMENT}", $output);
 		}
-		else
-		{
-			RemoveLogicTag("{COMMENT}", "{/COMMENT}", $output);
-		}
+		RemoveLogicTag("{COMMENT}", "{/COMMENT}", $output);
 		
 		//Paginate when appropriate
 		if(!isset($singlemode) && GetNumberOfPosts() > BLOG_POSTS_PER_PAGE)

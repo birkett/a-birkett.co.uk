@@ -15,8 +15,8 @@ class Page
 	public function __construct($title, $widget, $template)
 	{
 		$pagetemplate = OpenTemplate("page.tpl");
-		$contenttemplate = OpenTemplate("$template.tpl");
-		$widgettemplate = OpenTemplate("$widget.tpl");
+		ReplaceTag("{PAGE}", OpenTemplate("$template.tpl"), $pagetemplate);
+		ReplaceTag("{WIDGET}", OpenTemplate("$widget.tpl"), $pagetemplate);
 		
 		new BasePageController($pagetemplate, $title);
 		
@@ -25,31 +25,27 @@ class Page
 			new AdminBasePageController($pagetemplate);
 			switch($template)
 			{
-				case "index": new AdminBasePageController($contenttemplate); break;
-				case "listcomments": new ListCommentsPageController($contenttemplate); break;
-				case "listposts": new ListPostsPageController($contenttemplate); break;
-				case "listpages": new ListPagesPageController($contenttemplate); break;
-				case "serverinfo": new AdminServerInfoController($contenttemplate); break;
-				case "password": new AdminBasePageController($contenttemplate); break;
-				case "ipfilter": new AdminIPFilterPageController($contenttemplate); break;
-				case "edit": new AdminEditPageController($contenttemplate); break;
+				case "listcomments": new ListCommentsPageController($pagetemplate); break;
+				case "listposts": new ListPostsPageController($pagetemplate); break;
+				case "listpages": new ListPagesPageController($pagetemplate); break;
+				case "serverinfo": new AdminServerInfoController($pagetemplate); break;
+				case "ipfilter": new AdminIPFilterPageController($pagetemplate); break;
+				case "edit": new AdminEditPageController($pagetemplate); break;
 			}
-			new AdminSideWidgetController($widgettemplate);
+			if($widget = "userwidget") new AdminUserWidgetController($pagetemplate);
 		}
 		else
 		{
 			switch($template)
 			{
 				case "generic": 	$e = explode(' ', $title);  //Get page name from last word of title
-									new GenericPageController($contenttemplate, strtolower(array_pop($e))); 
+									new GenericPageController($pagetemplate, strtolower(array_pop($e))); 
 									break;
 									
-				case "blog": 		new BlogPageController($contenttemplate); break;
+				case "blog": 		new BlogPageController($pagetemplate); break;
 			}
-			if($widget == "postswidget") new PostsWidgetController($widgettemplate);
+			if($widget == "postswidget") new PostsWidgetController($pagetemplate);
 		}
-		ReplaceTag("{PAGE}", $contenttemplate, $pagetemplate);
-		ReplaceTag("{WIDGET}", $widgettemplate, $pagetemplate);
 		echo $pagetemplate;
 	}
 }

@@ -8,9 +8,7 @@ class AdminEditPageController
 {
 	public function __construct(&$output)
 	{
-		new AdminBasePageController($output, "edit");
-		$vars = "";
-		
+		$vars = "";	
 		//Page edit mode
 		if(isset($_GET['pageid']))
 		{

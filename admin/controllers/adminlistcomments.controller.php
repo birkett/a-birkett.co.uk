@@ -18,7 +18,6 @@ class ListCommentsPageController
 		while(list($id, $postid, $username, $comment, $timestamp, $ip) = GetDatabase()->GetRow($result))
 		{
 			$tags = [
-				"{ADMINFOLDER}" => ADMIN_FOLDER,
 				"{COMMENT}" => $comment,
 				"{USERNAME}" => $username,
 				"{TIMESTAMP}" => date(DATE_FORMAT, $timestamp),
@@ -30,9 +29,7 @@ class ListCommentsPageController
 			ReplaceTag("{LISTCOMMENTSENTRY}", $temp, $output);
 		}
 		RemoveLogicTag("{LOOP}", "{/LOOP}", $output);
-		//Clean up the tags if not already replaced
-		$cleantags = [ "{LISTCOMMENTSENTRY}" ];
-		RemoveTags($cleantags, $output);
+		ReplaceTag("{LISTCOMMENTSENTRY}", "", $output);
 	}
 }
 ?>

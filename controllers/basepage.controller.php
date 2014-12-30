@@ -11,7 +11,7 @@ class BasePageController
 	public function __construct(&$output, $title)
 	{
 		$tags = [
-			"{BASEURL}" => BASE_URL,
+			"{BASEURL}" => "//" . $_SERVER['HTTP_HOST'] . "/",
 			"{TITLE}" => $title,
 			"{RAND2551}" => rand(0, 255),
 			"{RAND2552}" => rand(0, 255),

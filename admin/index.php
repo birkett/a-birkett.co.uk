@@ -21,20 +21,20 @@ if(IsLoggedIn())
 		switch($_GET['action'])
 		{
 		//URL						//Page title					//Widget		//Template
-		case "password": 		new Page("Admin :: Password", 		"sidewidget", 	"password"		); break;
-		case "serverinfo": 		new Page("Admin :: Server Info", 	"sidewidget", 	"serverinfo"	); break;
-		case "ipfilter": 		new Page("Admin :: IP Filter", 		"sidewidget", 	"ipfilter"		); break;
-		case "listpages": 		new Page("Admin :: List Pages", 	"sidewidget", 	"listpages"		); break;
-		case "listcomments": 	new Page("Admin :: List Comments", 	"sidewidget", 	"listcomments"	); break;
-		case "listposts": 		new Page("Admin :: List Posts", 	"sidewidget", 	"listposts"		); break;
-		case "edit": 			new Page("Admin :: Editor",			"sidewidget", 	"edit"			); break;
+		case "password": 		new Page("Admin :: Password", 		"userwidget", 	"password"		); break;
+		case "serverinfo": 		new Page("Admin :: Server Info", 	"userwidget", 	"serverinfo"	); break;
+		case "ipfilter": 		new Page("Admin :: IP Filter", 		"userwidget", 	"ipfilter"		); break;
+		case "listpages": 		new Page("Admin :: List Pages", 	"userwidget", 	"listpages"		); break;
+		case "listcomments": 	new Page("Admin :: List Comments", 	"userwidget", 	"listcomments"	); break;
+		case "listposts": 		new Page("Admin :: List Posts", 	"userwidget", 	"listposts"		); break;
+		case "edit": 			new Page("Admin :: Editor",			"userwidget", 	"edit"			); break;
 		case "logout":			KillSession();
-								new Page("Admin :: Login",			"sidewidget", 	"login"			); break;
-		default: 				new Page("Admin :: Main",			"sidewidget", 	"index"  		); break;
+								new Page("Admin :: Login",			"userwidget", 	"login"			); break;
+		default: 				new Page("Admin :: Main",			"userwidget", 	"index"  		); break;
 		}
 	}
 	//Default when nothing requested
-	else { new Page("Admin :: Main", "sidewidget", "index" ); }
+	else { new Page("Admin :: Main", "userwidget", "index" ); }
 }
 else
 {
@@ -45,10 +45,10 @@ else
 		if(CheckCredentials($u, $p)) 
 		{ 
 			$_SESSION['user'] = $u; 
-			new Page("Admin :: Main", "sidewidget", "index");
+			new Page("Admin :: Main", "userwidget", "index");
 			return;
 		}
 	}
-	new Page("Admin :: Login", "sidewidget", "login");
+	new Page("Admin :: Login", "userwidget", "login");
 }
 ?>

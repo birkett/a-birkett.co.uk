@@ -79,6 +79,7 @@ function UpdatePost($postid, $title, $content, $draft)
 {
 	$draft = BoolToInt($draft);
 	GetDatabase()->RunQuery("UPDATE blog_posts SET post_title='$title', post_content='$content', post_draft='$draft' WHERE post_id='$postid' LIMIT 1");
+	TweetPost($postid);
 }
 
 //-----------------------------------------------------------------------------
@@ -98,9 +99,13 @@ function UpdatePage($pageid, $content)
 //-----------------------------------------------------------------------------
 function NewPost($title, $content, $draft)
 {
+	$db = GetDatabase();
 	$draft = BoolToInt($draft);
 	$timestamp = time();
-	GetDatabase()->RunQuery("INSERT INTO blog_posts(post_timestamp, post_title, post_content, post_draft) VALUES('$timestamp', '$title', '$content', '$draft')");
+	$db->RunQuery("INSERT INTO blog_posts(post_timestamp, post_title, post_content, post_draft, post_tweeted) VALUES('$timestamp', '$title', '$content', '$draft', 0)");
+	
+	$row = $db->GetRow($db->RunQuery("SELECT post_id FROM blog_posts ORDER BY post_timestamp DESC LIMIT 1"));
+	TweetPost($row[0]); //Tweet this if not already done
 }
 
 //-----------------------------------------------------------------------------
@@ -179,5 +184,30 @@ function ChangePassword($currentpassword, $newpassword, $confirmedpassword)
 	
 	$db->RunQuery("UPDATE site_users SET password='$hash' WHERE user_id='1'");
 	return true;
+}
+
+//-----------------------------------------------------------------------------
+// Send a tweet about a specified post
+//		In: Post ID
+//		Out: none
+//-----------------------------------------------------------------------------
+function TweetPost($postid)
+{
+	$db = GetDatabase();
+	$post = GetPosts("single", $postid, false);
+	if($db->GetNumRows($post) == 0) //Post doesnt exist or is a draft
+		return;
+		
+	list($id, $timestamp, $title, $content, $draft, $post_tweeted) = $db->GetRow($post);
+	if($post_tweeted == 1) //Already tweeted out
+		return;
+	$url = BASE_URL . "blog/" . $id;
+	
+	$tweet = "New Blog Post: " . $title . " - " . $url;
+	
+	$twitter = new TwitterOAuth(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_OAUTH_TOKEN, TWITTER_OAUTH_SECRET);
+	$twitter->post('statuses/update', array('status' => $tweet));
+	
+	$db->RunQuery("UPDATE blog_posts SET post_tweeted='1' WHERE post_id='$postid'");
 }
 ?>

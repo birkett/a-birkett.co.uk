@@ -24,9 +24,7 @@ class ListPostsPageController
 			ReplaceTag("{LISTPOSTSENTRY}", $temp, $output);		
 		}
 		RemoveLogicTag("{LOOP}", "{/LOOP}", $output);
-		//Clean up the tags if not already replaced
-		$cleantags = [ "{LISTPOSTSENTRY}" ];
-		RemoveTags($cleantags, $output);
+		ReplaceTag("{LISTPOSTSENTRY}", "", $output);
 	}
 }
 ?>

@@ -10,8 +10,8 @@ ini_set("display_errors", 1);
 //Timezone for converting timestamps
 date_default_timezone_set("Europe/London");
 
-//Used for the base of URLs to ensure rewriting doesn't mess up relative links
-define('BASE_URL', 'http://localhost/');
+//Default display format for timestamps
+define('DATE_FORMAT', 'l dS F Y');
 
 //Allows admin folder to be renamed
 define('ADMIN_FOLDER', 'admin/');
@@ -28,17 +28,20 @@ define('CHRISTMAS', 0);
 //Number of posts per page for the blog pagniation
 define('BLOG_POSTS_PER_PAGE', 5);
 
-//Default display format for timestamps
-define('DATE_FORMAT', 'l dS F Y');
-
 //ReCaptcha comment verification keys
 define('RECAPTCHA_PUBLIC_KEY', 'pub-key');
 define('RECAPTHCA_PRIVATE_KEY', 'priv-key');
 
+//Twitter keys used when tweeting new blog posts
+define("TWITTER_CONSUMER_KEY", 'cons-key');
+define("TWITTER_CONSUMER_SECRET", 'cons-secret');
+define("TWITTER_OAUTH_TOKEN", 'oauth-key');
+define("TWITTER_OAUTH_SECRET", 'oauth-secret');
+
 //Database connection
-define('DATABASE_HOSTNAME', 'host');
-define('DATABASE_USERNAME', 'user');
-define('DATABASE_PASSWORD', 'password');
+define('DATABASE_HOSTNAME', 'localhost');
+define('DATABASE_USERNAME', 'root');
+define('DATABASE_PASSWORD', 'newpass');
 define('DATABASE_PORT', 3306);
 define('DATABASE_NAME', 'database');
 ?>

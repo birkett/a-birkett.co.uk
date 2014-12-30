@@ -87,12 +87,12 @@ function LogicTag($start, $end, &$content)
 //-----------------------------------------------------------------------------
 function RemoveLogicTag($start, $end, &$content) 
 {
-  $beginningPos = strpos($content, $start);
-  $endPos = strpos($content, $end);
-  if(!$beginningPos || !$endPos)
-    return;
-  $textToDelete = substr($content, $beginningPos, ($endPos + strlen($end)) - $beginningPos);
-  $content = str_replace($textToDelete, '', $content);
+	$beginningPos = strpos($content, $start);
+	$endPos = strpos($content, $end);
+	if(!$beginningPos || !$endPos)
+		return;
+	$textToDelete = substr($content, $beginningPos, ($endPos + strlen($end)) - $beginningPos);
+	$content = str_replace($textToDelete, '', $content);
 }
 
 //-----------------------------------------------------------------------------

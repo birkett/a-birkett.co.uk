@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------------
 require_once("../config.php");
 require_once("../classes/database.class.php");
+require_once("classes/twitteroauth.php");
 require_once("../functions.php");
 require_once("adminfunctions.php");
 
@@ -27,7 +28,7 @@ if(isset($_POST['mode']))
 		break;
 	//New post mode
 	case "newpost":
-		if(!isset($_POST['title']) || !isset($_POST['content']) || !isset($_POST['draft']))
+		if($_POST['title'] == "" || $_POST['content'] == "" || !isset($_POST['draft']))
 		{ BadRequest("Something was rejected. Check all fields are correct.");	}
 		else { NewPost($_POST['title'], $_POST['content'], $_POST['draft']); GoodRequest("Posted!"); }
 		break;
