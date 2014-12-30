@@ -63,6 +63,39 @@ function RemoveTags(&$tags, &$output)
 }
 
 //-----------------------------------------------------------------------------
+// Parse logic tags to the template
+//		In: Tags and Unparsed template
+//		Out: Parsed template
+//
+//  Logic tags can be loops, i.e. {LOOP} content {/LOOP}
+//-----------------------------------------------------------------------------
+function LogicTag($start, $end, &$content)
+{
+    $r = explode($start, $content);
+    if(isset($r[1]))
+	{
+        $r = explode($end, $r[1]);
+        return $r[0];
+    }
+    return '';
+}
+
+//-----------------------------------------------------------------------------
+// Remove any left over logic tags from the parsed template
+//		In: Tags and Parsed template
+//		Out: Clean Parsed template
+//-----------------------------------------------------------------------------
+function RemoveLogicTag($start, $end, &$content) 
+{
+  $beginningPos = strpos($content, $start);
+  $endPos = strpos($content, $end);
+  if(!$beginningPos || !$endPos)
+    return;
+  $textToDelete = substr($content, $beginningPos, ($endPos + strlen($end)) - $beginningPos);
+  $content = str_replace($textToDelete, '', $content);
+}
+
+//-----------------------------------------------------------------------------
 // Fetch the specified post or range of posts
 //		In: Mode, ID and Draft lock
 //		Out: Post data

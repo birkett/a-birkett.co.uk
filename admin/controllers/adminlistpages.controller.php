@@ -9,12 +9,23 @@ class ListPagesPageController
 	public function __construct(&$output)
 	{
 		$result = GetAllPages();
-		$listpagesentry = "";
+		$listpagesentry = LogicTag("{LOOP}", "{/LOOP}", $output);
 		while(list($id, $title) = GetDatabase()->GetRow($result))
 		{
-			$listpagesentry .= '<a href="'.ADMIN_FOLDER.'index.php?action=edit&pageid=' . $id . '"><p>' . $title . '</p></a>';
+			$tags = [
+				"{ADMINFOLDER}" => ADMIN_FOLDER,
+				"{PAGEID}" => $id,
+				"{PAGETITLE}" => $title
+			];
+			$temp = $listpagesentry;
+			ParseTags($tags, $temp);
+			$temp .= "\n{LISTPAGESENTRY}";
+			ReplaceTag("{LISTPAGESENTRY}", $temp, $output);	
 		}
-		ReplaceTag("{LISTPAGESENTRY}", $listpagesentry, $output);
+		RemoveLogicTag("{LOOP}", "{/LOOP}", $output);
+		//Clean up the tags if not already replaced
+		$cleantags = [ "{LISTPAGESENTRY}" ];
+		RemoveTags($cleantags, $output);
 	}
 }
 ?>

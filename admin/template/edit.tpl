@@ -1,7 +1,32 @@
 						<div class="post aero">
 						{PAGEEDIT}
+							<h2>Edit Page</h2>
+							<div id="response"></div>
+							<form>
+								<input id="formpageid" type="hidden" value="{POSTID}">
+							</form>
+						{/PAGEEDIT}
 						{POSTEDIT}
+							<h2>Edit Post</h2>
+							<div id="response"></div>
+							<form>
+								<input id="formpostid" type="hidden" value="{POSTID}">
+								<p>Post Title:</p>
+								<input id="formtitle" type="text" size="65" value="{POSTTITLE}">
+								<p>Draft</p>
+								<input id="formdraft" type="checkbox" {DRAFT}>
+							</form>
+						{/POSTEDIT}
 						{NEWPOST}
+							<h2>New Post</h2>
+							<div id="response"></div>
+							<form>
+								<p>Post Title:</p>
+								<input id="formtitle" type="text" size="65" value="">
+								<p>Draft</p>
+								<input id="formdraft" type="checkbox">
+							</form>
+						{/NEWPOST}
 
 						<script type="text/javascript" src="http://tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 						<script type="text/javascript">

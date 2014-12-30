@@ -9,13 +9,24 @@ class ListPostsPageController
 	public function __construct(&$output)
 	{
 		$result = GetPosts("all", 0, true);
-		$listpostsentry = "";
+		$listpostsentry = LogicTag("{LOOP}", "{/LOOP}", $output);
 		while(list($id, $timestamp, $title, $draft) = GetDatabase()->GetRow($result))
 		{
-			$draft ? $draft = " (DRAFT)" : $draft = "";
-			$listpostsentry .= '<a href="'.ADMIN_FOLDER.'index.php?action=edit&postid=' . $id . '"><p>' . $title . $draft . '</p></a>';
+			$draft ? $title .= " (DRAFT)" : $title .= "";
+			$tags = [
+				"{ADMINFOLDER}" => ADMIN_FOLDER,
+				"{POSTID}" => $id,
+				"{POSTTITLE}" => $title
+			];
+			$temp = $listpostsentry;
+			ParseTags($tags, $temp);
+			$temp .= "\n{LISTPOSTSENTRY}";
+			ReplaceTag("{LISTPOSTSENTRY}", $temp, $output);		
 		}
-		ReplaceTag("{LISTPOSTSENTRY}", $listpostsentry, $output);
+		RemoveLogicTag("{LOOP}", "{/LOOP}", $output);
+		//Clean up the tags if not already replaced
+		$cleantags = [ "{LISTPOSTSENTRY}" ];
+		RemoveTags($cleantags, $output);
 	}
 }
 ?>

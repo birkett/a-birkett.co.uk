@@ -14,7 +14,7 @@
 		<div class="container">
 			<div class="header">
 				<div class="headerleft">
-					<a href="{ADMINFOLDER}"><h1>Admin <b>Birkett</b></h1></a>
+					<a href="{ADMINFOLDER}"><h1>Admin <strong>Birkett</strong></h1></a>
 				</div>
 			</div>
 			<div class="main">

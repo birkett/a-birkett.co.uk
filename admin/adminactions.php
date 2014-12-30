@@ -33,12 +33,12 @@ if(isset($_POST['mode']))
 		break;
 	//Add blocked IP mode
 	case "addip":
-		if(!isset($_POST['ip'])) { BadRequest("No address specified"); }
+		if(!isset($_POST['ip']) || $_POST['ip'] == "") { BadRequest("No address specified"); }
 		else { BlockIP($_POST['ip']); GoodRequest("Address " . $_POST['ip'] . " was blocked"); }
 		break;
 	//Remove blocked IP mode
 	case "removeip":
-		if(!isset($_POST['ip'])) { BadRequest("No address specified"); }
+		if(!isset($_POST['ip']) || $_POST['ip'] == "") { BadRequest("No address specified"); }
 		else { UnblockIP($_POST['ip']); GoodRequest("Address " . $_POST['ip'] . " was unblocked"); }
 		break;
 	//Change the admin password

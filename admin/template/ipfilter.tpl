@@ -40,5 +40,13 @@
 							
 							<table><tr><th>IP</th><th>Time blocked</th><th>Unblock</th><th>Comments</th></tr>
 								{IPFILTERENTRY}
+								{LOOP}
+								<tr>
+									<td>{IP}</td>
+									<td>{TIMESTAMP}</td>
+									<td><a href="" onClick="doaction('{IP}'); return false;">Unblock</a></td>
+									<td><a href="{ADMINFOLDER}index.php?action=listcomments&ip={IP}">Comments</a></td>
+								</tr>
+								{/LOOP}
 							</table>
 						</div>

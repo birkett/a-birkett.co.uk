@@ -10,22 +10,24 @@ class AdminSideWidgetController
 	{
 		new AdminBasePageController($output, "sidewidget");
 		
-		$sidewidgettemplate = "";
 		if(isset($_SESSION['user']))
 		{
-			$sidewidgettemplate .= '<p>Logged in as ' . $_SESSION['user'] . ' <a href="'.ADMIN_FOLDER.'index.php?action=logout">(Logout)</a></p>';
+			$tags = [
+				"{ADMINFOLDER}" => ADMIN_FOLDER,
+				"{USERNAME}" => $_SESSION['user']
+			];
+			RemoveLogicTag("{LOGIN}", "{/LOGIN}", $output);
+			ParseTags($tags, $output);
 		} 
 		else 
 		{
-			$sidewidgettemplate .= '
-			<form action="'.ADMIN_FOLDER.'index.php?action=login" method="POST">
-				<input type="text" name="username" id="username"/>
-				<input type="password" name="password" id="password"/>
-				<input type="submit" name="Submit" id="submit"/>
-			</form>';
+			$tags = [ "{ADMINFOLDER}" => ADMIN_FOLDER ];
+			RemoveLogicTag("{LOGGEDIN}", "{/LOGGEDIN}", $output);
+			ParseTags($tags, $output);
 		}
-					
-		ReplaceTag("{SIDEWIDGET}", $sidewidgettemplate, $output);
+		//Clean up the tags if not already replaced
+		$cleantags = [ "{LOGIN}", "{/LOGIN}", "{LOGGEDIN}", "{/LOGGEDIN}" ];
+		RemoveTags($cleantags, $output);
 	}
 }
 ?>
