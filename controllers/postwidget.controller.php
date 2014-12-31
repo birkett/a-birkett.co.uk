@@ -8,14 +8,15 @@ class PostsWidgetController
 {
 	public function __construct(&$output)
 	{
+		$db = GetDatabase();
 		$posts = GetPosts("all");
 		$post_array = [];
-		while(list($id, $timestamp, $title, $draft) = GetDatabase()->GetRow($posts))
+		while(list($id, $timestamp, $title, $draft) = $db->GetRow($posts))
 		{
 			$month = date("F Y", $timestamp);
 			if(!isset($post_array["$month"]))
 				$post_array["$month"] = [];
-			array_push($post_array["$month"], [ "title" => $title, "id" => $id ]);
+			$post_array["$month"][] = array("title" => $title, "id" => $id);
 		}
 		
 		$monthloop = LogicTag("{MONTHLOOP}", "{/MONTHLOOP}", $output);

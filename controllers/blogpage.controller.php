@@ -10,6 +10,7 @@ class BlogPageController
 {
 	public function __construct(&$output)
 	{
+		$db = GetDatabase();
 		//Clamp pagniation offset
 		(isset($_GET['offset']) && is_numeric($_GET['offset']) && $_GET['offset'] >= 1 && $_GET['offset'] < 100000) ? $offset = $_GET['offset'] - 1 : $offset = 0;
 
@@ -17,13 +18,13 @@ class BlogPageController
 		if(isset($_GET['postid']) && is_numeric($_GET['postid']) && $_GET['postid'] >= 0 && $_GET['postid'] < 500000) 
 		{ 
 			$result = GetPosts("single", $_GET['postid'], false); 
-			if(GetDatabase()->GetNumRows($result) == 0) { header('Location: /404'); return; } //Back out if we didnt find any posts
+			if($db->GetNumRows($result) == 0) { header('Location: /404'); return; } //Back out if we didnt find any posts
 					
 			//Show comments
 			$comments = GetCommentsOnPost($_GET['postid']);
-			if(GetDatabase()->GetNumRows($comments) != 0)
+			if($db->GetNumRows($comments) != 0)
 			{
-				while(list($cid, $pid, $cusername, $ctext, $ctimestamp, $cip) = GetDatabase()->GetRow($comments))
+				while(list($cid, $pid, $cusername, $ctext, $ctimestamp, $cip) = $db->GetRow($comments))
 				{
 					$tags = [
 						"{COMMENTAUTHOR}" => stripslashes($cusername),
@@ -47,17 +48,18 @@ class BlogPageController
 		else 
 		{ 
 			$result = GetPosts("page", $offset, false); 
-			if(GetDatabase()->GetNumRows($result) == 0) { header('Location: /404'); return; } //Back out if we didnt find any posts
+			if($db->GetNumRows($result) == 0) { header('Location: /404'); return; } //Back out if we didnt find any posts
 		
 			//Show Pagination
-			if(GetNumberOfPosts() > BLOG_POSTS_PER_PAGE)
+			$numberofposts = GetNumberOfPosts();
+			if($numberofposts > BLOG_POSTS_PER_PAGE)
 			{
 				if($offset > 0) 
 				{
 					$tags = [ "{PAGEPREVIOUSLINK}" => "/blog/page/$offset",	"{PAGEPREVIOUSTEXT}" => "Previous Page" ];
 					ParseTags($tags, $output);
 				}
-				if(($offset+1) * BLOG_POSTS_PER_PAGE < GetNumberOfPosts()) 
+				if(($offset+1) * BLOG_POSTS_PER_PAGE < $numberofposts) 
 				{
 					$linkoffset = $offset + 2;
 					$tags = [ "{PAGENEXTLINK}" => "/blog/page/$linkoffset", "{PAGENEXTTEXT}" => "Next Page" ];
@@ -70,7 +72,7 @@ class BlogPageController
 		}
 		
 		//Rendering code
-		while(list($id, $timestamp, $title, $content, $draft) = GetDatabase()->GetRow($result))
+		while(list($id, $timestamp, $title, $content, $draft) = $db->GetRow($result))
 		{
 			$tags = [
 				"{POSTTIMESTAMP}" => date(DATE_FORMAT, $timestamp),
