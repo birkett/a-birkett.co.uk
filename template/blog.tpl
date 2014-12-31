@@ -9,7 +9,6 @@
 						<a class="right" href="/blog/{POSTID}">Comments({COMMENTCOUNT})</a>
 					</div>
 					{/BLOGPOST}
-					{BLOGPOSTS}
 					
 					{COMMENT}
 					<div class="post aero">
@@ -18,7 +17,6 @@
 						<div class="divider"></div>
 					</div>
 					{/COMMENT}
-					{COMMENTS}
 					
 					{PAGINATION}
 					<div class="post aero commentbox">
@@ -43,7 +41,7 @@
 							var c = document.getElementById("formcomment").value;
 							var data = "mode=postcomment&postid="+p+"&username="+u+"&comment="+c+"&challenge="+Recaptcha.get_challenge()+"&response="+Recaptcha.get_response();
 
-							AJAXOpen("actions.php", data, SuccessCallBack);
+							AJAXOpen("/", data, SuccessCallBack);
 							Recaptcha.reload();
 						}
 					</script>

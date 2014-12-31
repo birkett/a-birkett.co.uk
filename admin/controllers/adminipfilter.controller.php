@@ -9,20 +9,18 @@ class AdminIPFilterPageController
 	public function __construct(&$output)
 	{	
 		$result = GetBlockedAddresses();
-		$ipfilterentry = LogicTag("{LOOP}", "{/LOOP}", $output);
 		while(list($ip_id, $address, $timestamp) = GetDatabase()->GetRow($result))
 		{
 			$tags = [
 				"{IP}" => $address,
 				"{TIMESTAMP}" => date(DATE_FORMAT, $timestamp)
 			];
-			$temp = $ipfilterentry;
+			$temp = LogicTag("{LOOP}", "{/LOOP}", $output);
 			ParseTags($tags, $temp);
-			$temp .= "\n{IPFILTERENTRY}";
-			ReplaceTag("{IPFILTERENTRY}", $temp, $output);				
+			$temp .= "\n{LOOP}";
+			ReplaceTag("{LOOP}", $temp, $output);				
 		}
 		RemoveLogicTag("{LOOP}", "{/LOOP}", $output);
-		ReplaceTag("{IPFILTERENTRY}", "", $output);
 	}
 }
 ?>

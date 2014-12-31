@@ -22,7 +22,6 @@
 							<a href="" onClick="ipblock(); return false;"><p>Submit</p></a>
 							
 							<table><tr><th>IP</th><th>Time blocked</th><th>Unblock</th><th>Comments</th></tr>
-								{IPFILTERENTRY}
 								{LOOP}
 								<tr>
 									<td>{IP}</td>

@@ -9,8 +9,6 @@ class PostsWidgetController
 	public function __construct(&$output)
 	{
 		$posts = GetPosts("all");
-		$monthloop = LogicTag("{MONTHLOOP}", "{/MONTHLOOP}", $output);
-		$itemloop = LogicTag("{ITEMLOOP}", "{/ITEMLOOP}", $output);
 		$post_array = [];
 		while(list($id, $timestamp, $title, $draft) = GetDatabase()->GetRow($posts))
 		{
@@ -20,11 +18,12 @@ class PostsWidgetController
 			array_push($post_array["$month"], [ "title" => $title, "id" => $id ]);
 		}
 		
+		$monthloop = LogicTag("{MONTHLOOP}", "{/MONTHLOOP}", $output);
+		$itemloop = LogicTag("{ITEMLOOP}", "{/ITEMLOOP}", $output);
 		foreach($post_array as $month => $data)
 		{
 			$temp = $monthloop;
-			$tags = [ "{MONTH}" => $month ];
-			ParseTags($tags, $temp);
+			ReplaceTag("{MONTH}", $month, $temp);
 			foreach($data as $post)
 			{
 				$temp2 = $itemloop;
@@ -33,11 +32,11 @@ class PostsWidgetController
 					"{POSTTITLE}" => $post['title']
 				];
 				ParseTags($tags, $temp2);
-				$temp2 .= "{ITEMS}";
-				ReplaceTag("{ITEMS}", $temp2, $temp);
+				$temp2 .= "\n{ITEMLOOP}";
+				ReplaceTag("{ITEMLOOP}", $temp2, $temp);
 			}
-			$temp .= "{MONTHS}";
-			ReplaceTag("{MONTHS}", $temp, $output);
+			$temp .= "\n{MONTHLOOP}";
+			ReplaceTag("{MONTHLOOP}", $temp, $output);
 			RemoveLogicTag("{ITEMLOOP}", "{/ITEMLOOP}", $output);
 		}
 		RemoveLogicTag("{MONTHLOOP}", "{/MONTHLOOP}", $output);

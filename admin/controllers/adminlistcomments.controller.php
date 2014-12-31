@@ -13,8 +13,6 @@ class ListCommentsPageController
 		else
 			$result = GetAllComments();
 
-		$listcommentsentry = LogicTag("{LOOP}", "{/LOOP}", $output);
-
 		while(list($id, $postid, $username, $comment, $timestamp, $ip) = GetDatabase()->GetRow($result))
 		{
 			$tags = [
@@ -23,13 +21,12 @@ class ListCommentsPageController
 				"{TIMESTAMP}" => date(DATE_FORMAT, $timestamp),
 				"{IP}" => $ip
 			];
-			$temp = $listcommentsentry;
+			$temp = LogicTag("{LOOP}", "{/LOOP}", $output);
 			ParseTags($tags, $temp);
-			$temp .= "\n{LISTCOMMENTSENTRY}";
-			ReplaceTag("{LISTCOMMENTSENTRY}", $temp, $output);
+			$temp .= "\n{LOOP}";
+			ReplaceTag("{LOOP}", $temp, $output);
 		}
 		RemoveLogicTag("{LOOP}", "{/LOOP}", $output);
-		ReplaceTag("{LISTCOMMENTSENTRY}", "", $output);
 	}
 }
 ?>

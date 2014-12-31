@@ -9,7 +9,6 @@ class ListPostsPageController
 	public function __construct(&$output)
 	{
 		$result = GetPosts("all", 0, true);
-		$listpostsentry = LogicTag("{LOOP}", "{/LOOP}", $output);
 		while(list($id, $timestamp, $title, $draft) = GetDatabase()->GetRow($result))
 		{
 			$draft ? $title .= " (DRAFT)" : $title .= "";
@@ -18,13 +17,12 @@ class ListPostsPageController
 				"{POSTID}" => $id,
 				"{POSTTITLE}" => $title
 			];
-			$temp = $listpostsentry;
+			$temp = LogicTag("{LOOP}", "{/LOOP}", $output);
 			ParseTags($tags, $temp);
-			$temp .= "\n{LISTPOSTSENTRY}";
-			ReplaceTag("{LISTPOSTSENTRY}", $temp, $output);		
+			$temp .= "\n{LOOP}";
+			ReplaceTag("{LOOP}", $temp, $output);		
 		}
 		RemoveLogicTag("{LOOP}", "{/LOOP}", $output);
-		ReplaceTag("{LISTPOSTSENTRY}", "", $output);
 	}
 }
 ?>
