@@ -10,8 +10,9 @@ class BasePageController
 {
 	public function __construct(&$output, $title)
 	{
+		(stripos($_SERVER['SERVER_PROTOCOL'],'https') === true) ? $proto = "https://" : $proto = "http://";
 		$tags = [
-			"{BASEURL}" => "//" . $_SERVER['HTTP_HOST'] . "/",
+			"{BASEURL}" => $proto . $_SERVER['HTTP_HOST'] . "/",
 			"{TITLE}" => $title,
 			"{RAND2551}" => rand(0, 255),
 			"{RAND2552}" => rand(0, 255),
