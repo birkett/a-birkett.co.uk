@@ -1,4 +1,4 @@
-						<div class="post aero">
+						<div class="aero">
 							<h2>{PAGETITLE}</h2>
 							{PAGECONTENT}
 						</div>

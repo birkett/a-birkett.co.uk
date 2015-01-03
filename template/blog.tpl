@@ -1,25 +1,24 @@
 					{BLOGPOST}
-					<div class="postavatar">
-						<img src="img/avatar.png" alt="avatar"/>
-					</div>
-					<div class="post aero">
-						<p class="timestamp">{POSTTIMESTAMP}</p>
+					<div class="aero">
+						<div class="postavatar">
+							<img src="img/avatar.png" alt="avatar"/>
+						</div>
 						<a href="/blog/{POSTID}"><h2>{POSTTITLE}</h2></a>
+						<p class="timestamp">{POSTTIMESTAMP}</p>
 						{POSTCONTENT}
 						<a class="right" href="/blog/{POSTID}">Comments({COMMENTCOUNT})</a>
 					</div>
 					{/BLOGPOST}
 					
 					{COMMENT}
-					<div class="post aero">
+					<div class="aero">
 						<p class="timestamp">Posted by {COMMENTAUTHOR} on {COMMENTTIMESTAMP}</p>
 						<p>{COMMENTCONTENT}</p>
-						<div class="divider"></div>
 					</div>
 					{/COMMENT}
 					
 					{PAGINATION}
-					<div class="post aero commentbox">
+					<div class="aero commentbox">
 						<a class="left" href="{PAGEPREVIOUSLINK}">{PAGEPREVIOUSTEXT}</a>
 						<a class="right" href="{PAGENEXTLINK}">{PAGENEXTTEXT}</a>
 					</div>
@@ -45,7 +44,7 @@
 							Recaptcha.reload();
 						}
 					</script>
-					<div class="post aero commentbox">
+					<div class="aero commentbox">
 						<h2>New comment</h2>
 						<div id="response"></div>
 						<form>

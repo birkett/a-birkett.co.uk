@@ -18,47 +18,32 @@
 	<body>
 		<div class="container">
 			<div class="header">
-				<div class="headerleft">
-					<a href="/"><h1>Anthony <strong>Birkett</strong></h1></a>
-				</div>
-				<div class="headerright">
-					<a href="http://www.twitter.com/birkett26" title="Twitter" target="_blank"><img class="headernavicon" src="img/twitter.png" alt="twitter" /></a>
-					<a href="http://www.steamcommunity.com/id/birkett" title="Steam" target="_blank"><img class="headernavicon" src="img/steam.png" alt="steam" /></a>
-					<a href="http://www.youtube.com/birkett26" title="YouTube" target="_blank"><img class="headernavicon" src="img/youtube.png" alt="youtube" /></a>
-					<a href="http://www.flickr.com/photos/birkett26" title="Flickr" target="_blank"><img class="headernavicon" src="img/flickr.png" alt="flickr" /></a>
-					<a href="{BASEURL}feed" title="Blog Feed" target="_blank"><img class="headernavicon" src="img/rss.png" alt="feed" /></a>
-				</div>
+				<a href="/"><h1>Anthony <strong>Birkett</strong></h1></a>
+				<a href="http://www.twitter.com/birkett26" title="Twitter" target="_blank"><img class="headernavicon" src="img/twitter.png" alt="twitter" /></a>
+				<a href="http://www.steamcommunity.com/id/birkett" title="Steam" target="_blank"><img class="headernavicon" src="img/steam.png" alt="steam" /></a>
+				<a href="http://www.youtube.com/birkett26" title="YouTube" target="_blank"><img class="headernavicon" src="img/youtube.png" alt="youtube" /></a>
+				<a href="http://www.flickr.com/photos/birkett26" title="Flickr" target="_blank"><img class="headernavicon" src="img/flickr.png" alt="flickr" /></a>
+				<a href="{BASEURL}feed" title="Blog Feed" target="_blank"><img class="headernavicon" src="img/rss.png" alt="feed" /></a>
 			</div>
+			<div class="headerborder"></div>
 			<div class="noticebox"></div>
-			<div class="main">
-				<div class="leftc">
-				</div>
-				<div class="rightcontainer">
-					<div class="middlec">
-						{PAGE}
-					</div>
-					<div class="rightc aero">
-						<div class="widgetcontainer">
-							{WIDGET}
-						</div>
-					</div>
+			<div class="post">
+				{PAGE}
+			</div>
+			<div class="widgetcontainer">
+				<div class="aero">
+					{WIDGET.old}
 				</div>
 			</div>
+			<div class="footerborder"></div>
 			<div class="footer">
-				<div class="footerleft">
-					<p>&copy; 2007-{THISYEAR} Anthony Birkett</p>
-				</div>
-				<div class="footerright">
-					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-					<!-- Footer -->
-					<ins class="adsbygoogle"
-						 style="display:inline-block;width:728px;height:90px"
-						 data-ad-client="ca-pub-3491498523960183"
-						 data-ad-slot="5861200158"></ins>
-					<script>
+				<p>&copy; 2007-{THISYEAR} Anthony Birkett</p>
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+				<ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-3491498523960183" data-ad-slot="5861200158"></ins>
+				<script>
 					(adsbygoogle = window.adsbygoogle || []).push({});
-					</script>
-				</div>				
+				</script>		
+				<div class="footerfade"></div>
 			</div>
 		</div>
 	</body>
