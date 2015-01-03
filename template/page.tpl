@@ -27,24 +27,26 @@
 			</div>
 			<div class="fadeout"></div>
 			<div class="noticebox"></div>
-			<div class="post">
+			<div class="content">
 				{PAGE}
 			</div>
 			<div class="widgetcontainer">
-				<div class="aero">
-					{WIDGET.old}
+				<div class="fadein"></div>
+				<div class="post">
+					{WIDGET}
 				</div>
+				<div class="fadeout"></div>
 			</div>
 			<div class="fadein"></div>
 			<div class="footer">
 				<p>&copy; 2007-{THISYEAR} Anthony Birkett</p>
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-				<ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-3491498523960183" data-ad-slot="5861200158"></ins>
-				<script>
-					(adsbygoogle = window.adsbygoogle || []).push({});
-				</script>		
+				<ins class="adsbygoogle" data-ad-client="ca-pub-3491498523960183" data-ad-slot="5861200158"></ins>
 				<div class="fadeblack"></div>
 			</div>
 		</div>
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
 	</body>
 </html>

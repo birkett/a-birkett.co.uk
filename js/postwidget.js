@@ -13,6 +13,14 @@ for(var i = 0; i < spans.length; i++){
 				}
 			}
 		}
+		return false; //prevent redirect on click
 	}
 	spans[i].onclick();
+}
+
+
+function toggleposts()
+{
+	var h2 = document.getElementById("allposts");
+	(h2.style.display == "none" || h2.style.display == "") ? h2.style.display = "block" : h2.style.display = "none";
 }

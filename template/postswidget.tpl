@@ -1,8 +1,9 @@
-							<h2>All Blog Posts</h2>
+							<a href="#"><h2 onClick="toggleposts(); return false;">All Posts &#x25BC;</h2></a>
+							<div id="allposts">
 							<ul>
 								{MONTHLOOP}
 								<li>
-									<span>{MONTH}</span>
+									<span><a href="#">{MONTH}</a></span>
 									<ul>
 										{ITEMLOOP}
 										<li><span><a href="/blog/{POSTID}">{POSTTITLE}</a></span></li>
@@ -11,4 +12,5 @@
 								</li>
 								{/MONTHLOOP}
 							</ul>
+							</div>
 							<script src="js/postwidget.js"></script>

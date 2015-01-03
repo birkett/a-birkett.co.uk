@@ -1,5 +1,6 @@
 					{BLOGPOST}
-					<div class="aero">
+					<div class="fadein"></div>
+					<div class="post">
 						<div class="postavatar">
 							<img src="img/avatar.png" alt="avatar"/>
 						</div>
@@ -8,20 +9,25 @@
 						{POSTCONTENT}
 						<a class="right" href="/blog/{POSTID}">Comments({COMMENTCOUNT})</a>
 					</div>
+					<div class="fadeout"></div>
 					{/BLOGPOST}
 					
 					{COMMENT}
-					<div class="aero">
+					<div class="fadein"></div>
+					<div class="post">
 						<p class="timestamp">Posted by {COMMENTAUTHOR} on {COMMENTTIMESTAMP}</p>
 						<p>{COMMENTCONTENT}</p>
 					</div>
+					<div class="fadeout"></div>
 					{/COMMENT}
 					
 					{PAGINATION}
-					<div class="aero commentbox">
+					<div class="fadein"></div>
+					<div class="post commentbox">
 						<a class="left" href="{PAGEPREVIOUSLINK}">{PAGEPREVIOUSTEXT}</a>
 						<a class="right" href="{PAGENEXTLINK}">{PAGENEXTTEXT}</a>
 					</div>
+					<div class="fadeout"></div>
 					{/PAGINATION}
 					
 					{NEWCOMMENT}
@@ -44,7 +50,8 @@
 							Recaptcha.reload();
 						}
 					</script>
-					<div class="aero commentbox">
+					<div class="fadein"></div>
+					<div class="post commentbox">
 						<h2>New comment</h2>
 						<div id="response"></div>
 						<form>
@@ -60,4 +67,5 @@
 						<a href="" onClick="newcomment(); return false;">Submit</a>
 						<br /><br />
 					</div>
+					<div class="fadeout"></div>
 					{/NEWCOMMENT}
