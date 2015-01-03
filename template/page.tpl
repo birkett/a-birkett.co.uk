@@ -25,7 +25,7 @@
 				<a href="http://www.flickr.com/photos/birkett26" title="Flickr" target="_blank"><img class="headernavicon" src="img/flickr.png" alt="flickr" /></a>
 				<a href="{BASEURL}feed" title="Blog Feed" target="_blank"><img class="headernavicon" src="img/rss.png" alt="feed" /></a>
 			</div>
-			<div class="headerborder"></div>
+			<div class="fadeout"></div>
 			<div class="noticebox"></div>
 			<div class="post">
 				{PAGE}
@@ -35,7 +35,7 @@
 					{WIDGET.old}
 				</div>
 			</div>
-			<div class="footerborder"></div>
+			<div class="fadein"></div>
 			<div class="footer">
 				<p>&copy; 2007-{THISYEAR} Anthony Birkett</p>
 				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -43,7 +43,7 @@
 				<script>
 					(adsbygoogle = window.adsbygoogle || []).push({});
 				</script>		
-				<div class="footerfade"></div>
+				<div class="fadeblack"></div>
 			</div>
 		</div>
 	</body>
