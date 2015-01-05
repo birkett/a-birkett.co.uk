@@ -12,6 +12,8 @@
 								AJAXOpen("{ADMINFOLDER}adminactions.php", data, SuccessCallBack);
 							}
 						</script>
+						<div class="fadein"></div>
+						<div class="post">
 						<h2>IP Filter</h2>
 						<div id="response"></div>
 						<form>
@@ -30,3 +32,6 @@
 							</tr>
 							{/LOOP}
 						</table>
+						</div>
+						<div class="fadeout"></div>
+						

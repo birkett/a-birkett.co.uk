@@ -1,3 +1,5 @@
+						<div class="fadein"></div>
+						<div class="post">						
 						<h2>Comments</h2>
 						<table>
 							<tr><th>Comment</th><th>Username</th><th>Timestamp</th><th>Client IP</th></tr>
@@ -10,3 +12,6 @@
 							</tr>
 							{/LOOP}
 						</table>
+						</div>
+						<div class="fadeout"></div>
+						

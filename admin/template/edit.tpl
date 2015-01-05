@@ -1,3 +1,5 @@
+						<div class="fadein"></div>
+						<div class="post">						
 						{PAGEEDIT}
 							<h2>Edit Page</h2>
 							<div id="response"></div>
@@ -56,3 +58,5 @@
 						</form>
 						
 						<a href="" onClick="doedit(); return false;"><p>Submit</p></a>
+						</div>
+						<div class="fadeout"></div>

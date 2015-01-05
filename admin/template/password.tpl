@@ -11,6 +11,8 @@
 								AJAXOpen("{ADMINFOLDER}adminactions.php", data, SuccessCallBack);
 							}
 						</script>
+						<div class="fadein"></div>
+						<div class="post">
 						<h2>Password Reset</h2>
 						<div id="response"></div>
 						<form>
@@ -22,3 +24,5 @@
 							<input id="formcnp" type="password" size="65" value="">
 						</form>
 						<a href="" onClick="setpassword(); return false;"><p>Submit</p></a>
+						</div>
+						<div class="fadeout"></div>

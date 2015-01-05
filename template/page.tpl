@@ -31,11 +31,7 @@
 			<div class="fadeout"></div>
 			<div class="noticebox"></div>
 			<div class="content">
-				<div class="fadein"></div>
-				<div class="post">
-					{PAGE}
-				</div>
-				<div class="fadeout"></div>
+				{PAGE}
 			</div>
 			<div class="widgetcontainer">
 				<div class="fadein"></div>
