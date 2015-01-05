@@ -5,7 +5,8 @@
 //  Generates an RSS feed for the blog
 //-----------------------------------------------------------------------------
 require_once("config.php");
-require_once("classes/database.class.php");
+require_once("classes/mysqli.database.class.php");
+require_once("classes/pdomysql.database.class.php");
 require_once("functions.php");
 
 header("Content-Type: application/xml; charset=utf-8");

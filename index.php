@@ -3,7 +3,8 @@
 // Page router
 //-----------------------------------------------------------------------------
 require_once("config.php");
-require_once("classes/database.class.php");
+require_once("classes/mysqli.database.class.php");
+require_once("classes/pdomysql.database.class.php");
 require_once("classes/page.class.php");
 require_once("classes/recaptchalib.php");
 require_once("functions.php");

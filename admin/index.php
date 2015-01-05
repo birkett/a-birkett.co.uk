@@ -9,7 +9,8 @@ define('ADMINPAGE', 1); //Set so the page class will include admin controllers
 session_start();
 
 require_once("../config.php");
-require_once("../classes/database.class.php");
+require_once("../classes/mysqli.database.class.php");
+require_once("../classes/pdomysql.database.class.php");
 require_once("../classes/page.class.php");
 require_once("../functions.php");
 require_once("adminfunctions.php");

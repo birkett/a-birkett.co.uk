@@ -5,7 +5,7 @@
 //  Basic class to interface with a MySQLi database
 //-----------------------------------------------------------------------------
 
-class Database
+class MySQLiDatabase
 {
 	private $mLink; //Store the connection link
 	private $host, $port, $user, $pass, $db;

@@ -16,7 +16,15 @@
 function GetDatabase()
 {
 	static $db = NULL;
-	if(!isset($db))	{ $db = new Database(DATABASE_NAME); }
+	if(!isset($db))	
+	{ 
+		if(extension_loaded("PDO_MySQL"))
+			$db = new PDOMySQLDatabase();
+		else if(extension_loaded("MySQLi"))
+			$db = new MySQLiDatabase(); 
+		else
+			die("No database driver available.");
+	}
 	return $db;
 }
 
