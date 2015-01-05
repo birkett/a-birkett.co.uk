@@ -10,6 +10,9 @@
 		{EXTRASTYLESHEETS}
 		<link rel="stylesheet" href="css/christmas.css" />
 		{/EXTRASTYLESHEETS}
+		{ADMINSTYLESHEET}
+		<link rel="stylesheet" href="{ADMINFOLDER}css/admin.css" />
+		{/ADMINSTYLESHEET}
 		<style type="text/css">
 		.container { background-color: rgb({RAND2551},{RAND2552},{RAND2553}); }
 		.leftc { background-image:url("img/background_figure_{RAND12}.png"); }
@@ -18,7 +21,7 @@
 	<body>
 		<div class="container">
 			<div class="header">
-				<a href="/"><h1>Anthony <strong>Birkett</strong></h1></a>
+				<a href="/{ADMINFOLDER}"><h1>Anthony <strong>Birkett</strong></h1></a>
 				<a href="http://www.twitter.com/birkett26" title="Twitter" target="_blank"><img class="headernavicon" src="img/twitter.png" alt="twitter" /></a>
 				<a href="http://www.steamcommunity.com/id/birkett" title="Steam" target="_blank"><img class="headernavicon" src="img/steam.png" alt="steam" /></a>
 				<a href="http://www.youtube.com/birkett26" title="YouTube" target="_blank"><img class="headernavicon" src="img/youtube.png" alt="youtube" /></a>
@@ -28,7 +31,11 @@
 			<div class="fadeout"></div>
 			<div class="noticebox"></div>
 			<div class="content">
-				{PAGE}
+				<div class="fadein"></div>
+				<div class="post">
+					{PAGE}
+				</div>
+				<div class="fadeout"></div>
 			</div>
 			<div class="widgetcontainer">
 				<div class="fadein"></div>

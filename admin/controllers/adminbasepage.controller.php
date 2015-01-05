@@ -16,6 +16,9 @@ class AdminBasePageController
 			"{ADMINFOLDER}" => ADMIN_FOLDER,
 		];
 		ParseTags($tags, $output);
+		
+		$tags = [ "{ADMINSTYLESHEET}", "{/ADMINSTYLESHEET}" ];
+		RemoveTags($tags, $output);
 	}
 }
 ?>

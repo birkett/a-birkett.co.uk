@@ -19,6 +19,7 @@ class BasePageController
 			"{RAND2553}" => rand(0, 255),	
 			"{RAND12}" => rand(1, 2),
 			"{THISYEAR}" => date('Y'),
+			"{ADMINFOLDER}" => ""
 		];
 		ParseTags($tags, $output);
 		
@@ -29,6 +30,8 @@ class BasePageController
 		}
 		else
 			RemoveLogicTag("{EXTRASTYLESHEETS}", "{/EXTRASTYLESHEETS}", $output);
+			
+		RemoveLogicTag("{ADMINSTYLESHEET}", "{/ADMINSTYLESHEET}", $output);
 	}
 }
 ?>

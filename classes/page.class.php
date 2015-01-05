@@ -14,11 +14,9 @@ class Page
 	//-----------------------------------------------------------------------------
 	public function __construct($title, $widget, $template)
 	{
-		$pagetemplate = OpenTemplate("page.tpl");
+		$pagetemplate = (defined('ADMINPAGE') ? OpenTemplate("../../" . TEMPLATE_FOLDER . "/page.tpl") : OpenTemplate("page.tpl"));
 		ReplaceTag("{PAGE}", OpenTemplate("$template.tpl"), $pagetemplate);
 		ReplaceTag("{WIDGET}", OpenTemplate("$widget.tpl"), $pagetemplate);
-		
-		new BasePageController($pagetemplate, $title);
 		
 		if(defined('ADMINPAGE'))
 		{
@@ -46,6 +44,8 @@ class Page
 			}
 			if($widget == "postswidget") new PostsWidgetController($pagetemplate);
 		}
+		
+		new BasePageController($pagetemplate, $title);
 		echo $pagetemplate;
 	}
 }

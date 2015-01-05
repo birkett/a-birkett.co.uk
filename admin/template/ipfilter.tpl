@@ -12,23 +12,21 @@
 								AJAXOpen("{ADMINFOLDER}adminactions.php", data, SuccessCallBack);
 							}
 						</script>
-						<div class="post aero">
-							<h2>IP Filter</h2>
-							<div id="response"></div>
-							<form>
-								<p>IP Address:</p>
-								<input id="formip" type="text" size="65" value="">
-							</form>
-							<a href="" onClick="ipblock(); return false;"><p>Submit</p></a>
-							
-							<table><tr><th>IP</th><th>Time blocked</th><th>Unblock</th><th>Comments</th></tr>
-								{LOOP}
-								<tr>
-									<td>{IP}</td>
-									<td>{TIMESTAMP}</td>
-									<td><a href="" onClick="ipblock('{IP}'); return false;">Unblock</a></td>
-									<td><a href="{ADMINFOLDER}index.php?action=listcomments&ip={IP}">Comments</a></td>
-								</tr>
-								{/LOOP}
-							</table>
-						</div>
+						<h2>IP Filter</h2>
+						<div id="response"></div>
+						<form>
+							<p>IP Address:</p>
+							<input id="formip" type="text" size="65" value="">
+						</form>
+						<a href="" onClick="ipblock(); return false;"><p>Submit</p></a>
+						
+						<table><tr><th>IP</th><th>Time blocked</th><th>Unblock</th><th>Comments</th></tr>
+							{LOOP}
+							<tr>
+								<td>{IP}</td>
+								<td>{TIMESTAMP}</td>
+								<td><a href="" onClick="ipblock('{IP}'); return false;">Unblock</a></td>
+								<td><a href="{ADMINFOLDER}index.php?action=listcomments&ip={IP}">Comments</a></td>
+							</tr>
+							{/LOOP}
+						</table>
