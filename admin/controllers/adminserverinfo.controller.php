@@ -11,7 +11,10 @@ class AdminServerInfoController
 		$tags = [
 			"{APACHEVERSION}" => $_SERVER["SERVER_SOFTWARE"],
 			"{PHPVERSION}" => phpversion(),
-			"{MYSQLVERSION}" => GetDatabase()->ServerInfo()
+			"{MYSQLVERSION}" => GetDatabase()->ServerInfo(),
+			"{MYSQLIEXT}" => (extension_loaded("MySQLi") ? "Yes" : "No"),
+			"{PDOMYSQLEXT}" => (extension_loaded("PDO_MySQL") ? "Yes" : "No"),
+			"{PHPCURLEXT}" => (extension_loaded("CURL") ? "Yes" : "No")
 		];
 		ParseTags($tags, $output);
 	}
