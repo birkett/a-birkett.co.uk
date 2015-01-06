@@ -6,7 +6,6 @@
 //		page. All admin related functions should be separate !!!
 //-----------------------------------------------------------------------------
 
-
 //-----------------------------------------------------------------------------
 // Open a database handle
 //		In: none
@@ -15,17 +14,17 @@
 //-----------------------------------------------------------------------------
 function GetDatabase()
 {
-	static $db = NULL;
-	if(!isset($db))	
-	{ 
-		if(extension_loaded("PDO_MySQL"))
-			$db = new PDOMySQLDatabase();
-		else if(extension_loaded("MySQLi"))
-			$db = new MySQLiDatabase(); 
-		else
-			die("No database driver available.");
-	}
-	return $db;
+    static $db = null;
+    if (!isset($db)) {
+        if (extension_loaded("PDO_MySQL")) {
+            $db = new ABirkett\PDOMySQLDatabase();
+        } elseif (extension_loaded("MySQLi")) {
+            $db = new ABirkett\MySQLiDatabase();
+        } else {
+            die("No database driver available.");
+        }
+    }
+    return $db;
 }
 
 //-----------------------------------------------------------------------------
@@ -35,7 +34,7 @@ function GetDatabase()
 //-----------------------------------------------------------------------------
 function OpenTemplate($file)
 {
-	return file_get_contents(TEMPLATE_FOLDER . $file);
+    return file_get_contents(TEMPLATE_FOLDER . $file);
 }
 
 //-----------------------------------------------------------------------------
@@ -45,7 +44,7 @@ function OpenTemplate($file)
 //-----------------------------------------------------------------------------
 function ReplaceTag($tag, $string, &$output)
 {
-	$output = str_replace($tag, $string, $output);
+    $output = str_replace($tag, $string, $output);
 }
 
 //-----------------------------------------------------------------------------
@@ -55,8 +54,9 @@ function ReplaceTag($tag, $string, &$output)
 //-----------------------------------------------------------------------------
 function ParseTags(&$tags, &$output)
 {
-	foreach($tags as $key => $val)
-		ReplaceTag($key, $val, $output);
+    foreach ($tags as $key => $val) {
+        ReplaceTag($key, $val, $output);
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -66,8 +66,9 @@ function ParseTags(&$tags, &$output)
 //-----------------------------------------------------------------------------
 function RemoveTags(&$tags, &$output)
 {
-	foreach($tags as $tag)
-		ReplaceTag($tag, "", $output);
+    foreach ($tags as $tag) {
+        ReplaceTag($tag, "", $output);
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -80,8 +81,7 @@ function RemoveTags(&$tags, &$output)
 function LogicTag($start, $end, &$content)
 {
     $r = explode($start, $content);
-    if(isset($r[1]))
-	{
+    if (isset($r[1])) {
         $r = explode($end, $r[1]);
         return $r[0];
     }
@@ -93,14 +93,15 @@ function LogicTag($start, $end, &$content)
 //		In: Tags and Parsed template
 //		Out: Clean Parsed template
 //-----------------------------------------------------------------------------
-function RemoveLogicTag($start, $end, &$content) 
+function RemoveLogicTag($start, $end, &$content)
 {
-	$beginningPos = strpos($content, $start);
-	$endPos = strpos($content, $end);
-	if(!$beginningPos || !$endPos)
-		return;
-	$textToDelete = substr($content, $beginningPos, ($endPos + strlen($end)) - $beginningPos);
-	$content = str_replace($textToDelete, '', $content);
+    $beginningPos = strpos($content, $start);
+    $endPos = strpos($content, $end);
+    if (!$beginningPos || !$endPos) {
+        return;
+    }
+    $textToDelete = substr($content, $beginningPos, ($endPos + strlen($end)) - $beginningPos);
+    $content = str_replace($textToDelete, '', $content);
 }
 
 //-----------------------------------------------------------------------------
@@ -113,18 +114,28 @@ function RemoveLogicTag($start, $end, &$content)
 //-----------------------------------------------------------------------------
 function GetPosts($mode, $id = 0, $drafts = false)
 {
-	if($mode == "single") //Single post
-		return GetDatabase()->RunQuery("SELECT * FROM blog_posts WHERE post_id = $id" . ($drafts ? " " : " AND post_draft='0' "));
-	
-	if($mode == "page") //Range of posts
-	{
-		$limit1 = $id * BLOG_POSTS_PER_PAGE;
-		$limit2 = BLOG_POSTS_PER_PAGE;
-		return GetDatabase()->RunQuery("SELECT * FROM blog_posts" . ($drafts ? " " : " WHERE post_draft='0' ") . "ORDER BY post_timestamp DESC LIMIT $limit1,$limit2");
-	}
-	
-	if($mode == "all") //All posts - only fetch the ID, title, timestamp and Draft status to save query time
-		return GetDatabase()->RunQuery("SELECT post_id, post_timestamp, post_title, post_draft FROM blog_posts" . ($drafts ? " " : " WHERE post_draft='0' ") . "ORDER BY post_timestamp DESC");
+    //Single Post
+    if ($mode == "single") {
+        return GetDatabase()->runQuery(
+            "SELECT * FROM blog_posts WHERE post_id = $id " . ($drafts ? "" : "AND post_draft='0' ")
+        );
+    }
+    $drafts ? $draftsql = "" : $draftsql = "WHERE post_draft='0' ";
+    //Range of Posts
+    if ($mode == "page") {
+        $limit1 = $id * BLOG_POSTS_PER_PAGE;
+        $limit2 = BLOG_POSTS_PER_PAGE;
+        return GetDatabase()->runQuery(
+            "SELECT * FROM blog_posts " . $draftsql . "ORDER BY post_timestamp DESC LIMIT $limit1,$limit2"
+        );
+    }
+    //All posts - only fetch the ID, title, timestamp and Draft status to save query time
+    if ($mode == "all") {
+        return GetDatabase()->runQuery(
+            "SELECT post_id, post_timestamp, post_title, post_draft FROM blog_posts " .
+            $draftsql . "ORDER BY post_timestamp DESC"
+        );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -135,8 +146,12 @@ function GetPosts($mode, $id = 0, $drafts = false)
 //-----------------------------------------------------------------------------
 function GetNumberOfPosts($drafts = false)
 {
-	$db = GetDatabase();
-	return $db->GetNumRows($db->RunQuery("SELECT post_id from blog_posts" . ($drafts ? " " : " WHERE post_draft='0' ")));
+    $db = GetDatabase();
+    return $db->getNumRows(
+        $db->runQuery(
+            "SELECT post_id from blog_posts " . ($drafts ? "" : "WHERE post_draft='0' ")
+        )
+    );
 }
 
 //-----------------------------------------------------------------------------
@@ -147,7 +162,9 @@ function GetNumberOfPosts($drafts = false)
 //-----------------------------------------------------------------------------
 function GetCommentsOnPost($postid)
 {
-	return GetDatabase()->RunQuery("SELECT * FROM blog_comments WHERE post_id = $postid ORDER BY comment_timestamp ASC ");
+    return GetDatabase()->runQuery(
+        "SELECT * FROM blog_comments WHERE post_id = $postid ORDER BY comment_timestamp ASC "
+    );
 }
 
 //-----------------------------------------------------------------------------
@@ -157,8 +174,8 @@ function GetCommentsOnPost($postid)
 //-----------------------------------------------------------------------------
 function GetNumberOfComments($postid)
 {
-	$db = GetDatabase();
-	return $db->GetNumRows($db->RunQuery("SELECT comment_id from blog_comments WHERE post_id='$postid'"));
+    $db = GetDatabase();
+    return $db->getNumRows($db->runQuery("SELECT comment_id from blog_comments WHERE post_id='$postid'"));
 }
 
 //-----------------------------------------------------------------------------
@@ -168,8 +185,11 @@ function GetNumberOfComments($postid)
 //-----------------------------------------------------------------------------
 function PostComment($postid, $username, $comment, $clientip)
 {
-	$currenttime = time();
-	GetDatabase()->RunQuery("INSERT INTO blog_comments(post_id, comment_username, comment_text, comment_timestamp, client_ip) VALUES('$postid', '$username', '$comment', '$currenttime', '$clientip')");
+    $currenttime = time();
+    GetDatabase()->runQuery(
+        "INSERT INTO blog_comments(post_id, comment_username, comment_text, comment_timestamp, client_ip)" .
+        " VALUES('$postid', $username, $comment, $currenttime, '$clientip')"
+    );
 }
 
 //-----------------------------------------------------------------------------
@@ -179,8 +199,13 @@ function PostComment($postid, $username, $comment, $clientip)
 //-----------------------------------------------------------------------------
 function GetPage($pagename)
 {
-	$db = GetDatabase();
-	return $db->GetRow($db->RunQuery("SELECT page_title, page_content FROM site_pages WHERE " . (is_numeric($pagename) ? "page_id='$pagename'" : "page_name='$pagename'")));
+    $db = GetDatabase();
+    return $db->getRow(
+        $db->runQuery(
+            "SELECT page_title, page_content FROM site_pages WHERE " .
+            (is_numeric($pagename) ? "page_id='$pagename'" : "page_name='$pagename'")
+        )
+    );
 }
 
 //-----------------------------------------------------------------------------
@@ -190,10 +215,11 @@ function GetPage($pagename)
 //-----------------------------------------------------------------------------
 function CheckIP($ip)
 {
-	$db = GetDatabase();
-	if($db->GetNumRows($db->RunQuery("SELECT * FROM blocked_addresses WHERE address='$ip'")) != 0)
-		return true;
-	return false;
+    $db = GetDatabase();
+    if ($db->getNumRows($db->runQuery("SELECT * FROM blocked_addresses WHERE address='$ip'")) != 0) {
+        return true;
+    }
+    return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -203,7 +229,7 @@ function CheckIP($ip)
 //-----------------------------------------------------------------------------
 function Sanitize($string)
 {
-	return GetDatabase()->EscapeString(stripslashes($string));
+    return GetDatabase()->escapeString(stripslashes($string));
 }
 
 //-----------------------------------------------------------------------------
@@ -211,7 +237,23 @@ function Sanitize($string)
 //		In: none
 //		Out: Exits script with a response code, printing an optional message
 //-----------------------------------------------------------------------------
-function GoodRequest($m = "")    { echo $m; http_response_code(200); exit(); }
-function BadRequest($m = "")     { echo $m; http_response_code(400); exit(); }
-function BlockedRequest($m = "") { echo $m; http_response_code(401); exit(); }
-?>
+function GoodRequest($m = "")
+{
+    echo $m;
+    http_response_code(200);
+    exit();
+}
+
+function BadRequest($m = "")
+{
+    echo $m;
+    http_response_code(400);
+    exit();
+}
+
+function BlockedRequest($m = "")
+{
+    echo $m;
+    http_response_code(401);
+    exit();
+}

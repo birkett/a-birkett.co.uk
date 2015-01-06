@@ -5,7 +5,6 @@
 //  Generates an RSS feed for the blog
 //-----------------------------------------------------------------------------
 require_once("config.php");
-require_once("classes/mysqli.database.class.php");
 require_once("classes/pdomysql.database.class.php");
 require_once("functions.php");
 
@@ -22,18 +21,15 @@ echo '<language>en-GB</language>';
 echo '<copyright>Copyright (C) 2007-' . date('Y') . ' Anthony Birkett - ' . BASE_URL . '</copyright>';
 
 $result = GetPosts("page", 0, false); //Get first page of posts
-while($row = GetDatabase()->GetRow($result))
-{
-	list($id, $timestamp, $title, $content, $draft) = $row;
-	echo '<item>';
-	echo '<title>' . $title . '</title>';
-	echo '<description><![CDATA[' . html_entity_decode($content) . ']]></description>';
-	echo '<link>' . BASE_URL . "blog/" . $id . '</link>';
-	echo '<pubDate>' . date("D, d M Y H:i:s O", $timestamp) . '</pubDate>';
-	echo '<guid isPermaLink="false">' . date("D, d M Y H:i:s O", $timestamp) . '</guid>'; //Using the timestamp as a GUID
-	echo '</item>';
+while (list($id, $timestamp, $title, $content, $draft) = GetDatabase()->GetRow($result)) {
+    echo '<item>';
+    echo '<title>' . $title . '</title>';
+    echo '<description><![CDATA[' . html_entity_decode($content) . ']]></description>';
+    echo '<link>' . BASE_URL . "blog/" . $id . '</link>';
+    echo '<pubDate>' . date("D, d M Y H:i:s O", $timestamp) . '</pubDate>';
+    echo '<guid isPermaLink="false">' . date("D, d M Y H:i:s O", $timestamp) . '</guid>'; //Using the timestamp as GUID
+    echo '</item>';
 }
-					 
+
 echo '</channel>';
 echo '</rss>';
-?>

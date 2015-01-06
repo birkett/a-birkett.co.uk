@@ -32,16 +32,16 @@ p.failed { background-color: #FF0000; color: #fff; font-size: 1.5em; }
 .commentbox { padding-top: 0px; text-align: center; }
 
 /*Tile defaults*/
-.tile, .rectile 
-{ 
-	background-color: #87c2ed; background-repeat: no-repeat; padding: 0; margin: 10px; height: 200px; border: none; display: inline-block;
-	box-shadow: 0px 0px 20px 6px #000; box-sizing: border-box; transition: 0.5s ease;
+.tile, .rectile
+{
+    background-color: #87c2ed; background-repeat: no-repeat; padding: 0; margin: 10px; height: 200px; border: none; display: inline-block;
+    box-shadow: 0px 0px 20px 6px #000; box-sizing: border-box; transition: 0.5s ease;
 }
 .tile { width: 200px; }
 .rectile { width: 420px; }
 .tile:hover, .rectile:hover { background-color: #1372BD; background-size: 100% 50%; }
 /*Tile overrides*/
-.abouttile {	background-image:url('../img/tile_about_bg.png'); }
+.abouttile { background-image:url('../img/tile_about_bg.png'); }
 .blogtile { background-image:url('../img/tile_blog_bg.png'); }
 .contacttile { background-image:url('../img/tile_contact_bg.png'); }
 .photostile { background-image:url('../img/tile_photos_bg.png'); }
