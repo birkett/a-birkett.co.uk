@@ -1,13 +1,4 @@
 <?php
-/* Generic exception class
-*/
-if (!class_exists('OAuthException')) {
-    class OAuthException extends Exception
-    {
-    // pass
-    }
-}
-
 class OAuthConsumer
 {
     public $key;
@@ -55,44 +46,6 @@ class OAuthToken
     }
 }
 
-/**
-* A class for implementing a Signature Method
-* See section 9 ("Signing Requests") in the spec
-*/
-abstract class OAuthSignatureMethod
-{
-    /**
-    * Needs to return the name of the Signature Method (ie HMAC-SHA1)
-    * @return string
-    */
-    abstract public function getName();
-
-    /**
-    * Build up the signature
-    * NOTE: The output of this function MUST NOT be urlencoded.
-    * the encoding is handled in OAuthRequest when the final
-    * request is serialized
-    * @param OAuthRequest $request
-    * @param OAuthConsumer $consumer
-    * @param OAuthToken $token
-    * @return string
-    */
-    abstract public function buildSignature($request, $consumer, $token);
-
-    /**
-    * Verifies that a given signature is correct
-    * @param OAuthRequest $request
-    * @param OAuthConsumer $consumer
-    * @param OAuthToken $token
-    * @param string $signature
-    * @return bool
-    */
-    public function checkSignature($request, $consumer, $token, $signature)
-    {
-        $built = $this->buildSignature($request, $consumer, $token);
-        return $built == $signature;
-    }
-}
 
 /**
 * The HMAC-SHA1 signature method uses the HMAC-SHA1 signature algorithm as defined in [RFC2104]
@@ -101,7 +54,7 @@ abstract class OAuthSignatureMethod
 * character (ASCII code 38) even if empty.
 *   - Chapter 9.2 ("HMAC-SHA1")
 */
-class OAuthSignatureMethodHMACSHA1 extends OAuthSignatureMethod
+class OAuthSignatureMethodHMACSHA1
 {
     public function getName()
     {
@@ -123,114 +76,14 @@ class OAuthSignatureMethodHMACSHA1 extends OAuthSignatureMethod
 
         return base64_encode(hash_hmac('sha1', $base_string, $key, true));
     }
-}
-
-/**
-* The PLAINTEXT method does not provide any security protection and SHOULD only be used
-* over a secure channel such as HTTPS. It does not use the Signature Base String.
-*   - Chapter 9.4 ("PLAINTEXT")
-*/
-class OAuthSignatureMethodPLAINTEXT extends OAuthSignatureMethod
-{
-    public function getName()
-    {
-        return "PLAINTEXT";
-    }
-
-    /**
-    * oauth_signature is set to the concatenated encoded values of the Consumer Secret and
-    * Token Secret, separated by a '&' character (ASCII code 38), even if either secret is
-    * empty. The result MUST be encoded again.
-    *   - Chapter 9.4.1 ("Generating Signatures")
-    *
-    * Please note that the second encoding MUST NOT happen in the SignatureMethod, as
-    * OAuthRequest handles this!
-    */
-    public function buildSignature($request, $consumer, $token)
-    {
-        $key_parts = array(
-            $consumer->secret,
-            ($token) ? $token->secret : ""
-        );
-
-        $key_parts = OAuthUtil::urlencode_rfc3986($key_parts);
-        $key = implode('&', $key_parts);
-        $request->base_string = $key;
-
-        return $key;
-    }
-}
-
-/**
-* The RSA-SHA1 signature method uses the RSASSA-PKCS1-v1_5 signature algorithm as defined in
-* [RFC3447] section 8.2 (more simply known as PKCS#1), using SHA-1 as the hash function for
-* EMSA-PKCS1-v1_5. It is assumed that the Consumer has provided its RSA public key in a
-* verified way to the Service Provider, in a manner which is beyond the scope of this
-* specification.
-*   - Chapter 9.3 ("RSA-SHA1")
-*/
-abstract class OAuthSignatureMethodRSASHA1 extends OAuthSignatureMethod
-{
-    public function getName()
-    {
-        return "RSA-SHA1";
-    }
-
-    // Up to the SP to implement this lookup of keys. Possible ideas are:
-    // (1) do a lookup in a table of trusted certs keyed off of consumer
-    // (2) fetch via http using a url provided by the requester
-    // (3) some sort of specific discovery code based on request
-    //
-    // Either way should return a string representation of the certificate
-    abstract protected function fetchPublicCert(&$request);
-
-    // Up to the SP to implement this lookup of keys. Possible ideas are:
-    // (1) do a lookup in a table of trusted certs keyed off of consumer
-    //
-    // Either way should return a string representation of the certificate
-    abstract protected function fetchPrivateCert(&$request);
-
-    public function buildSignature($request, $consumer, $token)
-    {
-        $base_string = $request->getSignatureBaseString();
-        $request->base_string = $base_string;
-
-        // Fetch the private key cert based on the request
-        $cert = $this->fetchPrivateCert($request);
-
-        // Pull the private key ID from the certificate
-        $privatekeyid = openssl_get_privatekey($cert);
-
-        // Sign using the key
-        $ok = openssl_sign($base_string, $signature, $privatekeyid);
-
-        // Release the key resource
-        openssl_free_key($privatekeyid);
-
-        return base64_encode($signature);
-    }
 
     public function checkSignature($request, $consumer, $token, $signature)
     {
-        $decoded_sig = base64_decode($signature);
-
-        $base_string = $request->getSignatureBaseString();
-
-        // Fetch the public key cert based on the request
-        $cert = $this->fetchPublicCert($request);
-
-        // Pull the public key ID from the certificate
-        $publickeyid = openssl_get_publickey($cert);
-
-        // Check the computed signature against the one passed in the query
-        $ok = openssl_verify($base_string, $decoded_sig, $publickeyid);
-
-        // Release the key resource
-        openssl_free_key($publickeyid);
-
-        return $ok == 1;
+        $built = $this->buildSignature($request, $consumer, $token);
+        return $built == $signature;
     }
 }
+
 
 class OAuthRequest
 {
@@ -458,9 +311,9 @@ class OAuthRequest
             if (substr($k, 0, 5) != "oauth") {
                 continue;
             }
-            if (is_array($v)) {
-                throw new OAuthException('Arrays not supported in headers');
-            }
+            //if (is_array($v)) {
+            //    throw new OAuthException('Arrays not supported in headers');
+            //}
             $out .= ($first) ? ' ' : ',';
             $out .= OAuthUtil::urlencodeRFC3986($k) .
             '="' .
@@ -511,260 +364,6 @@ class OAuthRequest
         $rand = mt_rand();
 
         return md5($mt . $rand); // md5s look nicer than numbers
-    }
-}
-
-class OAuthServer
-{
-    protected $timestamp_threshold = 300; // in seconds, five minutes
-    protected $version = '1.0';             // hi blaine
-    protected $signature_methods = array();
-
-    protected $data_store;
-
-    public function __construct($data_store)
-    {
-        $this->data_store = $data_store;
-    }
-
-    public function addSignatureMethod($signature_method)
-    {
-        $this->signature_methods[$signature_method->getName()] = $signature_method;
-    }
-
-    // high level functions
-
-    /**
-    * process a request_token request
-    * returns the request token on success
-    */
-    public function fetchRequestToken(&$request)
-    {
-        $this->getVersion($request);
-
-        $consumer = $this->getConsumer($request);
-
-        // no token required for the initial token request
-        $token = null;
-
-        $this->checkSignature($request, $consumer, $token);
-
-        // Rev A change
-        $callback = $request->getParameter('oauth_callback');
-        $new_token = $this->data_store->newRequestToken($consumer, $callback);
-
-        return $new_token;
-    }
-
-    /**
-    * process an access_token request
-    * returns the access token on success
-    */
-    public function fetchAccessToken(&$request)
-    {
-        $this->getVersion($request);
-
-        $consumer = $this->getConsumer($request);
-
-        // requires authorized request token
-        $token = $this->getToken($request, $consumer, "request");
-
-        $this->checkSignature($request, $consumer, $token);
-
-        // Rev A change
-        $verifier = $request->getParameter('oauth_verifier');
-        $new_token = $this->data_store->newAccessToken($token, $consumer, $verifier);
-
-        return $new_token;
-    }
-
-    /**
-    * verify an api call, checks all the parameters
-    */
-    public function verifyRequest(&$request)
-    {
-        $this->getVersion($request);
-        $consumer = $this->getConsumer($request);
-        $token = $this->getToken($request, $consumer, "access");
-        $this->checkSignature($request, $consumer, $token);
-        return array($consumer, $token);
-    }
-
-    // Internals from here
-    /**
-    * version 1
-    */
-    private function getVersion(&$request)
-    {
-        $version = $request->getParameter("oauth_version");
-        if (!$version) {
-            // Service Providers MUST assume the protocol version to be 1.0 if this parameter is not present.
-            // Chapter 7.0 ("Accessing Protected Ressources")
-            $version = '1.0';
-        }
-        if ($version !== $this->version) {
-            throw new OAuthException("OAuth version '$version' not supported");
-        }
-        return $version;
-    }
-
-    /**
-    * figure out the signature with some defaults
-    */
-    private function getSignatureMethod(&$request)
-    {
-        $signature_method =
-        @$request->getParameter("oauth_signature_method");
-
-        if (!$signature_method) {
-            // According to chapter 7 ("Accessing Protected Ressources") the signature-method
-            // parameter is required, and we can't just fallback to PLAINTEXT
-            throw new OAuthException('No signature method parameter. This parameter is required');
-        }
-
-        if (!in_array($signature_method, array_keys($this->signature_methods))) {
-            throw new OAuthException(
-                "Signature method '$signature_method' not supported " .
-                "try one of the following: " .
-                implode(", ", array_keys($this->signature_methods))
-            );
-        }
-        return $this->signature_methods[$signature_method];
-    }
-
-    /**
-    * try to find the consumer for the provided request's consumer key
-    */
-    private function getConsumer(&$request)
-    {
-        $consumer_key = @$request->getParameter("oauth_consumer_key");
-        if (!$consumer_key) {
-            throw new OAuthException("Invalid consumer key");
-        }
-
-        $consumer = $this->data_store->lookupConsumer($consumer_key);
-        if (!$consumer) {
-            throw new OAuthException("Invalid consumer");
-        }
-
-        return $consumer;
-    }
-
-    /**
-    * try to find the token for the provided request's token key
-    */
-    private function getToken(&$request, $consumer, $token_type = "access")
-    {
-        $token_field = @$request->getParameter('oauth_token');
-        $token = $this->data_store->lookupToken(
-            $consumer,
-            $token_type,
-            $token_field
-        );
-        if (!$token) {
-            throw new OAuthException("Invalid $token_type token: $token_field");
-        }
-        return $token;
-    }
-
-    /**
-    * all-in-one function to check the signature on a request
-    * should guess the signature method appropriately
-    */
-    private function checkSignature(&$request, $consumer, $token)
-    {
-        // this should probably be in a different method
-        $timestamp = @$request->getParameter('oauth_timestamp');
-        $nonce = @$request->getParameter('oauth_nonce');
-
-        $this->checkTimestamp($timestamp);
-        $this->checkNonce($consumer, $token, $nonce, $timestamp);
-
-        $signature_method = $this->getSignatureMethod($request);
-
-        $signature = $request->getParameter('oauth_signature');
-        $valid_sig = $signature_method->checkSignature(
-            $request,
-            $consumer,
-            $token,
-            $signature
-        );
-
-        if (!$valid_sig) {
-            throw new OAuthException("Invalid signature");
-        }
-    }
-
-    /**
-    * check that the timestamp is new enough
-    */
-    private function checkTimestamp($timestamp)
-    {
-        if (!$timestamp) {
-            throw new OAuthException(
-                'Missing timestamp parameter. The parameter is required'
-            );
-        }
-        // verify that timestamp is recentish
-        $now = time();
-        if (abs($now - $timestamp) > $this->timestamp_threshold) {
-            throw new OAuthException(
-                "Expired timestamp, yours $timestamp, ours $now"
-            );
-        }
-    }
-
-    /**
-    * check that the nonce is not repeated
-    */
-    private function checkNonce($consumer, $token, $nonce, $timestamp)
-    {
-        if (!$nonce) {
-            throw new OAuthException(
-                'Missing nonce parameter. The parameter is required'
-            );
-        }
-        // verify that the nonce is uniqueish
-        $found = $this->data_store->lookupNonce(
-            $consumer,
-            $token,
-            $nonce,
-            $timestamp
-        );
-        if ($found) {
-            throw new OAuthException("Nonce already used: $nonce");
-        }
-    }
-}
-
-class OAuthDataStore
-{
-    public function lookupConsumer($consumer_key)
-    {
-        // implement me
-    }
-
-    public function lookupToken($consumer, $token_type, $token)
-    {
-        // implement me
-    }
-
-    public function lookupNonce($consumer, $token, $nonce, $timestamp)
-    {
-        // implement me
-    }
-
-    public function newRequestToken($consumer, $callback = null)
-    {
-        // return a new token attached to this consumer
-    }
-
-    public function newAccessToken($token, $consumer, $verifier = null)
-    {
-        // return a new access token attached to this consumer
-        // for the user associated with this token if the request token
-        // is authorized
-        // should also invalidate the request token
     }
 }
 

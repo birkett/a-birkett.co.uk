@@ -83,7 +83,7 @@ if (isset($_GET['page'])) {
             }
 
             $captcha = recaptcha_check_answer(RECAPTHCA_PRIVATE_KEY, $ip, $ch, $resp);
-            if ($captcha->is_valid) {
+            if ($captcha['is_valid'] == true) {
                 PostComment($p, Sanitize($u), Sanitize($c), $ip);
                 GoodRequest("Comment Posted!");
             } else {

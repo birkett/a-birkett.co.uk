@@ -15,13 +15,6 @@
  */
 
 /**
- * The reCAPTCHA server URL's
- */
-define("RECAPTCHA_API_SERVER", "http://www.google.com/recaptcha/api");
-define("RECAPTCHA_API_SECURE_SERVER", "https://www.google.com/recaptcha/api");
-define("RECAPTCHA_VERIFY_SERVER", "www.google.com");
-
-/**
  * Encodes the given data into a query string format
  * @param $data - array of string elements to be encoded
  * @return string - encoded request
@@ -73,15 +66,6 @@ function _recaptcha_http_post($host, $path, $data, $port = 80)
     return $response;
 }
 
-/**
- * A ReCaptchaResponse is returned from recaptcha_check_answer()
- */
-class ReCaptchaResponse
-{
-    public $is_valid;
-    public $error;
-}
-
 
 /**
   * Calls an HTTP POST function to verify if the user's guess was correct
@@ -90,7 +74,7 @@ class ReCaptchaResponse
   * @param string $challenge
   * @param string $response
   * @param array $extra_params an array of extra variables to post to the server
-  * @return ReCaptchaResponse
+  * @return array containing is_valid (true / false) and error message
   */
 function recaptcha_check_answer($privkey, $remoteip, $challenge, $response, $extra_params = array())
 {
@@ -108,14 +92,12 @@ function recaptcha_check_answer($privkey, $remoteip, $challenge, $response, $ext
 
     //discard spam submissions
     if ($challenge == null || strlen($challenge) == 0 || $response == null || strlen($response) == 0) {
-        $recaptcha_response = new ReCaptchaResponse();
-        $recaptcha_response->is_valid = false;
-        $recaptcha_response->error = 'incorrect-captcha-sol';
+        $recaptcha_response = [ 'is_valid' => false, 'error' => 'incorrect-captcha-sol' ];
         return $recaptcha_response;
     }
 
     $response = _recaptcha_http_post(
-        RECAPTCHA_VERIFY_SERVER,
+        "www.google.com",
         "/recaptcha/api/verify",
         array(
             'privatekey' => $privkey,
@@ -126,13 +108,12 @@ function recaptcha_check_answer($privkey, $remoteip, $challenge, $response, $ext
     );
 
     $answers = explode("\n", $response [1]);
-    $recaptcha_response = new ReCaptchaResponse();
 
-    if (trim($answers [0]) == 'true') {
-        $recaptcha_response->is_valid = true;
-    } else {
-        $recaptcha_response->is_valid = false;
-        $recaptcha_response->error = $answers [1];
+    $recaptcha_response = [ 'is_valid' => true, 'error' => '' ];
+
+    if (trim($answers [0]) != 'true') {
+        $recaptcha_response['is_valid'] = false;
+        $recaptcha_response['error'] = $answers [1];
     }
     return $recaptcha_response;
 }
