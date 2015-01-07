@@ -41,7 +41,7 @@ function Autoloader($class)
     $relative_class = substr($class, $len);
 
     $base_dir = __DIR__ . "/";
-    if(strpos($class, "Controller")) {
+    if (strpos($class, "Controller")) {
         $folder = 'controllers/';
     } else {
         $folder = 'classes/';

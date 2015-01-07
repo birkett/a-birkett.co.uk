@@ -15,7 +15,7 @@ namespace ABirkett;
 function CheckCredentials($username, $password)
 {
     $db = GetDatabase();
-    $result = $db->runQuery("SELECT password FROM site_users WHERE username='$username'");
+    $result = $db->runQuery("SELECT password FROM site_users WHERE username=$username");
 
     if ($db->getNumRows($result) == 1) {
         $dbhash = $db->getRow($result);
@@ -220,7 +220,6 @@ function TweetPost($postid)
     if ($post_tweeted == 1) {
         return; //Already tweeted out
     }
-
 
     GetBaseURL();
     $url = GetBaseURL() . "/blog/" . $id;

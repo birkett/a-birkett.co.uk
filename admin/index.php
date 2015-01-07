@@ -53,9 +53,9 @@ if (IsLoggedIn()) {
 } else {
     if (isset($_POST['username']) && isset($_POST['password'])) {
         $u = Sanitize($_POST['username']);
-        $p = Sanitize($_POST['password']);
+        $p = $_POST['password'];
         if (CheckCredentials($u, $p)) {
-            $_SESSION['user'] = $u;
+            $_SESSION['user'] = $_POST['username'];
             new Page("Admin :: Main", "userwidget", "index");
             return;
         }
