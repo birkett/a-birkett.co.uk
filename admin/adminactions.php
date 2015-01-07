@@ -4,11 +4,9 @@
 //
 //  Defines the logic for actions that can be performed from AJAX requests
 //-----------------------------------------------------------------------------
+namespace ABirkett;
+
 require_once("../config.php");
-require_once("../classes/mysqli.database.class.php");
-require_once("../classes/pdomysql.database.class.php");
-require_once("classes/OAuth.php");
-require_once("classes/twitteroauth.php");
 require_once("../functions.php");
 require_once("adminfunctions.php");
 

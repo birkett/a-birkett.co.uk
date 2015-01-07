@@ -2,17 +2,12 @@
 //-----------------------------------------------------------------------------
 // Page router
 //-----------------------------------------------------------------------------
-use ABirkett\Page as Page;
-use ABirkett\RecaptchaLib as RecaptchaLib;
+namespace ABirkett;
 
 require_once("config.php");
-require_once("classes/mysqli.database.class.php");
-require_once("classes/pdomysql.database.class.php");
-require_once("classes/page.class.php");
 foreach (glob("controllers/*.controller.php") as $file) {
     require_once($file);
 }
-require_once("classes/recaptchalib.php");
 require_once("functions.php");
 
 PHPDefaults();

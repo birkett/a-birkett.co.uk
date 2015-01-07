@@ -4,14 +4,11 @@
 //
 //  Page proxy for admin pages
 //-----------------------------------------------------------------------------
-use ABirkett\Page as Page;
+namespace ABirkett;
 
 session_start();
 
 require_once("../config.php");
-require_once("../classes/mysqli.database.class.php");
-require_once("../classes/pdomysql.database.class.php");
-require_once("../classes/page.class.php");
 require_once("../controllers/basepage.controller.php");
 foreach (glob("controllers/*.controller.php") as $file) {
     require_once($file);

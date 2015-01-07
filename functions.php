@@ -1,10 +1,11 @@
 <?php
 //-----------------------------------------------------------------------------
-// General site functions. 
+// General site functions.
 //
-//  !!!This file should contain only functions needed to display the public 
+//  !!!This file should contain only functions needed to display the public
 //		page. All admin related functions should be separate !!!
 //-----------------------------------------------------------------------------
+namespace ABirkett;
 
 //-----------------------------------------------------------------------------
 // Open a database handle
@@ -16,15 +17,43 @@ function GetDatabase()
 {
     static $db = null;
     if (!isset($db)) {
-        if (extension_loaded("PDO_MySQL")) {
-            $db = new ABirkett\PDOMySQLDatabase();
-        } elseif (extension_loaded("MySQLi")) {
-            $db = new ABirkett\MySQLiDatabase();
-        } else {
-            die("No database driver available.");
-        }
+        $db = new PDOMySQLDatabase();
     }
     return $db;
+}
+
+//-----------------------------------------------------------------------------
+// Autoloader for Classes
+//		In: Class name
+//		Out: none
+//-----------------------------------------------------------------------------
+// project-specific namespace prefix
+function Autoloader($class)
+{
+    $prefix = 'ABirkett\\';
+
+    // base directory for the namespace prefix
+    $base_dir = __DIR__ . '/classes/';
+
+    // does the class use the namespace prefix?
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        // no, move to the next registered autoloader
+        return;
+    }
+
+    // get the relative class name
+    $relative_class = substr($class, $len);
+
+    // replace the namespace prefix with the base directory, replace namespace
+    // separators with directory separators in the relative class name, append
+    // with .php
+    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.class.php';
+
+    // if the file exists, require it
+    if (file_exists($file)) {
+        require $file;
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -40,6 +69,9 @@ function PHPDefaults()
 
     //Timezone for converting timestamps
     date_default_timezone_set("Europe/London");
+
+    //Autoloader
+    spl_autoload_register("ABirkett\Autoloader");
 }
 
 //-----------------------------------------------------------------------------
@@ -172,7 +204,7 @@ function GetNumberOfPosts($drafts = false)
 //-----------------------------------------------------------------------------
 // Fetch the comments for specified post ID
 //		In: Post ID
-//		Out: All comments for post 
+//		Out: All comments for post
 //			(number can be fetched with GetNumberOfComments(n)
 //-----------------------------------------------------------------------------
 function GetCommentsOnPost($postid)

@@ -4,8 +4,9 @@
 //
 //  Generates an RSS feed for the blog
 //-----------------------------------------------------------------------------
+namespace ABirkett;
+
 require_once("config.php");
-require_once("classes/pdomysql.database.class.php");
 require_once("functions.php");
 
 PHPDefaults();

@@ -1,10 +1,11 @@
 <?php
 //-----------------------------------------------------------------------------
-// Admin functions. 
+// Admin functions.
 //
 //  !!!These are generally more risky than the front end functions. Hence
 //      the separation!!!
 //-----------------------------------------------------------------------------
+namespace ABirkett;
 
 //-----------------------------------------------------------------------------
 // Check if the given username and password is valid
@@ -15,7 +16,7 @@ function CheckCredentials($username, $password)
 {
     $db = GetDatabase();
     $result = $db->runQuery("SELECT password FROM site_users WHERE username='$username'");
-    
+
     if ($db->getNumRows($result) == 1) {
         $dbhash = $db->getRow($result);
         if (password_verify($password, $dbhash[0])) {
@@ -26,7 +27,7 @@ function CheckCredentials($username, $password)
 }
 
 //-----------------------------------------------------------------------------
-// Check if a user is logged in with a valid session 
+// Check if a user is logged in with a valid session
 //      In: none
 //      Out: TRUE on logged in, FALSE if not
 //-----------------------------------------------------------------------------
@@ -115,7 +116,7 @@ function NewPost($title, $content, $draft)
         "INSERT INTO blog_posts(post_timestamp, post_title, post_content, post_draft, post_tweeted) " .
         "VALUES('$timestamp', '$title', '$content', '$draft', 0)"
     );
-    
+
     $row = $db->getRow($db->runQuery("SELECT post_id FROM blog_posts ORDER BY post_timestamp DESC LIMIT 1"));
     TweetPost($row[0]); //Tweet this if not already done
 }
@@ -193,12 +194,12 @@ function ChangePassword($currentpassword, $newpassword, $confirmedpassword)
     }
     $db = GetDatabase();
     $row = $db->getRow($db->runQuery("SELECT username FROM site_users WHERE user_id='1'"));
-    
+
     if (!CheckCredentials($row[0], $currentpassword)) {
         return false; //Current password is wrong
     }
     $hash = HashPassword($newpassword);
-    
+
     $db->runQuery("UPDATE site_users SET password='$hash' WHERE user_id='1'");
     return true;
 }
@@ -223,17 +224,17 @@ function TweetPost($postid)
     (stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true) ? $proto = "https://" : $proto = "http://";
     $baseurl = $proto . $_SERVER['HTTP_HOST'];
     $url = $baseurl . "/blog/" . $id;
-    
+
     $tweet = "New Blog Post: " . $title . " - " . $url;
-    
-    $twitter = new ABirkett\TwitterOAuth(
+
+    $twitter = new TwitterOAuth(
         TWITTER_CONSUMER_KEY,
         TWITTER_CONSUMER_SECRET,
         TWITTER_OAUTH_TOKEN,
         TWITTER_OAUTH_SECRET
     );
     $twitter->post('statuses/update', array('status' => $tweet));
-    
+
     $db->runQuery("UPDATE blog_posts SET post_tweeted='1' WHERE post_id='$postid'");
 }
 
