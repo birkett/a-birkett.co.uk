@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett;
 
-class AdminServerInfoController
+class AdminServerInfoPageController
 {
     public function __construct(&$output)
     {

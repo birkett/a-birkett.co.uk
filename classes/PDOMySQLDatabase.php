@@ -16,7 +16,7 @@ class PDOMySQLDatabase
     private $user;
     private $pass;
     private $db;
-    
+
     //-----------------------------------------------------------------------------
     // Constructor
     //      In: Database name
@@ -51,7 +51,7 @@ class PDOMySQLDatabase
     {
         $this->mLink = null;
     }
-    
+
     //-----------------------------------------------------------------------------
     // Get MySQL server version info
     //      In: none
@@ -77,7 +77,7 @@ class PDOMySQLDatabase
         }
         return $this->mLink->query($query);
     }
-    
+
     //-----------------------------------------------------------------------------
     // Get single row from a result
     //      In: MySQLi result
@@ -91,7 +91,7 @@ class PDOMySQLDatabase
         }
         return $result->fetch(PDO::FETCH_NUM);
     }
-    
+
     //-----------------------------------------------------------------------------
     // Get number of rows
     //      In: MySQLi result
@@ -104,7 +104,7 @@ class PDOMySQLDatabase
         }
         return $result->rowCount();
     }
-    
+
     //-----------------------------------------------------------------------------
     // Escape string
     //      In: Raw string

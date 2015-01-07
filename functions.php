@@ -23,7 +23,7 @@ function GetDatabase()
 }
 
 //-----------------------------------------------------------------------------
-// Autoloader for Classes
+// Autoloader for Classes and Controllers
 //		In: Class name
 //		Out: none
 //-----------------------------------------------------------------------------
@@ -32,25 +32,33 @@ function Autoloader($class)
 {
     $prefix = 'ABirkett\\';
 
-    // base directory for the namespace prefix
-    $base_dir = __DIR__ . '/classes/';
-
-    // does the class use the namespace prefix?
+    //Does the class use this namespace prefix?
     $len = strlen($prefix);
     if (strncmp($prefix, $class, $len) !== 0) {
-        // no, move to the next registered autoloader
         return;
     }
 
-    // get the relative class name
     $relative_class = substr($class, $len);
 
-    // replace the namespace prefix with the base directory, replace namespace
-    // separators with directory separators in the relative class name, append
-    // with .php
-    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.class.php';
+    $base_dir = __DIR__ . "/";
+    if(strpos($class, "Controller")) {
+        $folder = 'controllers/';
+    } else {
+        $folder = 'classes/';
+    }
 
-    // if the file exists, require it
+    $file = $base_dir . $folder . str_replace('\\', '/', $relative_class) . '.php';
+
+    //Try the public folders
+    if (file_exists($file)) {
+        require $file;
+        return;
+    }
+
+    //Try the admin folder
+    $base_dir = __DIR__ . "/" . ADMIN_FOLDER;
+
+    $file = $base_dir . $folder . str_replace('\\', '/', $relative_class) . '.php';
     if (file_exists($file)) {
         require $file;
     }

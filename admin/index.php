@@ -9,15 +9,11 @@ namespace ABirkett;
 session_start();
 
 require_once("../config.php");
-require_once("../controllers/basepage.controller.php");
-foreach (glob("controllers/*.controller.php") as $file) {
-    require_once($file);
-}
 require_once("../functions.php");
 require_once("adminfunctions.php");
 
-PHPDefaults();
 DeclareAdminPage(); //Set so the page class will include admin controllers
+PHPDefaults();
 
 if (IsLoggedIn()) {
     if (isset($_GET['action'])) {

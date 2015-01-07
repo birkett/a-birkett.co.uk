@@ -5,9 +5,6 @@
 namespace ABirkett;
 
 require_once("config.php");
-foreach (glob("controllers/*.controller.php") as $file) {
-    require_once($file);
-}
 require_once("functions.php");
 
 PHPDefaults();

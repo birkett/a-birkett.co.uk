@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett;
 
-class ListPostsPageController
+class AdminListPostsPageController
 {
     public function __construct(&$output)
     {

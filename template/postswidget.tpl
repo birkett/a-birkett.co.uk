@@ -6,7 +6,7 @@
 									<span><a href="#">{MONTH}</a></span>
 									<ul>
 										{ITEMLOOP}
-										<li><span><a href="/blog/{POSTID}">{POSTTITLE}</a></span></li>
+										<li><a href="/blog/{POSTID}">{POSTTITLE}</a></li>
 										{/ITEMLOOP}
 									</ul>
 								</li>

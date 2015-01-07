@@ -20,21 +20,21 @@ class Page
         }
         ReplaceTag("{PAGE}", OpenTemplate("$template.tpl"), $pagetemplate);
         ReplaceTag("{WIDGET}", OpenTemplate("$widget.tpl"), $pagetemplate);
-        
+
         if (defined('ADMINPAGE')) {
             new AdminBasePageController($pagetemplate);
             switch ($template) {
                 case "listcomments":
-                    new ListCommentsPageController($pagetemplate);
+                    new AdminListCommentsPageController($pagetemplate);
                     break;
                 case "listposts":
-                    new ListPostsPageController($pagetemplate);
+                    new AdminListPostsPageController($pagetemplate);
                     break;
                 case "listpages":
-                    new ListPagesPageController($pagetemplate);
+                    new AdminListPagesPageController($pagetemplate);
                     break;
                 case "serverinfo":
-                    new AdminServerInfoController($pagetemplate);
+                    new AdminServerInfoPageController($pagetemplate);
                     break;
                 case "ipfilter":
                     new AdminIPFilterPageController($pagetemplate);
@@ -60,7 +60,7 @@ class Page
                 new PostsWidgetController($pagetemplate);
             }
         }
-        
+
         new BasePageController($pagetemplate, $title);
         echo $pagetemplate;
     }
