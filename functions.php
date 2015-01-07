@@ -28,6 +28,21 @@ function GetDatabase()
 }
 
 //-----------------------------------------------------------------------------
+// Set up PHP with some new defaults
+//		In: none
+//		Out: none
+//-----------------------------------------------------------------------------
+function PHPDefaults()
+{
+    //Show PHP errors and warnings
+    error_reporting(E_ALL);
+    ini_set("display_errors", 1);
+
+    //Timezone for converting timestamps
+    date_default_timezone_set("Europe/London");
+}
+
+//-----------------------------------------------------------------------------
 // Open a template file for inclusion
 //		In: Filename
 //		Out: Unparsed (sub)template

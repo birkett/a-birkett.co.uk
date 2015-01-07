@@ -3,6 +3,7 @@
 // Page router
 //-----------------------------------------------------------------------------
 use ABirkett\Page as Page;
+use ABirkett\RecaptchaLib as RecaptchaLib;
 
 require_once("config.php");
 require_once("classes/mysqli.database.class.php");
@@ -13,6 +14,8 @@ foreach (glob("controllers/*.controller.php") as $file) {
 }
 require_once("classes/recaptchalib.php");
 require_once("functions.php");
+
+PHPDefaults();
 
 //-----------------------------------------------------------------------------
 // Page requests.
@@ -81,8 +84,8 @@ if (isset($_GET['page'])) {
             if (CheckIP($ip)) {
                 BlockedRequest("Your address is blocked. This is most likely due to spam.");
             }
-
-            $captcha = recaptcha_check_answer(RECAPTHCA_PRIVATE_KEY, $ip, $ch, $resp);
+            $recaptcha = new RecaptchaLib();
+            $captcha = $recaptcha->checkAnswer(RECAPTHCA_PRIVATE_KEY, $ip, $ch, $resp);
             if ($captcha['is_valid'] == true) {
                 PostComment($p, Sanitize($u), Sanitize($c), $ip);
                 GoodRequest("Comment Posted!");

@@ -8,6 +8,9 @@
 /**
 * Twitter OAuth class
 */
+
+namespace ABirkett;
+
 class TwitterOAuth
 {
     /* Contains the last HTTP status code returned. */
@@ -33,31 +36,15 @@ class TwitterOAuth
     /* Immediately retry the API call if the response was not successful. */
     //public $retry = true;
 
-
-    /**
-    * Debug helpers
-    */
-    public function lastStatusCode()
-    {
-        return $this->http_status;
-    }
-    public function lastAPICall()
-    {
-        return $this->last_api_call;
-    }
-
     /**
     * construct TwitterOAuth object
     */
-    public function __construct($consumer_key, $consumer_secret, $oauth_token = null, $oauth_token_secret = null)
+    public function __construct($consumer_key, $consumer_secret, $oauth_token, $oauth_token_secret)
     {
-        $this->sha1_method = new OAuthSignatureMethodHMACSHA1();
-        $this->consumer = new OAuthConsumer($consumer_key, $consumer_secret);
-        if (!empty($oauth_token) && !empty($oauth_token_secret)) {
-            $this->token = new OAuthConsumer($oauth_token, $oauth_token_secret);
-        } else {
-            $this->token = null;
-        }
+        $this->consumer_key = $consumer_key;
+        $this->consumer_secret = $consumer_secret;
+        $this->oauth_token = $oauth_token;
+        $this->oauth_token_secret = $oauth_token_secret;
     }
 
     /**
@@ -85,18 +72,6 @@ class TwitterOAuth
     }
 
     /**
-    * DELETE wrapper for oAuthReqeust.
-    */
-    public function delete($url, $parameters = array())
-    {
-        $response = $this->oAuthRequest($url, 'DELETE', $parameters);
-        if ($this->format === 'json' && $this->decode_json) {
-            return json_decode($response);
-        }
-        return $response;
-    }
-
-    /**
     * Format and sign an OAuth / API request
     */
     private function oAuthRequest($url, $method, $parameters)
@@ -104,8 +79,19 @@ class TwitterOAuth
         if (strrpos($url, 'https://') !== 0 && strrpos($url, 'http://') !== 0) {
             $url = "{$this->host}{$url}.{$this->format}";
         }
-        $request = OAuthRequest::fromConsumerAndToken($this->consumer, $this->token, $method, $url, $parameters);
-        $request->signRequest($this->sha1_method, $this->consumer, $this->token);
+        $request = OAuthRequest::fromConsumerAndToken(
+            $this->consumer_key,
+            $this->oauth_token,
+            $method,
+            $url,
+            $parameters
+        );
+        $request->signRequest(
+            $this->consumer_key,
+            $this->consumer_secret,
+            $this->oauth_token,
+            $this->oauth_token_secret
+        );
         switch ($method) {
             case 'GET':
                 return $this->http($request->toUrl(), 'GET');
@@ -140,11 +126,6 @@ class TwitterOAuth
                     curl_setopt($ci, CURLOPT_POSTFIELDS, $postfields);
                 }
                 break;
-            case 'DELETE':
-                curl_setopt($ci, CURLOPT_CUSTOMREQUEST, 'DELETE');
-                if (!empty($postfields)) {
-                    $url = "{$url}?{$postfields}";
-                }
         }
 
         curl_setopt($ci, CURLOPT_URL, $url);

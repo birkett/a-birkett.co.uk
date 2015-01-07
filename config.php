@@ -3,13 +3,6 @@
 // Site configuration
 //-----------------------------------------------------------------------------
 
-//Show PHP errors and warnings
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
-
-//Timezone for converting timestamps
-date_default_timezone_set("Europe/London");
-
 //Default display format for timestamps
 define('DATE_FORMAT', 'l dS F Y');
 

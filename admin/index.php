@@ -19,6 +19,7 @@ foreach (glob("controllers/*.controller.php") as $file) {
 require_once("../functions.php");
 require_once("adminfunctions.php");
 
+PHPDefaults();
 DeclareAdminPage(); //Set so the page class will include admin controllers
 
 if (IsLoggedIn()) {

@@ -226,7 +226,7 @@ function TweetPost($postid)
     
     $tweet = "New Blog Post: " . $title . " - " . $url;
     
-    $twitter = new TwitterOAuth(
+    $twitter = new ABirkett\TwitterOAuth(
         TWITTER_CONSUMER_KEY,
         TWITTER_CONSUMER_SECRET,
         TWITTER_OAUTH_TOKEN,

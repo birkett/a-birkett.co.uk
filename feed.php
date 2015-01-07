@@ -8,6 +8,8 @@ require_once("config.php");
 require_once("classes/pdomysql.database.class.php");
 require_once("functions.php");
 
+PHPDefaults();
+
 header("Content-Type: application/xml; charset=utf-8");
 
 echo '<?xml version="1.0" encoding="utf-8"?>';

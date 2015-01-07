@@ -12,6 +12,8 @@ require_once("classes/twitteroauth.php");
 require_once("../functions.php");
 require_once("adminfunctions.php");
 
+PHPDefaults();
+
 if (isset($_POST['mode'])) {
     switch($_POST['mode']) {
         //Edit post mode
