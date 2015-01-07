@@ -14,12 +14,16 @@ namespace ABirkett;
 //-----------------------------------------------------------------------------
 function CheckCredentials($username, $password)
 {
+    $u = Sanitize($_POST['username']);
+    $p = $_POST['password'];
+
     $db = GetDatabase();
-    $result = $db->runQuery("SELECT password FROM site_users WHERE username=$username");
+    $result = $db->runQuery("SELECT password FROM site_users WHERE username=$u");
 
     if ($db->getNumRows($result) == 1) {
         $dbhash = $db->getRow($result);
-        if (password_verify($password, $dbhash[0])) {
+        if (password_verify($p, $dbhash[0])) {
+            $_SESSION['user'] = $_POST['username'];
             return true;
         }
     }

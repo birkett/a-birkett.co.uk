@@ -35,6 +35,9 @@ if (isset($_GET['page'])) {
         case "404":
             new Page(SITE_TITLE . " :: Error", "twitterwidget", "generic");
             break;
+        case "feed":
+            new Feed();
+            break;
         default:
             new Page(SITE_TITLE . " :: Home", "twitterwidget", "index");
     }
