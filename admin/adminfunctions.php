@@ -221,9 +221,9 @@ function TweetPost($postid)
         return; //Already tweeted out
     }
 
-    (stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true) ? $proto = "https://" : $proto = "http://";
-    $baseurl = $proto . $_SERVER['HTTP_HOST'];
-    $url = $baseurl . "/blog/" . $id;
+
+    GetBaseURL();
+    $url = GetBaseURL() . "/blog/" . $id;
 
     $tweet = "New Blog Post: " . $title . " - " . $url;
 
