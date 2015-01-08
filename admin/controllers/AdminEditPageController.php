@@ -15,8 +15,7 @@ class AdminEditPageController extends AdminBasePageController
     //-----------------------------------------------------------------------------
     private function getPage($pageid)
     {
-        $db = GetDatabase();
-        $page = $db->runQuery(
+        $page = GetDatabase()->runQuery(
             "SELECT page_title, page_content FROM site_pages WHERE page_id = :pageid",
             array(":pageid" => $pageid)
         );

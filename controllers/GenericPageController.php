@@ -17,8 +17,7 @@ class GenericPageController extends BasePageController
     //-----------------------------------------------------------------------------
     private function getPage($pagename)
     {
-        $db = GetDatabase();
-        $page = $db->runQuery(
+        $page = GetDatabase()->runQuery(
             "SELECT page_title, page_content FROM site_pages WHERE page_name = :pagename",
             array(":pagename" => $pagename)
         );

@@ -24,11 +24,10 @@ class PostsWidgetController extends BasePageController
 
     public function __construct(&$output)
     {
-        $db = GetDatabase();
         $te = TemplateEngine();
         $posts = $this->getAllPosts();
         $post_array = [];
-        while (list($id, $timestamp, $title) = $db->GetRow($posts)) {
+        while (list($id, $timestamp, $title) = GetDatabase()->GetRow($posts)) {
             $month = date("F Y", $timestamp);
             if (!isset($post_array["$month"])) {
                 $post_array["$month"] = [];

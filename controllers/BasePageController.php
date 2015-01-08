@@ -12,6 +12,7 @@ class BasePageController
 {
     public function __construct(&$output)
     {
+        $te = TemplateEngine();
         $tags = [
             "{BASEURL}" => GetBaseURL(),
             "{RAND2551}" => rand(0, 255),
@@ -21,14 +22,14 @@ class BasePageController
             "{THISYEAR}" => date('Y'),
             "{ADMINFOLDER}" => ""
         ];
-        TemplateEngine()->parseTags($tags, $output);
+        $te->parseTags($tags, $output);
 
         if (CHRISTMAS) {
             $tags = [ "{EXTRASTYLESHEETS}", "{/EXTRASTYLESHEETS}" ];
-            TemplateEngine()->removeTags($tags, $output);
+            $te->removeTags($tags, $output);
         } else {
-            TemplateEngine()->removeLogicTag("{EXTRASTYLESHEETS}", "{/EXTRASTYLESHEETS}", $output);
+            $te->removeLogicTag("{EXTRASTYLESHEETS}", "{/EXTRASTYLESHEETS}", $output);
         }
-        TemplateEngine()->removeLogicTag("{ADMINSTYLESHEET}", "{/ADMINSTYLESHEET}", $output);
+        $te->removeLogicTag("{ADMINSTYLESHEET}", "{/ADMINSTYLESHEET}", $output);
     }
 }

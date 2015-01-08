@@ -32,7 +32,6 @@ class AJAXRequestController
     //-----------------------------------------------------------------------------
     protected function checkIP($ip)
     {
-        $db = GetDatabase();
         $count = GetDatabase()->runQuery(
             "SELECT COUNT(*) from blocked_addresses WHERE address = :ip",
             array(":ip" => $ip)

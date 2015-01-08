@@ -26,7 +26,6 @@ class FeedPageController extends BasePageController
     {
         header("Content-Type: application/xml; charset=utf-8");
 
-        $db = GetDatabase();
         $te = TemplateEngine();
 
         $posts = $this->getLatestPosts();
