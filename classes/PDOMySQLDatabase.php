@@ -101,17 +101,4 @@ class PDOMySQLDatabase
         }
         return count($result);
     }
-
-    //-----------------------------------------------------------------------------
-    // Escape string
-    //      In: Raw string
-    //      Out: Escaped string
-    //-----------------------------------------------------------------------------
-    public function escapeString($string)
-    {
-        if (!$this->mLink) {
-            return;
-        }
-        return $this->mLink->quote($string);
-    }
 }

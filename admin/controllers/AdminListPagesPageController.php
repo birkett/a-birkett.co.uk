@@ -13,11 +13,11 @@ class AdminListPagesPageController extends AdminBasePageController
     //      In: none
     //      Out: All page IDs and Titles as MySQLi result resource
     //-----------------------------------------------------------------------------
-    function getAllPages()
+    private function getAllPages()
     {
         return GetDatabase()->runQuery("SELECT page_id, page_title from site_pages", array());
     }
-    
+
     public function __construct(&$output)
     {
         $te = TemplateEngine();

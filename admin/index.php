@@ -16,7 +16,7 @@ PHPDefaults();
 
 if (isset($_POST['mode'])) {
     new AdminAJAXRequestController();
-} else if (isset($_SESSION['user'])) {
+} elseif (isset($_SESSION['user'])) {
     if (isset($_GET['action'])) {
         switch($_GET['action']) {
             case "password":

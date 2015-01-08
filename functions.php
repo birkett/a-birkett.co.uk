@@ -60,7 +60,8 @@ function Autoloader($class)
         $folder = 'classes/';
     }
 
-    $file = $base_dir . $folder . str_replace('\\', '/', $relative_class) . '.php';
+    $endpath = $folder . str_replace('\\', '/', $relative_class) . '.php';
+    $file = $base_dir . $endpath;
 
     //Try the public folders
     if (file_exists($file)) {
@@ -72,7 +73,7 @@ function Autoloader($class)
     if (defined('ADMINPAGE')) {
         $base_dir .= ADMIN_FOLDER;
 
-        $file = $base_dir . $folder . str_replace('\\', '/', $relative_class) . '.php';
+        $file = $base_dir . $endpath;
         if (file_exists($file)) {
             require $file;
         }

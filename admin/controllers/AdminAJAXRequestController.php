@@ -145,7 +145,6 @@ class AdminAJAXRequestController extends AJAXRequestController
             return; //Already tweeted out
         }
 
-        GetBaseURL();
         $url = GetBaseURL() . "blog/" . $id;
 
         $tweet = "New Blog Post: " . $title . " - " . $url;
