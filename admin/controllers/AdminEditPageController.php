@@ -10,6 +10,7 @@ class AdminEditPageController extends AdminBasePageController
 {
     public function __construct(&$output)
     {
+        $te = TemplateEngine();
         $vars = "";
         if (isset($_GET['pageid'])) {
             //Page edit mode
@@ -19,9 +20,9 @@ class AdminEditPageController extends AdminBasePageController
             $vars .= 'var pageid = document.getElementById("formpageid").value;';
             $vars .= 'var data = "mode=editpage&pageid="+pageid+"&content="+content;';
 
-            ReplaceTag("{POSTID}", $_GET['pageid'], $output);
-            RemoveLogicTag("{POSTEDIT}", "{/POSTEDIT}", $output);
-            RemoveLogicTag("{NEWPOST}", "{/NEWPOST}", $output);
+            $te->replaceTag("{POSTID}", $_GET['pageid'], $output);
+            $te->removeLogicTag("{POSTEDIT}", "{/POSTEDIT}", $output);
+            $te->removeLogicTag("{NEWPOST}", "{/NEWPOST}", $output);
         } elseif (isset($_GET['postid'])) {
             //Post edit mode
             $post = GetPosts("single", $_GET['postid'], true);
@@ -41,17 +42,17 @@ class AdminEditPageController extends AdminBasePageController
                 "{POSTTITLE}" => $title,
                 "{DRAFT}" => $draft
             ];
-            ParseTags($tags, $output);
-            RemoveLogicTag("{PAGEEDIT}", "{/PAGEEDIT}", $output);
-            RemoveLogicTag("{NEWPOST}", "{/NEWPOST}", $output);
+            $te->parseTags($tags, $output);
+            $te->removeLogicTag("{PAGEEDIT}", "{/PAGEEDIT}", $output);
+            $te->removeLogicTag("{NEWPOST}", "{/NEWPOST}", $output);
         } else {
             //New post mode
             $vars .= 'var title = document.getElementById("formtitle").value;';
             $vars .= 'var draft = document.getElementById("formdraft").checked;';
             $vars .= 'var data = "mode=newpost&title="+title+"&draft="+draft+"&content="+content;';
 
-            RemoveLogicTag("{PAGEEDIT}", "{/PAGEEDIT}", $output);
-            RemoveLogicTag("{POSTEDIT}", "{/POSTEDIT}", $output);
+            $te->removeLogicTag("{PAGEEDIT}", "{/PAGEEDIT}", $output);
+            $te->removeLogicTag("{POSTEDIT}", "{/POSTEDIT}", $output);
         }
         isset($content) ? $content = stripslashes($content) : $content = "";
 
@@ -59,10 +60,10 @@ class AdminEditPageController extends AdminBasePageController
             "{VARS}" => $vars,
             "{CONTENT}" => $content
         ];
-        ParseTags($tags, $output);
+        $te->parseTags($tags, $output);
         //Clean up the tags if not already replaced
         $tags = [ "{NEWPOST}", "{/NEWPOST}", "{PAGEEDIT}", "{/PAGEEDIT}", "{POSTEDIT}", "{/POSTEDIT}" ];
-        RemoveTags($tags, $output);
+        $te->removeTags($tags, $output);
 
         parent::__construct($output);
     }

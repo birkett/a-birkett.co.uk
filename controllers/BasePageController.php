@@ -21,14 +21,14 @@ class BasePageController
             "{THISYEAR}" => date('Y'),
             "{ADMINFOLDER}" => ""
         ];
-        ParseTags($tags, $output);
+        TemplateEngine()->parseTags($tags, $output);
 
         if (CHRISTMAS) {
             $tags = [ "{EXTRASTYLESHEETS}", "{/EXTRASTYLESHEETS}" ];
-            RemoveTags($tags, $output);
+            TemplateEngine()->removeTags($tags, $output);
         } else {
-            RemoveLogicTag("{EXTRASTYLESHEETS}", "{/EXTRASTYLESHEETS}", $output);
+            TemplateEngine()->removeLogicTag("{EXTRASTYLESHEETS}", "{/EXTRASTYLESHEETS}", $output);
         }
-        RemoveLogicTag("{ADMINSTYLESHEET}", "{/ADMINSTYLESHEET}", $output);
+        TemplateEngine()->removeLogicTag("{ADMINSTYLESHEET}", "{/ADMINSTYLESHEET}", $output);
     }
 }

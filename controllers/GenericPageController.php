@@ -17,8 +17,7 @@ class GenericPageController extends BasePageController
             "{PAGETITLE}" => $page[0],
             "{PAGECONTENT}" => stripslashes($page[1])
         ];
-        ParseTags($tags, $output);
-
+        TemplateEngine()->parseTags($tags, $output);
         parent::__construct($output);
     }
 }

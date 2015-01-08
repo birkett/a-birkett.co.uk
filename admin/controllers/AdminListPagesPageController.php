@@ -10,18 +10,19 @@ class AdminListPagesPageController extends AdminBasePageController
 {
     public function __construct(&$output)
     {
+        $te = TemplateEngine();
         $result = GetAllPages();
         while (list($id, $title) = GetDatabase()->getRow($result)) {
             $tags = [
                 "{PAGEID}" => $id,
                 "{PAGETITLE}" => $title
             ];
-            $temp = LogicTag("{LOOP}", "{/LOOP}", $output);
-            ParseTags($tags, $temp);
+            $temp = $te->logicTag("{LOOP}", "{/LOOP}", $output);
+            $te->parseTags($tags, $temp);
             $temp .= "\n{LOOP}";
-            ReplaceTag("{LOOP}", $temp, $output);
+            $te->replaceTag("{LOOP}", $temp, $output);
         }
-        RemoveLogicTag("{LOOP}", "{/LOOP}", $output);
+        $te->removeLogicTag("{LOOP}", "{/LOOP}", $output);
 
         parent::__construct($output);
     }

@@ -13,9 +13,11 @@ class FeedPageController extends BasePageController
         header("Content-Type: application/xml; charset=utf-8");
 
         $db = GetDatabase();
+        $te = TemplateEngine();
+
         $posts = GetPosts("page", 0, false);
 
-        $itemloop = LogicTag("{LOOP}", "{/LOOP}", $output);
+        $itemloop = $te->logicTag("{LOOP}", "{/LOOP}", $output);
 
         while (list($id, $timestamp, $title, $content, $draft) = GetDatabase()->GetRow($posts)) {
             $temp = $itemloop;
@@ -25,18 +27,11 @@ class FeedPageController extends BasePageController
                 "{POSTTIMESTAMP}" => date("D, d M Y H:i:s O", $timestamp),
                 "{POSTCONTENT}" => $content
             ];
-            ParseTags($tags, $temp);
+            $te->parseTags($tags, $temp);
             $temp .= "\n{LOOP}";
-            ReplaceTag("{LOOP}", $temp, $output);
+            $te->replaceTag("{LOOP}", $temp, $output);
         }
-        RemoveLogicTag("{LOOP}", "{/LOOP}", $output);
-
-        $tags = [
-            "{BASEURL}" => GetBaseURL(),
-            "{SITETITLE}" => SITE_TITLE,
-            "{THISYEAR}" => date('Y'),
-        ];
-        ParseTags($tags, $output);
+        $te->removeLogicTag("{LOOP}", "{/LOOP}", $output);
 
         parent::__construct($output);
     }

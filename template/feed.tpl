@@ -2,9 +2,9 @@
     <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <atom:link href="{BASEURL}feed" rel="self" type="application/rss+xml" />
-        <title>{SITETITLE} :: Blog Posts</title>
+        <title>{TITLE}</title>
         <link>{BASEURL}</link>
-        <description>RSS feed for the personal blog of {SITETITLE}</description>
+        <description>RSS feed for the personal blog of Anthony Birkett.</description>
         <language>en-GB</language>
         <copyright>Copyright (C) 2007-{THISYEAR} Anthony Birkett - {BASEURL}</copyright>
 

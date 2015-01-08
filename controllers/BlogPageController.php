@@ -56,6 +56,7 @@ class BlogPageController extends BasePageController
     public function __construct(&$output)
     {
         $db = GetDatabase();
+        $te = TemplateEngine();
         //Clamp pagniation offset
         if (
             isset($_GET['offset']) &&
@@ -85,18 +86,18 @@ class BlogPageController extends BasePageController
                         "{COMMENTTIMESTAMP}" => date(DATE_FORMAT, $ctimestamp),
                         "{COMMENTCONTENT}" => stripslashes($ctext)
                     ];
-                    $temp = LogicTag("{COMMENT}", "{/COMMENT}", $output);
-                    ParseTags($tags, $temp);
+                    $temp = $te->logicTag("{COMMENT}", "{/COMMENT}", $output);
+                    $te->parseTags($tags, $temp);
                     $temp .= "{COMMENT}";
-                    ReplaceTag("{COMMENT}", $temp, $output); //Add this comment to the output
+                    $te->replaceTag("{COMMENT}", $temp, $output); //Add this comment to the output
                 }
             }
 
             //Snow new comments box
             $tags = [ "{COMMENTPOSTID}" => $_GET['postid'], "{RECAPTCHAKEY}" => RECAPTCHA_PUBLIC_KEY ];
-            ParseTags($tags, $output);
+            $te->parseTags($tags, $output);
 
-            RemoveLogicTag("{PAGINATION}", "{/PAGINATION}", $output); //No pagination in single post mode
+            $te->removeLogicTag("{PAGINATION}", "{/PAGINATION}", $output); //No pagination in single post mode
         } else {
         //Normal mode
             $result = GetPosts("page", $offset, false);
@@ -110,17 +111,17 @@ class BlogPageController extends BasePageController
             if ($numberofposts > BLOG_POSTS_PER_PAGE) {
                 if ($offset > 0) {
                     $tags = [ "{PAGEPREVIOUSLINK}" => "/blog/page/$offset", "{PAGEPREVIOUSTEXT}" => "Previous Page" ];
-                    ParseTags($tags, $output);
+                    $te->parseTags($tags, $output);
                 }
                 if (($offset + 1) * BLOG_POSTS_PER_PAGE < $numberofposts) {
                     $linkoffset = $offset + 2;
                     $tags = [ "{PAGENEXTLINK}" => "/blog/page/$linkoffset", "{PAGENEXTTEXT}" => "Next Page" ];
-                    ParseTags($tags, $output);
+                    $te->parseTags($tags, $output);
                 }
             } else {
-                RemoveLogicTag("{PAGINATION}", "{/PAGINATION}", $output); //Hide pagniation when too few posts
+                $te->removeLogicTag("{PAGINATION}", "{/PAGINATION}", $output); //Hide pagniation when too few posts
             }
-            RemoveLogicTag("{NEWCOMMENT}", "{/NEWCOMMENT}", $output); //No comments box in normal mode
+            $te->removeLogicTag("{NEWCOMMENT}", "{/NEWCOMMENT}", $output); //No comments box in normal mode
         }
 
         //Rendering code
@@ -132,19 +133,19 @@ class BlogPageController extends BasePageController
                 "{POSTCONTENT}" => stripslashes($content),
                 "{COMMENTCOUNT}" => $this->getNumberOfComments($id)
             ];
-            $temp = LogicTag("{BLOGPOST}", "{/BLOGPOST}", $output);
-            ParseTags($tags, $temp);
+            $temp = $te->logicTag("{BLOGPOST}", "{/BLOGPOST}", $output);
+            $te->parseTags($tags, $temp);
             $temp .= "\n{BLOGPOST}";
-            ReplaceTag("{BLOGPOST}", $temp, $output); //Add this post to the output
+            $te->replaceTag("{BLOGPOST}", $temp, $output); //Add this post to the output
         }
 
-        RemoveLogicTag("{BLOGPOST}", "{/BLOGPOST}", $output);
-        RemoveLogicTag("{COMMENT}", "{/COMMENT}", $output);
+        $te->removeLogicTag("{BLOGPOST}", "{/BLOGPOST}", $output);
+        $te->removeLogicTag("{COMMENT}", "{/COMMENT}", $output);
 
         //Clean up the tags if not already replaced
         $cleantags = [ "{PAGEPREVIOUSLINK}", "{PAGEPREVIOUSTEXT}", "{PAGENEXTLINK}", "{PAGENEXTTEXT}",
                         "{PAGINATION}", "{/PAGINATION}", "{NEWCOMMENT}", "{/NEWCOMMENT}" ];
-        RemoveTags($cleantags, $output);
+        $te->removeTags($cleantags, $output);
 
         parent::__construct($output);
     }

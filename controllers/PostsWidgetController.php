@@ -11,6 +11,7 @@ class PostsWidgetController extends BasePageController
     public function __construct(&$output)
     {
         $db = GetDatabase();
+        $te = TemplateEngine();
         $posts = GetPosts("all");
         $post_array = [];
         while (list($id, $timestamp, $title, $draft) = $db->GetRow($posts)) {
@@ -21,28 +22,28 @@ class PostsWidgetController extends BasePageController
             $post_array["$month"][] = array("title" => $title, "id" => $id);
         }
 
-        $monthloop = LogicTag("{MONTHLOOP}", "{/MONTHLOOP}", $output);
-        $itemloop = LogicTag("{ITEMLOOP}", "{/ITEMLOOP}", $output);
+        $monthloop = $te->logicTag("{MONTHLOOP}", "{/MONTHLOOP}", $output);
+        $itemloop = $te->logicTag("{ITEMLOOP}", "{/ITEMLOOP}", $output);
         foreach ($post_array as $month => $data) {
             $temp = $monthloop;
-            ReplaceTag("{MONTH}", $month, $temp);
+            $te->replaceTag("{MONTH}", $month, $temp);
             foreach ($data as $post) {
                 $temp2 = $itemloop;
                 $tags = [
                     "{POSTID}" => $post['id'],
                     "{POSTTITLE}" => $post['title']
                 ];
-                ParseTags($tags, $temp2);
+                $te->parseTags($tags, $temp2);
                 $temp2 .= "\n{ITEMLOOP}";
-                ReplaceTag("{ITEMLOOP}", $temp2, $temp);
+                $te->replaceTag("{ITEMLOOP}", $temp2, $temp);
             }
             $temp .= "\n{MONTHLOOP}";
-            ReplaceTag("{MONTHLOOP}", $temp, $output);
-            RemoveLogicTag("{ITEMLOOP}", "{/ITEMLOOP}", $output);
+            $te->replaceTag("{MONTHLOOP}", $temp, $output);
+            $te->removeLogicTag("{ITEMLOOP}", "{/ITEMLOOP}", $output);
         }
-        RemoveLogicTag("{MONTHLOOP}", "{/MONTHLOOP}", $output);
+        $te->removeLogicTag("{MONTHLOOP}", "{/MONTHLOOP}", $output);
         $tags = [ "{ITEMS}", "{MONTHS}" ];
-        RemoveTags($tags, $output);
+        $te->removeTags($tags, $output);
 
         parent::__construct($output);
     }

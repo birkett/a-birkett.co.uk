@@ -13,18 +13,21 @@ class Page
     //-----------------------------------------------------------------------------
     public function __construct($title, $widget, $template)
     {
-        if (defined('ADMINPAGE')) {
-            $pagetemplate = OpenTemplate("../../" . TEMPLATE_FOLDER . "/page.tpl");
-        } else {
-            $pagetemplate = OpenTemplate("page.tpl");
-        }
+        $te = TemplateEngine();
 
-        $tags = [
-            "{PAGE}" => OpenTemplate("$template.tpl"),
-            "{WIDGET}" => OpenTemplate("$widget.tpl"),
-            "{TITLE}" => $title
-        ];
-        ParseTags($tags, $pagetemplate);
+        if ($template == "feed") {
+            $pagetemplate = $te->loadPageTemplate("feed.tpl");
+            $tags = [ "{TITLE}" => $title ];
+        } else {
+            $pagetemplate = $te->loadPageTemplate("page.tpl");
+
+            $tags = [
+                "{PAGE}" => $te->loadSubTemplate("$template.tpl"),
+                "{WIDGET}" => $te->loadSubTemplate("$widget.tpl"),
+                "{TITLE}" => $title
+            ];
+        }
+        $te->parseTags($tags, $pagetemplate);
 
         if (defined('ADMINPAGE')) {
             switch ($template) {
@@ -60,6 +63,9 @@ class Page
                     break;
                 case "blog":
                     new BlogPageController($pagetemplate);
+                    break;
+                case "feed":
+                    new FeedPageController($pagetemplate);
                     break;
                 default:
                     new BasePageController($pagetemplate);

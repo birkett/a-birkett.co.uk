@@ -23,6 +23,20 @@ function GetDatabase()
 }
 
 //-----------------------------------------------------------------------------
+// Open a TemplateEngine handle
+//		In: none
+//		Out: TemplateEngine object
+//-----------------------------------------------------------------------------
+function TemplateEngine()
+{
+    static $te = null;
+    if (!isset($te)) {
+        $te = new TemplateEngine();
+    }
+    return $te;
+}
+
+//-----------------------------------------------------------------------------
 // Autoloader for Classes and Controllers
 //		In: Class name
 //		Out: none
@@ -82,79 +96,6 @@ function PHPDefaults()
 
     //Autoloader
     spl_autoload_register("ABirkett\Autoloader");
-}
-
-//-----------------------------------------------------------------------------
-// Open a template file for inclusion
-//		In: Filename
-//		Out: Unparsed (sub)template
-//-----------------------------------------------------------------------------
-function OpenTemplate($file)
-{
-    return file_get_contents(TEMPLATE_FOLDER . $file);
-}
-
-//-----------------------------------------------------------------------------
-// Replace a tag with a string (for inserting sub templates into the output)
-//		In: Tag and parsed sub template
-//		Out: Parsed template
-//-----------------------------------------------------------------------------
-function ReplaceTag($tag, $string, &$output)
-{
-    $output = str_replace($tag, $string, $output);
-}
-
-//-----------------------------------------------------------------------------
-// Parse the tags in a given array to the template
-//		In: Tags and Unparsed template
-//		Out: Parsed template
-//-----------------------------------------------------------------------------
-function ParseTags(&$tags, &$output)
-{
-    $output = str_replace(array_keys($tags), $tags, $output);
-}
-
-//-----------------------------------------------------------------------------
-// Remove any left over tags from the parsed template
-//		In: Tags and Parsed template
-//		Out: Clean Parsed template
-//-----------------------------------------------------------------------------
-function RemoveTags(&$tags, &$output)
-{
-    $output = str_replace($tags, "", $output);
-}
-
-//-----------------------------------------------------------------------------
-// Return the contents of a logic tag
-//		In: Tags and Unparsed template
-//		Out: String from between $start and $end
-//
-//  Logic tags can be loops, i.e. {LOOP} content {/LOOP}
-//-----------------------------------------------------------------------------
-function LogicTag($start, $end, &$content)
-{
-    $r = explode($start, $content);
-    if (isset($r[1])) {
-        $r = explode($end, $r[1]);
-        return $r[0];
-    }
-    return '';
-}
-
-//-----------------------------------------------------------------------------
-// Remove any left over logic tags from the parsed template
-//		In: Tags and Parsed template
-//		Out: Clean Parsed template
-//-----------------------------------------------------------------------------
-function RemoveLogicTag($start, $end, &$content)
-{
-    $beginningPos = strpos($content, $start);
-    $endPos = strpos($content, $end);
-    if (!$beginningPos || !$endPos) {
-        return;
-    }
-    $textToDelete = substr($content, $beginningPos, ($endPos + strlen($end)) - $beginningPos);
-    $content = str_replace($textToDelete, '', $content);
 }
 
 //-----------------------------------------------------------------------------

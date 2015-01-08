@@ -18,7 +18,7 @@ class AdminServerInfoPageController extends AdminBasePageController
             "{PDOMYSQLEXT}" => (extension_loaded("PDO_MySQL") ? "Yes" : "No"),
             "{PHPCURLEXT}" => (extension_loaded("CURL") ? "Yes" : "No")
         ];
-        ParseTags($tags, $output);
+        TemplateEngine()->parseTags($tags, $output);
 
         parent::__construct($output);
     }

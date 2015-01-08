@@ -12,13 +12,14 @@ class AdminBasePageController extends BasePageController
 {
     public function __construct(&$output)
     {
+        $te = TemplateEngine();
         $tags = [
             "{ADMINFOLDER}" => ADMIN_FOLDER,
         ];
-        ParseTags($tags, $output);
+        $te->parseTags($tags, $output);
 
         $tags = [ "{ADMINSTYLESHEET}", "{/ADMINSTYLESHEET}" ];
-        RemoveTags($tags, $output);
+        $te->removeTags($tags, $output);
 
         parent::__construct($output);
     }

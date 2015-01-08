@@ -10,6 +10,7 @@ class AdminListPostsPageController extends AdminBasePageController
 {
     public function __construct(&$output)
     {
+        $te = TemplateEngine();
         $result = GetPosts("all", 0, true);
         while (list($id, $timestamp, $title, $draft) = GetDatabase()->getRow($result)) {
             $draft ? $title .= " (DRAFT)" : $title .= "";
@@ -18,12 +19,12 @@ class AdminListPostsPageController extends AdminBasePageController
                 "{POSTID}" => $id,
                 "{POSTTITLE}" => $title
             ];
-            $temp = LogicTag("{LOOP}", "{/LOOP}", $output);
-            ParseTags($tags, $temp);
+            $temp = $te->logicTag("{LOOP}", "{/LOOP}", $output);
+            $te->parseTags($tags, $temp);
             $temp .= "\n{LOOP}";
-            ReplaceTag("{LOOP}", $temp, $output);
+            $te->replaceTag("{LOOP}", $temp, $output);
         }
-        RemoveLogicTag("{LOOP}", "{/LOOP}", $output);
+        $te->removeLogicTag("{LOOP}", "{/LOOP}", $output);
 
         parent::__construct($output);
     }

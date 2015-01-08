@@ -36,7 +36,7 @@ if (isset($_GET['page'])) {
             new Page(SITE_TITLE . " :: Error", "twitterwidget", "generic");
             break;
         case "feed":
-            new Feed();
+            new Page(SITE_TITLE . " :: Blog Feed", "none", "feed");
             break;
         default:
             new Page(SITE_TITLE . " :: Home", "twitterwidget", "index");
