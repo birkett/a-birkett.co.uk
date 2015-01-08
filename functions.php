@@ -71,7 +71,7 @@ function Autoloader($class)
 
     //Try the admin folder
     if (defined('ADMINPAGE')) {
-        $base_dir = __DIR__ . "/" . ADMIN_FOLDER;
+        $base_dir .= ADMIN_FOLDER;
 
         $file = $base_dir . $folder . str_replace('\\', '/', $relative_class) . '.php';
         if (file_exists($file)) {
@@ -133,43 +133,6 @@ function GetPosts($mode, $id = 0, $drafts = false)
             array()
         );
     }
-}
-
-//-----------------------------------------------------------------------------
-// Post a new comment to the database
-//		In: Target post ID, Username, Text and IP address
-//		Out: none
-//-----------------------------------------------------------------------------
-function PostComment($postid, $username, $comment, $clientip)
-{
-    $currenttime = time();
-    GetDatabase()->runQuery(
-        "INSERT INTO blog_comments(post_id, comment_username, comment_text, comment_timestamp, client_ip)" .
-        " VALUES(:postid, :username, :comment, :currenttime, :clientip)",
-        array(
-            ":postid" => $postid,
-            ":username" => $username,
-            ":comment" => $comment,
-            ":currenttime" => $currenttime,
-            ":clientip" => $clientip
-        )
-    );
-}
-
-//-----------------------------------------------------------------------------
-// Fetch page content by ID or Name
-//		In: Page name or ID
-//		Out: Page title and content or NULL
-//-----------------------------------------------------------------------------
-function GetPage($pagename)
-{
-    $db = GetDatabase();
-    $pages = $db->runQuery(
-        "SELECT page_title, page_content FROM site_pages WHERE " .
-        (is_numeric($pagename) ? "page_id = :pagename" : "page_name = :pagename"),
-        array(":pagename" => $pagename)
-    );
-    return $pages[0];
 }
 
 //-----------------------------------------------------------------------------

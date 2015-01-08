@@ -10,12 +10,27 @@ namespace ABirkett;
 
 class GenericPageController extends BasePageController
 {
+    //-----------------------------------------------------------------------------
+    // Fetch page content
+    //		In: Page name
+    //		Out: Page title and content
+    //-----------------------------------------------------------------------------
+    private function getPage($pagename)
+    {
+        $db = GetDatabase();
+        $page = $db->runQuery(
+            "SELECT page_title, page_content FROM site_pages WHERE page_name = :pagename",
+            array(":pagename" => $pagename)
+        );
+        return $page[0];
+    }
+
     public function __construct(&$output, $name)
     {
-        $page = GetPage($name);
+        $page = $this->getPage($name);
         $tags = [
-            "{PAGETITLE}" => $page[0],
-            "{PAGECONTENT}" => stripslashes($page[1])
+            "{PAGETITLE}" => $page['page_title'],
+            "{PAGECONTENT}" => stripslashes($page['page_content'])
         ];
         TemplateEngine()->parseTags($tags, $output);
         parent::__construct($output);

@@ -8,14 +8,29 @@ namespace ABirkett;
 
 class AdminEditPageController extends AdminBasePageController
 {
+    //-----------------------------------------------------------------------------
+    // Fetch page content
+    //		In: Page ID
+    //		Out: Page title and content
+    //-----------------------------------------------------------------------------
+    private function getPage($pageid)
+    {
+        $db = GetDatabase();
+        $page = $db->runQuery(
+            "SELECT page_title, page_content FROM site_pages WHERE page_id = :pageid",
+            array(":pageid" => $pageid)
+        );
+        return $page[0];
+    }
+
     public function __construct(&$output)
     {
         $te = TemplateEngine();
         $vars = "";
         if (isset($_GET['pageid'])) {
             //Page edit mode
-            $page = GetPage($_GET['pageid']);
-            $content = $page[1];
+            $page = $this->getPage($_GET['pageid']);
+            $content = $page['page_content'];
 
             $vars .= 'var pageid = document.getElementById("formpageid").value;';
             $vars .= 'var data = "mode=editpage&pageid="+pageid+"&content="+content;';
