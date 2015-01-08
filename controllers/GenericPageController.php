@@ -15,7 +15,7 @@ class GenericPageController
         $page = GetPage($name);
         $tags = [
             "{PAGETITLE}" => $page[0],
-            "{PAGECONTENT}" => $page[1]
+            "{PAGECONTENT}" => stripslashes($page[1])
         ];
         ParseTags($tags, $output);
     }

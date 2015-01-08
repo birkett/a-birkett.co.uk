@@ -11,11 +11,6 @@ use PDO;
 class PDOMySQLDatabase
 {
     private $mLink;
-    private $host;
-    private $port;
-    private $user;
-    private $pass;
-    private $db;
 
     //-----------------------------------------------------------------------------
     // Constructor
@@ -24,20 +19,14 @@ class PDOMySQLDatabase
     //-----------------------------------------------------------------------------
     public function __construct()
     {
-        $this->host = DATABASE_HOSTNAME;
-        $this->port = DATABASE_PORT;
-        $this->user = DATABASE_USERNAME;
-        $this->pass = DATABASE_PASSWORD;
-        $this->db   = DATABASE_NAME;
-
         try {
             $this->mLink = new PDO(
-                "mysql:host=$this->host;dbname=$this->db",
-                $this->user,
-                $this->pass,
-                array(PDO::ATTR_ERRMODE => PDO::ERRMODE_SILENT)
+                "mysql:host=" . DATABASE_HOSTNAME . ";dbname=" . DATABASE_NAME . ";port=" . DATABASE_PORT,
+                DATABASE_USERNAME,
+                DATABASE_PASSWORD,
+                array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
             );
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             echo "DB no work :(";
         }
     }
@@ -70,12 +59,16 @@ class PDOMySQLDatabase
     //      In: Query string
     //      Out: MySQLi result
     //-----------------------------------------------------------------------------
-    public function runQuery($query)
+    public function runQuery($query, $params)
     {
         if (!$this->mLink) {
             return;
         }
-        return $this->mLink->query($query);
+        $statement = $this->mLink->prepare($query);
+        $statement->execute($params);
+        if ($statement->columnCount() != 0) {
+            return $statement->fetchAll();
+        }
     }
 
     //-----------------------------------------------------------------------------
@@ -84,12 +77,16 @@ class PDOMySQLDatabase
     //      Out: Single row
     //   Returns next row on each call until end, then NULL
     //-----------------------------------------------------------------------------
-    public function getRow($result)
+    public function getRow(&$result)
     {
-        if (!$this->mLink) {
+        if (!$result) {
             return;
         }
-        return $result->fetch(PDO::FETCH_NUM);
+        if (count($result) != 0) {
+            return array_shift($result);
+        } else {
+            return null;
+        }
     }
 
     //-----------------------------------------------------------------------------
@@ -102,7 +99,7 @@ class PDOMySQLDatabase
         if (!$result) {
             return;
         }
-        return $result->rowCount();
+        return count($result);
     }
 
     //-----------------------------------------------------------------------------

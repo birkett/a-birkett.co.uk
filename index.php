@@ -82,7 +82,7 @@ if (isset($_GET['page'])) {
             $recaptcha = new RecaptchaLib();
             $captcha = $recaptcha->checkAnswer(RECAPTHCA_PRIVATE_KEY, $ip, $ch, $resp);
             if ($captcha['is_valid'] == true) {
-                PostComment($p, Sanitize($u), Sanitize($c), $ip);
+                PostComment($p, $u, $c, $ip);
                 GoodRequest("Comment Posted!");
             } else {
                 BadRequest("Captcha verification failed");

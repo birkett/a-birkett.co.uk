@@ -32,7 +32,7 @@ class BlogPageController
                 header('Location: /404');  //Back out if we didnt find any posts
                 return;
             }
-                    
+
             //Show comments
             $comments = GetCommentsOnPost($_GET['postid']);
             if ($db->GetNumRows($comments) != 0) {
@@ -48,11 +48,11 @@ class BlogPageController
                     ReplaceTag("{COMMENT}", $temp, $output); //Add this comment to the output
                 }
             }
-            
+
             //Snow new comments box
             $tags = [ "{COMMENTPOSTID}" => $_GET['postid'], "{RECAPTCHAKEY}" => RECAPTCHA_PUBLIC_KEY ];
             ParseTags($tags, $output);
-            
+
             RemoveLogicTag("{PAGINATION}", "{/PAGINATION}", $output); //No pagination in single post mode
         } else {
         //Normal mode
@@ -61,7 +61,7 @@ class BlogPageController
                 header('Location: /404'); //Back out if we didnt find any posts
                 return;
             }
-        
+
             //Show Pagination
             $numberofposts = GetNumberOfPosts();
             if ($numberofposts > BLOG_POSTS_PER_PAGE) {
@@ -79,25 +79,25 @@ class BlogPageController
             }
             RemoveLogicTag("{NEWCOMMENT}", "{/NEWCOMMENT}", $output); //No comments box in normal mode
         }
-        
+
         //Rendering code
         while (list($id, $timestamp, $title, $content, $draft) = $db->GetRow($result)) {
             $tags = [
                 "{POSTTIMESTAMP}" => date(DATE_FORMAT, $timestamp),
                 "{POSTID}" => $id,
                 "{POSTTITLE}" => $title,
-                "{POSTCONTENT}" => $content,
-                "{COMMENTCOUNT}" => GetNumberOfComments($id)
+                "{POSTCONTENT}" => stripslashes($content),
+                "{COMMENTCOUNT}" => GetNumberOfComments($id)[0]['COUNT(*)']
             ];
             $temp = LogicTag("{BLOGPOST}", "{/BLOGPOST}", $output);
             ParseTags($tags, $temp);
             $temp .= "\n{BLOGPOST}";
             ReplaceTag("{BLOGPOST}", $temp, $output); //Add this post to the output
         }
-        
+
         RemoveLogicTag("{BLOGPOST}", "{/BLOGPOST}", $output);
         RemoveLogicTag("{COMMENT}", "{/COMMENT}", $output);
-    
+
         //Clean up the tags if not already replaced
         $cleantags = [ "{PAGEPREVIOUSLINK}", "{PAGEPREVIOUSTEXT}", "{PAGENEXTLINK}", "{PAGENEXTTEXT}",
                         "{PAGINATION}", "{/PAGINATION}", "{NEWCOMMENT}", "{/NEWCOMMENT}" ];

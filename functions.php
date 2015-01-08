@@ -174,7 +174,8 @@ function GetPosts($mode, $id = 0, $drafts = false)
     //Single Post
     if ($mode == "single") {
         return GetDatabase()->runQuery(
-            "SELECT * FROM blog_posts WHERE post_id = $id " . ($drafts ? "" : "AND post_draft='0' ")
+            "SELECT * FROM blog_posts WHERE post_id = :id " . ($drafts ? "" : "AND post_draft='0' "),
+            array(":id" => $id)
         );
     }
     $drafts ? $draftsql = "" : $draftsql = "WHERE post_draft='0' ";
@@ -183,14 +184,16 @@ function GetPosts($mode, $id = 0, $drafts = false)
         $limit1 = $id * BLOG_POSTS_PER_PAGE;
         $limit2 = BLOG_POSTS_PER_PAGE;
         return GetDatabase()->runQuery(
-            "SELECT * FROM blog_posts " . $draftsql . "ORDER BY post_timestamp DESC LIMIT $limit1,$limit2"
+            "SELECT * FROM blog_posts " . $draftsql . "ORDER BY post_timestamp DESC LIMIT $limit1,$limit2",
+            array()
         );
     }
     //All posts - only fetch the ID, title, timestamp and Draft status to save query time
     if ($mode == "all") {
         return GetDatabase()->runQuery(
             "SELECT post_id, post_timestamp, post_title, post_draft FROM blog_posts " .
-            $draftsql . "ORDER BY post_timestamp DESC"
+            $draftsql . "ORDER BY post_timestamp DESC",
+            array()
         );
     }
 }
@@ -206,7 +209,8 @@ function GetNumberOfPosts($drafts = false)
     $db = GetDatabase();
     return $db->getNumRows(
         $db->runQuery(
-            "SELECT post_id from blog_posts " . ($drafts ? "" : "WHERE post_draft='0' ")
+            "SELECT post_id from blog_posts " . ($drafts ? "" : "WHERE post_draft='0' "),
+            array()
         )
     );
 }
@@ -220,7 +224,8 @@ function GetNumberOfPosts($drafts = false)
 function GetCommentsOnPost($postid)
 {
     return GetDatabase()->runQuery(
-        "SELECT * FROM blog_comments WHERE post_id = $postid ORDER BY comment_timestamp ASC "
+        "SELECT * FROM blog_comments WHERE post_id = :postid ORDER BY comment_timestamp ASC ",
+        array(":postid" => $postid)
     );
 }
 
@@ -232,7 +237,10 @@ function GetCommentsOnPost($postid)
 function GetNumberOfComments($postid)
 {
     $db = GetDatabase();
-    return $db->getNumRows($db->runQuery("SELECT comment_id from blog_comments WHERE post_id='$postid'"));
+    return $db->runQuery(
+        "SELECT COUNT(*) FROM blog_comments WHERE post_id = :postid",
+        array(":postid" => $postid)
+    );
 }
 
 //-----------------------------------------------------------------------------
@@ -245,7 +253,14 @@ function PostComment($postid, $username, $comment, $clientip)
     $currenttime = time();
     GetDatabase()->runQuery(
         "INSERT INTO blog_comments(post_id, comment_username, comment_text, comment_timestamp, client_ip)" .
-        " VALUES('$postid', $username, $comment, $currenttime, '$clientip')"
+        " VALUES(:postid, :username, :comment, :currenttime, :clientip)",
+        array(
+            ":postid" => $postid,
+            ":username" => $username,
+            ":comment" => $comment,
+            ":currenttime" => $currenttime,
+            ":clientip" => $clientip
+        )
     );
 }
 
@@ -257,12 +272,12 @@ function PostComment($postid, $username, $comment, $clientip)
 function GetPage($pagename)
 {
     $db = GetDatabase();
-    return $db->getRow(
-        $db->runQuery(
-            "SELECT page_title, page_content FROM site_pages WHERE " .
-            (is_numeric($pagename) ? "page_id='$pagename'" : "page_name='$pagename'")
-        )
+    $pages = $db->runQuery(
+        "SELECT page_title, page_content FROM site_pages WHERE " .
+        (is_numeric($pagename) ? "page_id = :pagename" : "page_name = :pagename"),
+        array(":pagename" => $pagename)
     );
+    return $pages[0];
 }
 
 //-----------------------------------------------------------------------------
@@ -273,20 +288,17 @@ function GetPage($pagename)
 function CheckIP($ip)
 {
     $db = GetDatabase();
-    if ($db->getNumRows($db->runQuery("SELECT * FROM blocked_addresses WHERE address='$ip'")) != 0) {
-        return true;
+    if (
+        $db->getNumRows(
+            $db->runQuery(
+                "SELECT * FROM blocked_addresses WHERE address=':ip'",
+                array(":ip" => $ip)
+            )
+        )
+        != 0) {
+            return true;
     }
     return false;
-}
-
-//-----------------------------------------------------------------------------
-// Make user input strings safe for the database
-//		In: Raw string
-//		Out: Safe string with original slashes removed - then escaped
-//-----------------------------------------------------------------------------
-function Sanitize($string)
-{
-    return GetDatabase()->escapeString(stripslashes($string));
 }
 
 //-----------------------------------------------------------------------------
@@ -307,21 +319,18 @@ function GetBaseURL()
 //-----------------------------------------------------------------------------
 function GoodRequest($m = "")
 {
-    echo $m;
     http_response_code(200);
-    exit();
+    exit($m);
 }
 
 function BadRequest($m = "")
 {
-    echo $m;
     http_response_code(400);
-    exit();
+    exit($m);
 }
 
 function BlockedRequest($m = "")
 {
-    echo $m;
     http_response_code(401);
-    exit();
+    exit($m);
 }

@@ -20,7 +20,8 @@ class AdminListCommentsPageController
                 "{COMMENT}" => $comment,
                 "{USERNAME}" => $username,
                 "{TIMESTAMP}" => date(DATE_FORMAT, $timestamp),
-                "{IP}" => $ip
+                "{IP}" => $ip,
+                "{POSTID}" => $postid
             ];
             $temp = LogicTag("{LOOP}", "{/LOOP}", $output);
             ParseTags($tags, $temp);

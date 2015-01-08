@@ -20,7 +20,7 @@ class PostsWidgetController
             }
             $post_array["$month"][] = array("title" => $title, "id" => $id);
         }
-        
+
         $monthloop = LogicTag("{MONTHLOOP}", "{/MONTHLOOP}", $output);
         $itemloop = LogicTag("{ITEMLOOP}", "{/ITEMLOOP}", $output);
         foreach ($post_array as $month => $data) {

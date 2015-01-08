@@ -14,16 +14,16 @@ namespace ABirkett;
 //-----------------------------------------------------------------------------
 function CheckCredentials($username, $password)
 {
-    $u = Sanitize($_POST['username']);
-    $p = $_POST['password'];
-
     $db = GetDatabase();
-    $result = $db->runQuery("SELECT password FROM site_users WHERE username=$u");
+    $result = $db->runQuery(
+        "SELECT password FROM site_users WHERE username = :username",
+        array(":username" => $username)
+    );
 
     if ($db->getNumRows($result) == 1) {
         $dbhash = $db->getRow($result);
-        if (password_verify($p, $dbhash[0])) {
-            $_SESSION['user'] = $_POST['username'];
+        if (password_verify($password, $dbhash[0])) {
+            $_SESSION['user'] = $username;
             return true;
         }
     }
@@ -78,7 +78,7 @@ function BoolToInt($bool)
 //-----------------------------------------------------------------------------
 function GetAllPages()
 {
-    return GetDatabase()->runQuery("SELECT page_id, page_title from site_pages");
+    return GetDatabase()->runQuery("SELECT page_id, page_title from site_pages", array());
 }
 
 //-----------------------------------------------------------------------------
@@ -90,8 +90,9 @@ function UpdatePost($postid, $title, $content, $draft)
 {
     $draft = BoolToInt($draft);
     GetDatabase()->runQuery(
-        "UPDATE blog_posts SET post_title='$title', post_content='$content', " .
-        "post_draft='$draft' WHERE post_id='$postid' LIMIT 1"
+        "UPDATE blog_posts SET post_title = :title, post_content = :content, " .
+        "post_draft = :draft WHERE post_id = :postid LIMIT 1",
+        array(":title" => $title, ":content" => $content, ":draft" => $draft, ":postid" => $postid)
     );
     TweetPost($postid);
 }
@@ -103,7 +104,10 @@ function UpdatePost($postid, $title, $content, $draft)
 //-----------------------------------------------------------------------------
 function UpdatePage($pageid, $content)
 {
-    GetDatabase()->runQuery("UPDATE site_pages SET page_content='$content' WHERE page_id='$pageid' LIMIT 1");
+    GetDatabase()->runQuery(
+        "UPDATE site_pages SET page_content = :content WHERE page_id = :pageid LIMIT 1",
+        array(":content" => $content, ":pageid" => $pageid)
+    );
 }
 
 //-----------------------------------------------------------------------------
@@ -115,13 +119,13 @@ function NewPost($title, $content, $draft)
 {
     $db = GetDatabase();
     $draft = BoolToInt($draft);
-    $timestamp = time();
     $db->runQuery(
         "INSERT INTO blog_posts(post_timestamp, post_title, post_content, post_draft, post_tweeted) " .
-        "VALUES('$timestamp', '$title', '$content', '$draft', 0)"
+        "VALUES(:timestamp, :title, :content, :draft, 0)",
+        array(":timestamp" => time(), ":title" => $title, ":content" => $content, ":draft" => $draft)
     );
-
-    $row = $db->getRow($db->runQuery("SELECT post_id FROM blog_posts ORDER BY post_timestamp DESC LIMIT 1"));
+    $data = $db->runQuery("SELECT post_id FROM blog_posts ORDER BY post_timestamp DESC LIMIT 1", array());
+    $row = $db->getRow($data);
     TweetPost($row[0]); //Tweet this if not already done
 }
 
@@ -132,11 +136,13 @@ function NewPost($title, $content, $draft)
 //-----------------------------------------------------------------------------
 function BlockIP($ip)
 {
-    $timestamp = time();
     if (CheckIP($ip)) {
         return; //do nothing if already blocked
     }
-    GetDatabase()->runQuery("INSERT INTO blocked_addresses(address, blocked_timestamp) VALUES('$ip', '$timestamp')");
+    GetDatabase()->runQuery(
+        "INSERT INTO blocked_addresses(address, blocked_timestamp) VALUES(:ip, :timestamp)",
+        array(":ip" => $ip, ":timestamp" => time())
+    );
 }
 
 //-----------------------------------------------------------------------------
@@ -146,7 +152,7 @@ function BlockIP($ip)
 //-----------------------------------------------------------------------------
 function UnblockIP($ip)
 {
-    GetDatabase()->runQuery("DELETE FROM blocked_addresses WHERE address='$ip'");
+    GetDatabase()->runQuery("DELETE FROM blocked_addresses WHERE address = :ip", array(":ip" => $ip));
 }
 
 //-----------------------------------------------------------------------------
@@ -156,7 +162,7 @@ function UnblockIP($ip)
 //-----------------------------------------------------------------------------
 function GetBlockedAddresses()
 {
-    return GetDatabase()->runQuery("SELECT * FROM blocked_addresses ORDER BY blocked_timestamp DESC");
+    return GetDatabase()->runQuery("SELECT * FROM blocked_addresses ORDER BY blocked_timestamp DESC", array());
 }
 
 //-----------------------------------------------------------------------------
@@ -168,7 +174,8 @@ function GetAllComments($ip = "")
 {
     return GetDatabase()->runQuery(
         "SELECT * FROM blog_comments" . ($ip == "" ? " " : " WHERE client_ip='$ip' ") .
-        "ORDER BY comment_timestamp DESC"
+        "ORDER BY comment_timestamp DESC",
+        array()
     );
 }
 
@@ -197,14 +204,15 @@ function ChangePassword($currentpassword, $newpassword, $confirmedpassword)
         return false; //Passwords dont match
     }
     $db = GetDatabase();
-    $row = $db->getRow($db->runQuery("SELECT username FROM site_users WHERE user_id='1'"));
+    $data = $db->runQuery("SELECT username FROM site_users WHERE user_id='1'", array());
+    $row = $db->getRow($data);
 
     if (!CheckCredentials($row[0], $currentpassword)) {
         return false; //Current password is wrong
     }
     $hash = HashPassword($newpassword);
 
-    $db->runQuery("UPDATE site_users SET password='$hash' WHERE user_id='1'");
+    $db->runQuery("UPDATE site_users SET password='$hash' WHERE user_id='1'", array());
     return true;
 }
 
@@ -226,7 +234,7 @@ function TweetPost($postid)
     }
 
     GetBaseURL();
-    $url = GetBaseURL() . "/blog/" . $id;
+    $url = GetBaseURL() . "blog/" . $id;
 
     $tweet = "New Blog Post: " . $title . " - " . $url;
 
@@ -238,7 +246,7 @@ function TweetPost($postid)
     );
     $twitter->post('statuses/update', array('status' => $tweet));
 
-    $db->runQuery("UPDATE blog_posts SET post_tweeted='1' WHERE post_id='$postid'");
+    $db->runQuery("UPDATE blog_posts SET post_tweeted=1 WHERE post_id = :postid", array(":postid" => $postid));
 }
 
 //-----------------------------------------------------------------------------
