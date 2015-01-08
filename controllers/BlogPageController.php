@@ -11,6 +11,34 @@ namespace ABirkett;
 class BlogPageController extends BasePageController
 {
     //-----------------------------------------------------------------------------
+    // Fetch the specified post
+    //		In: Post ID
+    //		Out: Post data
+    //-----------------------------------------------------------------------------
+    private function getSinglePost($postid)
+    {
+        return GetDatabase()->runQuery(
+            "SELECT * FROM blog_posts WHERE post_id = :id AND post_draft = '0'",
+            array(":id" => $postid)
+        );
+    }
+
+    //-----------------------------------------------------------------------------
+    // Fetch a page of posts
+    //		In: Page number
+    //		Out: Post data
+    //-----------------------------------------------------------------------------
+    private function getMultiplePosts($page)
+    {
+        $limit1 = $page * BLOG_POSTS_PER_PAGE;
+        $limit2 = BLOG_POSTS_PER_PAGE;
+        return GetDatabase()->runQuery(
+            "SELECT * FROM blog_posts WHERE post_draft = '0' ORDER BY post_timestamp DESC LIMIT $limit1,$limit2",
+            array()
+        );
+    }
+
+    //-----------------------------------------------------------------------------
     // Get the total number of blog posts
     //		In: none
     //		Out: Number of posts
@@ -71,7 +99,7 @@ class BlogPageController extends BasePageController
 
         //Single post mode
         if (isset($_GET['postid']) && is_numeric($_GET['postid']) && $_GET['postid'] >= 0 && $_GET['postid'] < 500000) {
-            $result = GetPosts("single", $_GET['postid'], false);
+            $result = $this->getSinglePost($_GET['postid']);
             if ($db->GetNumRows($result) == 0) {
                 header('Location: /404');  //Back out if we didnt find any posts
                 return;
@@ -100,7 +128,7 @@ class BlogPageController extends BasePageController
             $te->removeLogicTag("{PAGINATION}", "{/PAGINATION}", $output); //No pagination in single post mode
         } else {
         //Normal mode
-            $result = GetPosts("page", $offset, false);
+            $result = $this->getMultiplePosts($offset);
             if ($db->GetNumRows($result) == 0) {
                 header('Location: /404'); //Back out if we didnt find any posts
                 return;

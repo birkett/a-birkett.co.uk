@@ -8,13 +8,27 @@ namespace ABirkett;
 
 class PostsWidgetController extends BasePageController
 {
+    //-----------------------------------------------------------------------------
+    // Fetch post data
+    //		In: none
+    //		Out: Post data
+    //-----------------------------------------------------------------------------
+    private function getAllPosts()
+    {
+        return GetDatabase()->runQuery(
+            "SELECT post_id, post_timestamp, post_title FROM blog_posts " .
+            "WHERE post_draft = '0' ORDER BY post_timestamp DESC",
+            array()
+        );
+    }
+
     public function __construct(&$output)
     {
         $db = GetDatabase();
         $te = TemplateEngine();
-        $posts = GetPosts("all");
+        $posts = $this->getAllPosts();
         $post_array = [];
-        while (list($id, $timestamp, $title, $draft) = $db->GetRow($posts)) {
+        while (list($id, $timestamp, $title) = $db->GetRow($posts)) {
             $month = date("F Y", $timestamp);
             if (!isset($post_array["$month"])) {
                 $post_array["$month"] = [];

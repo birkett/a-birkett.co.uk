@@ -136,7 +136,7 @@ class AdminAJAXRequestController extends AJAXRequestController
     private function tweetPost($postid)
     {
         $db = GetDatabase();
-        $post = getPosts("single", $postid, false);
+        $post = parent::getSinglePost($postid);
         if ($db->GetNumRows($post) == 0) {
             return; //Post doesnt exist or is a draft
         }

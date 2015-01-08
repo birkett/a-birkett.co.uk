@@ -109,43 +109,6 @@ function DeclareAdminPage()
 }
 
 //-----------------------------------------------------------------------------
-// Fetch the specified post or range of posts
-//		In: Mode, ID and Draft lock
-//		Out: Post data
-//
-//		Mode should be one of "single", "page" or "titles"
-// !!! Defaults to not fetching drafts !!!
-//-----------------------------------------------------------------------------
-function GetPosts($mode, $id = 0, $drafts = false)
-{
-    //Single Post
-    if ($mode == "single") {
-        return GetDatabase()->runQuery(
-            "SELECT * FROM blog_posts WHERE post_id = :id " . ($drafts ? "" : "AND post_draft='0' "),
-            array(":id" => $id)
-        );
-    }
-    $drafts ? $draftsql = "" : $draftsql = "WHERE post_draft='0' ";
-    //Range of Posts
-    if ($mode == "page") {
-        $limit1 = $id * BLOG_POSTS_PER_PAGE;
-        $limit2 = BLOG_POSTS_PER_PAGE;
-        return GetDatabase()->runQuery(
-            "SELECT * FROM blog_posts " . $draftsql . "ORDER BY post_timestamp DESC LIMIT $limit1,$limit2",
-            array()
-        );
-    }
-    //All posts - only fetch the ID, title, timestamp and Draft status to save query time
-    if ($mode == "all") {
-        return GetDatabase()->runQuery(
-            "SELECT post_id, post_timestamp, post_title, post_draft FROM blog_posts " .
-            $draftsql . "ORDER BY post_timestamp DESC",
-            array()
-        );
-    }
-}
-
-//-----------------------------------------------------------------------------
 // Get the base URL of the side (Protocol+DomainName+Backslash)
 //		In: Raw string
 //		Out: Safe string with original slashes removed - then escaped

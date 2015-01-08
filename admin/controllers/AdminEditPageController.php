@@ -23,6 +23,19 @@ class AdminEditPageController extends AdminBasePageController
         return $page[0];
     }
 
+    //-----------------------------------------------------------------------------
+    // Fetch the specified post
+    //		In: Post ID
+    //		Out: Post data
+    //-----------------------------------------------------------------------------
+    private function getSinglePost($postid)
+    {
+        return GetDatabase()->runQuery(
+            "SELECT * FROM blog_posts WHERE post_id = :id",
+            array(":id" => $postid)
+        );
+    }
+
     public function __construct(&$output)
     {
         $te = TemplateEngine();
@@ -40,7 +53,7 @@ class AdminEditPageController extends AdminBasePageController
             $te->removeLogicTag("{NEWPOST}", "{/NEWPOST}", $output);
         } elseif (isset($_GET['postid'])) {
             //Post edit mode
-            $post = GetPosts("single", $_GET['postid'], true);
+            $post = $this->getSinglePost($_GET['postid']);
             $row = GetDatabase()->getRow($post);
             list($postid, $timestamp, $title, $content, $draft) = $row;
 

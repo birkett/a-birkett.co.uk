@@ -8,6 +8,20 @@ namespace ABirkett;
 
 class FeedPageController extends BasePageController
 {
+    //-----------------------------------------------------------------------------
+    // Fetch the latest posts
+    //		In: none
+    //		Out: Post data
+    //-----------------------------------------------------------------------------
+    private function getLatestPosts()
+    {
+        $limit = BLOG_POSTS_PER_PAGE;
+        return GetDatabase()->runQuery(
+            "SELECT * FROM blog_posts WHERE post_draft = '0' ORDER BY post_timestamp DESC LIMIT 0,$limit",
+            array()
+        );
+    }
+
     public function __construct(&$output)
     {
         header("Content-Type: application/xml; charset=utf-8");
@@ -15,7 +29,7 @@ class FeedPageController extends BasePageController
         $db = GetDatabase();
         $te = TemplateEngine();
 
-        $posts = GetPosts("page", 0, false);
+        $posts = $this->getLatestPosts();
 
         $itemloop = $te->logicTag("{LOOP}", "{/LOOP}", $output);
 

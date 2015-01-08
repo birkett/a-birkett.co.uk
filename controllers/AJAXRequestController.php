@@ -41,6 +41,19 @@ class AJAXRequestController
     }
 
     //-----------------------------------------------------------------------------
+    // Fetch the specified post
+    //		In: Post ID
+    //		Out: Post data
+    //-----------------------------------------------------------------------------
+    protected function getSinglePost($postid)
+    {
+        return GetDatabase()->runQuery(
+            "SELECT * FROM blog_posts WHERE post_id = :id AND post_draft = '0'",
+            array(":id" => $postid)
+        );
+    }
+
+    //-----------------------------------------------------------------------------
     // Post a new comment to the database
     //		In: Target post ID, Username, Text and IP address
     //		Out: none
@@ -83,7 +96,7 @@ class AJAXRequestController
                 $ch = $_POST['challenge'];
                 $resp = $_POST['response'];
 
-                if (GetDatabase()->GetNumRows(GetPosts("single", $p, false)) != 1) {
+                if (GetDatabase()->GetNumRows($this->getSinglePost($p)) != 1) {
                     $this->badRequest("Invalid Post ID.");
                 }
                 if ($u == "" || $c == "" || $ch == "" || $resp == "") {
