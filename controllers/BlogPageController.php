@@ -15,7 +15,7 @@ class BlogPageController extends BasePageController
     //		In: none
     //		Out: Number of posts
     //-----------------------------------------------------------------------------
-    function GetNumberOfPosts()
+    private function getNumberOfPosts()
     {
         $count = GetDatabase()->runQuery("SELECT COUNT(*) from blog_posts", array());
         return $count[0]['COUNT(*)'];
@@ -26,7 +26,7 @@ class BlogPageController extends BasePageController
     //		In: Post ID
     //		Out: Number of comments on specified post
     //-----------------------------------------------------------------------------
-    function GetNumberOfComments($postid)
+    private function getNumberOfComments($postid)
     {
         $count = GetDatabase()->runQuery(
             "SELECT COUNT(*) FROM blog_comments WHERE post_id = :postid",
@@ -40,7 +40,7 @@ class BlogPageController extends BasePageController
     //		In: Post ID
     //		Out: All comments for post
     //-----------------------------------------------------------------------------
-    function GetCommentsOnPost($postid)
+    private function getCommentsOnPost($postid)
     {
         return GetDatabase()->runQuery(
             "SELECT * FROM blog_comments WHERE post_id = :postid ORDER BY comment_timestamp ASC ",
@@ -77,7 +77,7 @@ class BlogPageController extends BasePageController
             }
 
             //Show comments
-            $comments = $this->GetCommentsOnPost($_GET['postid']);
+            $comments = $this->getCommentsOnPost($_GET['postid']);
             if ($db->GetNumRows($comments) != 0) {
                 while (list($cid, $pid, $cusername, $ctext, $ctimestamp, $cip) = $db->GetRow($comments)) {
                     $tags = [
@@ -106,7 +106,7 @@ class BlogPageController extends BasePageController
             }
 
             //Show Pagination
-            $numberofposts = $this->GetNumberOfPosts();
+            $numberofposts = $this->getNumberOfPosts();
             if ($numberofposts > BLOG_POSTS_PER_PAGE) {
                 if ($offset > 0) {
                     $tags = [ "{PAGEPREVIOUSLINK}" => "/blog/page/$offset", "{PAGEPREVIOUSTEXT}" => "Previous Page" ];
@@ -130,7 +130,7 @@ class BlogPageController extends BasePageController
                 "{POSTID}" => $id,
                 "{POSTTITLE}" => $title,
                 "{POSTCONTENT}" => stripslashes($content),
-                "{COMMENTCOUNT}" => $this->GetNumberOfComments($id)
+                "{COMMENTCOUNT}" => $this->getNumberOfComments($id)
             ];
             $temp = LogicTag("{BLOGPOST}", "{/BLOGPOST}", $output);
             ParseTags($tags, $temp);

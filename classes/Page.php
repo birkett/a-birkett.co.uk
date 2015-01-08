@@ -18,10 +18,13 @@ class Page
         } else {
             $pagetemplate = OpenTemplate("page.tpl");
         }
-        ReplaceTag("{PAGE}", OpenTemplate("$template.tpl"), $pagetemplate);
-        ReplaceTag("{WIDGET}", OpenTemplate("$widget.tpl"), $pagetemplate);
 
-        ReplaceTag("{TITLE}", $title, $pagetemplate);
+        $tags = [
+            "{PAGE}" => OpenTemplate("$template.tpl"),
+            "{WIDGET}" => OpenTemplate("$widget.tpl"),
+            "{TITLE}" => $title
+        ];
+        ParseTags($tags, $pagetemplate);
 
         if (defined('ADMINPAGE')) {
             switch ($template) {

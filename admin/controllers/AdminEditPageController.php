@@ -53,12 +53,16 @@ class AdminEditPageController extends AdminBasePageController
             RemoveLogicTag("{PAGEEDIT}", "{/PAGEEDIT}", $output);
             RemoveLogicTag("{POSTEDIT}", "{/POSTEDIT}", $output);
         }
-        ReplaceTag("{VARS}", $vars, $output);
         isset($content) ? $content = stripslashes($content) : $content = "";
-        ReplaceTag("{CONTENT}", $content, $output);
+
+        $tags = [
+            "{VARS}" => $vars,
+            "{CONTENT}" => $content
+        ];
+        ParseTags($tags, $output);
         //Clean up the tags if not already replaced
-        $cleantags = [ "{NEWPOST}", "{/NEWPOST}", "{PAGEEDIT}", "{/PAGEEDIT}", "{POSTEDIT}", "{/POSTEDIT}" ];
-        RemoveTags($cleantags, $output);
+        $tags = [ "{NEWPOST}", "{/NEWPOST}", "{PAGEEDIT}", "{/PAGEEDIT}", "{POSTEDIT}", "{/POSTEDIT}" ];
+        RemoveTags($tags, $output);
 
         parent::__construct($output);
     }

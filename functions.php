@@ -111,9 +111,7 @@ function ReplaceTag($tag, $string, &$output)
 //-----------------------------------------------------------------------------
 function ParseTags(&$tags, &$output)
 {
-    foreach ($tags as $key => $val) {
-        ReplaceTag($key, $val, $output);
-    }
+    $output = str_replace(array_keys($tags), $tags, $output);
 }
 
 //-----------------------------------------------------------------------------
@@ -123,15 +121,13 @@ function ParseTags(&$tags, &$output)
 //-----------------------------------------------------------------------------
 function RemoveTags(&$tags, &$output)
 {
-    foreach ($tags as $tag) {
-        ReplaceTag($tag, "", $output);
-    }
+    $output = str_replace($tags, "", $output);
 }
 
 //-----------------------------------------------------------------------------
-// Parse logic tags to the template
+// Return the contents of a logic tag
 //		In: Tags and Unparsed template
-//		Out: Parsed template
+//		Out: String from between $start and $end
 //
 //  Logic tags can be loops, i.e. {LOOP} content {/LOOP}
 //-----------------------------------------------------------------------------
