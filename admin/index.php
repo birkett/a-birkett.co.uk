@@ -17,20 +17,7 @@ PHPDefaults();
 
 if (isset($_POST['mode'])) {
     new AdminAJAXRequestController();
-    exit();
-}
-
-if (isset($_POST['username']) && isset($_POST['password'])) {
-    if (CheckCredentials($_POST['username'], $_POST['password'])) {
-        new Page("Admin :: Main", "userwidget", "index");
-        exit();
-    } else {
-        new Page("Admin :: Login", "userwidget", "login");
-        exit();
-    }
-}
-
-if (IsLoggedIn()) {
+} else if (IsLoggedIn()) {
     if (isset($_GET['action'])) {
         switch($_GET['action']) {
             case "password":

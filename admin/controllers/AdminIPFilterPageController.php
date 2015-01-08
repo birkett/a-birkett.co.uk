@@ -8,10 +8,20 @@ namespace ABirkett;
 
 class AdminIPFilterPageController extends AdminBasePageController
 {
+    //-----------------------------------------------------------------------------
+    // Gets all blocked IP addresses
+    //      In: none
+    //      Out: MySQLi result resource
+    //-----------------------------------------------------------------------------
+    private function getBlockedAddresses()
+    {
+        return GetDatabase()->runQuery("SELECT * FROM blocked_addresses ORDER BY blocked_timestamp DESC", array());
+    }
+
     public function __construct(&$output)
     {
         $te = TemplateEngine();
-        $result = GetBlockedAddresses();
+        $result = $this->getBlockedAddresses();
         while (list($ip_id, $address, $timestamp) = GetDatabase()->GetRow($result)) {
             $tags = [
                 "{IP}" => $address,

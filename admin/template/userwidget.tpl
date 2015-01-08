@@ -2,9 +2,22 @@
 					<p>Logged in as {USERNAME} <a href="{ADMINFOLDER}index.php?action=logout">(Logout)</a></p>
 					{/LOGGEDIN}
 					{LOGIN}
-					<form action="{ADMINFOLDER}index.php?action=login" method="POST">
+					<script type="text/javascript" src="js/ajax.js"></script>
+					<script type="text/javascript">
+					function login()
+					{
+						SuccessCallBack = function() { self.location="{ADMINFOLDER}index.php"; }
+						var username = document.getElementById("username").value;
+						var password = document.getElementById("password").value;
+						var data = "mode=login&username="+username+"&password="+password;
+
+						AJAXOpen("{ADMINFOLDER}", data, SuccessCallBack);
+					}
+					</script>
+					<div id="response"></div>
+					<form>
 						<input type="text" name="username" id="username"/>
 						<input type="password" name="password" id="password"/>
-						<input type="submit" name="Submit" id="submit"/>
 					</form>
+					<a href="" onClick="login(); return false;"><p>Submit</p></a>
 					{/LOGIN}

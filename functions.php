@@ -136,27 +136,6 @@ function GetPosts($mode, $id = 0, $drafts = false)
 }
 
 //-----------------------------------------------------------------------------
-// Checks if an IP is blocked
-//		In: IP address
-//		Out: TRUE on blocked, FALSE on not found
-//-----------------------------------------------------------------------------
-function CheckIP($ip)
-{
-    $db = GetDatabase();
-    if (
-        $db->getNumRows(
-            $db->runQuery(
-                "SELECT * FROM blocked_addresses WHERE address=':ip'",
-                array(":ip" => $ip)
-            )
-        )
-        != 0) {
-            return true;
-    }
-    return false;
-}
-
-//-----------------------------------------------------------------------------
 // Get the base URL of the side (Protocol+DomainName+Backslash)
 //		In: Raw string
 //		Out: Safe string with original slashes removed - then escaped
@@ -165,27 +144,4 @@ function GetBaseURL()
 {
     (stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true) ? $proto = "https://" : $proto = "http://";
     return $proto . $_SERVER['HTTP_HOST'] . "/";
-}
-
-//-----------------------------------------------------------------------------
-// Good, Bad and Blocked request exits
-//		In: none
-//		Out: Exits script with a response code, printing an optional message
-//-----------------------------------------------------------------------------
-function GoodRequest($m = "")
-{
-    http_response_code(200);
-    exit($m);
-}
-
-function BadRequest($m = "")
-{
-    http_response_code(400);
-    exit($m);
-}
-
-function BlockedRequest($m = "")
-{
-    http_response_code(401);
-    exit($m);
 }
