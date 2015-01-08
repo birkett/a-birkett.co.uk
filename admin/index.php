@@ -10,14 +10,13 @@ session_start();
 
 require_once("../config.php");
 require_once("../functions.php");
-require_once("adminfunctions.php");
 
 DeclareAdminPage(); //Set so the page class will include admin controllers
 PHPDefaults();
 
 if (isset($_POST['mode'])) {
     new AdminAJAXRequestController();
-} else if (IsLoggedIn()) {
+} else if (isset($_SESSION['user'])) {
     if (isset($_GET['action'])) {
         switch($_GET['action']) {
             case "password":
@@ -42,7 +41,10 @@ if (isset($_POST['mode'])) {
                 new Page("Admin :: Editor", "userwidget", "edit");
                 break;
             case "logout":
-                KillSession();
+                if (isset($_SESSION['user'])) {
+                    unset($_SESSION['user']);
+                    session_destroy();
+                }
                 new Page("Admin :: Login", "userwidget", "login");
                 break;
             default:

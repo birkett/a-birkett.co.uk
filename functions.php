@@ -41,7 +41,6 @@ function TemplateEngine()
 //		In: Class name
 //		Out: none
 //-----------------------------------------------------------------------------
-// project-specific namespace prefix
 function Autoloader($class)
 {
     $prefix = 'ABirkett\\';
@@ -96,6 +95,16 @@ function PHPDefaults()
 
     //Autoloader
     spl_autoload_register("ABirkett\Autoloader");
+}
+
+//-----------------------------------------------------------------------------
+// Define a symbol so public functions can act accordingly on an admin page
+//      In: none
+//      Out: none
+//-----------------------------------------------------------------------------
+function DeclareAdminPage()
+{
+    define('ADMINPAGE', 1);
 }
 
 //-----------------------------------------------------------------------------
