@@ -1,14 +1,14 @@
 						<script type="text/javascript" src="js/ajax.js"></script>
 						<script type="text/javascript">
 							function setpassword()
-							{	
+							{
 								SuccessCallBack = function() { return; }
 								var cp = document.getElementById("formcp").value;
 								var np = document.getElementById("formnp").value;
-								var cnp = document.getElementById("formcnp").value;	
+								var cnp = document.getElementById("formcnp").value;
 								var data = "mode=password&cp="+cp+"&np="+np+"&cnp="+cnp;
-								
-								AJAXOpen("{ADMINFOLDER}adminactions.php", data, SuccessCallBack);
+
+								AJAXOpen("{ADMINFOLDER}", data, SuccessCallBack);
 							}
 						</script>
 						<div class="fadein"></div>

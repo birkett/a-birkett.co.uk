@@ -1,5 +1,5 @@
 						<div class="fadein"></div>
-						<div class="post">						
+						<div class="post">
 						{PAGEEDIT}
 							<h2>Edit Page</h2>
 							<div id="response"></div>
@@ -37,26 +37,26 @@
 						</script>
 						<script type="text/javascript" src="js/ajax.js"></script>
 						<script type="text/javascript">
-							function addslashes(str) 
+							function addslashes(str)
 							{
 								return (str + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
 							}
-							
+
 							function doedit()
 							{
 								var SuccessCallBack = function()
 								{ tinymce.activeEditor.getBody().setAttribute('contenteditable', false); }
-								
+
 								var content = encodeURIComponent(addslashes(tinyMCE.activeEditor.getContent()));
 								{VARS}
-								
-								AJAXOpen("{ADMINFOLDER}adminactions.php", data, SuccessCallBack);
+
+								AJAXOpen("{ADMINFOLDER}", data, SuccessCallBack);
 							}
 						</script>
 						<form method="post">
 							<textarea>{CONTENT}</textarea>
 						</form>
-						
+
 						<a href="" onClick="doedit(); return false;"><p>Submit</p></a>
 						</div>
 						<div class="fadeout"></div>

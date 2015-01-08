@@ -5,11 +5,11 @@
 								SuccessCallBack = function() { return; }
 								if(inip != undefined) { document.getElementById("formip").value=inip; }
 								var ip = document.getElementById("formip").value;
-								
+
 								if(inip != undefined) { var data = "mode=removeip&ip="+ip; }
 								else { var data = "mode=addip&ip="+ip; }
-								
-								AJAXOpen("{ADMINFOLDER}adminactions.php", data, SuccessCallBack);
+
+								AJAXOpen("{ADMINFOLDER}", data, SuccessCallBack);
 							}
 						</script>
 						<div class="fadein"></div>
@@ -21,7 +21,7 @@
 							<input id="formip" type="text" size="65" value="">
 						</form>
 						<a href="" onClick="ipblock(); return false;"><p>Submit</p></a>
-						
+
 						<table><tr><th>IP</th><th>Time blocked</th><th>Unblock</th><th>Comments</th></tr>
 							{LOOP}
 							<tr>
@@ -34,4 +34,3 @@
 						</table>
 						</div>
 						<div class="fadeout"></div>
-						

@@ -15,6 +15,21 @@ require_once("adminfunctions.php");
 DeclareAdminPage(); //Set so the page class will include admin controllers
 PHPDefaults();
 
+if (isset($_POST['mode'])) {
+    new AdminAJAXRequestController();
+    exit();
+}
+
+if (isset($_POST['username']) && isset($_POST['password'])) {
+    if (CheckCredentials($_POST['username'], $_POST['password'])) {
+        new Page("Admin :: Main", "userwidget", "index");
+        exit();
+    } else {
+        new Page("Admin :: Login", "userwidget", "login");
+        exit();
+    }
+}
+
 if (IsLoggedIn()) {
     if (isset($_GET['action'])) {
         switch($_GET['action']) {
@@ -51,11 +66,5 @@ if (IsLoggedIn()) {
         new Page("Admin :: Main", "userwidget", "index"); //Default when nothing requested
     }
 } else {
-    if (isset($_POST['username']) && isset($_POST['password'])) {
-        if (CheckCredentials($_POST['username'], $_POST['password'])) {
-            new Page("Admin :: Main", "userwidget", "index");
-            return;
-        }
-    }
     new Page("Admin :: Login", "userwidget", "login");
 }
