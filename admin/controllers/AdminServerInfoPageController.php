@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett;
 
-class AdminServerInfoPageController
+class AdminServerInfoPageController extends AdminBasePageController
 {
     public function __construct(&$output)
     {
@@ -19,5 +19,7 @@ class AdminServerInfoPageController
             "{PHPCURLEXT}" => (extension_loaded("CURL") ? "Yes" : "No")
         ];
         ParseTags($tags, $output);
+
+        parent::__construct($output);
     }
 }

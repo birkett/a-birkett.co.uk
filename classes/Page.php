@@ -21,8 +21,9 @@ class Page
         ReplaceTag("{PAGE}", OpenTemplate("$template.tpl"), $pagetemplate);
         ReplaceTag("{WIDGET}", OpenTemplate("$widget.tpl"), $pagetemplate);
 
+        ReplaceTag("{TITLE}", $title, $pagetemplate);
+
         if (defined('ADMINPAGE')) {
-            new AdminBasePageController($pagetemplate);
             switch ($template) {
                 case "listcomments":
                     new AdminListCommentsPageController($pagetemplate);
@@ -42,6 +43,8 @@ class Page
                 case "edit":
                     new AdminEditPageController($pagetemplate);
                     break;
+                default:
+                    new AdminBasePageController($pagetemplate);
             }
             if ($widget = "userwidget") {
                 new AdminUserWidgetController($pagetemplate);
@@ -55,13 +58,13 @@ class Page
                 case "blog":
                     new BlogPageController($pagetemplate);
                     break;
+                default:
+                    new BasePageController($pagetemplate);
             }
             if ($widget == "postswidget") {
                 new PostsWidgetController($pagetemplate);
             }
         }
-
-        new BasePageController($pagetemplate, $title);
         echo $pagetemplate;
     }
 }

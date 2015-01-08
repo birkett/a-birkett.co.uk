@@ -10,11 +10,10 @@ namespace ABirkett;
 
 class BasePageController
 {
-    public function __construct(&$output, $title)
+    public function __construct(&$output)
     {
         $tags = [
             "{BASEURL}" => GetBaseURL(),
-            "{TITLE}" => $title,
             "{RAND2551}" => rand(0, 255),
             "{RAND2552}" => rand(0, 255),
             "{RAND2553}" => rand(0, 255),

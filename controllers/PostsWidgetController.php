@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett;
 
-class PostsWidgetController
+class PostsWidgetController extends BasePageController
 {
     public function __construct(&$output)
     {
@@ -43,5 +43,7 @@ class PostsWidgetController
         RemoveLogicTag("{MONTHLOOP}", "{/MONTHLOOP}", $output);
         $tags = [ "{ITEMS}", "{MONTHS}" ];
         RemoveTags($tags, $output);
+
+        parent::__construct($output);
     }
 }

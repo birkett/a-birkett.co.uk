@@ -8,8 +8,51 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett;
 
-class BlogPageController
+class BlogPageController extends BasePageController
 {
+    //-----------------------------------------------------------------------------
+    // Get the total number of blog posts
+    //		In: none
+    //		Out: Number of posts
+    //-----------------------------------------------------------------------------
+    function GetNumberOfPosts()
+    {
+        $count = GetDatabase()->runQuery("SELECT COUNT(*) from blog_posts", array());
+        return $count[0]['COUNT(*)'];
+    }
+
+    //-----------------------------------------------------------------------------
+    // Get the total comments on a specified post
+    //		In: Post ID
+    //		Out: Number of comments on specified post
+    //-----------------------------------------------------------------------------
+    function GetNumberOfComments($postid)
+    {
+        $count = GetDatabase()->runQuery(
+            "SELECT COUNT(*) FROM blog_comments WHERE post_id = :postid",
+            array(":postid" => $postid)
+        );
+        return $count[0]['COUNT(*)'];
+    }
+
+    //-----------------------------------------------------------------------------
+    // Fetch the comments for specified post ID
+    //		In: Post ID
+    //		Out: All comments for post
+    //-----------------------------------------------------------------------------
+    function GetCommentsOnPost($postid)
+    {
+        return GetDatabase()->runQuery(
+            "SELECT * FROM blog_comments WHERE post_id = :postid ORDER BY comment_timestamp ASC ",
+            array(":postid" => $postid)
+        );
+    }
+
+    //-----------------------------------------------------------------------------
+    // Constructor
+    //		In: Unparsed template
+    //		Out: Parsed template
+    //-----------------------------------------------------------------------------
     public function __construct(&$output)
     {
         $db = GetDatabase();
@@ -34,7 +77,7 @@ class BlogPageController
             }
 
             //Show comments
-            $comments = GetCommentsOnPost($_GET['postid']);
+            $comments = $this->GetCommentsOnPost($_GET['postid']);
             if ($db->GetNumRows($comments) != 0) {
                 while (list($cid, $pid, $cusername, $ctext, $ctimestamp, $cip) = $db->GetRow($comments)) {
                     $tags = [
@@ -63,7 +106,7 @@ class BlogPageController
             }
 
             //Show Pagination
-            $numberofposts = GetNumberOfPosts();
+            $numberofposts = $this->GetNumberOfPosts();
             if ($numberofposts > BLOG_POSTS_PER_PAGE) {
                 if ($offset > 0) {
                     $tags = [ "{PAGEPREVIOUSLINK}" => "/blog/page/$offset", "{PAGEPREVIOUSTEXT}" => "Previous Page" ];
@@ -87,7 +130,7 @@ class BlogPageController
                 "{POSTID}" => $id,
                 "{POSTTITLE}" => $title,
                 "{POSTCONTENT}" => stripslashes($content),
-                "{COMMENTCOUNT}" => GetNumberOfComments($id)[0]['COUNT(*)']
+                "{COMMENTCOUNT}" => $this->GetNumberOfComments($id)
             ];
             $temp = LogicTag("{BLOGPOST}", "{/BLOGPOST}", $output);
             ParseTags($tags, $temp);
@@ -102,5 +145,7 @@ class BlogPageController
         $cleantags = [ "{PAGEPREVIOUSLINK}", "{PAGEPREVIOUSTEXT}", "{PAGENEXTLINK}", "{PAGENEXTTEXT}",
                         "{PAGINATION}", "{/PAGINATION}", "{NEWCOMMENT}", "{/NEWCOMMENT}" ];
         RemoveTags($cleantags, $output);
+
+        parent::__construct($output);
     }
 }

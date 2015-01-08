@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett;
 
-class AdminListCommentsPageController
+class AdminListCommentsPageController extends AdminBasePageController
 {
     public function __construct(&$output)
     {
@@ -29,5 +29,7 @@ class AdminListCommentsPageController
             ReplaceTag("{LOOP}", $temp, $output);
         }
         RemoveLogicTag("{LOOP}", "{/LOOP}", $output);
+        
+        parent::__construct($output);
     }
 }

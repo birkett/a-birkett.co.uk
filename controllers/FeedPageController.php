@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett;
 
-class FeedPageController
+class FeedPageController extends BasePageController
 {
     public function __construct(&$output)
     {
@@ -37,5 +37,7 @@ class FeedPageController
             "{THISYEAR}" => date('Y'),
         ];
         ParseTags($tags, $output);
+
+        parent::__construct($output);
     }
 }

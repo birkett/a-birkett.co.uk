@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett;
 
-class AdminBasePageController
+class AdminBasePageController extends BasePageController
 {
     public function __construct(&$output)
     {
@@ -16,8 +16,10 @@ class AdminBasePageController
             "{ADMINFOLDER}" => ADMIN_FOLDER,
         ];
         ParseTags($tags, $output);
-        
+
         $tags = [ "{ADMINSTYLESHEET}", "{/ADMINSTYLESHEET}" ];
         RemoveTags($tags, $output);
+
+        parent::__construct($output);
     }
 }

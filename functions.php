@@ -199,51 +199,6 @@ function GetPosts($mode, $id = 0, $drafts = false)
 }
 
 //-----------------------------------------------------------------------------
-// Get the total number of blog posts
-//		In: none
-//		Out: Number of posts
-// !!! Defaults to not displaying drafts !!!
-//-----------------------------------------------------------------------------
-function GetNumberOfPosts($drafts = false)
-{
-    $db = GetDatabase();
-    return $db->getNumRows(
-        $db->runQuery(
-            "SELECT post_id from blog_posts " . ($drafts ? "" : "WHERE post_draft='0' "),
-            array()
-        )
-    );
-}
-
-//-----------------------------------------------------------------------------
-// Fetch the comments for specified post ID
-//		In: Post ID
-//		Out: All comments for post
-//			(number can be fetched with GetNumberOfComments(n)
-//-----------------------------------------------------------------------------
-function GetCommentsOnPost($postid)
-{
-    return GetDatabase()->runQuery(
-        "SELECT * FROM blog_comments WHERE post_id = :postid ORDER BY comment_timestamp ASC ",
-        array(":postid" => $postid)
-    );
-}
-
-//-----------------------------------------------------------------------------
-// Get the total comments on a specified post
-//		In: Post ID
-//		Out: Number of comments on specified post
-//-----------------------------------------------------------------------------
-function GetNumberOfComments($postid)
-{
-    $db = GetDatabase();
-    return $db->runQuery(
-        "SELECT COUNT(*) FROM blog_comments WHERE post_id = :postid",
-        array(":postid" => $postid)
-    );
-}
-
-//-----------------------------------------------------------------------------
 // Post a new comment to the database
 //		In: Target post ID, Username, Text and IP address
 //		Out: none

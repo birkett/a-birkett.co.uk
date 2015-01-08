@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett;
 
-class AdminIPFilterPageController
+class AdminIPFilterPageController extends AdminBasePageController
 {
     public function __construct(&$output)
     {
@@ -22,5 +22,7 @@ class AdminIPFilterPageController
             ReplaceTag("{LOOP}", $temp, $output);
         }
         RemoveLogicTag("{LOOP}", "{/LOOP}", $output);
+
+        parent::__construct($output);
     }
 }

@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett;
 
-class AdminUserWidgetController
+class AdminUserWidgetController extends AdminBasePageController
 {
     public function __construct(&$output)
     {
@@ -18,5 +18,7 @@ class AdminUserWidgetController
         }
         $cleantags = [ "{LOGIN}", "{/LOGIN}", "{LOGGEDIN}", "{/LOGGEDIN}" ];
         RemoveTags($cleantags, $output);
+
+        parent::__construct($output);
     }
 }

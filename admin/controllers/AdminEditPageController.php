@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett;
 
-class AdminEditPageController
+class AdminEditPageController extends AdminBasePageController
 {
     public function __construct(&$output)
     {
@@ -59,5 +59,7 @@ class AdminEditPageController
         //Clean up the tags if not already replaced
         $cleantags = [ "{NEWPOST}", "{/NEWPOST}", "{PAGEEDIT}", "{/PAGEEDIT}", "{POSTEDIT}", "{/POSTEDIT}" ];
         RemoveTags($cleantags, $output);
+
+        parent::__construct($output);
     }
 }

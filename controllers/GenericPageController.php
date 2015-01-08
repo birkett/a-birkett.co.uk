@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett;
 
-class GenericPageController
+class GenericPageController extends BasePageController
 {
     public function __construct(&$output, $name)
     {
@@ -18,5 +18,7 @@ class GenericPageController
             "{PAGECONTENT}" => stripslashes($page[1])
         ];
         ParseTags($tags, $output);
+
+        parent::__construct($output);
     }
 }
