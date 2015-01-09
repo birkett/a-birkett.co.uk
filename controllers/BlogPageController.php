@@ -6,7 +6,7 @@
 //
 //  !!! This is a custom controller, only used for the Blog pages !!!
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\controllers;
 
 class BlogPageController extends BasePageController
 {
@@ -17,7 +17,7 @@ class BlogPageController extends BasePageController
     //-----------------------------------------------------------------------------
     private function getSinglePost($postid)
     {
-        return GetDatabase()->runQuery(
+        return \ABirkett\GetDatabase()->runQuery(
             "SELECT * FROM blog_posts WHERE post_id = :id AND post_draft = '0'",
             array(":id" => $postid)
         );
@@ -32,7 +32,7 @@ class BlogPageController extends BasePageController
     {
         $limit1 = $page * BLOG_POSTS_PER_PAGE;
         $limit2 = BLOG_POSTS_PER_PAGE;
-        return GetDatabase()->runQuery(
+        return \ABirkett\GetDatabase()->runQuery(
             "SELECT * FROM blog_posts WHERE post_draft = '0' ORDER BY post_timestamp DESC LIMIT $limit1,$limit2",
             array()
         );
@@ -45,7 +45,7 @@ class BlogPageController extends BasePageController
     //-----------------------------------------------------------------------------
     private function getNumberOfPosts()
     {
-        $count = GetDatabase()->runQuery("SELECT COUNT(*) from blog_posts", array());
+        $count = \ABirkett\GetDatabase()->runQuery("SELECT COUNT(*) from blog_posts", array());
         return $count[0]['COUNT(*)'];
     }
 
@@ -56,7 +56,7 @@ class BlogPageController extends BasePageController
     //-----------------------------------------------------------------------------
     private function getNumberOfComments($postid)
     {
-        $count = GetDatabase()->runQuery(
+        $count = \ABirkett\GetDatabase()->runQuery(
             "SELECT COUNT(*) FROM blog_comments WHERE post_id = :postid",
             array(":postid" => $postid)
         );
@@ -70,7 +70,7 @@ class BlogPageController extends BasePageController
     //-----------------------------------------------------------------------------
     private function getCommentsOnPost($postid)
     {
-        return GetDatabase()->runQuery(
+        return \ABirkett\GetDatabase()->runQuery(
             "SELECT * FROM blog_comments WHERE post_id = :postid ORDER BY comment_timestamp ASC ",
             array(":postid" => $postid)
         );
@@ -83,8 +83,8 @@ class BlogPageController extends BasePageController
     //-----------------------------------------------------------------------------
     public function __construct(&$output)
     {
-        $db = GetDatabase();
-        $te = TemplateEngine();
+        $db = \ABirkett\GetDatabase();
+        $te = \ABirkett\TemplateEngine();
         //Clamp pagniation offset
         if (
             isset($_GET['offset']) &&

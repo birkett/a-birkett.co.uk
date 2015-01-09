@@ -4,13 +4,13 @@
 //      In: Unparsed template
 //      Out: Parsed template
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\controllers;
 
 class AdminUserWidgetController extends AdminBasePageController
 {
     public function __construct(&$output)
     {
-        $te = TemplateEngine();
+        $te = \ABirkett\TemplateEngine();
         if (isset($_SESSION['user'])) {
             $te->removeLogicTag("{LOGIN}", "{/LOGIN}", $output);
             $te->replaceTag("{USERNAME}", $_SESSION['user'], $output);

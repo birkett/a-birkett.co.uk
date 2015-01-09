@@ -6,13 +6,13 @@
 //
 //  !!! All pages get parsed through here !!!
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\controllers;
 
 class AdminBasePageController extends BasePageController
 {
     public function __construct(&$output)
     {
-        $te = TemplateEngine();
+        $te = \ABirkett\TemplateEngine();
         $tags = [
             "{ADMINFOLDER}" => ADMIN_FOLDER,
         ];

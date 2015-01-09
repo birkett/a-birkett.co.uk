@@ -4,7 +4,7 @@
 //      In: Unparsed template
 //      Out: Parsed template
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\controllers;
 
 class AdminEditPageController extends AdminBasePageController
 {
@@ -15,7 +15,7 @@ class AdminEditPageController extends AdminBasePageController
     //-----------------------------------------------------------------------------
     private function getPage($pageid)
     {
-        $page = GetDatabase()->runQuery(
+        $page = \ABirkett\GetDatabase()->runQuery(
             "SELECT page_title, page_content FROM site_pages WHERE page_id = :pageid",
             array(":pageid" => $pageid)
         );
@@ -29,7 +29,7 @@ class AdminEditPageController extends AdminBasePageController
     //-----------------------------------------------------------------------------
     private function getSinglePost($postid)
     {
-        return GetDatabase()->runQuery(
+        return \ABirkett\GetDatabase()->runQuery(
             "SELECT * FROM blog_posts WHERE post_id = :id",
             array(":id" => $postid)
         );
@@ -37,7 +37,7 @@ class AdminEditPageController extends AdminBasePageController
 
     public function __construct(&$output)
     {
-        $te = TemplateEngine();
+        $te = \ABirkett\TemplateEngine();
         $vars = "";
         if (isset($_GET['pageid'])) {
             //Page edit mode
@@ -53,7 +53,7 @@ class AdminEditPageController extends AdminBasePageController
         } elseif (isset($_GET['postid'])) {
             //Post edit mode
             $post = $this->getSinglePost($_GET['postid']);
-            $row = GetDatabase()->getRow($post);
+            $row = \ABirkett\GetDatabase()->getRow($post);
             list($postid, $timestamp, $title, $content, $draft) = $row;
 
             if ($draft) {

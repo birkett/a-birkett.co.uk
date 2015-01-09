@@ -4,7 +4,7 @@
 //      In: Unparsed template
 //      Out: Parsed template
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\controllers;
 
 class FeedPageController extends BasePageController
 {
@@ -16,7 +16,7 @@ class FeedPageController extends BasePageController
     private function getLatestPosts()
     {
         $limit = BLOG_POSTS_PER_PAGE;
-        return GetDatabase()->runQuery(
+        return \ABirkett\GetDatabase()->runQuery(
             "SELECT * FROM blog_posts WHERE post_draft = '0' ORDER BY post_timestamp DESC LIMIT 0,$limit",
             array()
         );
@@ -26,13 +26,13 @@ class FeedPageController extends BasePageController
     {
         header("Content-Type: application/xml; charset=utf-8");
 
-        $te = TemplateEngine();
+        $te = \ABirkett\TemplateEngine();
 
         $posts = $this->getLatestPosts();
 
         $itemloop = $te->logicTag("{LOOP}", "{/LOOP}", $output);
 
-        while (list($id, $timestamp, $title, $content, $draft) = GetDatabase()->GetRow($posts)) {
+        while (list($id, $timestamp, $title, $content, $draft) = \ABirkett\GetDatabase()->GetRow($posts)) {
             $temp = $itemloop;
             $tags = [
                 "{POSTTITLE}" => $title,

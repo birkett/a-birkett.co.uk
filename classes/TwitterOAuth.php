@@ -9,7 +9,7 @@
 * Twitter OAuth class
 */
 
-namespace ABirkett;
+namespace ABirkett\classes;
 
 class TwitterOAuth
 {

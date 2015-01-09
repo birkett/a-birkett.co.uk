@@ -17,7 +17,7 @@ function GetDatabase()
 {
     static $db = null;
     if (!isset($db)) {
-        $db = new PDOMySQLDatabase();
+        $db = new classes\PDOMySQLDatabase();
     }
     return $db;
 }
@@ -31,7 +31,7 @@ function TemplateEngine()
 {
     static $te = null;
     if (!isset($te)) {
-        $te = new TemplateEngine();
+        $te = new classes\TemplateEngine();
     }
     return $te;
 }
@@ -54,13 +54,8 @@ function Autoloader($class)
     $relative_class = substr($class, $len);
 
     $base_dir = __DIR__ . "/";
-    if (strpos($class, "Controller")) {
-        $folder = 'controllers/';
-    } else {
-        $folder = 'classes/';
-    }
 
-    $endpath = $folder . str_replace('\\', '/', $relative_class) . '.php';
+    $endpath = str_replace('\\', '/', $relative_class) . '.php';
     $file = $base_dir . $endpath;
 
     //Try the public folders

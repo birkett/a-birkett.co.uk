@@ -4,7 +4,7 @@
 //      In: Request POST data
 //      Out: Status message
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\controllers;
 
 class AJAXRequestController
 {
@@ -32,7 +32,7 @@ class AJAXRequestController
     //-----------------------------------------------------------------------------
     protected function checkIP($ip)
     {
-        $count = GetDatabase()->runQuery(
+        $count = \ABirkett\GetDatabase()->runQuery(
             "SELECT COUNT(*) from blocked_addresses WHERE address = :ip",
             array(":ip" => $ip)
         );
@@ -46,7 +46,7 @@ class AJAXRequestController
     //-----------------------------------------------------------------------------
     protected function getSinglePost($postid)
     {
-        return GetDatabase()->runQuery(
+        return \ABirkett\GetDatabase()->runQuery(
             "SELECT * FROM blog_posts WHERE post_id = :id AND post_draft = '0'",
             array(":id" => $postid)
         );
@@ -59,7 +59,7 @@ class AJAXRequestController
     //-----------------------------------------------------------------------------
     private function postComment($postid, $username, $comment, $clientip)
     {
-        GetDatabase()->runQuery(
+        \ABirkett\GetDatabase()->runQuery(
             "INSERT INTO blog_comments(post_id, comment_username, comment_text, comment_timestamp, client_ip)" .
             " VALUES(:postid, :username, :comment, :currenttime, :clientip)",
             array(
@@ -95,7 +95,7 @@ class AJAXRequestController
                 $ch = $_POST['challenge'];
                 $resp = $_POST['response'];
 
-                if (GetDatabase()->GetNumRows($this->getSinglePost($p)) != 1) {
+                if (\ABirkett\GetDatabase()->GetNumRows($this->getSinglePost($p)) != 1) {
                     $this->badRequest("Invalid Post ID.");
                 }
                 if ($u == "" || $c == "" || $ch == "" || $resp == "") {
@@ -110,7 +110,7 @@ class AJAXRequestController
                 if ($this->checkIP($ip) != 0) {
                     $this->badRequest("Your address is blocked. This is most likely due to spam.");
                 }
-                $recaptcha = new RecaptchaLib();
+                $recaptcha = new \ABirkett\classes\RecaptchaLib();
                 $captcha = $recaptcha->checkAnswer(RECAPTHCA_PRIVATE_KEY, $ip, $ch, $resp);
                 if ($captcha['is_valid'] == true) {
                     $this->postComment($p, $u, $c, $ip);

@@ -4,7 +4,7 @@
 //      In: Unparsed template
 //      Out: Parsed template
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\controllers;
 
 class PostsWidgetController extends BasePageController
 {
@@ -15,7 +15,7 @@ class PostsWidgetController extends BasePageController
     //-----------------------------------------------------------------------------
     private function getAllPosts()
     {
-        return GetDatabase()->runQuery(
+        return \ABirkett\GetDatabase()->runQuery(
             "SELECT post_id, post_timestamp, post_title FROM blog_posts " .
             "WHERE post_draft = '0' ORDER BY post_timestamp DESC",
             array()
@@ -24,10 +24,10 @@ class PostsWidgetController extends BasePageController
 
     public function __construct(&$output)
     {
-        $te = TemplateEngine();
+        $te = \ABirkett\TemplateEngine();
         $posts = $this->getAllPosts();
         $post_array = [];
-        while (list($id, $timestamp, $title) = GetDatabase()->GetRow($posts)) {
+        while (list($id, $timestamp, $title) = \ABirkett\GetDatabase()->GetRow($posts)) {
             $month = date("F Y", $timestamp);
             if (!isset($post_array["$month"])) {
                 $post_array["$month"] = [];

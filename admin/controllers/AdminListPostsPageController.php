@@ -4,7 +4,7 @@
 //      In: Unparsed template
 //      Out: Parsed template
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\controllers;
 
 class AdminListPostsPageController extends AdminBasePageController
 {
@@ -15,7 +15,7 @@ class AdminListPostsPageController extends AdminBasePageController
     //-----------------------------------------------------------------------------
     private function getAllPosts()
     {
-        return GetDatabase()->runQuery(
+        return \ABirkett\GetDatabase()->runQuery(
             "SELECT post_id, post_timestamp, post_title, post_draft FROM blog_posts ORDER BY post_timestamp DESC",
             array()
         );
@@ -23,9 +23,9 @@ class AdminListPostsPageController extends AdminBasePageController
 
     public function __construct(&$output)
     {
-        $te = TemplateEngine();
+        $te = \ABirkett\TemplateEngine();
         $result = $this->getAllPosts();
-        while (list($id, $timestamp, $title, $draft) = GetDatabase()->getRow($result)) {
+        while (list($id, $timestamp, $title, $draft) = \ABirkett\GetDatabase()->getRow($result)) {
             $draft ? $title .= " (DRAFT)" : $title .= "";
             $tags = [
                 "{ADMINFOLDER}" => ADMIN_FOLDER,

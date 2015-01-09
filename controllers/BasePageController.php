@@ -6,15 +6,15 @@
 //
 //  !!! All pages get parsed through here !!!
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\controllers;
 
 class BasePageController
 {
     public function __construct(&$output)
     {
-        $te = TemplateEngine();
+        $te = \ABirkett\TemplateEngine();
         $tags = [
-            "{BASEURL}" => GetBaseURL(),
+            "{BASEURL}" => \ABirkett\GetBaseURL(),
             "{RAND2551}" => rand(0, 255),
             "{RAND2552}" => rand(0, 255),
             "{RAND2553}" => rand(0, 255),

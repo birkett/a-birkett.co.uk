@@ -4,7 +4,7 @@
 //
 //  Basic class to interface with a MySQL database via PDO
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\classes;
 
 use PDO;
 

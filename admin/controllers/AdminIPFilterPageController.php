@@ -4,7 +4,7 @@
 //      In: Unparsed template
 //      Out: Parsed template
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\controllers;
 
 class AdminIPFilterPageController extends AdminBasePageController
 {
@@ -15,14 +15,14 @@ class AdminIPFilterPageController extends AdminBasePageController
     //-----------------------------------------------------------------------------
     private function getBlockedAddresses()
     {
-        return GetDatabase()->runQuery("SELECT * FROM blocked_addresses ORDER BY blocked_timestamp DESC", array());
+        return \ABirkett\GetDatabase()->runQuery("SELECT * FROM blocked_addresses ORDER BY blocked_timestamp DESC", array());
     }
 
     public function __construct(&$output)
     {
-        $te = TemplateEngine();
+        $te = \ABirkett\TemplateEngine();
         $result = $this->getBlockedAddresses();
-        while (list($ip_id, $address, $timestamp) = GetDatabase()->GetRow($result)) {
+        while (list($ip_id, $address, $timestamp) = \ABirkett\GetDatabase()->GetRow($result)) {
             $tags = [
                 "{IP}" => $address,
                 "{TIMESTAMP}" => date(DATE_FORMAT, $timestamp)

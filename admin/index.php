@@ -6,16 +6,18 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett;
 
+use ABirkett\classes\Page as Page;
+
 session_start();
 
 require_once("../config.php");
 require_once("../functions.php");
 
-DeclareAdminPage(); //Set so the page class will include admin controllers
-PHPDefaults();
+\ABirkett\DeclareAdminPage(); //Set so the page class will include admin controllers
+\ABirkett\PHPDefaults();
 
 if (isset($_POST['mode'])) {
-    new AdminAJAXRequestController();
+    new \ABirkett\controllers\AdminAJAXRequestController();
 } elseif (isset($_SESSION['user'])) {
     if (isset($_GET['action'])) {
         switch($_GET['action']) {

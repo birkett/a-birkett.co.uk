@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett;
 
+use ABirkett\classes\Page as Page;
+
 require_once("config.php");
 require_once("functions.php");
 
@@ -45,7 +47,7 @@ if (isset($_GET['page'])) {
 // AJAX actions.
 //-----------------------------------------------------------------------------
 } elseif (isset($_POST['mode'])) {
-    new AJAXRequestController();
+    new \ABirkett\controllers\AJAXRequestController();
 } else {
 //-----------------------------------------------------------------------------
 // Default when nothing requested.

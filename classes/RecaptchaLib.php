@@ -1,5 +1,5 @@
 <?php
-namespace ABirkett;
+namespace ABirkett\classes;
 
 class RecaptchaLib
 {

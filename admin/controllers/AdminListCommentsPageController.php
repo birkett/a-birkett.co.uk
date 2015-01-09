@@ -4,7 +4,7 @@
 //      In: Unparsed template
 //      Out: Parsed template
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\controllers;
 
 class AdminListCommentsPageController extends AdminBasePageController
 {
@@ -15,7 +15,7 @@ class AdminListCommentsPageController extends AdminBasePageController
     //-----------------------------------------------------------------------------
     private function getAllComments($ip = "")
     {
-        return GetDatabase()->runQuery(
+        return \ABirkett\GetDatabase()->runQuery(
             "SELECT * FROM blog_comments" . ($ip == "" ? " " : " WHERE client_ip='$ip' ") .
             "ORDER BY comment_timestamp DESC",
             array()
@@ -24,14 +24,14 @@ class AdminListCommentsPageController extends AdminBasePageController
 
     public function __construct(&$output)
     {
-        $te = TemplateEngine();
+        $te = \ABirkett\TemplateEngine();
 
         if (isset($_GET['ip'])) {
             $result = $this->getAllComments($_GET['ip']);
         } else {
             $result = $this->getAllComments();
         }
-        while (list($id, $postid, $username, $comment, $timestamp, $ip) = GetDatabase()->getRow($result)) {
+        while (list($id, $postid, $username, $comment, $timestamp, $ip) = \ABirkett\GetDatabase()->getRow($result)) {
             $tags = [
                 "{COMMENT}" => $comment,
                 "{USERNAME}" => $username,

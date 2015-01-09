@@ -4,7 +4,7 @@
 //
 //  Basic functions to use when building a templated page
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\classes;
 
 class TemplateEngine
 {

@@ -6,7 +6,7 @@
 //
 //  !!! This controller is only used for pages stored in the database !!!
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\controllers;
 
 class GenericPageController extends BasePageController
 {
@@ -17,7 +17,7 @@ class GenericPageController extends BasePageController
     //-----------------------------------------------------------------------------
     private function getPage($pagename)
     {
-        $page = GetDatabase()->runQuery(
+        $page = \ABirkett\GetDatabase()->runQuery(
             "SELECT page_title, page_content FROM site_pages WHERE page_name = :pagename",
             array(":pagename" => $pagename)
         );
@@ -31,7 +31,7 @@ class GenericPageController extends BasePageController
             "{PAGETITLE}" => $page['page_title'],
             "{PAGECONTENT}" => stripslashes($page['page_content'])
         ];
-        TemplateEngine()->parseTags($tags, $output);
+        \ABirkett\TemplateEngine()->parseTags($tags, $output);
         parent::__construct($output);
     }
 }

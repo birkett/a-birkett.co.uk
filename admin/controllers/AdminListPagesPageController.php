@@ -4,7 +4,7 @@
 //      In: Unparsed template
 //      Out: Parsed template
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\controllers;
 
 class AdminListPagesPageController extends AdminBasePageController
 {
@@ -15,14 +15,14 @@ class AdminListPagesPageController extends AdminBasePageController
     //-----------------------------------------------------------------------------
     private function getAllPages()
     {
-        return GetDatabase()->runQuery("SELECT page_id, page_title from site_pages", array());
+        return \ABirkett\GetDatabase()->runQuery("SELECT page_id, page_title from site_pages", array());
     }
 
     public function __construct(&$output)
     {
-        $te = TemplateEngine();
+        $te = \ABirkett\TemplateEngine();
         $result = $this->getAllPages();
-        while (list($id, $title) = GetDatabase()->getRow($result)) {
+        while (list($id, $title) = \ABirkett\GetDatabase()->getRow($result)) {
             $tags = [
                 "{PAGEID}" => $id,
                 "{PAGETITLE}" => $title

@@ -4,7 +4,7 @@
 //      In: Request POST data
 //      Out: Status message
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\controllers;
 
 class AdminAJAXRequestController extends AJAXRequestController
 {
@@ -15,7 +15,7 @@ class AdminAJAXRequestController extends AJAXRequestController
     //-----------------------------------------------------------------------------
     private function newPost($title, $content, $draft)
     {
-        $db = GetDatabase();
+        $db = \ABirkett\GetDatabase();
         $draft = ($draft == "true") ? 1 : 0; //bool to int
         $db->runQuery(
             "INSERT INTO blog_posts(post_timestamp, post_title, post_content, post_draft, post_tweeted) " .
@@ -35,7 +35,7 @@ class AdminAJAXRequestController extends AJAXRequestController
     private function updatePost($postid, $title, $content, $draft)
     {
         $draft = ($draft == "true") ? 1 : 0; //bool to int
-        GetDatabase()->runQuery(
+        \ABirkett\GetDatabase()->runQuery(
             "UPDATE blog_posts SET post_title = :title, post_content = :content, " .
             "post_draft = :draft WHERE post_id = :postid LIMIT 1",
             array(":title" => $title, ":content" => $content, ":draft" => $draft, ":postid" => $postid)
@@ -50,7 +50,7 @@ class AdminAJAXRequestController extends AJAXRequestController
     //-----------------------------------------------------------------------------
     private function updatePage($pageid, $content)
     {
-        GetDatabase()->runQuery(
+        \ABirkett\GetDatabase()->runQuery(
             "UPDATE site_pages SET page_content = :content WHERE page_id = :pageid LIMIT 1",
             array(":content" => $content, ":pageid" => $pageid)
         );
@@ -66,7 +66,7 @@ class AdminAJAXRequestController extends AJAXRequestController
         if (parent::checkIP($ip) != 0) {
             return; //do nothing if already blocked
         }
-        GetDatabase()->runQuery(
+        \ABirkett\GetDatabase()->runQuery(
             "INSERT INTO blocked_addresses(address, blocked_timestamp) VALUES(:ip, :timestamp)",
             array(":ip" => $ip, ":timestamp" => time())
         );
@@ -79,7 +79,7 @@ class AdminAJAXRequestController extends AJAXRequestController
     //-----------------------------------------------------------------------------
     private function unblockIP($ip)
     {
-        GetDatabase()->runQuery("DELETE FROM blocked_addresses WHERE address = :ip", array(":ip" => $ip));
+        \ABirkett\GetDatabase()->runQuery("DELETE FROM blocked_addresses WHERE address = :ip", array(":ip" => $ip));
     }
 
     //-----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ class AdminAJAXRequestController extends AJAXRequestController
         if ($newpassword != $confirmedpassword) {
             return false; //Passwords dont match
         }
-        $db = GetDatabase();
+        $db = \ABirkett\GetDatabase();
         $data = $db->runQuery("SELECT username FROM site_users WHERE user_id='1'", array());
         $row = $db->getRow($data);
 
@@ -112,7 +112,7 @@ class AdminAJAXRequestController extends AJAXRequestController
     //-----------------------------------------------------------------------------
     private function checkCredentials($username, $password)
     {
-        $db = GetDatabase();
+        $db = \ABirkett\GetDatabase();
         $result = $db->runQuery(
             "SELECT password FROM site_users WHERE username = :username",
             array(":username" => $username)
@@ -135,7 +135,7 @@ class AdminAJAXRequestController extends AJAXRequestController
     //-----------------------------------------------------------------------------
     private function tweetPost($postid)
     {
-        $db = GetDatabase();
+        $db = \ABirkett\GetDatabase();
         $post = parent::getSinglePost($postid);
         if ($db->GetNumRows($post) == 0) {
             return; //Post doesnt exist or is a draft
@@ -145,7 +145,7 @@ class AdminAJAXRequestController extends AJAXRequestController
             return; //Already tweeted out
         }
 
-        $url = GetBaseURL() . "blog/" . $id;
+        $url = \ABirkett\GetBaseURL() . "blog/" . $id;
 
         $tweet = "New Blog Post: " . $title . " - " . $url;
 

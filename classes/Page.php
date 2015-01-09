@@ -4,7 +4,7 @@
 //
 //  Builds pages using a template.
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\classes;
 
 class Page
 {
@@ -13,7 +13,7 @@ class Page
     //-----------------------------------------------------------------------------
     public function __construct($title, $widget, $template)
     {
-        $te = TemplateEngine();
+        $te = \ABirkett\TemplateEngine();
 
         if ($template == "feed") {
             $pagetemplate = $te->loadPageTemplate("feed.tpl");
@@ -32,46 +32,46 @@ class Page
         if (defined('ADMINPAGE')) {
             switch ($template) {
                 case "listcomments":
-                    new AdminListCommentsPageController($pagetemplate);
+                    new \ABirkett\controllers\AdminListCommentsPageController($pagetemplate);
                     break;
                 case "listposts":
-                    new AdminListPostsPageController($pagetemplate);
+                    new \ABirkett\controllers\AdminListPostsPageController($pagetemplate);
                     break;
                 case "listpages":
-                    new AdminListPagesPageController($pagetemplate);
+                    new \ABirkett\controllers\AdminListPagesPageController($pagetemplate);
                     break;
                 case "serverinfo":
-                    new AdminServerInfoPageController($pagetemplate);
+                    new \ABirkett\controllers\AdminServerInfoPageController($pagetemplate);
                     break;
                 case "ipfilter":
-                    new AdminIPFilterPageController($pagetemplate);
+                    new \ABirkett\controllers\AdminIPFilterPageController($pagetemplate);
                     break;
                 case "edit":
-                    new AdminEditPageController($pagetemplate);
+                    new \ABirkett\controllers\AdminEditPageController($pagetemplate);
                     break;
                 default:
-                    new AdminBasePageController($pagetemplate);
+                    new \ABirkett\controllers\AdminBasePageController($pagetemplate);
             }
             if ($widget = "userwidget") {
-                new AdminUserWidgetController($pagetemplate);
+                new \ABirkett\controllers\AdminUserWidgetController($pagetemplate);
             }
         } else {
             switch ($template) {
                 case "generic":
                     $e = explode(' ', $title);  //Get page name from last word of title
-                    new GenericPageController($pagetemplate, strtolower(array_pop($e)));
+                    new \ABirkett\controllers\GenericPageController($pagetemplate, strtolower(array_pop($e)));
                     break;
                 case "blog":
-                    new BlogPageController($pagetemplate);
+                    new \ABirkett\controllers\BlogPageController($pagetemplate);
                     break;
                 case "feed":
-                    new FeedPageController($pagetemplate);
+                    new \ABirkett\controllers\FeedPageController($pagetemplate);
                     break;
                 default:
-                    new BasePageController($pagetemplate);
+                    new \ABirkett\controllers\BasePageController($pagetemplate);
             }
             if ($widget == "postswidget") {
-                new PostsWidgetController($pagetemplate);
+                new \ABirkett\controllers\PostsWidgetController($pagetemplate);
             }
         }
         echo $pagetemplate;

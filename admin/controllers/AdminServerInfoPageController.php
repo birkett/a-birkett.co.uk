@@ -4,7 +4,7 @@
 //      In: Unparsed template
 //      Out: Parsed template
 //-----------------------------------------------------------------------------
-namespace ABirkett;
+namespace ABirkett\controllers;
 
 class AdminServerInfoPageController extends AdminBasePageController
 {
@@ -13,12 +13,12 @@ class AdminServerInfoPageController extends AdminBasePageController
         $tags = [
             "{APACHEVERSION}" => $_SERVER["SERVER_SOFTWARE"],
             "{PHPVERSION}" => phpversion(),
-            "{MYSQLVERSION}" => GetDatabase()->ServerInfo(),
+            "{MYSQLVERSION}" => \ABirkett\GetDatabase()->ServerInfo(),
             "{MYSQLIEXT}" => (extension_loaded("MySQLi") ? "Yes" : "No"),
             "{PDOMYSQLEXT}" => (extension_loaded("PDO_MySQL") ? "Yes" : "No"),
             "{PHPCURLEXT}" => (extension_loaded("CURL") ? "Yes" : "No")
         ];
-        TemplateEngine()->parseTags($tags, $output);
+        \ABirkett\TemplateEngine()->parseTags($tags, $output);
 
         parent::__construct($output);
     }
