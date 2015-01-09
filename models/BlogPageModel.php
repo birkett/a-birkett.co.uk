@@ -1,16 +1,24 @@
 <?php
-//-----------------------------------------------------------------------------
-// Blog page data
-//-----------------------------------------------------------------------------
+/**
+* BlogPageModel - glue between the database and BlogPageController
+*
+* PHP Version 5.5
+*
+* @category Models
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett\models;
 
 class BlogPageModel extends BasePageModel
 {
-    //-----------------------------------------------------------------------------
-    // Fetch the specified post
-    //		In: Post ID
-    //		Out: Post data
-    //-----------------------------------------------------------------------------
+    /**
+    * Get the post data and return it as an array
+    * @param int $postid ID of the post to fetch
+    * @return mixed[] Array of post data
+    */
     public function getSinglePost($postid)
     {
         return $this->database->runQuery(
@@ -19,37 +27,40 @@ class BlogPageModel extends BasePageModel
         );
     }
 
-    //-----------------------------------------------------------------------------
-    // Fetch a page of posts
-    //		In: Page number
-    //		Out: Post data
-    //-----------------------------------------------------------------------------
+    /**
+    * Get posts data and return it as an array
+    * @param int $page Page number to fetch
+    * @return mixed[] Array of posts data
+    */
     public function getMultiplePosts($page)
     {
         $limit1 = $page * BLOG_POSTS_PER_PAGE;
         $limit2 = BLOG_POSTS_PER_PAGE;
         return $this->database->runQuery(
-            "SELECT * FROM blog_posts WHERE post_draft = '0' ORDER BY post_timestamp DESC LIMIT $limit1,$limit2",
+            "SELECT * FROM blog_posts WHERE post_draft = '0'" .
+            " ORDER BY post_timestamp DESC LIMIT $limit1,$limit2",
             array()
         );
     }
 
-    //-----------------------------------------------------------------------------
-    // Get the total number of blog posts
-    //		In: none
-    //		Out: Number of posts
-    //-----------------------------------------------------------------------------
+    /**
+    * Get the total number of public blog posts
+    * @return mixed[] Array containing post count
+    */
     public function getNumberOfPosts()
     {
-        $count = $this->database->runQuery("SELECT COUNT(*) from blog_posts", array());
+        $count = $this->database->runQuery(
+            "SELECT COUNT(*) from blog_posts WHERE post_draft = '0'",
+            array()
+        );
         return $count[0]['COUNT(*)'];
     }
 
-    //-----------------------------------------------------------------------------
-    // Get the total comments on a specified post
-    //		In: Post ID
-    //		Out: Number of comments on specified post
-    //-----------------------------------------------------------------------------
+    /**
+    * Get the total number of comments on a post
+    * @param int $postid ID of the post to count comments on
+    * @return mixed[] Array containing comment count
+    */
     public function getNumberOfComments($postid)
     {
         $count = $this->database->runQuery(
@@ -59,17 +70,17 @@ class BlogPageModel extends BasePageModel
         return $count[0]['COUNT(*)'];
     }
 
-    //-----------------------------------------------------------------------------
-    // Fetch the comments for specified post ID
-    //		In: Post ID
-    //		Out: All comments for post
-    //-----------------------------------------------------------------------------
+    /**
+    * Get the comments for a specified post
+    * @param int $postid ID of the post to fetch comments for
+    * @return mixed[] array of comments data
+    */
     public function getCommentsOnPost($postid)
     {
         return $this->database->runQuery(
-            "SELECT comment_username, comment_text, comment_timestamp FROM blog_comments " .
-            "WHERE post_id = :postid ORDER BY comment_timestamp ASC",
-            array(":postid" => $postid)
+            "SELECT comment_username, comment_text, comment_timestamp" .
+            " FROM blog_comments WHERE post_id= :pid ORDER BY comment_timestamp ASC",
+            array(":pid" => $postid)
         );
     }
 }

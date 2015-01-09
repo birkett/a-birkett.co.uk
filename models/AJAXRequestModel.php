@@ -1,21 +1,33 @@
 <?php
-//-----------------------------------------------------------------------------
-// Handle public AJAX requests
-//-----------------------------------------------------------------------------
+/**
+* AJAXRequestModel - glue between the database and AJAXRequestController
+*
+* PHP Version 5.5
+*
+* @category Models
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett\models;
 
 class AJAXRequestModel extends BasePageModel
 {
-    //-----------------------------------------------------------------------------
-    // Post a new comment to the database
-    //		In: Target post ID, Username, Text and IP address
-    //		Out: none
-    //-----------------------------------------------------------------------------
+    /**
+    * Post a new comment
+    * @param int    $postid   ID of the post the comment is for
+    * @param string $username Comment author
+    * @param string $comment  Comment text
+    * @param string $clientip IP address of the author
+    * @return none
+    */
     public function postComment($postid, $username, $comment, $clientip)
     {
         $this->database->runQuery(
-            "INSERT INTO blog_comments(post_id, comment_username, comment_text, comment_timestamp, client_ip)" .
-            " VALUES(:postid, :username, :comment, :currenttime, :clientip)",
+            "INSERT INTO blog_comments(" .
+            "post_id, comment_username, comment_text, comment_timestamp, client_ip" .
+            ") VALUES(:postid, :username, :comment, :currenttime, :clientip)",
             array(
                 ":postid" => $postid,
                 ":username" => $username,
@@ -26,11 +38,11 @@ class AJAXRequestModel extends BasePageModel
         );
     }
 
-    //-----------------------------------------------------------------------------
-    // Fetch the specified post
-    //		In: Post ID
-    //		Out: Post data
-    //-----------------------------------------------------------------------------
+    /**
+    * Get the post data and return it as an array
+    * @param int $postid ID of the post to fetch
+    * @return mixed[] Array of post data
+    */
     public function getSinglePost($postid)
     {
         return $this->database->runQuery(
@@ -39,11 +51,11 @@ class AJAXRequestModel extends BasePageModel
         );
     }
 
-    //-----------------------------------------------------------------------------
-    // Checks if an IP is blocked
-    //		In: IP address
-    //		Out: TRUE on blocked, FALSE on not found
-    //-----------------------------------------------------------------------------
+    /**
+    * Check if an IP address is blacklisted
+    * @param string $ip IP address to check for
+    * @return string 1 on found, 0 when not found
+    */
     public function checkIP($ip)
     {
         $count = $this->database->runQuery(

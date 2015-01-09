@@ -25,15 +25,11 @@ class TemplateEngine
     //-----------------------------------------------------------------------------
     // Open a page template, taking into account if the requested page is in admin
     //		In: Filename
-    //		Out: Unparsed (sub)template
+    //		Out: Unparsed template
     //-----------------------------------------------------------------------------
     public function loadPageTemplate($filename)
     {
-        if (defined('ADMINPAGE')) {
-            return file_get_contents("../" . TEMPLATE_FOLDER . $filename);
-        } else {
-            return file_get_contents(TEMPLATE_FOLDER . $filename);
-        }
+        return file_get_contents(__DIR__ . "/../" . TEMPLATE_FOLDER . $filename);
     }
 
     //-----------------------------------------------------------------------------

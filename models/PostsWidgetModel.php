@@ -1,16 +1,23 @@
 <?php
-//-----------------------------------------------------------------------------
-// Posts widget data
-//-----------------------------------------------------------------------------
+/**
+ * PostsWidgetModel - glue between the database and PostsWidgetController
+ *
+ * PHP Version 5.5
+ *
+ * @category Models
+ * @package  PersonalWebsite
+ * @author   Anthony Birkett <anthony@a-birkett.co.uk>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @link     http://www.a-birkett.co.uk
+ */
 namespace ABirkett\models;
 
 class PostsWidgetModel extends BasePageModel
 {
-    //-----------------------------------------------------------------------------
-    // Fetch post data
-    //		In: none
-    //		Out: Post data
-    //-----------------------------------------------------------------------------
+    /**
+     * Get the post data and return it as an array
+     * @return mixed[] Array of post data
+     */
     public function getAllPosts()
     {
         return $this->database->runQuery(

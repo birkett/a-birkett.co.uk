@@ -1,24 +1,42 @@
 <?php
-//-----------------------------------------------------------------------------
-// Basic page data
-//-----------------------------------------------------------------------------
+/**
+* BasePageModel - glue between the database and BasePageController
+*
+* PHP Version 5.5
+*
+* @category Models
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett\models;
 
 class BasePageModel
 {
+    /**
+     * Store a database instance - used by child classes
+     * @var object $databse
+     */
     public $database;
 
-    //-----------------------------------------------------------------------------
-    // Get the base URL of the site (Protocol+DomainName+Backslash)
-    //		In: Raw string
-    //		Out: Safe string with original slashes removed - then escaped
-    //-----------------------------------------------------------------------------
+    /**
+    * Get the base URL for the site (Protocol+Domain+TrailingSlash)
+    * @return string URL
+    */
     public function getBaseURL()
     {
-        (stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true) ? $proto = "https://" : $proto = "http://";
+        if (stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true) {
+            $proto = "https://";
+        } else {
+            $proto = "http://";
+        }
         return $proto . $_SERVER['HTTP_HOST'] . "/";
     }
 
+    /**
+    * Store a database instance, accessible from child classs
+    */
     public function __construct()
     {
         $this->database = \ABirkett\classes\PDOMySQLDatabase::getInstance();

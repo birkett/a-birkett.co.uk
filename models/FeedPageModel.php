@@ -1,21 +1,29 @@
 <?php
-//-----------------------------------------------------------------------------
-// Feed page data
-//-----------------------------------------------------------------------------
+/**
+* FeedPageModel - glue between the database and FeedPageController
+*
+* PHP Version 5.5
+*
+* @category Models
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett\models;
 
 class FeedPageModel extends BasePageModel
 {
-    //-----------------------------------------------------------------------------
-    // Fetch the latest posts
-    //		In: none
-    //		Out: Post data
-    //-----------------------------------------------------------------------------
+    /**
+    * Get the posts data and return it as an array
+    * @return mixed[] Array of posts data
+    */
     public function getLatestPosts()
     {
         $limit = BLOG_POSTS_PER_PAGE;
         return $this->database->runQuery(
-            "SELECT * FROM blog_posts WHERE post_draft = '0' ORDER BY post_timestamp DESC LIMIT 0,$limit",
+            "SELECT * FROM blog_posts WHERE post_draft = '0'" .
+            " ORDER BY post_timestamp DESC LIMIT 0,$limit",
             array()
         );
     }

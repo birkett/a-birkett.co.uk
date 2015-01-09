@@ -1,18 +1,28 @@
 <?php
-//-----------------------------------------------------------------------------
-// IP filter page data
-//-----------------------------------------------------------------------------
+/**
+* AdminIPFilterPageModel - glue between the database and AdminIPFilterPageController
+*
+* PHP Version 5.5
+*
+* @category AdminModels
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett\models;
 
 class AdminIPFilterPageModel extends AdminBasePageModel
 {
-    //-----------------------------------------------------------------------------
-    // Gets all blocked IP addresses
-    //      In: none
-    //      Out: MySQLi result resource
-    //-----------------------------------------------------------------------------
+    /**
+     * Fetch a list of all blacklisted addresses
+     * @return mixed[] Array of blacklist entries
+     */
     public function getBlockedAddresses()
     {
-        return $this->database->runQuery("SELECT * FROM blocked_addresses ORDER BY blocked_timestamp DESC", array());
+        return $this->database->runQuery(
+            "SELECT * FROM blocked_addresses ORDER BY blocked_timestamp DESC",
+            array()
+        );
     }
 }
