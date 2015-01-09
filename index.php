@@ -17,7 +17,7 @@ use ABirkett\classes\Page as Page;
 require_once "config.php";
 require_once "functions.php";
 
-PHPDefaults();
+Functions::PHPDefaults();
 
 if (isset($_GET['page'])) {
     switch($_GET['page']) {

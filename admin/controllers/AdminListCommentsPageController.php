@@ -1,6 +1,6 @@
 <?php
 /**
-* AdminListCommentsPageController - pull data from the model to populate the template
+* AdminListCommentsPageController - pull data from model to populate template
 *
 * PHP Version 5.5
 *

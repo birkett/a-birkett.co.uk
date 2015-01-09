@@ -26,14 +26,14 @@ class AJAXRequestModel extends BasePageModel
     {
         $this->database->runQuery(
             "INSERT INTO blog_comments(" .
-            "post_id, comment_username, comment_text, comment_timestamp, client_ip" .
-            ") VALUES(:postid, :username, :comment, :currenttime, :clientip)",
+            "post_id, comment_username, comment_text, comment_timestamp, " .
+            "client_ip) VALUES(:pid, :uname, :cmnt, :time, :ip)",
             array(
-                ":postid" => $postid,
-                ":username" => $username,
-                ":comment" => $comment,
-                ":currenttime" => time(),
-                ":clientip" => $clientip
+                ":pid" => $postid,
+                ":uname" => $username,
+                ":cmnt" => $comment,
+                ":time" => time(),
+                ":ip" => $clientip
             )
         );
     }

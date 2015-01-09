@@ -156,7 +156,15 @@ class AdminAJAXRequestModel extends AJAXRequestModel
 
         if ($this->database->getNumRows($result) == 1) {
             $dbhash = $this->database->getRow($result);
-            if (password_verify($password, $dbhash[0])) {
+
+            if (function_exists('password_verify')) {
+                $check = password_verify($password, $dbhash[0]);
+            } else {
+                $hash = $this->hashPassword($password);
+                ($hash == $dbhash[0]) ? $check = true : $check = false;
+            }
+
+            if ($check) {
                 $_SESSION['user'] = $username;
                 return true;
             }
@@ -209,9 +217,14 @@ class AdminAJAXRequestModel extends AJAXRequestModel
     */
     public function hashPassword($password)
     {
-        $options = [
-            'cost' => 10,
-        ];
-        return password_hash($password, PASSWORD_BCRYPT, $options);
+        $options = [ 'cost' => HASHING_COST ];
+        //password_hash is PHP 5.5+, fall back when not available
+        if (function_exists('password_hash')) {
+            return password_hash($password, PASSWORD_BCRYPT, $options);
+        } else {
+            $salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+            $salt = str_replace('+', '.', $salt);
+            return crypt($password, '$2y$'.$options['cost'].'$'.$salt.'$');
+        }
     }
 }

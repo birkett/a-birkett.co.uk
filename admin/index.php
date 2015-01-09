@@ -19,8 +19,8 @@ session_start();
 require_once "../config.php";
 require_once "../functions.php";
 
-declareAdminPage(); //Set so the page class will include admin controllers
-PHPDefaults();
+Functions::declareAdminPage();
+Functions::PHPDefaults();
 
 if (isset($_POST['mode'])) {
     new \ABirkett\controllers\AdminAJAXRequestController();
@@ -40,7 +40,11 @@ if (isset($_POST['mode'])) {
                 new Page("Admin :: List Pages", "userwidget", "listpages");
                 break;
             case "listcomments":
-                new Page("Admin :: List Comments", "userwidget", "listcomments");
+                new Page(
+                    "Admin :: List Comments",
+                    "userwidget",
+                    "listcomments"
+                );
                 break;
             case "listposts":
                 new Page("Admin :: List Posts", "userwidget", "listposts");
@@ -60,7 +64,7 @@ if (isset($_POST['mode'])) {
                 break;
         }
     } else {
-        new Page("Admin :: Main", "userwidget", "index"); //Default when nothing requested
+        new Page("Admin :: Main", "userwidget", "index"); //Default request
     }
 } else {
     new Page("Admin :: Login", "userwidget", "login");

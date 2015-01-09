@@ -43,20 +43,20 @@ class RecaptchaLib
     {
         $req = $this->qsEncode($data);
 
-        $http_request  = "POST $path HTTP/1.0\r\n";
-        $http_request .= "Host: $host\r\n";
-        $http_request .= "Content-Type: application/x-www-form-urlencoded;\r\n";
-        $http_request .= "Content-Length: " . strlen($req) . "\r\n";
-        $http_request .= "User-Agent: reCAPTCHA/PHP\r\n";
-        $http_request .= "\r\n";
-        $http_request .= $req;
+        $httpRequest  = "POST $path HTTP/1.0\r\n";
+        $httpRequest .= "Host: $host\r\n";
+        $httpRequest .= "Content-Type: application/x-www-form-urlencoded;\r\n";
+        $httpRequest .= "Content-Length: " . strlen($req) . "\r\n";
+        $httpRequest .= "User-Agent: reCAPTCHA/PHP\r\n";
+        $httpRequest .= "\r\n";
+        $httpRequest .= $req;
 
         $response = '';
         if (false == ($fs = @fsockopen($host, $port, $errno, $errstr, 10))) {
             die ('Could not open socket');
         }
 
-        fwrite($fs, $http_request);
+        fwrite($fs, $httpRequest);
 
         while (!feof($fs)) {
             $response .= fgets($fs, 1160); // One TCP-IP packet
@@ -90,12 +90,12 @@ class RecaptchaLib
 
         $answers = explode("\n", $reply[1]);
 
-        $recaptcha_response = [ 'is_valid' => true, 'error' => '' ];
+        $recaptchaResponse = [ 'is_valid' => true, 'error' => '' ];
 
         if (trim($answers[0]) != 'true') {
-            $recaptcha_response['is_valid'] = false;
-            $recaptcha_response['error'] = $answers[1];
+            $recaptchaResponse['is_valid'] = false;
+            $recaptchaResponse['error'] = $answers[1];
         }
-        return $recaptcha_response;
+        return $recaptchaResponse;
     }
 }

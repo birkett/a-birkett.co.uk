@@ -34,11 +34,11 @@ class BlogPageModel extends BasePageModel
     */
     public function getMultiplePosts($page)
     {
-        $limit1 = $page * BLOG_POSTS_PER_PAGE;
-        $limit2 = BLOG_POSTS_PER_PAGE;
+        $limitlower = $page * BLOG_POSTS_PER_PAGE;
+        $limitupper = BLOG_POSTS_PER_PAGE;
         return $this->database->runQuery(
             "SELECT * FROM blog_posts WHERE post_draft = '0'" .
-            " ORDER BY post_timestamp DESC LIMIT $limit1,$limit2",
+            " ORDER BY post_timestamp DESC LIMIT $limitlower,$limitupper",
             array()
         );
     }

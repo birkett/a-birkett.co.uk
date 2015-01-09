@@ -17,9 +17,9 @@ class TwitterOAuth
 {
     /**
     * Contains the last HTTP status code returned
-    * @var int $http_code
+    * @var int $httpCode
     */
-    public $http_code;
+    public $httpCode;
 
     /**
     * Contains the last API call
@@ -41,9 +41,9 @@ class TwitterOAuth
 
     /**
     * Contains the last HTTP headers returned
-    * @var mixed[] $http_info
+    * @var mixed[] $httpInfo
     */
-    public $http_info;
+    public $httpInfo;
 
     /**
     * Set the useragnet
@@ -53,18 +53,18 @@ class TwitterOAuth
 
     /**
     * Construct TwitterOAuth object
-    * @param string $c_key    API consumer key
-    * @param string $c_secret API consumer secret
-    * @param string $o_token  API OAuth token
-    * @param string $o_secret API OAuth token secret
+    * @param string $cKey    API consumer key
+    * @param string $cSecret API consumer secret
+    * @param string $oToken  API OAuth token
+    * @param string $oSecret API OAuth token secret
     * @return none
     */
-    public function __construct($c_key, $c_secret, $o_token, $o_secret)
+    public function __construct($cKey, $cSecret, $oToken, $oSecret)
     {
-        $this->consumer_key = $c_key;
-        $this->consumer_secret = $c_secret;
-        $this->oauth_token = $o_token;
-        $this->oauth_token_secret = $o_secret;
+        $this->consumerKey = $cKey;
+        $this->consumerSecret = $cSecret;
+        $this->oauthToken = $oToken;
+        $this->oauthTokenSecret = $oSecret;
     }
 
     /**
@@ -105,17 +105,17 @@ class TwitterOAuth
             $url = "{$this->host}{$url}.{$test}";
         }
         $request = OAuthRequest::fromConsumerAndToken(
-            $this->consumer_key,
-            $this->oauth_token,
+            $this->consumerKey,
+            $this->oauthToken,
             $method,
             $url,
             $parameters
         );
         $request->signRequest(
-            $this->consumer_key,
-            $this->consumer_secret,
-            $this->oauth_token,
-            $this->oauth_token_secret
+            $this->consumerKey,
+            $this->consumerSecret,
+            $this->oauthToken,
+            $this->oauthTokenSecret
         );
         switch ($method) {
             case 'GET':
@@ -138,7 +138,7 @@ class TwitterOAuth
     */
     private function http($url, $method, $postfields = null)
     {
-        $this->http_info = array();
+        $this->httpInfo = array();
         $ci = curl_init();
         /* Curl settings */
         curl_setopt($ci, CURLOPT_USERAGENT, $this->useragent);
@@ -161,8 +161,8 @@ class TwitterOAuth
 
         curl_setopt($ci, CURLOPT_URL, $url);
         $response = curl_exec($ci);
-        $this->http_code = curl_getinfo($ci, CURLINFO_HTTP_CODE);
-        $this->http_info = array_merge($this->http_info, curl_getinfo($ci));
+        $this->httpCode = curl_getinfo($ci, CURLINFO_HTTP_CODE);
+        $this->httpInfo = array_merge($this->httpInfo, curl_getinfo($ci));
         $this->url = $url;
         curl_close($ci);
         return $response;
@@ -180,7 +180,7 @@ class TwitterOAuth
         if (!empty($i)) {
             $key = str_replace('-', '_', strtolower(substr($header, 0, $i)));
             $value = trim(substr($header, $i + 2));
-            $this->http_header[$key] = $value;
+            $this->httpHeader[$key] = $value;
         }
         return strlen($header);
     }

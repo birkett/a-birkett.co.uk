@@ -30,15 +30,36 @@ define('CHRISTMAS', 0);
 //Number of posts per page for the blog pagniation
 define('BLOG_POSTS_PER_PAGE', 5);
 
+//Cost value when hashing passwords
+define('HASHING_COST', 10);
+
 //ReCaptcha comment verification keys
-define('RECAPTCHA_PUBLIC_KEY', 'pub-key');
-define('RECAPTHCA_PRIVATE_KEY', 'priv-key');
+define(
+    'RECAPTCHA_PUBLIC_KEY',
+    'pub-key'
+);
+define(
+    'RECAPTHCA_PRIVATE_KEY',
+    'priv-key'
+);
 
 //Twitter keys used when tweeting new blog posts
-define("TWITTER_CONSUMER_KEY", 'cons-key');
-define("TWITTER_CONSUMER_SECRET", 'cons-secret');
-define("TWITTER_OAUTH_TOKEN", 'oauth-key');
-define("TWITTER_OAUTH_SECRET", 'oauth-secret');
+define(
+    'TWITTER_CONSUMER_KEY',
+    'cons-key'
+);
+define(
+    'TWITTER_CONSUMER_SECRET',
+    'cons-secret'
+);
+define(
+    'TWITTER_OAUTH_TOKEN',
+    'oauth-key'
+);
+define(
+    'TWITTER_OAUTH_SECRET',
+    'oauth-secret'
+);
 
 //Database connection
 define('DATABASE_HOSTNAME', 'localhost');

@@ -1,6 +1,6 @@
 <?php
 /**
-* AdminServeInfoPageController - pull data from the model to populate the template
+* AdminServeInfoPageController - pull data from model to populate the template
 *
 * PHP Version 5.5
 *
@@ -24,12 +24,20 @@ class AdminServerInfoPageController extends AdminBasePageController
         parent::__construct($output);
         $this->model = new \ABirkett\models\AdminServerInfoPageModel();
         $tags = [
-            "{APACHEVERSION}" => $_SERVER["SERVER_SOFTWARE"],
-            "{PHPVERSION}" => phpversion(),
-            "{MYSQLVERSION}" => $this->model->database->ServerInfo(),
-            "{MYSQLIEXT}" => (extension_loaded("MySQLi") ? "Yes" : "No"),
-            "{PDOMYSQLEXT}" => (extension_loaded("PDO_MySQL") ? "Yes" : "No"),
-            "{PHPCURLEXT}" => (extension_loaded("CURL") ? "Yes" : "No")
+            "{APACHEVERSION}" =>
+                $_SERVER["SERVER_SOFTWARE"],
+            "{PHPVERSION}" =>
+                phpversion(),
+            "{MYSQLVERSION}" =>
+                $this->model->database->ServerInfo(),
+            "{MYSQLIEXT}" =>
+                (extension_loaded("MySQLi") ? "Yes" : "No"),
+            "{PDOMYSQLEXT}" =>
+                (extension_loaded("PDO_MySQL") ? "Yes" : "No"),
+            "{PHPCURLEXT}" =>
+                (extension_loaded("CURL") ? "Yes" : "No"),
+            "{PASSWORDHASH}" =>
+                (function_exists("password_hash") ? "Yes" : "No")
         ];
         $this->templateEngine->parseTags($tags, $output);
     }

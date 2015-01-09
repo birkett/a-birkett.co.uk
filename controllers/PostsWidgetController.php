@@ -24,16 +24,13 @@ class PostsWidgetController extends BasePageController
         parent::__construct($output);
         $this->model = new \ABirkett\models\PostsWidgetModel();
         $posts = $this->model->getAllPosts();
-        $post_array = [];
+        $postArray = [];
         while ($post = $this->model->database->GetRow($posts)) {
             $month = date("F Y", $post['post_timestamp']);
-            if (!isset($post_array["$month"])) {
-                $post_array["$month"] = [];
-            }
-            $post_array["$month"][] = array(
+            $postArray["$month"][] = [
                 "title" => $post['post_title'],
                 "id" => $post['post_id']
-            );
+            ];
         }
 
         $monthloop = $this->templateEngine->logicTag(
@@ -46,18 +43,22 @@ class PostsWidgetController extends BasePageController
             "{/ITEMLOOP}",
             $output
         );
-        foreach ($post_array as $month => $data) {
+        foreach ($postArray as $month => $data) {
             $temp = $monthloop;
             $this->templateEngine->replaceTag("{MONTH}", $month, $temp);
             foreach ($data as $post) {
-                $temp2 = $itemloop;
+                $tempitem = $itemloop;
                 $tags = [
                     "{POSTID}" => $post['id'],
                     "{POSTTITLE}" => $post['title']
                 ];
-                $this->templateEngine->parseTags($tags, $temp2);
-                $temp2 .= "\n{ITEMLOOP}";
-                $this->templateEngine->replaceTag("{ITEMLOOP}", $temp2, $temp);
+                $this->templateEngine->parseTags($tags, $tempitem);
+                $tempitem .= "\n{ITEMLOOP}";
+                $this->templateEngine->replaceTag(
+                    "{ITEMLOOP}",
+                    $tempitem,
+                    $temp
+                );
             }
             $temp .= "\n{MONTHLOOP}";
             $this->templateEngine->replaceTag("{MONTHLOOP}", $temp, $output);

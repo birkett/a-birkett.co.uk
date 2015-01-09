@@ -28,7 +28,11 @@ class FeedPageController extends BasePageController
 
         $posts = $this->model->getLatestPosts();
 
-        $itemloop = $this->templateEngine->logicTag("{LOOP}", "{/LOOP}", $output);
+        $itemloop = $this->templateEngine->logicTag(
+            "{LOOP}",
+            "{/LOOP}",
+            $output
+        );
 
         while ($post = $this->model->database->GetRow($posts)) {
             $temp = $itemloop;

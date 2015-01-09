@@ -1,6 +1,6 @@
 <?php
 /**
-* AdminListPostsPageController - pull data from the model to populate the template
+* AdminListPostsPageController - pull data from model to populate the template
 *
 * PHP Version 5.5
 *

@@ -24,14 +24,14 @@ class AdminEditPageController extends AdminBasePageController
         parent::__construct($output);
 
         $this->model = new \ABirkett\models\AdminEditPageModel();
-        $vars = "";
         if (isset($_GET['pageid'])) {
             //Page edit mode
             $page = $this->model->getPage($_GET['pageid']);
             $content = $page['page_content'];
 
-            $vars .= 'var pageid = document.getElementById("formpageid").value;';
-            $vars .= 'var data = "mode=editpage&pageid="+pageid+"&content="+content;';
+            $vars = 'var pageid = document.getElementById("formpageid").value;';
+            $vars .= 'var data = ' .
+                '"mode=editpage&pageid="+pageid+"&content="+content;';
 
             $this->templateEngine->replaceTag(
                 "{POSTID}",
@@ -55,10 +55,13 @@ class AdminEditPageController extends AdminBasePageController
 
             $content = $row['post_content'];
 
-            $vars .= 'var postid = document.getElementById("formpostid").value;';
+            $vars = 'var postid = document.getElementById("formpostid").value;';
             $vars .= 'var title = document.getElementById("formtitle").value;';
-            $vars .= 'var draft = document.getElementById("formdraft").checked;';
-            $vars .= 'var data = "mode=editpost&postid="+postid+"&title="+title+"&draft="+draft+"&content="+content;';
+            $vars .= 'var draft = ' .
+                'document.getElementById("formdraft").checked;';
+            $vars .= 'var data = ' .
+                '"mode=editpost&postid="+postid+"&title="' .
+                '+title+"&draft="+draft+"&content="+content;';
 
             $tags = [
                 "{POSTID}" => $row['post_id'],
@@ -79,9 +82,12 @@ class AdminEditPageController extends AdminBasePageController
         } else {
             //New post mode
             $content = "";
-            $vars .= 'var title = document.getElementById("formtitle").value;';
-            $vars .= 'var draft = document.getElementById("formdraft").checked;';
-            $vars .= 'var data = "mode=newpost&title="+title+"&draft="+draft+"&content="+content;';
+            $vars = 'var title = document.getElementById("formtitle").value;';
+            $vars .= 'var draft = ' .
+                'document.getElementById("formdraft").checked;';
+            $vars .= 'var data = ' .
+                '"mode=newpost&title="+title+"&draft="' .
+                '+draft+"&content="+content;';
 
             $this->templateEngine->removeLogicTag(
                 "{PAGEEDIT}",

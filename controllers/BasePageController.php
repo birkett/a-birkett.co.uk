@@ -18,13 +18,13 @@ class BasePageController
     * Store an instance of the model for child controller to use
     * @var object $model
     */
-    public $model;
+    protected $model;
 
     /**
     * Store an instance of the template engine for child controllers to use
     * @var object $templateEngine
     */
-    public $templateEngine;
+    protected $templateEngine;
 
     /**
      * Parse some common tags present in most (if not all) templates

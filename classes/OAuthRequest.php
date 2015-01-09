@@ -23,70 +23,75 @@ class OAuthRequest
 
     /*
     * Request method
-    * @var string $http_method
+    * @var string $httpMethod
     */
-    private $http_method;
+    private $httpMethod;
 
     /*
     * Request URL
-    * @var string $http_url
+    * @var string $httpUrl
     */
-    private $http_url;
+    private $httpUrl;
 
     /**
     * Create a new OAuth request
-    * @param string  $http_method Request method
-    * @param string  $http_url    Request URL
-    * @param mixed[] $parameters  Additional parameters as array
+    * @param string  $httpMethod Request method
+    * @param string  $httpUrl    Request URL
+    * @param mixed[] $parameters Additional parameters as array
     * @return none
     */
-    public function __construct($http_method, $http_url, $parameters = null)
+    public function __construct($httpMethod, $httpUrl, $parameters = null)
     {
         @$parameters or $parameters = array();
         $parameters = array_merge(
-            $this->parseParameters(parse_url($http_url, PHP_URL_QUERY)),
+            $this->parseParameters(parse_url($httpUrl, PHP_URL_QUERY)),
             $parameters
         );
         $this->parameters = $parameters;
-        $this->http_method = $http_method;
-        $this->http_url = $http_url;
+        $this->httpMethod = $httpMethod;
+        $this->httpUrl = $httpUrl;
     }
 
     /**
     * Pretty much a helper function to set up the request
-    * @param string  $c_key       Consumer key
-    * @param string  $o_token     OAuth token
-    * @param string  $http_method Request method
-    * @param string  $http_url    Request URL
-    * @param mixed[] $parameters  Additional parameters as array
+    * @param string  $cKey       Consumer key
+    * @param string  $oToken     OAuth token
+    * @param string  $httpMethod Request method
+    * @param string  $httpUrl    Request URL
+    * @param mixed[] $parameters Additional parameters as array
     * @return object OAuthRequest instance
     */
-    public static function fromConsumerAndToken($c_key, $o_token, $http_method, $http_url, $parameters = null)
-    {
+    public static function fromConsumerAndToken(
+        $cKey,
+        $oToken,
+        $httpMethod,
+        $httpUrl,
+        $parameters = null
+    ) {
         @$parameters or $parameters = array();
         $defaults = array(
             "oauth_version" => "1.0",
             "oauth_nonce" => md5(microtime() . mt_rand()),
             "oauth_timestamp" => time(),
-            "oauth_consumer_key" => $c_key
+            "oauth_consumer_key" => $cKey
         );
-        $defaults['oauth_token'] = $o_token;
+        $defaults['oauth_token'] = $oToken;
 
         $parameters = array_merge($defaults, $parameters);
 
-        return new OAuthRequest($http_method, $http_url, $parameters);
+        return new OAuthRequest($httpMethod, $httpUrl, $parameters);
     }
 
     /**
     * Set a request parameter
     * @param string $name             Parameter name
     * @param string $value            Parameter value
-    * @param bool   $allow_duplicates Boolean to allow duplicates in the array
+    * @param bool   $allowDuplicates  Boolean to allow duplicates in the array
     * @return none
     */
-    public function setParameter($name, $value, $allow_duplicates = true)
+    public function setParameter($name, $value, $allowDuplicates = true)
     {
-        if ($allow_duplicates && isset($this->parameters[$name])) {
+        if ($allowDuplicates && isset($this->parameters[$name])) {
             // Already added parameter(s) with this name, so add to the list
             if (is_scalar($this->parameters[$name])) {
                 // This is the first duplicate, so transform scalar (string)
@@ -106,7 +111,11 @@ class OAuthRequest
     */
     public function getParameter($name)
     {
-        return isset($this->parameters[$name]) ? $this->parameters[$name] : null;
+        if (isset($this->parameters[$name])) {
+            return $this->parameters[$name];
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -163,7 +172,7 @@ class OAuthRequest
         $this->getSignableParameters()
         );
 
-        $parts = OAuthRequest::urlencodeRFC3986($parts);
+        $parts = $this->urlencodeRFC3986($parts);
 
         return implode('&', $parts);
     }
@@ -174,7 +183,7 @@ class OAuthRequest
     */
     public function getNormalizedHttpMethod()
     {
-        return strtoupper($this->http_method);
+        return strtoupper($this->httpMethod);
     }
 
     /**
@@ -183,7 +192,7 @@ class OAuthRequest
     */
     public function getNormalizedHttpUrl()
     {
-        $parts = parse_url($this->http_url);
+        $parts = parse_url($this->httpUrl);
 
         $port = @$parts['port'];
         $scheme = $parts['scheme'];
@@ -207,10 +216,10 @@ class OAuthRequest
     */
     public function toUrl()
     {
-        $post_data = $this->toPostdata();
+        $postData = $this->toPostdata();
         $out = $this->getNormalizedHttpUrl();
-        if ($post_data) {
-            $out .= '?'.$post_data;
+        if ($postData) {
+            $out .= '?'.$postData;
         }
         return $out;
     }
@@ -233,7 +242,9 @@ class OAuthRequest
     {
         $first = true;
         if ($realm) {
-            $out = 'Authorization: OAuth realm="' . OAuthRequest::urlencodeRFC3986($realm) . '"';
+            $out = 'Authorization: OAuth realm="' .
+                $this->urlencodeRFC3986($realm) .
+                '"';
             $first = false;
         } else {
             $out = 'Authorization: OAuth';
@@ -247,9 +258,9 @@ class OAuthRequest
             //    throw new OAuthException('Arrays not supported in headers');
             //}
             $out .= ($first) ? ' ' : ',';
-            $out .= OAuthRequest::urlencodeRFC3986($k) .
+            $out .= $this->urlencodeRFC3986($k) .
             '="' .
-            OAuthRequest::urlencodeRFC3986($v) .
+            $this->urlencodeRFC3986($v) .
             '"';
             $first = false;
         }
@@ -258,45 +269,45 @@ class OAuthRequest
 
     /**
     * Sign an OAuth request
-    * @param string $c_key   Consumer key
-    * @param string $c_sec   Consumer secret
-    * @param string $o_token OAuth token
-    * @param string $o_sec   OAuth token secret
+    * @param string $cKey   Consumer key
+    * @param string $cSec   Consumer secret
+    * @param string $oToken OAuth token
+    * @param string $oSec   OAuth token secret
     * @return none
     */
-    public function signRequest($c_key, $c_sec, $o_token, $o_sec)
+    public function signRequest($cKey, $cSec, $oToken, $oSec)
     {
         $this->setParameter(
             "oauth_signature_method",
             "HMAC-SHA1",
             false
         );
-        $signature = $this->buildSignature($c_key, $c_sec, $o_token, $o_sec);
+        $signature = $this->buildSignature($cKey, $cSec, $oToken, $oSec);
         $this->setParameter("oauth_signature", $signature, false);
     }
 
     /**
     * Build an OAuth request signature
-    * @param string $c_key   Consumer key
-    * @param string $c_sec   Consumer secret
-    * @param string $o_token OAuth token
-    * @param string $o_sec   OAuth token secret
+    * @param string $cKey   Consumer key
+    * @param string $cSec   Consumer secret
+    * @param string $oToken OAuth token
+    * @param string $oSec   OAuth token secret
     * @return string Signature
     */
-    public function buildSignature($c_key, $c_sec, $o_token, $o_sec)
+    public function buildSignature($cKey, $cSec, $oToken, $oSec)
     {
-        $base_string = $this->getSignatureBaseString();
-        $this->base_string = $base_string;
+        $baseString = $this->getSignatureBaseString();
+        $this->baseString = $baseString;
 
-        $key_parts = array(
-            $c_sec,
-            $o_sec
+        $keyParts = array(
+            $cSec,
+            $oSec
         );
 
-        $key_parts = OAuthRequest::urlencodeRFC3986($key_parts);
-        $key = implode('&', $key_parts);
+        $keyParts = $this->urlencodeRFC3986($keyParts);
+        $key = implode('&', $keyParts);
 
-        return base64_encode(hash_hmac('sha1', $base_string, $key, true));
+        return base64_encode(hash_hmac('sha1', $baseString, $key, true));
     }
 
     /**
@@ -344,23 +355,23 @@ class OAuthRequest
     * parameters, has to do some unescaping
     * Can filter out any non-oauth parameters if needed (default behaviour)
     *
-    * @param string $header            Request header
-    * @param bool   $only_oauth_params Unknown
+    * @param string $header          Request header
+    * @param bool   $onlyOauthParams Unknown
     * @return mixed[] Parameters array Output parameters array
     */
-    public static function splitHeader($header, $only_oauth_params = true)
+    public static function splitHeader($header, $onlyOauthParams = true)
     {
-        $pattern = '/(([-_a-z]*)=("([^"]*)"|([^,]*)),?)/';
-        $offset = 0;
+        $pat = '/(([-_a-z]*)=("([^"]*)"|([^,]*)),?)/';
+        $off = 0;
         $params = array();
-        while (preg_match($pattern, $header, $matches, PREG_OFFSET_CAPTURE, $offset) > 0) {
-            $match = $matches[0];
-            $header_name = $matches[2][0];
-            $header_content = (isset($matches[5])) ? $matches[5][0] : $matches[4][0];
-            if (preg_match('/^oauth_/', $header_name) || !$only_oauth_params) {
-                $params[$header_name] = OAuthRequest::urldecodeRFC3986($header_content);
+        while (preg_match($pat, $header, $m, PREG_OFFSET_CAPTURE, $off) > 0) {
+            $match = $m[0];
+            $headerName = $m[2][0];
+            $content = (isset($m[5])) ? $m[5][0] : $m[4][0];
+            if (preg_match('/^oauth_/', $headerName) || !$onlyOauthParams) {
+                $params[$headerName] = $this->urldecodeRFC3986($content);
             }
-            $offset = $match[1] + strlen($match[0]);
+            $off = $match[1] + strlen($match[0]);
         }
 
         if (isset($params['realm'])) {
@@ -429,22 +440,22 @@ class OAuthRequest
         }
         $pairs = explode('&', $input);
 
-        $parsed_parameters = array();
+        $parsedParams = array();
         foreach ($pairs as $pair) {
             $split = explode('=', $pair, 2);
-            $parameter = OAuthRequest::urldecodeRFC3986($split[0]);
-            $value = isset($split[1]) ? OAuthRequest::urldecodeRFC3986($split[1]) : '';
+            $param = $this->urldecodeRFC3986($split[0]);
+            $value = isset($split[1]) ? $this->urldecodeRFC3986($split[1]) : '';
 
-            if (isset($parsed_parameters[$parameter])) {
-                if (is_scalar($parsed_parameters[$parameter])) {
-                    $parsed_parameters[$parameter] = array($parsed_parameters[$parameter]);
+            if (isset($parsedParams[$param])) {
+                if (is_scalar($parsedParams[$param])) {
+                    $parsedParams[$param] = array($parsedParams[$param]);
                 }
-                $parsed_parameters[$parameter][] = $value;
+                $parsedParams[$param][] = $value;
             } else {
-                $parsed_parameters[$parameter] = $value;
+                $parsedParams[$param] = $value;
             }
         }
-        return $parsed_parameters;
+        return $parsedParams;
     }
 
     /**
@@ -458,8 +469,8 @@ class OAuthRequest
             return '';
         }
         // Urlencode both keys and values
-        $keys = OAuthRequest::urlencodeRFC3986(array_keys($params));
-        $values = OAuthRequest::urlencodeRFC3986(array_values($params));
+        $keys = $this->urlencodeRFC3986(array_keys($params));
+        $values = $this->urlencodeRFC3986(array_values($params));
         $params = array_combine($keys, $values);
 
         // Parameters are sorted by name, using lexicographical byte ordering.
@@ -472,8 +483,8 @@ class OAuthRequest
                 // If two or more parameters share the same name, store by value
                 // Ref: Spec: 9.1.1 (1)
                 natsort($value);
-                foreach ($value as $duplicate_value) {
-                    $pairs[] = $parameter . '=' . $duplicate_value;
+                foreach ($value as $duplicateValue) {
+                    $pairs[] = $parameter . '=' . $duplicateValue;
                 }
             } else {
                 $pairs[] = $parameter . '=' . $value;

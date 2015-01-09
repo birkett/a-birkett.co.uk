@@ -12,67 +12,70 @@
 */
 namespace ABirkett;
 
-/**
-* Autoloader for classes, controllers and models
-* @param string $class Class name to load
-* @return none
-*/
-function autoloader($class)
+class Functions
 {
-    $prefix = 'ABirkett\\';
+    /**
+    * Autoloader for classes, controllers and models
+    * @param string $class Class name to load
+    * @return none
+    */
+    public static function autoloader($class)
+    {
+        $prefix = 'ABirkett\\';
 
-    //Does the class use this namespace prefix?
-    $len = strlen($prefix);
-    if (strncmp($prefix, $class, $len) !== 0) {
-        return;
-    }
+        //Does the class use this namespace prefix?
+        $len = strlen($prefix);
+        if (strncmp($prefix, $class, $len) !== 0) {
+            return;
+        }
 
-    $relative_class = substr($class, $len);
+        $relativeClass = substr($class, $len);
 
-    $base_dir = __DIR__ . "/";
+        $baseDir = __DIR__ . "/";
 
-    $endpath = str_replace('\\', '/', $relative_class) . '.php';
-    $file = $base_dir . $endpath;
+        $endpath = str_replace('\\', '/', $relativeClass) . '.php';
+        $file = $baseDir . $endpath;
 
-    //Try the public folders
-    if (file_exists($file)) {
-        require $file;
-        return;
-    }
-
-    //Try the admin folder
-    if (defined('ADMINPAGE')) {
-        $base_dir .= ADMIN_FOLDER;
-
-        $file = $base_dir . $endpath;
+        //Try the public folders
         if (file_exists($file)) {
             require $file;
+            return;
+        }
+
+        //Try the admin folder
+        if (defined('ADMINPAGE')) {
+            $baseDir .= ADMIN_FOLDER;
+
+            $file = $baseDir . $endpath;
+            if (file_exists($file)) {
+                require $file;
+            }
         }
     }
-}
 
-/**
-* Setup some default PHP settings
-* @return none
-*/
-function PHPDefaults()
-{
-    //Show PHP errors and warnings
-    error_reporting(E_ALL);
-    ini_set("display_errors", 1);
+    /**
+    * Setup some default PHP settings
+    * @return none
+    */
+    public static function PHPDefaults()
+    {
+        //Show PHP errors and warnings
+        error_reporting(E_ALL);
+        ini_set("display_errors", 1);
 
-    //Timezone for converting timestamps
-    date_default_timezone_set("Europe/London");
+        //Timezone for converting timestamps
+        date_default_timezone_set("Europe/London");
 
-    //Autoloader
-    spl_autoload_register("ABirkett\autoloader");
-}
+        //Autoloader
+        spl_autoload_register("ABirkett\Functions::autoloader");
+    }
 
-/**
-* Define a symbol so public functions can act accordingly on an admin page
-* @return none
-*/
-function declareAdminPage()
-{
-    define('ADMINPAGE', 1);
+    /**
+    * Define a symbol so public functions can act accordingly on an admin page
+    * @return none
+    */
+    public static function declareAdminPage()
+    {
+        define('ADMINPAGE', 1);
+    }
 }
