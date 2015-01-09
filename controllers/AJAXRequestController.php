@@ -69,7 +69,11 @@ class AJAXRequestController
                 $ch = $_POST['challenge'];
                 $resp = $_POST['response'];
 
-                if ($this->model->database->GetNumRows($this->model->getSinglePost($p)) != 1) {
+                $postcheck = $this->model->database->GetNumRows(
+                    $this->model->getSinglePost($p)
+                );
+
+                if ($postcheck != 1) {
                     $this->badRequest("Invalid Post ID.");
                 }
                 if ($u == "" || $c == "" || $ch == "" || $resp == "") {
@@ -82,10 +86,18 @@ class AJAXRequestController
                     $this->badRequest("Comment should be 10 - 500 characters");
                 }
                 if ($this->model->checkIP($ip) != 0) {
-                    $this->badRequest("Your address is blocked. This is most likely due to spam.");
+                    $this->badRequest(
+                        "Your address is blocked." .
+                        " This is most likely due to spam."
+                    );
                 }
                 $recaptcha = new \ABirkett\classes\RecaptchaLib();
-                $captcha = $recaptcha->checkAnswer(RECAPTHCA_PRIVATE_KEY, $ip, $ch, $resp);
+                $captcha = $recaptcha->checkAnswer(
+                    RECAPTHCA_PRIVATE_KEY,
+                    $ip,
+                    $ch,
+                    $resp
+                );
                 if ($captcha['is_valid'] == true) {
                     $this->model->postComment($p, $u, $c, $ip);
                     $this->goodRequest("Comment Posted!");

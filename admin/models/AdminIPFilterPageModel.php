@@ -1,6 +1,6 @@
 <?php
 /**
-* AdminIPFilterPageModel - glue between the database and AdminIPFilterPageController
+* AdminIPFilterPageModel - glue between the database and Controller
 *
 * PHP Version 5.5
 *

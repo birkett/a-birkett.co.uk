@@ -30,27 +30,51 @@ class AdminAJAXRequestController extends AJAXRequestController
                     || !isset($_POST['content'])
                     || !isset($_POST['draft'])
                 ) {
-                    parent::badRequest("Something was rejected. Check all fields are correct.");
+                    parent::badRequest(
+                        "Something was rejected. Check all fields are correct."
+                    );
                 } else {
-                    $this->model->updatePost($_POST['postid'], $_POST['title'], $_POST['content'], $_POST['draft']);
+                    $this->model->updatePost(
+                        $_POST['postid'],
+                        $_POST['title'],
+                        $_POST['content'],
+                        $_POST['draft']
+                    );
                     parent::goodRequest("Post updated.");
                 }
                 break;
             //Edit page mode
             case "editpage":
-                if (!isset($_POST['pageid']) || is_numeric($_POST['pageid'] || !isset($_POST['content']))) {
-                    parent::badRequest("Something was rejected. Check all fields are correct.");
+                if (!isset($_POST['pageid'])
+                    || is_numeric($_POST['pageid'])
+                    || !isset($_POST['content'])
+                ) {
+                    parent::badRequest(
+                        "Something was rejected. Check all fields are correct."
+                    );
                 } else {
-                    $this->model->updatePage($_POST['pageid'], $_POST['content']);
+                    $this->model->updatePage(
+                        $_POST['pageid'],
+                        $_POST['content']
+                    );
                     parent::goodRequest("Page updated.");
                 }
                 break;
             //New post mode
             case "newpost":
-                if ($_POST['title'] == "" || $_POST['content'] == "" || !isset($_POST['draft'])) {
-                    parent::badRequest("Something was rejected. Check all fields are correct.");
+                if ($_POST['title'] == ""
+                    || $_POST['content'] == ""
+                    || !isset($_POST['draft'])
+                ) {
+                    parent::badRequest(
+                        "Something was rejected. Check all fields are correct."
+                    );
                 } else {
-                    $this->model->newPost($_POST['title'], $_POST['content'], $_POST['draft']);
+                    $this->model->newPost(
+                        $_POST['title'],
+                        $_POST['content'],
+                        $_POST['draft']
+                    );
                     parent::goodRequest("Posted!");
                 }
                 break;
@@ -60,7 +84,9 @@ class AdminAJAXRequestController extends AJAXRequestController
                     parent::badRequest("No address specified");
                 } else {
                     $this->model->blockIP($_POST['ip']);
-                    parent::goodRequest("Address " . $_POST['ip'] . " was blocked");
+                    parent::goodRequest(
+                        "Address " . $_POST['ip'] . " was blocked"
+                    );
                 }
                 break;
             //Remove blocked IP mode
@@ -69,25 +95,39 @@ class AdminAJAXRequestController extends AJAXRequestController
                     parent::badRequest("No address specified");
                 } else {
                     $this->model->unblockIP($_POST['ip']);
-                    parent::goodRequest("Address " . $_POST['ip'] . " was unblocked");
+                    parent::goodRequest(
+                        "Address " . $_POST['ip'] . " was unblocked"
+                    );
                 }
                 break;
             //Change the admin password
             case "password":
-                if (!isset($_POST['cp']) || !isset($_POST['np']) || !isset($_POST['cnp'])) {
+                if (!isset($_POST['cp'])
+                    || !isset($_POST['np'])
+                    || !isset($_POST['cnp'])
+                ) {
                     parent::badRequest();
                 } else {
-                    if ($this->model->changePassword($_POST['cp'], $_POST['np'], $_POST['cnp'])) {
+                    if ($this->model->changePassword(
+                        $_POST['cp'],
+                        $_POST['np'],
+                        $_POST['cnp']
+                    )) {
                         parent::goodRequest("Password changed.");
                     } else {
-                        parent::badRequest("Failed. Check new passwords match.");
+                        parent::badRequest(
+                            "Failed. Check new passwords match."
+                        );
                     }
                 }
                 break;
             //Login
             case "login":
                 if (isset($_POST['username']) && isset($_POST['password'])) {
-                    if ($this->model->checkCredentials($_POST['username'], $_POST['password'])) {
+                    if ($this->model->checkCredentials(
+                        $_POST['username'],
+                        $_POST['password']
+                    )) {
                         parent::goodRequest();
                     } else {
                         parent::badRequest("Incorrect username or password.");

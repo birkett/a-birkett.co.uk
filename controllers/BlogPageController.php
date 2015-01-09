@@ -35,7 +35,11 @@ class BlogPageController extends BasePageController
         }
 
         //Single post mode
-        if (isset($_GET['postid']) && is_numeric($_GET['postid']) && $_GET['postid'] >= 0 && $_GET['postid'] < 500000) {
+        if (isset($_GET['postid'])
+            && is_numeric($_GET['postid'])
+            && $_GET['postid'] >= 0
+            && $_GET['postid'] < 500000
+            ) {
             $result = $this->model->getSinglePost($_GET['postid']);
             if ($this->model->database->GetNumRows($result) == 0) {
                 header('Location: /404');  //Back out if we didnt find any posts
@@ -51,17 +55,32 @@ class BlogPageController extends BasePageController
                         "{COMMENTTIMESTAMP}" => date(DATE_FORMAT, $ctimestamp),
                         "{COMMENTCONTENT}" => stripslashes($ctext)
                     ];
-                    $temp = $this->templateEngine->logicTag("{COMMENT}", "{/COMMENT}", $output);
+                    $temp = $this->templateEngine->logicTag(
+                        "{COMMENT}",
+                        "{/COMMENT}",
+                        $output
+                    );
                     $this->templateEngine->parseTags($tags, $temp);
                     $temp .= "{COMMENT}";
-                    $this->templateEngine->replaceTag("{COMMENT}", $temp, $output); //Add this comment to the output
+                    $this->templateEngine->replaceTag(
+                        "{COMMENT}",
+                        $temp,
+                        $output
+                    ); //Add this comment to the output
                 }
             }
 
             //Snow new comments box
-            $tags = [ "{COMMENTPOSTID}" => $_GET['postid'], "{RECAPTCHAKEY}" => RECAPTCHA_PUBLIC_KEY ];
+            $tags = [
+                "{COMMENTPOSTID}" => $_GET['postid'],
+                "{RECAPTCHAKEY}" => RECAPTCHA_PUBLIC_KEY
+            ];
             $this->templateEngine->parseTags($tags, $output);
-            $this->templateEngine->removeLogicTag("{PAGINATION}", "{/PAGINATION}", $output); //No pagination
+            $this->templateEngine->removeLogicTag(
+                "{PAGINATION}",
+                "{/PAGINATION}",
+                $output
+            ); //No pagination
         } else {
             //Normal mode
             $result = $this->model->getMultiplePosts($offset);
@@ -74,18 +93,32 @@ class BlogPageController extends BasePageController
             $numberofposts = $this->model->getNumberOfPosts();
             if ($numberofposts > BLOG_POSTS_PER_PAGE) {
                 if ($offset > 0) {
-                    $tags = [ "{PAGEPREVIOUSLINK}" => "/blog/page/$offset", "{PAGEPREVIOUSTEXT}" => "Previous Page" ];
+                    $tags = [
+                        "{PAGEPREVIOUSLINK}" => "/blog/page/$offset",
+                        "{PAGEPREVIOUSTEXT}" => "Previous Page"
+                    ];
                     $this->templateEngine->parseTags($tags, $output);
                 }
                 if (($offset + 1) * BLOG_POSTS_PER_PAGE < $numberofposts) {
                     $linkoffset = $offset + 2;
-                    $tags = [ "{PAGENEXTLINK}" => "/blog/page/$linkoffset", "{PAGENEXTTEXT}" => "Next Page" ];
+                    $tags = [
+                        "{PAGENEXTLINK}" => "/blog/page/$linkoffset",
+                        "{PAGENEXTTEXT}" => "Next Page"
+                    ];
                     $this->templateEngine->parseTags($tags, $output);
                 }
             } else {
-                $this->templateEngine->removeLogicTag("{PAGINATION}", "{/PAGINATION}", $output); //Hide pagniation
+                $this->templateEngine->removeLogicTag(
+                    "{PAGINATION}",
+                    "{/PAGINATION}",
+                    $output
+                ); //Hide pagniation
             }
-            $this->templateEngine->removeLogicTag("{NEWCOMMENT}", "{/NEWCOMMENT}", $output); //Hide new comment box
+            $this->templateEngine->removeLogicTag(
+                "{NEWCOMMENT}",
+                "{/NEWCOMMENT}",
+                $output
+            ); //Hide new comment box
         }
 
         //Rendering code
@@ -97,18 +130,38 @@ class BlogPageController extends BasePageController
                 "{POSTCONTENT}" => stripslashes($content),
                 "{COMMENTCOUNT}" => $this->model->getNumberOfComments($id)
             ];
-            $temp = $this->templateEngine->logicTag("{BLOGPOST}", "{/BLOGPOST}", $output);
+            $temp = $this->templateEngine->logicTag(
+                "{BLOGPOST}",
+                "{/BLOGPOST}",
+                $output
+            );
             $this->templateEngine->parseTags($tags, $temp);
             $temp .= "\n{BLOGPOST}";
-            $this->templateEngine->replaceTag("{BLOGPOST}", $temp, $output); //Add this post to the output
+            $this->templateEngine->replaceTag("{BLOGPOST}", $temp, $output);
         }
 
-        $this->templateEngine->removeLogicTag("{BLOGPOST}", "{/BLOGPOST}", $output);
-        $this->templateEngine->removeLogicTag("{COMMENT}", "{/COMMENT}", $output);
+        $this->templateEngine->removeLogicTag(
+            "{BLOGPOST}",
+            "{/BLOGPOST}",
+            $output
+        );
+        $this->templateEngine->removeLogicTag(
+            "{COMMENT}",
+            "{/COMMENT}",
+            $output
+        );
 
         //Clean up the tags if not already replaced
-        $cleantags = [ "{PAGEPREVIOUSLINK}", "{PAGEPREVIOUSTEXT}", "{PAGENEXTLINK}", "{PAGENEXTTEXT}",
-                        "{PAGINATION}", "{/PAGINATION}", "{NEWCOMMENT}", "{/NEWCOMMENT}" ];
+        $cleantags = [
+            "{PAGEPREVIOUSLINK}",
+            "{PAGEPREVIOUSTEXT}",
+            "{PAGENEXTLINK}",
+            "{PAGENEXTTEXT}",
+            "{PAGINATION}",
+            "{/PAGINATION}",
+            "{NEWCOMMENT}",
+            "{/NEWCOMMENT}"
+        ];
         $this->templateEngine->removeTags($cleantags, $output);
     }
 }

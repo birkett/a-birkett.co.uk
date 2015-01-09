@@ -31,7 +31,11 @@ class AdminListPostsPageController extends AdminBasePageController
                 "{POSTID}" => $id,
                 "{POSTTITLE}" => $title
             ];
-            $temp = $this->templateEngine->logicTag("{LOOP}", "{/LOOP}", $output);
+            $temp = $this->templateEngine->logicTag(
+                "{LOOP}",
+                "{/LOOP}",
+                $output
+            );
             $this->templateEngine->parseTags($tags, $temp);
             $temp .= "\n{LOOP}";
             $this->templateEngine->replaceTag("{LOOP}", $temp, $output);

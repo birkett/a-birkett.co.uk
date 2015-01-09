@@ -22,7 +22,8 @@ class AdminEditPageModel extends AdminBasePageModel
     public function getPage($pageid)
     {
         $page = $this->database->runQuery(
-            "SELECT page_title, page_content FROM site_pages WHERE page_id = :pid",
+            "SELECT page_title, page_content FROM site_pages" .
+            " WHERE page_id = :pid",
             array(":pid" => $pageid)
         );
         return $page[0];

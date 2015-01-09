@@ -29,7 +29,11 @@ class AdminIPFilterPageController extends AdminBasePageController
                 "{IP}" => $address,
                 "{TIMESTAMP}" => date(DATE_FORMAT, $timestamp)
             ];
-            $temp = $this->templateEngine->logicTag("{LOOP}", "{/LOOP}", $output);
+            $temp = $this->templateEngine->logicTag(
+                "{LOOP}",
+                "{/LOOP}",
+                $output
+            );
             $this->templateEngine->parseTags($tags, $temp);
             $temp .= "\n{LOOP}";
             $this->templateEngine->replaceTag("{LOOP}", $temp, $output);

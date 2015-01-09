@@ -79,7 +79,8 @@ class BlogPageModel extends BasePageModel
     {
         return $this->database->runQuery(
             "SELECT comment_username, comment_text, comment_timestamp" .
-            " FROM blog_comments WHERE post_id= :pid ORDER BY comment_timestamp ASC",
+            " FROM blog_comments WHERE post_id = :pid" .
+            " ORDER BY comment_timestamp ASC",
             array(":pid" => $postid)
         );
     }

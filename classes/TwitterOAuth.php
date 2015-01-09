@@ -53,18 +53,18 @@ class TwitterOAuth
 
     /**
     * Construct TwitterOAuth object
-    * @param string $consumer_key       API consumer key
-    * @param string $consumer_secret    API consumer secret
-    * @param string $oauth_token        API OAuth token
-    * @param string $oauth_token_secret API OAuth token secret
+    * @param string $c_key    API consumer key
+    * @param string $c_secret API consumer secret
+    * @param string $o_token  API OAuth token
+    * @param string $o_secret API OAuth token secret
     * @return none
     */
-    public function __construct($consumer_key, $consumer_secret, $oauth_token, $oauth_token_secret)
+    public function __construct($c_key, $c_secret, $o_token, $o_secret)
     {
-        $this->consumer_key = $consumer_key;
-        $this->consumer_secret = $consumer_secret;
-        $this->oauth_token = $oauth_token;
-        $this->oauth_token_secret = $oauth_token_secret;
+        $this->consumer_key = $c_key;
+        $this->consumer_secret = $c_secret;
+        $this->oauth_token = $o_token;
+        $this->oauth_token_secret = $o_secret;
     }
 
     /**
@@ -121,7 +121,11 @@ class TwitterOAuth
             case 'GET':
                 return $this->http($request->toUrl(), 'GET');
             default:
-                return $this->http($request->getNormalizedHttpUrl(), $method, $request->toPostdata());
+                return $this->http(
+                    $request->getNormalizedHttpUrl(),
+                    $method,
+                    $request->toPostdata()
+                );
         }
     }
 

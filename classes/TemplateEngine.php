@@ -28,23 +28,23 @@ class TemplateEngine
     }
 
     /**
-    * Open a page template, taking into account if the requested page is in admin
-    * @param string $filename Input template filename
+    * Open a page template, taking into account if the page is in admin
+    * @param string $file Input template filename
     * @return string Template
     */
-    public function loadPageTemplate($filename)
+    public function loadPageTemplate($file)
     {
-        return file_get_contents(__DIR__ . "/../" . TEMPLATE_FOLDER . $filename);
+        return file_get_contents(__DIR__ . "/../" . TEMPLATE_FOLDER . $file);
     }
 
     /**
     * Open a sub template (widget, page content)
-    * @param string $filename Input subtemplate filename
+    * @param string $file Input subtemplate filename
     * @return string SubTemplate
     */
-    public function loadSubTemplate($filename)
+    public function loadSubTemplate($file)
     {
-        return file_get_contents(TEMPLATE_FOLDER . $filename);
+        return file_get_contents(TEMPLATE_FOLDER . $file);
     }
 
     /**
@@ -112,7 +112,11 @@ class TemplateEngine
         if (!$beginningPos || !$endPos) {
             return;
         }
-        $textToDelete = substr($content, $beginningPos, ($endPos + strlen($end)) - $beginningPos);
+        $textToDelete = substr(
+            $content,
+            $beginningPos,
+            ($endPos + strlen($end)) - $beginningPos
+        );
         $content = str_replace($textToDelete, '', $content);
     }
 }

@@ -43,7 +43,10 @@ class OAuthRequest
     public function __construct($http_method, $http_url, $parameters = null)
     {
         @$parameters or $parameters = array();
-        $parameters = array_merge($this->parseParameters(parse_url($http_url, PHP_URL_QUERY)), $parameters);
+        $parameters = array_merge(
+            $this->parseParameters(parse_url($http_url, PHP_URL_QUERY)),
+            $parameters
+        );
         $this->parameters = $parameters;
         $this->http_method = $http_method;
         $this->http_url = $http_url;
@@ -78,13 +81,13 @@ class OAuthRequest
     * Set a request parameter
     * @param string $name             Parameter name
     * @param string $value            Parameter value
-    * @param bool   $allow_duplicates Boolean to allow duplicates in the params array
+    * @param bool   $allow_duplicates Boolean to allow duplicates in the array
     * @return none
     */
     public function setParameter($name, $value, $allow_duplicates = true)
     {
         if ($allow_duplicates && isset($this->parameters[$name])) {
-            // We have already added parameter(s) with this name, so add to the list
+            // Already added parameter(s) with this name, so add to the list
             if (is_scalar($this->parameters[$name])) {
                 // This is the first duplicate, so transform scalar (string)
                 // into an array so we can add the duplicates
@@ -255,39 +258,39 @@ class OAuthRequest
 
     /**
     * Sign an OAuth request
-    * @param string $consumer_key    Consumer key
-    * @param string $consumer_secret Consumer secret
-    * @param string $oauth_token     OAuth token
-    * @param string $oauth_secret    OAuth token secret
+    * @param string $c_key   Consumer key
+    * @param string $c_sec   Consumer secret
+    * @param string $o_token OAuth token
+    * @param string $o_sec   OAuth token secret
     * @return none
     */
-    public function signRequest($consumer_key, $consumer_secret, $oauth_token, $oauth_secret)
+    public function signRequest($c_key, $c_sec, $o_token, $o_sec)
     {
         $this->setParameter(
             "oauth_signature_method",
             "HMAC-SHA1",
             false
         );
-        $signature = $this->buildSignature($consumer_key, $consumer_secret, $oauth_token, $oauth_secret);
+        $signature = $this->buildSignature($c_key, $c_sec, $o_token, $o_sec);
         $this->setParameter("oauth_signature", $signature, false);
     }
 
     /**
     * Build an OAuth request signature
-    * @param string $consumer_key    Consumer key
-    * @param string $consumer_secret Consumer secret
-    * @param string $oauth_token     OAuth token
-    * @param string $oauth_secret    OAuth token secret
+    * @param string $c_key   Consumer key
+    * @param string $c_sec   Consumer secret
+    * @param string $o_token OAuth token
+    * @param string $o_sec   OAuth token secret
     * @return string Signature
     */
-    public function buildSignature($consumer_key, $consumer_secret, $oauth_token, $oauth_secret)
+    public function buildSignature($c_key, $c_sec, $o_token, $o_sec)
     {
         $base_string = $this->getSignatureBaseString();
         $this->base_string = $base_string;
 
         $key_parts = array(
-            $consumer_secret,
-            $oauth_secret
+            $c_sec,
+            $o_sec
         );
 
         $key_parts = OAuthRequest::urlencodeRFC3986($key_parts);
@@ -304,7 +307,10 @@ class OAuthRequest
     public static function urlencodeRFC3986($input)
     {
         if (is_array($input)) {
-            return array_map(array('ABirkett\classes\OAuthRequest', 'urlencodeRFC3986'), $input);
+            return array_map(
+                array('ABirkett\classes\OAuthRequest', 'urlencodeRFC3986'),
+                $input
+            );
         } elseif (is_scalar($input)) {
             return str_replace(
                 '+',
@@ -338,11 +344,11 @@ class OAuthRequest
     * parameters, has to do some unescaping
     * Can filter out any non-oauth parameters if needed (default behaviour)
     *
-    * @param string $header                      Request header
-    * @param bool   $only_allow_oauth_parameters Unknown
-    * @return mixed[] Parameters array           Output parameters array
+    * @param string $header            Request header
+    * @param bool   $only_oauth_params Unknown
+    * @return mixed[] Parameters array Output parameters array
     */
-    public static function splitHeader($header, $only_allow_oauth_parameters = true)
+    public static function splitHeader($header, $only_oauth_params = true)
     {
         $pattern = '/(([-_a-z]*)=("([^"]*)"|([^,]*)),?)/';
         $offset = 0;
@@ -351,7 +357,7 @@ class OAuthRequest
             $match = $matches[0];
             $header_name = $matches[2][0];
             $header_content = (isset($matches[5])) ? $matches[5][0] : $matches[4][0];
-            if (preg_match('/^oauth_/', $header_name) || !$only_allow_oauth_parameters) {
+            if (preg_match('/^oauth_/', $header_name) || !$only_oauth_params) {
                 $params[$header_name] = OAuthRequest::urldecodeRFC3986($header_content);
             }
             $offset = $match[1] + strlen($match[0]);
@@ -374,7 +380,11 @@ class OAuthRequest
             $headers = apache_request_headers();
             $out = array();
             foreach ($headers as $key => $value) {
-                $key = str_replace(" ", "-", ucwords(strtolower(str_replace("-", " ", $key))));
+                $key = str_replace(
+                    " ",
+                    "-",
+                    ucwords(strtolower(str_replace("-", " ", $key)))
+                );
                 $out[$key] = $value;
             }
         } else {
@@ -388,7 +398,13 @@ class OAuthRequest
 
             foreach ($_SERVER as $key => $value) {
                 if (substr($key, 0, 5) == "HTTP_") {
-                    $key = str_replace(" ", "-", ucwords(strtolower(str_replace("_", " ", substr($key, 5)))));
+                    $key = str_replace(
+                        " ",
+                        "-",
+                        ucwords(
+                            strtolower(str_replace("_", " ", substr($key, 5)))
+                        )
+                    );
                     $out[$key] = $value;
                 }
             }
@@ -446,14 +462,14 @@ class OAuthRequest
         $values = OAuthRequest::urlencodeRFC3986(array_values($params));
         $params = array_combine($keys, $values);
 
-        // Parameters are sorted by name, using lexicographical byte value ordering.
+        // Parameters are sorted by name, using lexicographical byte ordering.
         // Ref: Spec: 9.1.1 (1)
         uksort($params, 'strcmp');
 
         $pairs = array();
         foreach ($params as $parameter => $value) {
             if (is_array($value)) {
-                // If two or more parameters share the same name, they are sorted by their value
+                // If two or more parameters share the same name, store by value
                 // Ref: Spec: 9.1.1 (1)
                 natsort($value);
                 foreach ($value as $duplicate_value) {
@@ -463,7 +479,8 @@ class OAuthRequest
                 $pairs[] = $parameter . '=' . $value;
             }
         }
-        // For each parameter, the name is separated from the corresponding value by an '=' character (ASCII code 61)
+        // For each parameter, the name is separated from the corresponding
+        // value by an '=' character (ASCII code 61)
         // Each name-value pair is separated by an '&' character (ASCII code 38)
         return implode('&', $pairs);
     }
