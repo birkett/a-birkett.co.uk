@@ -1,18 +1,36 @@
 <?php
-//-----------------------------------------------------------------------------
-// Parse essential tags in the basic page template
-//      In: Unparsed template
-//      Out: Parsed template
-//
-//  !!! All pages get parsed through here !!!
-//-----------------------------------------------------------------------------
+/**
+* BasePageController - pull data from the model to populate the template
+*
+* PHP Version 5.5
+*
+* @category Controllers
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett\controllers;
 
 class BasePageController
 {
+    /**
+    * Store an instance of the model for this controller to use
+    * @var object $model
+    */
     private $model;
+
+    /**
+    * Store an instance of the template engine for child controllers to use
+    * @var object $templateEngine
+    */
     public $templateEngine;
 
+    /**
+     * Parse some common tags present in most (if not all) templates
+     * @param string $output Unparsed template passed by reference
+     * @return none
+     */
     public function __construct(&$output)
     {
         $this->model = new \ABirkett\models\BasePageModel();
@@ -32,10 +50,18 @@ class BasePageController
             $tags = [ "{EXTRASTYLESHEETS}", "{/EXTRASTYLESHEETS}" ];
             $this->templateEngine->removeTags($tags, $output);
         } else {
-            $this->templateEngine->removeLogicTag("{EXTRASTYLESHEETS}", "{/EXTRASTYLESHEETS}", $output);
+            $this->templateEngine->removeLogicTag(
+                "{EXTRASTYLESHEETS}",
+                "{/EXTRASTYLESHEETS}",
+                $output
+            );
         }
         if (!defined('ADMINPAGE')) {
-            $this->templateEngine->removeLogicTag("{ADMINSTYLESHEET}", "{/ADMINSTYLESHEET}", $output);
+            $this->templateEngine->removeLogicTag(
+                "{ADMINSTYLESHEET}",
+                "{/ADMINSTYLESHEET}",
+                $output
+            );
             $this->templateEngine->replaceTag("{ADMINFOLDER}", "", $output);
         }
     }

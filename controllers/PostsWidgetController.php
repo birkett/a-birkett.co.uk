@@ -1,15 +1,30 @@
 <?php
-//-----------------------------------------------------------------------------
-// Build the post list widget
-//      In: Unparsed template
-//      Out: Parsed template
-//-----------------------------------------------------------------------------
+/**
+* PostsWidgetController - pull data from the model to populate the template
+*
+* PHP Version 5.5
+*
+* @category Controllers
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett\controllers;
 
 class PostsWidgetController extends BasePageController
 {
+    /**
+    * Store an instance of the model for this controller to use
+    * @var object $model
+    */
     private $model;
 
+    /**
+    * Build the posts widget
+    * @param string $output Unparsed template passed by reference
+    * @return none
+    */
     public function __construct(&$output)
     {
         parent::__construct($output);
@@ -24,8 +39,16 @@ class PostsWidgetController extends BasePageController
             $post_array["$month"][] = array("title" => $title, "id" => $id);
         }
 
-        $monthloop = $this->templateEngine->logicTag("{MONTHLOOP}", "{/MONTHLOOP}", $output);
-        $itemloop = $this->templateEngine->logicTag("{ITEMLOOP}", "{/ITEMLOOP}", $output);
+        $monthloop = $this->templateEngine->logicTag(
+            "{MONTHLOOP}",
+            "{/MONTHLOOP}",
+            $output
+        );
+        $itemloop = $this->templateEngine->logicTag(
+            "{ITEMLOOP}",
+            "{/ITEMLOOP}",
+            $output
+        );
         foreach ($post_array as $month => $data) {
             $temp = $monthloop;
             $this->templateEngine->replaceTag("{MONTH}", $month, $temp);
@@ -41,9 +64,17 @@ class PostsWidgetController extends BasePageController
             }
             $temp .= "\n{MONTHLOOP}";
             $this->templateEngine->replaceTag("{MONTHLOOP}", $temp, $output);
-            $this->templateEngine->removeLogicTag("{ITEMLOOP}", "{/ITEMLOOP}", $output);
+            $this->templateEngine->removeLogicTag(
+                "{ITEMLOOP}",
+                "{/ITEMLOOP}",
+                $output
+            );
         }
-        $this->templateEngine->removeLogicTag("{MONTHLOOP}", "{/MONTHLOOP}", $output);
+        $this->templateEngine->removeLogicTag(
+            "{MONTHLOOP}",
+            "{/MONTHLOOP}",
+            $output
+        );
         $tags = [ "{ITEMS}", "{MONTHS}" ];
         $this->templateEngine->removeTags($tags, $output);
     }

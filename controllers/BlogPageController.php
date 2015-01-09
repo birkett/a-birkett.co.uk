@@ -1,31 +1,39 @@
 <?php
-//-----------------------------------------------------------------------------
-// Build the blog pages
-//      In: Unparsed template
-//      Out: Parsed template
-//
-//  !!! This is a custom controller, only used for the Blog pages !!!
-//-----------------------------------------------------------------------------
+/**
+* BlogPageController - pull data from the model to populate the template
+*
+* PHP Version 5.5
+*
+* @category Controllers
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett\controllers;
 
 class BlogPageController extends BasePageController
 {
+    /**
+    * Store an instance of the model for this controller to use
+    * @var object $model
+    */
     private $model;
-    //-----------------------------------------------------------------------------
-    // Constructor
-    //		In: Unparsed template
-    //		Out: Parsed template
-    //-----------------------------------------------------------------------------
+
+    /**
+    * Build the blog page
+    * @param string $output Unparsed template passed by reference
+    * @return none
+    */
     public function __construct(&$output)
     {
         parent::__construct($output);
         $this->model = new \ABirkett\models\BlogPageModel();
         //Clamp pagniation offset
-        if (
-            isset($_GET['offset']) &&
-            is_numeric($_GET['offset']) &&
-            $_GET['offset'] >= 1 &&
-            $_GET['offset'] < 100000
+        if (isset($_GET['offset'])
+            && is_numeric($_GET['offset'])
+            && $_GET['offset'] >= 1
+            && $_GET['offset'] < 100000
         ) {
             $offset = $_GET['offset'] - 1;
         } else {
@@ -61,7 +69,7 @@ class BlogPageController extends BasePageController
             $this->templateEngine->parseTags($tags, $output);
             $this->templateEngine->removeLogicTag("{PAGINATION}", "{/PAGINATION}", $output); //No pagination
         } else {
-        //Normal mode
+            //Normal mode
             $result = $this->model->getMultiplePosts($offset);
             if ($this->model->database->GetNumRows($result) == 0) {
                 header('Location: /404'); //Back out if we didnt find any posts

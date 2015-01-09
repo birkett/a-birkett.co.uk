@@ -1,51 +1,69 @@
 <?php
-//-----------------------------------------------------------------------------
-// Handle public AJAX requests
-//      In: Request POST data
-//      Out: Status message
-//-----------------------------------------------------------------------------
+/**
+* AJAXRequestController - Handle public POST requests from AJAX
+*
+* PHP Version 5.5
+*
+* @category Controllers
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett\controllers;
 
 class AJAXRequestController
 {
+    /**
+     * Store an instance of the model for this controller to use
+     * @var object $model
+     */
     private $model;
 
-    //-----------------------------------------------------------------------------
-    // Good and Bad request exits
-    //		In: none
-    //		Out: Exits script with a response code, printing an optional message
-    //-----------------------------------------------------------------------------
+    /**
+     * Exit the script with a success HTTP code
+     * @param string $m Optional message
+     * @return none
+     */
     protected function goodRequest($m = "")
     {
         http_response_code(200);
         exit($m);
     }
 
+    /**
+    * Exit the script with a failed HTTP code
+    * @param string $m Optional message
+    * @return none
+    */
     protected function badRequest($m = "")
     {
         http_response_code(400);
         exit($m);
     }
 
+    /**
+    * Handle public POST requests from AJAX
+    * @return none
+    */
     public function __construct()
     {
         $this->model = new \ABirkett\models\AJAXRequestModel();
         switch($_POST['mode']) {
             //Handle a new comment request
             case "postcomment":
-                if (
-                    !isset($_POST['postid']) ||
-                    !is_numeric($_POST['postid']) ||
-                    !isset($_POST['username']) ||
-                    !isset($_POST['comment']) ||
-                    !isset($_POST['challenge']) ||
-                    !isset($_POST['response'])
+                if (!isset($_POST['postid'])
+                    || !is_numeric($_POST['postid'])
+                    || !isset($_POST['username'])
+                    || !isset($_POST['comment'])
+                    || !isset($_POST['challenge'])
+                    || !isset($_POST['response'])
                 ) {
                     $this->badRequest("Something did not send correctly.");
                 }
 
                 $p = $_POST['postid'];
-                $u = strip_tags($_POST['username']); //Strip tags to avoid HTML in comments
+                $u = strip_tags($_POST['username']); //Strip HTML tags
                 $c = strip_tags($_POST['comment']);
                 $ip = $_SERVER['REMOTE_ADDR'];
                 $ch = $_POST['challenge'];

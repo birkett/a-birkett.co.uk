@@ -1,17 +1,22 @@
 <?php
-//-----------------------------------------------------------------------------
-// General site functions.
-//
-//  !!!This file should contain only functions needed to display the public
-//		page. All admin related functions should be separate !!!
-//-----------------------------------------------------------------------------
+/**
+* General site functions
+*
+* PHP Version 5.5
+*
+* @category Functions
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett;
 
-//-----------------------------------------------------------------------------
-// Autoloader for Classes and Controllers
-//		In: Class name
-//		Out: none
-//-----------------------------------------------------------------------------
+/**
+* Autoloader for classes, controllers and models
+* @param string $class Class name to load
+* @return none
+*/
 function Autoloader($class)
 {
     $prefix = 'ABirkett\\';
@@ -46,11 +51,10 @@ function Autoloader($class)
     }
 }
 
-//-----------------------------------------------------------------------------
-// Set up PHP with some new defaults
-//		In: none
-//		Out: none
-//-----------------------------------------------------------------------------
+/**
+* Setup some default PHP settings
+* @return none
+*/
 function PHPDefaults()
 {
     //Show PHP errors and warnings
@@ -64,11 +68,10 @@ function PHPDefaults()
     spl_autoload_register("ABirkett\Autoloader");
 }
 
-//-----------------------------------------------------------------------------
-// Define a symbol so public functions can act accordingly on an admin page
-//      In: none
-//      Out: none
-//-----------------------------------------------------------------------------
+/**
+* Define a symbol so public functions can act accordingly on an admin page
+* @return none
+*/
 function DeclareAdminPage()
 {
     define('ADMINPAGE', 1);

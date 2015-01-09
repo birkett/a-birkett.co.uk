@@ -1,19 +1,24 @@
 <?php
-//-----------------------------------------------------------------------------
-// Page router
-//-----------------------------------------------------------------------------
+/**
+* Page router - Routes GET and POST requests
+*
+* PHP Version 5.5
+*
+* @category Index
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett;
 
 use ABirkett\classes\Page as Page;
 
-require_once("config.php");
-require_once("functions.php");
+require_once "config.php";
+require_once "functions.php";
 
 PHPDefaults();
 
-//-----------------------------------------------------------------------------
-// Page requests.
-//-----------------------------------------------------------------------------
 if (isset($_GET['page'])) {
     switch($_GET['page']) {
         case "about":
@@ -43,14 +48,8 @@ if (isset($_GET['page'])) {
         default:
             new Page(SITE_TITLE . " :: Home", "twitterwidget", "index");
     }
-//-----------------------------------------------------------------------------
-// AJAX actions.
-//-----------------------------------------------------------------------------
 } elseif (isset($_POST['mode'])) {
     new \ABirkett\controllers\AJAXRequestController();
 } else {
-//-----------------------------------------------------------------------------
-// Default when nothing requested.
-//-----------------------------------------------------------------------------
     new Page(SITE_TITLE . " :: Home", "twitterwidget", "index");
 }

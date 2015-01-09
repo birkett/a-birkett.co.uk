@@ -1,17 +1,30 @@
 <?php
-//-----------------------------------------------------------------------------
-// Parse essential tags in the admin basic page template
-//      In: Unparsed template
-//      Out: Parsed template
-//
-//  !!! All pages get parsed through here !!!
-//-----------------------------------------------------------------------------
+/**
+* AdminBasePageController - pull data from the model to populate the template
+*
+* PHP Version 5.5
+*
+* @category AdminControllers
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett\controllers;
 
 class AdminBasePageController extends BasePageController
 {
+    /**
+    * Store an instance of the model for this controller to use
+    * @var object $model
+    */
     private $model;
 
+    /**
+    * Basic tags common to most (if not all) admin pages
+    * @param string $output Unparsed template passed by reference
+    * @return none
+    */
     public function __construct(&$output)
     {
         parent::__construct($output);

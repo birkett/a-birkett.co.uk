@@ -1,19 +1,34 @@
 <?php
-//-----------------------------------------------------------------------------
-// Build the editor page
-//      In: Unparsed template
-//      Out: Parsed template
-//-----------------------------------------------------------------------------
+/**
+* AdminEditPageController - pull data from the model to populate the template
+*
+* PHP Version 5.5
+*
+* @category AdminControllers
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett\controllers;
 
 class AdminEditPageController extends AdminBasePageController
 {
+    /**
+    * Store an instance of the model for this controller to use
+    * @var object $model
+    */
     private $model;
 
+    /**
+    * Build an editor page
+    * @param string $output Unparsed template passed by reference
+    * @return none
+    */
     public function __construct(&$output)
     {
         parent::__construct($output);
-        
+
         $this->model = new \ABirkett\models\AdminEditPageModel();
         $vars = "";
         if (isset($_GET['pageid'])) {

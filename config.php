@@ -1,7 +1,16 @@
 <?php
-//-----------------------------------------------------------------------------
-// Site configuration
-//-----------------------------------------------------------------------------
+/**
+* Site configuration options
+*
+* PHP Version 5.5
+*
+* @category Config
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
+namespace ABirkett;
 
 //Default display format for timestamps
 define('DATE_FORMAT', 'l dS F Y');

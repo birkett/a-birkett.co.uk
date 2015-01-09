@@ -1,27 +1,40 @@
 <?php
-//-----------------------------------------------------------------------------
-// Handle private, admin, AJAX requests
-//      In: Request POST data
-//      Out: Status message
-//-----------------------------------------------------------------------------
+/**
+* AdminAJAXRequestController - Handle private POST requests from AJAX
+*
+* PHP Version 5.5
+*
+* @category AdminControllers
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett\controllers;
 
 class AdminAJAXRequestController extends AJAXRequestController
 {
+    /**
+    * Store an instance of the model for this controller to use
+    * @var object $model
+    */
     private $model;
 
+    /**
+    * Handle private POST requests from AJAX
+    * @return none
+    */
     public function __construct()
     {
         $this->model = new \ABirkett\models\AdminAJAXRequestModel();
         switch($_POST['mode']) {
             //Edit post mode
             case "editpost":
-                if (
-                    !isset($_POST['postid']) ||
-                    !is_numeric($_POST['postid']) ||
-                    !isset($_POST['title']) ||
-                    !isset($_POST['content']) ||
-                    !isset($_POST['draft'])
+                if (!isset($_POST['postid'])
+                    || !is_numeric($_POST['postid'])
+                    || !isset($_POST['title'])
+                    || !isset($_POST['content'])
+                    || !isset($_POST['draft'])
                 ) {
                     parent::badRequest("Something was rejected. Check all fields are correct.");
                 } else {

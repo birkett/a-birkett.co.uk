@@ -1,17 +1,23 @@
 <?php
-//-----------------------------------------------------------------------------
-// Admin index.
-//
-//  Page proxy for admin pages
-//-----------------------------------------------------------------------------
+/**
+* Page router - Routes GET and POST requests
+*
+* PHP Version 5.5
+*
+* @category Index
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett;
 
 use ABirkett\classes\Page as Page;
 
 session_start();
 
-require_once("../config.php");
-require_once("../functions.php");
+require_once "../config.php";
+require_once "../functions.php";
 
 DeclareAdminPage(); //Set so the page class will include admin controllers
 PHPDefaults();
