@@ -8,20 +8,13 @@ namespace ABirkett\controllers;
 
 class AdminListPagesPageController extends AdminBasePageController
 {
-    //-----------------------------------------------------------------------------
-    // Fetch ID and Title of all pages
-    //      In: none
-    //      Out: All page IDs and Titles as MySQLi result resource
-    //-----------------------------------------------------------------------------
-    private function getAllPages()
-    {
-        return \ABirkett\GetDatabase()->runQuery("SELECT page_id, page_title from site_pages", array());
-    }
+    private $model;
 
     public function __construct(&$output)
     {
+        $this->model = new \ABirkett\models\AdminListPagesPageModel();
         $te = \ABirkett\TemplateEngine();
-        $result = $this->getAllPages();
+        $result = $this->model->getAllPages();
         while (list($id, $title) = \ABirkett\GetDatabase()->getRow($result)) {
             $tags = [
                 "{PAGEID}" => $id,

@@ -8,8 +8,11 @@ namespace ABirkett\controllers;
 
 class AdminServerInfoPageController extends AdminBasePageController
 {
+    private $model;
+
     public function __construct(&$output)
     {
+        $this->model = new \ABirkett\models\AdminServerInfoPageModel();
         $tags = [
             "{APACHEVERSION}" => $_SERVER["SERVER_SOFTWARE"],
             "{PHPVERSION}" => phpversion(),

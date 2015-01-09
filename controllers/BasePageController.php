@@ -10,11 +10,15 @@ namespace ABirkett\controllers;
 
 class BasePageController
 {
+    private $model;
+
     public function __construct(&$output)
     {
+        $this->model = new \ABirkett\models\BasePageModel();
+
         $te = \ABirkett\TemplateEngine();
         $tags = [
-            "{BASEURL}" => \ABirkett\GetBaseURL(),
+            "{BASEURL}" => $this->model->getBaseURL(),
             "{RAND2551}" => rand(0, 255),
             "{RAND2552}" => rand(0, 255),
             "{RAND2553}" => rand(0, 255),

@@ -10,8 +10,12 @@ namespace ABirkett\controllers;
 
 class AdminBasePageController extends BasePageController
 {
+    private $model;
+
     public function __construct(&$output)
     {
+        $this->model = new \ABirkett\models\AdminBasePageModel();
+        
         $te = \ABirkett\TemplateEngine();
         $tags = [
             "{ADMINFOLDER}" => ADMIN_FOLDER,

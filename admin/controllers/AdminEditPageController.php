@@ -8,40 +8,16 @@ namespace ABirkett\controllers;
 
 class AdminEditPageController extends AdminBasePageController
 {
-    //-----------------------------------------------------------------------------
-    // Fetch page content
-    //		In: Page ID
-    //		Out: Page title and content
-    //-----------------------------------------------------------------------------
-    private function getPage($pageid)
-    {
-        $page = \ABirkett\GetDatabase()->runQuery(
-            "SELECT page_title, page_content FROM site_pages WHERE page_id = :pageid",
-            array(":pageid" => $pageid)
-        );
-        return $page[0];
-    }
-
-    //-----------------------------------------------------------------------------
-    // Fetch the specified post
-    //		In: Post ID
-    //		Out: Post data
-    //-----------------------------------------------------------------------------
-    private function getSinglePost($postid)
-    {
-        return \ABirkett\GetDatabase()->runQuery(
-            "SELECT * FROM blog_posts WHERE post_id = :id",
-            array(":id" => $postid)
-        );
-    }
+    private $model;
 
     public function __construct(&$output)
     {
+        $this->model = new \ABirkett\models\AdminEditPageModel();
         $te = \ABirkett\TemplateEngine();
         $vars = "";
         if (isset($_GET['pageid'])) {
             //Page edit mode
-            $page = $this->getPage($_GET['pageid']);
+            $page = $this->model->getPage($_GET['pageid']);
             $content = $page['page_content'];
 
             $vars .= 'var pageid = document.getElementById("formpageid").value;';
@@ -52,7 +28,7 @@ class AdminEditPageController extends AdminBasePageController
             $te->removeLogicTag("{NEWPOST}", "{/NEWPOST}", $output);
         } elseif (isset($_GET['postid'])) {
             //Post edit mode
-            $post = $this->getSinglePost($_GET['postid']);
+            $post = $this->model->getSinglePost($_GET['postid']);
             $row = \ABirkett\GetDatabase()->getRow($post);
             list($postid, $timestamp, $title, $content, $draft) = $row;
 

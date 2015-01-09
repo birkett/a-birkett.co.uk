@@ -13,8 +13,8 @@ session_start();
 require_once("../config.php");
 require_once("../functions.php");
 
-\ABirkett\DeclareAdminPage(); //Set so the page class will include admin controllers
-\ABirkett\PHPDefaults();
+DeclareAdminPage(); //Set so the page class will include admin controllers
+PHPDefaults();
 
 if (isset($_POST['mode'])) {
     new \ABirkett\controllers\AdminAJAXRequestController();

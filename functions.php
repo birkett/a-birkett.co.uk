@@ -102,14 +102,3 @@ function DeclareAdminPage()
 {
     define('ADMINPAGE', 1);
 }
-
-//-----------------------------------------------------------------------------
-// Get the base URL of the side (Protocol+DomainName+Backslash)
-//		In: Raw string
-//		Out: Safe string with original slashes removed - then escaped
-//-----------------------------------------------------------------------------
-function GetBaseURL()
-{
-    (stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true) ? $proto = "https://" : $proto = "http://";
-    return $proto . $_SERVER['HTTP_HOST'] . "/";
-}

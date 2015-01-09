@@ -10,72 +10,7 @@ namespace ABirkett\controllers;
 
 class BlogPageController extends BasePageController
 {
-    //-----------------------------------------------------------------------------
-    // Fetch the specified post
-    //		In: Post ID
-    //		Out: Post data
-    //-----------------------------------------------------------------------------
-    private function getSinglePost($postid)
-    {
-        return \ABirkett\GetDatabase()->runQuery(
-            "SELECT * FROM blog_posts WHERE post_id = :id AND post_draft = '0'",
-            array(":id" => $postid)
-        );
-    }
-
-    //-----------------------------------------------------------------------------
-    // Fetch a page of posts
-    //		In: Page number
-    //		Out: Post data
-    //-----------------------------------------------------------------------------
-    private function getMultiplePosts($page)
-    {
-        $limit1 = $page * BLOG_POSTS_PER_PAGE;
-        $limit2 = BLOG_POSTS_PER_PAGE;
-        return \ABirkett\GetDatabase()->runQuery(
-            "SELECT * FROM blog_posts WHERE post_draft = '0' ORDER BY post_timestamp DESC LIMIT $limit1,$limit2",
-            array()
-        );
-    }
-
-    //-----------------------------------------------------------------------------
-    // Get the total number of blog posts
-    //		In: none
-    //		Out: Number of posts
-    //-----------------------------------------------------------------------------
-    private function getNumberOfPosts()
-    {
-        $count = \ABirkett\GetDatabase()->runQuery("SELECT COUNT(*) from blog_posts", array());
-        return $count[0]['COUNT(*)'];
-    }
-
-    //-----------------------------------------------------------------------------
-    // Get the total comments on a specified post
-    //		In: Post ID
-    //		Out: Number of comments on specified post
-    //-----------------------------------------------------------------------------
-    private function getNumberOfComments($postid)
-    {
-        $count = \ABirkett\GetDatabase()->runQuery(
-            "SELECT COUNT(*) FROM blog_comments WHERE post_id = :postid",
-            array(":postid" => $postid)
-        );
-        return $count[0]['COUNT(*)'];
-    }
-
-    //-----------------------------------------------------------------------------
-    // Fetch the comments for specified post ID
-    //		In: Post ID
-    //		Out: All comments for post
-    //-----------------------------------------------------------------------------
-    private function getCommentsOnPost($postid)
-    {
-        return \ABirkett\GetDatabase()->runQuery(
-            "SELECT * FROM blog_comments WHERE post_id = :postid ORDER BY comment_timestamp ASC ",
-            array(":postid" => $postid)
-        );
-    }
-
+    private $model;
     //-----------------------------------------------------------------------------
     // Constructor
     //		In: Unparsed template
@@ -83,6 +18,7 @@ class BlogPageController extends BasePageController
     //-----------------------------------------------------------------------------
     public function __construct(&$output)
     {
+        $this->model = new \ABirkett\models\BlogPageModel();
         $db = \ABirkett\GetDatabase();
         $te = \ABirkett\TemplateEngine();
         //Clamp pagniation offset
@@ -99,14 +35,14 @@ class BlogPageController extends BasePageController
 
         //Single post mode
         if (isset($_GET['postid']) && is_numeric($_GET['postid']) && $_GET['postid'] >= 0 && $_GET['postid'] < 500000) {
-            $result = $this->getSinglePost($_GET['postid']);
+            $result = $this->model->getSinglePost($_GET['postid']);
             if ($db->GetNumRows($result) == 0) {
                 header('Location: /404');  //Back out if we didnt find any posts
                 return;
             }
 
             //Show comments
-            $comments = $this->getCommentsOnPost($_GET['postid']);
+            $comments = $this->model->getCommentsOnPost($_GET['postid']);
             if ($db->GetNumRows($comments) != 0) {
                 while (list($cid, $pid, $cusername, $ctext, $ctimestamp, $cip) = $db->GetRow($comments)) {
                     $tags = [
@@ -128,14 +64,14 @@ class BlogPageController extends BasePageController
             $te->removeLogicTag("{PAGINATION}", "{/PAGINATION}", $output); //No pagination in single post mode
         } else {
         //Normal mode
-            $result = $this->getMultiplePosts($offset);
+            $result = $this->model->getMultiplePosts($offset);
             if ($db->GetNumRows($result) == 0) {
                 header('Location: /404'); //Back out if we didnt find any posts
                 return;
             }
 
             //Show Pagination
-            $numberofposts = $this->getNumberOfPosts();
+            $numberofposts = $this->model->getNumberOfPosts();
             if ($numberofposts > BLOG_POSTS_PER_PAGE) {
                 if ($offset > 0) {
                     $tags = [ "{PAGEPREVIOUSLINK}" => "/blog/page/$offset", "{PAGEPREVIOUSTEXT}" => "Previous Page" ];
@@ -159,7 +95,7 @@ class BlogPageController extends BasePageController
                 "{POSTID}" => $id,
                 "{POSTTITLE}" => $title,
                 "{POSTCONTENT}" => stripslashes($content),
-                "{COMMENTCOUNT}" => $this->getNumberOfComments($id)
+                "{COMMENTCOUNT}" => $this->model->getNumberOfComments($id)
             ];
             $temp = $te->logicTag("{BLOGPOST}", "{/BLOGPOST}", $output);
             $te->parseTags($tags, $temp);

@@ -8,28 +8,17 @@ namespace ABirkett\controllers;
 
 class AdminListCommentsPageController extends AdminBasePageController
 {
-    //-----------------------------------------------------------------------------
-    // Fetch all comments
-    //      In: Optional IP Address
-    //      Out: All comment data
-    //-----------------------------------------------------------------------------
-    private function getAllComments($ip = "")
-    {
-        return \ABirkett\GetDatabase()->runQuery(
-            "SELECT * FROM blog_comments" . ($ip == "" ? " " : " WHERE client_ip='$ip' ") .
-            "ORDER BY comment_timestamp DESC",
-            array()
-        );
-    }
+    private $model;
 
     public function __construct(&$output)
     {
+        $this->model = new \ABirkett\models\AdminListCommentsPageModel();
         $te = \ABirkett\TemplateEngine();
 
         if (isset($_GET['ip'])) {
-            $result = $this->getAllComments($_GET['ip']);
+            $result = $this->model->getAllComments($_GET['ip']);
         } else {
-            $result = $this->getAllComments();
+            $result = $this->model->getAllComments();
         }
         while (list($id, $postid, $username, $comment, $timestamp, $ip) = \ABirkett\GetDatabase()->getRow($result)) {
             $tags = [

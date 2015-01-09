@@ -8,27 +8,17 @@ namespace ABirkett\controllers;
 
 class FeedPageController extends BasePageController
 {
-    //-----------------------------------------------------------------------------
-    // Fetch the latest posts
-    //		In: none
-    //		Out: Post data
-    //-----------------------------------------------------------------------------
-    private function getLatestPosts()
-    {
-        $limit = BLOG_POSTS_PER_PAGE;
-        return \ABirkett\GetDatabase()->runQuery(
-            "SELECT * FROM blog_posts WHERE post_draft = '0' ORDER BY post_timestamp DESC LIMIT 0,$limit",
-            array()
-        );
-    }
+    private $model;
 
     public function __construct(&$output)
     {
+        $this->model = new \ABirkett\models\FeedPageModel();
+
         header("Content-Type: application/xml; charset=utf-8");
 
         $te = \ABirkett\TemplateEngine();
 
-        $posts = $this->getLatestPosts();
+        $posts = $this->model->getLatestPosts();
 
         $itemloop = $te->logicTag("{LOOP}", "{/LOOP}", $output);
 

@@ -8,8 +8,11 @@ namespace ABirkett\controllers;
 
 class AdminUserWidgetController extends AdminBasePageController
 {
+    private $model;
+
     public function __construct(&$output)
     {
+        $this->model = new \ABirkett\models\AdminUserWidgetModel();
         $te = \ABirkett\TemplateEngine();
         if (isset($_SESSION['user'])) {
             $te->removeLogicTag("{LOGIN}", "{/LOGIN}", $output);

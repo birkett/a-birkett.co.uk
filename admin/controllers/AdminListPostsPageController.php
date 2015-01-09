@@ -8,23 +8,13 @@ namespace ABirkett\controllers;
 
 class AdminListPostsPageController extends AdminBasePageController
 {
-    //-----------------------------------------------------------------------------
-    // Fetch post data
-    //		In: none
-    //		Out: Post data
-    //-----------------------------------------------------------------------------
-    private function getAllPosts()
-    {
-        return \ABirkett\GetDatabase()->runQuery(
-            "SELECT post_id, post_timestamp, post_title, post_draft FROM blog_posts ORDER BY post_timestamp DESC",
-            array()
-        );
-    }
+    private $model;
 
     public function __construct(&$output)
     {
+        $this->model = new \ABirkett\models\AdminListPostsPageModel();
         $te = \ABirkett\TemplateEngine();
-        $result = $this->getAllPosts();
+        $result = $this->model->getAllPosts();
         while (list($id, $timestamp, $title, $draft) = \ABirkett\GetDatabase()->getRow($result)) {
             $draft ? $title .= " (DRAFT)" : $title .= "";
             $tags = [

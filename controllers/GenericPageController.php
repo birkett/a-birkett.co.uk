@@ -10,23 +10,12 @@ namespace ABirkett\controllers;
 
 class GenericPageController extends BasePageController
 {
-    //-----------------------------------------------------------------------------
-    // Fetch page content
-    //		In: Page name
-    //		Out: Page title and content
-    //-----------------------------------------------------------------------------
-    private function getPage($pagename)
-    {
-        $page = \ABirkett\GetDatabase()->runQuery(
-            "SELECT page_title, page_content FROM site_pages WHERE page_name = :pagename",
-            array(":pagename" => $pagename)
-        );
-        return $page[0];
-    }
+    private $model;
 
     public function __construct(&$output, $name)
     {
-        $page = $this->getPage($name);
+        $this->model = new \ABirkett\models\GenericPageModel();
+        $page = $this->model->getPage($name);
         $tags = [
             "{PAGETITLE}" => $page['page_title'],
             "{PAGECONTENT}" => stripslashes($page['page_content'])

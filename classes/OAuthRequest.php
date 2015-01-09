@@ -217,7 +217,7 @@ class OAuthRequest
     public static function urlencodeRFC3986($input)
     {
         if (is_array($input)) {
-            return array_map(array('ABirkett\OAuthRequest', 'urlencodeRFC3986'), $input);
+            return array_map(array('ABirkett\classes\OAuthRequest', 'urlencodeRFC3986'), $input);
         } elseif (is_scalar($input)) {
             return str_replace(
                 '+',

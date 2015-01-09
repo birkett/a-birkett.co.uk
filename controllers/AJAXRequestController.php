@@ -8,6 +8,8 @@ namespace ABirkett\controllers;
 
 class AJAXRequestController
 {
+    private $model;
+
     //-----------------------------------------------------------------------------
     // Good and Bad request exits
     //		In: none
@@ -25,55 +27,9 @@ class AJAXRequestController
         exit($m);
     }
 
-    //-----------------------------------------------------------------------------
-    // Checks if an IP is blocked
-    //		In: IP address
-    //		Out: TRUE on blocked, FALSE on not found
-    //-----------------------------------------------------------------------------
-    protected function checkIP($ip)
-    {
-        $count = \ABirkett\GetDatabase()->runQuery(
-            "SELECT COUNT(*) from blocked_addresses WHERE address = :ip",
-            array(":ip" => $ip)
-        );
-        return $count[0]['COUNT(*)'];
-    }
-
-    //-----------------------------------------------------------------------------
-    // Fetch the specified post
-    //		In: Post ID
-    //		Out: Post data
-    //-----------------------------------------------------------------------------
-    protected function getSinglePost($postid)
-    {
-        return \ABirkett\GetDatabase()->runQuery(
-            "SELECT * FROM blog_posts WHERE post_id = :id AND post_draft = '0'",
-            array(":id" => $postid)
-        );
-    }
-
-    //-----------------------------------------------------------------------------
-    // Post a new comment to the database
-    //		In: Target post ID, Username, Text and IP address
-    //		Out: none
-    //-----------------------------------------------------------------------------
-    private function postComment($postid, $username, $comment, $clientip)
-    {
-        \ABirkett\GetDatabase()->runQuery(
-            "INSERT INTO blog_comments(post_id, comment_username, comment_text, comment_timestamp, client_ip)" .
-            " VALUES(:postid, :username, :comment, :currenttime, :clientip)",
-            array(
-                ":postid" => $postid,
-                ":username" => $username,
-                ":comment" => $comment,
-                ":currenttime" => time(),
-                ":clientip" => $clientip
-            )
-        );
-    }
-
     public function __construct()
     {
+        $this->model = new \ABirkett\models\AJAXRequestModel();
         switch($_POST['mode']) {
             //Handle a new comment request
             case "postcomment":
@@ -95,7 +51,7 @@ class AJAXRequestController
                 $ch = $_POST['challenge'];
                 $resp = $_POST['response'];
 
-                if (\ABirkett\GetDatabase()->GetNumRows($this->getSinglePost($p)) != 1) {
+                if (\ABirkett\GetDatabase()->GetNumRows($this->model->getSinglePost($p)) != 1) {
                     $this->badRequest("Invalid Post ID.");
                 }
                 if ($u == "" || $c == "" || $ch == "" || $resp == "") {
@@ -107,13 +63,13 @@ class AJAXRequestController
                 if (strlen($c) < 10 || strlen($c) > 500) {
                     $this->badRequest("Comment should be 10 - 500 characters");
                 }
-                if ($this->checkIP($ip) != 0) {
+                if ($this->model->checkIP($ip) != 0) {
                     $this->badRequest("Your address is blocked. This is most likely due to spam.");
                 }
                 $recaptcha = new \ABirkett\classes\RecaptchaLib();
                 $captcha = $recaptcha->checkAnswer(RECAPTHCA_PRIVATE_KEY, $ip, $ch, $resp);
                 if ($captcha['is_valid'] == true) {
-                    $this->postComment($p, $u, $c, $ip);
+                    $this->model->postComment($p, $u, $c, $ip);
                     $this->goodRequest("Comment Posted!");
                 } else {
                     $this->badRequest("Captcha verification failed");
