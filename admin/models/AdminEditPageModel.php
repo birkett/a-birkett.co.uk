@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett\models;
 
-class AdminEditPageModel
+class AdminEditPageModel extends AdminBasePageModel
 {
     //-----------------------------------------------------------------------------
     // Fetch page content
@@ -13,7 +13,7 @@ class AdminEditPageModel
     //-----------------------------------------------------------------------------
     public function getPage($pageid)
     {
-        $page = \ABirkett\GetDatabase()->runQuery(
+        $page = $this->database->runQuery(
             "SELECT page_title, page_content FROM site_pages WHERE page_id = :pageid",
             array(":pageid" => $pageid)
         );
@@ -27,7 +27,7 @@ class AdminEditPageModel
     //-----------------------------------------------------------------------------
     public function getSinglePost($postid)
     {
-        return \ABirkett\GetDatabase()->runQuery(
+        return $this->database->runQuery(
             "SELECT * FROM blog_posts WHERE post_id = :id",
             array(":id" => $postid)
         );

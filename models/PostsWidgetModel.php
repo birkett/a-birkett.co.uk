@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett\models;
 
-class PostsWidgetModel
+class PostsWidgetModel extends BasePageModel
 {
     //-----------------------------------------------------------------------------
     // Fetch post data
@@ -13,7 +13,7 @@ class PostsWidgetModel
     //-----------------------------------------------------------------------------
     public function getAllPosts()
     {
-        return \ABirkett\GetDatabase()->runQuery(
+        return $this->database->runQuery(
             "SELECT post_id, post_timestamp, post_title FROM blog_posts " .
             "WHERE post_draft = '0' ORDER BY post_timestamp DESC",
             array()

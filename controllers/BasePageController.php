@@ -11,12 +11,13 @@ namespace ABirkett\controllers;
 class BasePageController
 {
     private $model;
+    public $templateEngine;
 
     public function __construct(&$output)
     {
         $this->model = new \ABirkett\models\BasePageModel();
+        $this->templateEngine = \ABirkett\classes\TemplateEngine::getInstance();
 
-        $te = \ABirkett\TemplateEngine();
         $tags = [
             "{BASEURL}" => $this->model->getBaseURL(),
             "{RAND2551}" => rand(0, 255),
@@ -24,16 +25,18 @@ class BasePageController
             "{RAND2553}" => rand(0, 255),
             "{RAND12}" => rand(1, 2),
             "{THISYEAR}" => date('Y'),
-            "{ADMINFOLDER}" => ""
         ];
-        $te->parseTags($tags, $output);
+        $this->templateEngine->parseTags($tags, $output);
 
         if (CHRISTMAS) {
             $tags = [ "{EXTRASTYLESHEETS}", "{/EXTRASTYLESHEETS}" ];
-            $te->removeTags($tags, $output);
+            $this->templateEngine->removeTags($tags, $output);
         } else {
-            $te->removeLogicTag("{EXTRASTYLESHEETS}", "{/EXTRASTYLESHEETS}", $output);
+            $this->templateEngine->removeLogicTag("{EXTRASTYLESHEETS}", "{/EXTRASTYLESHEETS}", $output);
         }
-        $te->removeLogicTag("{ADMINSTYLESHEET}", "{/ADMINSTYLESHEET}", $output);
+        if (!defined('ADMINPAGE')) {
+            $this->templateEngine->removeLogicTag("{ADMINSTYLESHEET}", "{/ADMINSTYLESHEET}", $output);
+            $this->templateEngine->replaceTag("{ADMINFOLDER}", "", $output);
+        }
     }
 }

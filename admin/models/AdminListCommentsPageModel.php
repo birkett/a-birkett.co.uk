@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett\models;
 
-class AdminListCommentsPageModel
+class AdminListCommentsPageModel extends AdminBasePageModel
 {
     //-----------------------------------------------------------------------------
     // Fetch all comments
@@ -13,7 +13,7 @@ class AdminListCommentsPageModel
     //-----------------------------------------------------------------------------
     public function getAllComments($ip = "")
     {
-        return \ABirkett\GetDatabase()->runQuery(
+        return $this->database->runQuery(
             "SELECT * FROM blog_comments" . ($ip == "" ? " " : " WHERE client_ip='$ip' ") .
             "ORDER BY comment_timestamp DESC",
             array()

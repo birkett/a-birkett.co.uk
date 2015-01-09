@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett\models;
 
-class AdminIPFilterPageModel
+class AdminIPFilterPageModel extends AdminBasePageModel
 {
     //-----------------------------------------------------------------------------
     // Gets all blocked IP addresses
@@ -13,6 +13,6 @@ class AdminIPFilterPageModel
     //-----------------------------------------------------------------------------
     public function getBlockedAddresses()
     {
-        return \ABirkett\GetDatabase()->runQuery("SELECT * FROM blocked_addresses ORDER BY blocked_timestamp DESC", array());
+        return $this->database->runQuery("SELECT * FROM blocked_addresses ORDER BY blocked_timestamp DESC", array());
     }
 }

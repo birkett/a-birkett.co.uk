@@ -9,6 +9,20 @@ namespace ABirkett\classes;
 class TemplateEngine
 {
     //-----------------------------------------------------------------------------
+    // Get a TemplateEngine instance
+    //		In: none
+    //		Out: TemplateEngine object
+    //-----------------------------------------------------------------------------
+    public static function getInstance()
+    {
+        static $templateengine = null;
+        if (!isset($templateengine)) {
+            $templateengine = new TemplateEngine();
+        }
+        return $templateengine;
+    }
+
+    //-----------------------------------------------------------------------------
     // Open a page template, taking into account if the requested page is in admin
     //		In: Filename
     //		Out: Unparsed (sub)template

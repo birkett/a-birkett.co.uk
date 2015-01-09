@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett\models;
 
-class FeedPageModel
+class FeedPageModel extends BasePageModel
 {
     //-----------------------------------------------------------------------------
     // Fetch the latest posts
@@ -14,7 +14,7 @@ class FeedPageModel
     public function getLatestPosts()
     {
         $limit = BLOG_POSTS_PER_PAGE;
-            return \ABirkett\GetDatabase()->runQuery(
+        return $this->database->runQuery(
             "SELECT * FROM blog_posts WHERE post_draft = '0' ORDER BY post_timestamp DESC LIMIT 0,$limit",
             array()
         );

@@ -12,15 +12,15 @@ class AdminListCommentsPageController extends AdminBasePageController
 
     public function __construct(&$output)
     {
+        parent::__construct($output);
         $this->model = new \ABirkett\models\AdminListCommentsPageModel();
-        $te = \ABirkett\TemplateEngine();
 
         if (isset($_GET['ip'])) {
             $result = $this->model->getAllComments($_GET['ip']);
         } else {
             $result = $this->model->getAllComments();
         }
-        while (list($id, $postid, $username, $comment, $timestamp, $ip) = \ABirkett\GetDatabase()->getRow($result)) {
+        while (list($id, $postid, $username, $comment, $timestamp, $ip) = $this->model->database->getRow($result)) {
             $tags = [
                 "{COMMENT}" => $comment,
                 "{USERNAME}" => $username,
@@ -28,13 +28,11 @@ class AdminListCommentsPageController extends AdminBasePageController
                 "{IP}" => $ip,
                 "{POSTID}" => $postid
             ];
-            $temp = $te->logicTag("{LOOP}", "{/LOOP}", $output);
-            $te->parseTags($tags, $temp);
+            $temp = $this->templateEngine->logicTag("{LOOP}", "{/LOOP}", $output);
+            $this->templateEngine->parseTags($tags, $temp);
             $temp .= "\n{LOOP}";
-            $te->replaceTag("{LOOP}", $temp, $output);
+            $this->templateEngine->replaceTag("{LOOP}", $temp, $output);
         }
-        $te->removeLogicTag("{LOOP}", "{/LOOP}", $output);
-
-        parent::__construct($output);
+        $this->templateEngine->removeLogicTag("{LOOP}", "{/LOOP}", $output);
     }
 }

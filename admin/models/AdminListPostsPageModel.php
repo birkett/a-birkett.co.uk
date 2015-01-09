@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett\models;
 
-class AdminListPostsPageModel
+class AdminListPostsPageModel extends AdminBasePageModel
 {
     //-----------------------------------------------------------------------------
     // Fetch post data
@@ -13,7 +13,7 @@ class AdminListPostsPageModel
     //-----------------------------------------------------------------------------
     public function getAllPosts()
     {
-        return \ABirkett\GetDatabase()->runQuery(
+        return $this->database->runQuery(
             "SELECT post_id, post_timestamp, post_title, post_draft FROM blog_posts ORDER BY post_timestamp DESC",
             array()
         );

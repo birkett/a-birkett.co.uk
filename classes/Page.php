@@ -13,7 +13,7 @@ class Page
     //-----------------------------------------------------------------------------
     public function __construct($title, $widget, $template)
     {
-        $te = \ABirkett\TemplateEngine();
+        $te = \ABirkett\classes\TemplateEngine::getInstance();
 
         if ($template == "feed") {
             $pagetemplate = $te->loadPageTemplate("feed.tpl");

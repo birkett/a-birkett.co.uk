@@ -14,13 +14,13 @@ class GenericPageController extends BasePageController
 
     public function __construct(&$output, $name)
     {
+        parent::__construct($output);
         $this->model = new \ABirkett\models\GenericPageModel();
         $page = $this->model->getPage($name);
         $tags = [
             "{PAGETITLE}" => $page['page_title'],
             "{PAGECONTENT}" => stripslashes($page['page_content'])
         ];
-        \ABirkett\TemplateEngine()->parseTags($tags, $output);
-        parent::__construct($output);
+        $this->templateEngine->parseTags($tags, $output);
     }
 }

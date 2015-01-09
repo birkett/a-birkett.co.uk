@@ -8,35 +8,6 @@
 namespace ABirkett;
 
 //-----------------------------------------------------------------------------
-// Open a database handle
-//		In: none
-//		Out: Database object
-//  Store the current database object to prevent multiple connections
-//-----------------------------------------------------------------------------
-function GetDatabase()
-{
-    static $db = null;
-    if (!isset($db)) {
-        $db = new classes\PDOMySQLDatabase();
-    }
-    return $db;
-}
-
-//-----------------------------------------------------------------------------
-// Open a TemplateEngine handle
-//		In: none
-//		Out: TemplateEngine object
-//-----------------------------------------------------------------------------
-function TemplateEngine()
-{
-    static $te = null;
-    if (!isset($te)) {
-        $te = new classes\TemplateEngine();
-    }
-    return $te;
-}
-
-//-----------------------------------------------------------------------------
 // Autoloader for Classes and Controllers
 //		In: Class name
 //		Out: none

@@ -17,7 +17,7 @@ class PDOMySQLDatabase
     //      In: Database name
     //      Out: none
     //-----------------------------------------------------------------------------
-    public function __construct()
+    private function __construct()
     {
         try {
             $this->mLink = new PDO(
@@ -29,6 +29,21 @@ class PDOMySQLDatabase
         } catch (\PDOException $e) {
             echo "DB no work :(";
         }
+    }
+
+    //-----------------------------------------------------------------------------
+    // Open a database handle
+    //		In: none
+    //		Out: Database object
+    //  Store the current database object to prevent multiple connections
+    //-----------------------------------------------------------------------------
+    public static function getInstance()
+    {
+        static $database = null;
+        if (!isset($database)) {
+            $database = new PDOMySQLDatabase();
+        }
+        return $database;
     }
 
     //-----------------------------------------------------------------------------

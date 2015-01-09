@@ -12,17 +12,16 @@ class FeedPageController extends BasePageController
 
     public function __construct(&$output)
     {
+        parent::__construct($output);
         $this->model = new \ABirkett\models\FeedPageModel();
 
         header("Content-Type: application/xml; charset=utf-8");
 
-        $te = \ABirkett\TemplateEngine();
-
         $posts = $this->model->getLatestPosts();
 
-        $itemloop = $te->logicTag("{LOOP}", "{/LOOP}", $output);
+        $itemloop = $this->templateEngine->logicTag("{LOOP}", "{/LOOP}", $output);
 
-        while (list($id, $timestamp, $title, $content, $draft) = \ABirkett\GetDatabase()->GetRow($posts)) {
+        while (list($id, $timestamp, $title, $content, $draft) = $this->model->database->GetRow($posts)) {
             $temp = $itemloop;
             $tags = [
                 "{POSTTITLE}" => $title,
@@ -30,12 +29,10 @@ class FeedPageController extends BasePageController
                 "{POSTTIMESTAMP}" => date("D, d M Y H:i:s O", $timestamp),
                 "{POSTCONTENT}" => $content
             ];
-            $te->parseTags($tags, $temp);
+            $this->templateEngine->parseTags($tags, $temp);
             $temp .= "\n{LOOP}";
-            $te->replaceTag("{LOOP}", $temp, $output);
+            $this->templateEngine->replaceTag("{LOOP}", $temp, $output);
         }
-        $te->removeLogicTag("{LOOP}", "{/LOOP}", $output);
-
-        parent::__construct($output);
+        $this->templateEngine->removeLogicTag("{LOOP}", "{/LOOP}", $output);
     }
 }

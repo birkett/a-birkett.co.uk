@@ -12,21 +12,19 @@ class AdminIPFilterPageController extends AdminBasePageController
 
     public function __construct(&$output)
     {
+        parent::__construct($output);
         $this->model = new \ABirkett\models\AdminIPFilterPageModel();
-        $te = \ABirkett\TemplateEngine();
         $result = $this->model->getBlockedAddresses();
-        while (list($ip_id, $address, $timestamp) = \ABirkett\GetDatabase()->GetRow($result)) {
+        while (list($ip_id, $address, $timestamp) = $this->model->database->GetRow($result)) {
             $tags = [
                 "{IP}" => $address,
                 "{TIMESTAMP}" => date(DATE_FORMAT, $timestamp)
             ];
-            $temp = $te->logicTag("{LOOP}", "{/LOOP}", $output);
-            $te->parseTags($tags, $temp);
+            $temp = $this->templateEngine->logicTag("{LOOP}", "{/LOOP}", $output);
+            $this->templateEngine->parseTags($tags, $temp);
             $temp .= "\n{LOOP}";
-            $te->replaceTag("{LOOP}", $temp, $output);
+            $this->templateEngine->replaceTag("{LOOP}", $temp, $output);
         }
-        $te->removeLogicTag("{LOOP}", "{/LOOP}", $output);
-
-        parent::__construct($output);
+        $this->templateEngine->removeLogicTag("{LOOP}", "{/LOOP}", $output);
     }
 }

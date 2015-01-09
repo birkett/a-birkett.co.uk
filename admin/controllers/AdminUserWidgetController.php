@@ -12,17 +12,15 @@ class AdminUserWidgetController extends AdminBasePageController
 
     public function __construct(&$output)
     {
+        parent::__construct($output);
         $this->model = new \ABirkett\models\AdminUserWidgetModel();
-        $te = \ABirkett\TemplateEngine();
         if (isset($_SESSION['user'])) {
-            $te->removeLogicTag("{LOGIN}", "{/LOGIN}", $output);
-            $te->replaceTag("{USERNAME}", $_SESSION['user'], $output);
+            $this->templateEngine->removeLogicTag("{LOGIN}", "{/LOGIN}", $output);
+            $this->templateEngine->replaceTag("{USERNAME}", $_SESSION['user'], $output);
         } else {
-            $te->removeLogicTag("{LOGGEDIN}", "{/LOGGEDIN}", $output);
+            $this->templateEngine->removeLogicTag("{LOGGEDIN}", "{/LOGGEDIN}", $output);
         }
         $cleantags = [ "{LOGIN}", "{/LOGIN}", "{LOGGEDIN}", "{/LOGGEDIN}" ];
-        $te->removeTags($cleantags, $output);
-
-        parent::__construct($output);
+        $this->templateEngine->removeTags($cleantags, $output);
     }
 }

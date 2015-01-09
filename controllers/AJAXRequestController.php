@@ -51,7 +51,7 @@ class AJAXRequestController
                 $ch = $_POST['challenge'];
                 $resp = $_POST['response'];
 
-                if (\ABirkett\GetDatabase()->GetNumRows($this->model->getSinglePost($p)) != 1) {
+                if ($this->model->database->GetNumRows($this->model->getSinglePost($p)) != 1) {
                     $this->badRequest("Invalid Post ID.");
                 }
                 if ($u == "" || $c == "" || $ch == "" || $resp == "") {

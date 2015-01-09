@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett\models;
 
-class AdminListPagesPageModel
+class AdminListPagesPageModel extends AdminBasePageModel
 {
     //-----------------------------------------------------------------------------
     // Fetch ID and Title of all pages
@@ -13,6 +13,6 @@ class AdminListPagesPageModel
     //-----------------------------------------------------------------------------
     public function getAllPages()
     {
-        return \ABirkett\GetDatabase()->runQuery("SELECT page_id, page_title from site_pages", array());
+        return $this->database->runQuery("SELECT page_id, page_title from site_pages", array());
     }
 }

@@ -13,15 +13,17 @@ class AdminAJAXRequestModel extends AJAXRequestModel
     //-----------------------------------------------------------------------------
     public function newPost($title, $content, $draft)
     {
-        $db = \ABirkett\GetDatabase();
         $draft = ($draft == "true") ? 1 : 0; //bool to int
-        $db->runQuery(
+        $this->database->runQuery(
             "INSERT INTO blog_posts(post_timestamp, post_title, post_content, post_draft, post_tweeted) " .
             "VALUES(:timestamp, :title, :content, :draft, 0)",
             array(":timestamp" => time(), ":title" => $title, ":content" => $content, ":draft" => $draft)
         );
-        $data = $db->runQuery("SELECT post_id FROM blog_posts ORDER BY post_timestamp DESC LIMIT 1", array());
-        $row = $db->getRow($data);
+        $data = $this->database->runQuery(
+            "SELECT post_id FROM blog_posts ORDER BY post_timestamp DESC LIMIT 1",
+            array()
+        );
+        $row = $this->database->getRow($data);
         $this->tweetPost($row['post_id']); //Tweet this if not already done
     }
 
@@ -33,7 +35,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
     public function updatePost($postid, $title, $content, $draft)
     {
         $draft = ($draft == "true") ? 1 : 0; //bool to int
-        \ABirkett\GetDatabase()->runQuery(
+        $this->database->runQuery(
             "UPDATE blog_posts SET post_title = :title, post_content = :content, " .
             "post_draft = :draft WHERE post_id = :postid LIMIT 1",
             array(":title" => $title, ":content" => $content, ":draft" => $draft, ":postid" => $postid)
@@ -48,7 +50,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
     //-----------------------------------------------------------------------------
     public function updatePage($pageid, $content)
     {
-        \ABirkett\GetDatabase()->runQuery(
+        $this->database->runQuery(
             "UPDATE site_pages SET page_content = :content WHERE page_id = :pageid LIMIT 1",
             array(":content" => $content, ":pageid" => $pageid)
         );
@@ -64,7 +66,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         if (parent::checkIP($ip) != 0) {
             return; //do nothing if already blocked
         }
-        \ABirkett\GetDatabase()->runQuery(
+        $this->database->runQuery(
             "INSERT INTO blocked_addresses(address, blocked_timestamp) VALUES(:ip, :timestamp)",
             array(":ip" => $ip, ":timestamp" => time())
         );
@@ -77,7 +79,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
     //-----------------------------------------------------------------------------
     public function unblockIP($ip)
     {
-        \ABirkett\GetDatabase()->runQuery("DELETE FROM blocked_addresses WHERE address = :ip", array(":ip" => $ip));
+        $this->database->runQuery("DELETE FROM blocked_addresses WHERE address = :ip", array(":ip" => $ip));
     }
 
     //-----------------------------------------------------------------------------
@@ -90,16 +92,16 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         if ($newpassword != $confirmedpassword) {
             return false; //Passwords dont match
         }
-        $db = \ABirkett\GetDatabase();
-        $data = $db->runQuery("SELECT username FROM site_users WHERE user_id='1'", array());
-        $row = $db->getRow($data);
+
+        $data = $this->database->runQuery("SELECT username FROM site_users WHERE user_id='1'", array());
+        $row = $this->database->getRow($data);
 
         if (!$this->checkCredentials($row[0], $currentpassword)) {
             return false; //Current password is wrong
         }
         $hash = $this->hashPassword($newpassword);
 
-        $db->runQuery("UPDATE site_users SET password='$hash' WHERE user_id='1'", array());
+        $this->database->runQuery("UPDATE site_users SET password='$hash' WHERE user_id='1'", array());
         return true;
     }
 
@@ -110,14 +112,13 @@ class AdminAJAXRequestModel extends AJAXRequestModel
     //-----------------------------------------------------------------------------
     public function checkCredentials($username, $password)
     {
-        $db = \ABirkett\GetDatabase();
-        $result = $db->runQuery(
-        "SELECT password FROM site_users WHERE username = :username",
-        array(":username" => $username)
+        $result = $this->database->runQuery(
+            "SELECT password FROM site_users WHERE username = :username",
+            array(":username" => $username)
         );
 
-        if ($db->getNumRows($result) == 1) {
-            $dbhash = $db->getRow($result);
+        if ($this->database->getNumRows($result) == 1) {
+            $dbhash = $this->database->getRow($result);
             if (password_verify($password, $dbhash[0])) {
                 $_SESSION['user'] = $username;
                 return true;
@@ -133,12 +134,11 @@ class AdminAJAXRequestModel extends AJAXRequestModel
     //-----------------------------------------------------------------------------
     public function tweetPost($postid)
     {
-        $db = \ABirkett\GetDatabase();
         $post = parent::getSinglePost($postid);
-        if ($db->GetNumRows($post) == 0) {
+        if ($this->database->GetNumRows($post) == 0) {
             return; //Post doesnt exist or is a draft
         }
-        list($id, $timestamp, $title, $content, $draft, $post_tweeted) = $db->getRow($post);
+        list($id, $timestamp, $title, $content, $draft, $post_tweeted) = $this->database->getRow($post);
         if ($post_tweeted == 1) {
             return; //Already tweeted out
         }
@@ -155,7 +155,10 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         );
         $twitter->post('statuses/update', array('status' => $tweet));
 
-        $db->runQuery("UPDATE blog_posts SET post_tweeted=1 WHERE post_id = :postid", array(":postid" => $postid));
+        $this->database->runQuery(
+            "UPDATE blog_posts SET post_tweeted=1 WHERE post_id = :postid",
+            array(":postid" => $postid)
+        );
     }
 
     //-----------------------------------------------------------------------------

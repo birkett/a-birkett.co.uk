@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett\models;
 
-class AdminServerInfoPageModel
+class AdminServerInfoPageModel extends AdminBasePageModel
 {
     //Nothing yet
 }

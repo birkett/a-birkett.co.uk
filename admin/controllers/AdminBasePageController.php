@@ -14,17 +14,15 @@ class AdminBasePageController extends BasePageController
 
     public function __construct(&$output)
     {
+        parent::__construct($output);
         $this->model = new \ABirkett\models\AdminBasePageModel();
-        
-        $te = \ABirkett\TemplateEngine();
+
         $tags = [
             "{ADMINFOLDER}" => ADMIN_FOLDER,
         ];
-        $te->parseTags($tags, $output);
+        $this->templateEngine->parseTags($tags, $output);
 
         $tags = [ "{ADMINSTYLESHEET}", "{/ADMINSTYLESHEET}" ];
-        $te->removeTags($tags, $output);
-
-        parent::__construct($output);
+        $this->templateEngine->removeTags($tags, $output);
     }
 }

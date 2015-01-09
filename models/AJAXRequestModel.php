@@ -13,15 +13,15 @@ class AJAXRequestModel extends BasePageModel
     //-----------------------------------------------------------------------------
     public function postComment($postid, $username, $comment, $clientip)
     {
-        \ABirkett\GetDatabase()->runQuery(
-        "INSERT INTO blog_comments(post_id, comment_username, comment_text, comment_timestamp, client_ip)" .
-        " VALUES(:postid, :username, :comment, :currenttime, :clientip)",
-        array(
-            ":postid" => $postid,
-            ":username" => $username,
-            ":comment" => $comment,
-            ":currenttime" => time(),
-            ":clientip" => $clientip
+        $this->database->runQuery(
+            "INSERT INTO blog_comments(post_id, comment_username, comment_text, comment_timestamp, client_ip)" .
+            " VALUES(:postid, :username, :comment, :currenttime, :clientip)",
+            array(
+                ":postid" => $postid,
+                ":username" => $username,
+                ":comment" => $comment,
+                ":currenttime" => time(),
+                ":clientip" => $clientip
             )
         );
     }
@@ -33,7 +33,7 @@ class AJAXRequestModel extends BasePageModel
     //-----------------------------------------------------------------------------
     public function getSinglePost($postid)
     {
-        return \ABirkett\GetDatabase()->runQuery(
+        return $this->database->runQuery(
             "SELECT * FROM blog_posts WHERE post_id = :id AND post_draft = '0'",
             array(":id" => $postid)
         );
@@ -46,7 +46,7 @@ class AJAXRequestModel extends BasePageModel
     //-----------------------------------------------------------------------------
     public function checkIP($ip)
     {
-        $count = \ABirkett\GetDatabase()->runQuery(
+        $count = $this->database->runQuery(
             "SELECT COUNT(*) from blocked_addresses WHERE address = :ip",
             array(":ip" => $ip)
         );

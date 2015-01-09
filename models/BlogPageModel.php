@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace ABirkett\models;
 
-class BlogPageModel
+class BlogPageModel extends BasePageModel
 {
     //-----------------------------------------------------------------------------
     // Fetch the specified post
@@ -13,7 +13,7 @@ class BlogPageModel
     //-----------------------------------------------------------------------------
     public function getSinglePost($postid)
     {
-        return \ABirkett\GetDatabase()->runQuery(
+        return $this->database->runQuery(
             "SELECT * FROM blog_posts WHERE post_id = :id AND post_draft = '0'",
             array(":id" => $postid)
         );
@@ -28,10 +28,10 @@ class BlogPageModel
     {
         $limit1 = $page * BLOG_POSTS_PER_PAGE;
         $limit2 = BLOG_POSTS_PER_PAGE;
-        return \ABirkett\GetDatabase()->runQuery(
-        "SELECT * FROM blog_posts WHERE post_draft = '0' ORDER BY post_timestamp DESC LIMIT $limit1,$limit2",
-        array()
-    );
+        return $this->database->runQuery(
+            "SELECT * FROM blog_posts WHERE post_draft = '0' ORDER BY post_timestamp DESC LIMIT $limit1,$limit2",
+            array()
+        );
     }
 
     //-----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ class BlogPageModel
     //-----------------------------------------------------------------------------
     public function getNumberOfPosts()
     {
-        $count = \ABirkett\GetDatabase()->runQuery("SELECT COUNT(*) from blog_posts", array());
+        $count = $this->database->runQuery("SELECT COUNT(*) from blog_posts", array());
         return $count[0]['COUNT(*)'];
     }
 
@@ -52,11 +52,11 @@ class BlogPageModel
     //-----------------------------------------------------------------------------
     public function getNumberOfComments($postid)
     {
-        $count = \ABirkett\GetDatabase()->runQuery(
-        "SELECT COUNT(*) FROM blog_comments WHERE post_id = :postid",
-        array(":postid" => $postid)
-    );
-    return $count[0]['COUNT(*)'];
+        $count = $this->database->runQuery(
+            "SELECT COUNT(*) FROM blog_comments WHERE post_id = :postid",
+            array(":postid" => $postid)
+        );
+        return $count[0]['COUNT(*)'];
     }
 
     //-----------------------------------------------------------------------------
@@ -66,9 +66,10 @@ class BlogPageModel
     //-----------------------------------------------------------------------------
     public function getCommentsOnPost($postid)
     {
-        return \ABirkett\GetDatabase()->runQuery(
-        "SELECT * FROM blog_comments WHERE post_id = :postid ORDER BY comment_timestamp ASC ",
-        array(":postid" => $postid)
+        return $this->database->runQuery(
+            "SELECT comment_username, comment_text, comment_timestamp FROM blog_comments " .
+            "WHERE post_id = :postid ORDER BY comment_timestamp ASC",
+            array(":postid" => $postid)
         );
     }
 }
