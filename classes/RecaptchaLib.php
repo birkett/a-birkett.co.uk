@@ -1,8 +1,26 @@
 <?php
+/**
+* RecaptchaLib - Send and process a Recaptcha request
+*
+* PHP Version 5.5
+*
+* @category Classes
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @author   Mike Crawford <unknown@unknown.com>
+* @author   Ben Maurer <unknown@unknown.com>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://recaptcha.net
+*/
 namespace ABirkett\classes;
 
 class RecaptchaLib
 {
+    /**
+    * Encode data
+    * @param string $data Data to be encoded
+    * @return string Encoded data
+    */
     private function qsEncode($data)
     {
         $req = "";
@@ -13,6 +31,14 @@ class RecaptchaLib
         return $req;
     }
 
+    /**
+    * Send a HTTP request
+    * @param string $host Hostname
+    * @param string $path Path
+    * @param string $data Un-encoded data
+    * @param int    $port Port number (default 80)
+    * @return string Response
+    */
     private function httpPost($host, $path, $data, $port = 80)
     {
         $req = $this->qsEncode($data);
@@ -41,6 +67,14 @@ class RecaptchaLib
         return $response;
     }
 
+    /**
+    * Verfiy a Recaptch challenge
+    * @param string $privkey   Recaptcha private key
+    * @param string $remoteip  Client IP
+    * @param string $challenge Challenge
+    * @param string $response  Server response
+    * @return mixed[] Response array
+    */
     public function checkAnswer($privkey, $remoteip, $challenge, $response)
     {
         $reply = $this->httpPost(

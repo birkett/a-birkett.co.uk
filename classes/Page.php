@@ -1,16 +1,26 @@
 <?php
-//-----------------------------------------------------------------------------
-// Page class
-//
-//  Builds pages using a template.
-//-----------------------------------------------------------------------------
+/**
+* Serves GET request by serving a page
+*
+* PHP Version 5.5
+*
+* @category Classes
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett\classes;
 
 class Page
 {
-    //-----------------------------------------------------------------------------
-    // Constructor
-    //-----------------------------------------------------------------------------
+    /**
+    * Generate a page
+    * @param string $title    Page title
+    * @param string $widget   Request widget
+    * @param string $template Requested template
+    * @return none
+    */
     public function __construct($title, $widget, $template)
     {
         $te = \ABirkett\classes\TemplateEngine::getInstance();

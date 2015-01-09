@@ -17,7 +17,7 @@ namespace ABirkett;
 * @param string $class Class name to load
 * @return none
 */
-function Autoloader($class)
+function autoloader($class)
 {
     $prefix = 'ABirkett\\';
 
@@ -65,14 +65,14 @@ function PHPDefaults()
     date_default_timezone_set("Europe/London");
 
     //Autoloader
-    spl_autoload_register("ABirkett\Autoloader");
+    spl_autoload_register("ABirkett\autoloader");
 }
 
 /**
 * Define a symbol so public functions can act accordingly on an admin page
 * @return none
 */
-function DeclareAdminPage()
+function declareAdminPage()
 {
     define('ADMINPAGE', 1);
 }

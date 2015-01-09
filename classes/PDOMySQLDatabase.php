@@ -1,22 +1,31 @@
 <?php
-//-----------------------------------------------------------------------------
-// Database class
-//
-//  Basic class to interface with a MySQL database via PDO
-//-----------------------------------------------------------------------------
+/**
+* Basic wrapper for working with a MySQL database via PDO
+*
+* PHP Version 5.5
+*
+* @category Classes
+* @package  PersonalWebsite
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://www.a-birkett.co.uk
+*/
 namespace ABirkett\classes;
 
 use PDO;
 
 class PDOMySQLDatabase
 {
+    /**
+    * Store the current link to avoid reconnections
+    * @var object $mLink
+    */
     private $mLink;
 
-    //-----------------------------------------------------------------------------
-    // Constructor
-    //      In: Database name
-    //      Out: none
-    //-----------------------------------------------------------------------------
+    /**
+    * Constructor
+    * @return none
+    */
     private function __construct()
     {
         try {
@@ -31,12 +40,10 @@ class PDOMySQLDatabase
         }
     }
 
-    //-----------------------------------------------------------------------------
-    // Open a database handle
-    //		In: none
-    //		Out: Database object
-    //  Store the current database object to prevent multiple connections
-    //-----------------------------------------------------------------------------
+    /**
+    * Open a database handle
+    * @return object Database handle
+    */
     public static function getInstance()
     {
         static $database = null;
@@ -46,21 +53,19 @@ class PDOMySQLDatabase
         return $database;
     }
 
-    //-----------------------------------------------------------------------------
-    // Destructor
-    //      In: none
-    //      Out: none
-    //-----------------------------------------------------------------------------
+    /**
+    * Destructor
+    * @return none
+    */
     public function __destruct()
     {
         $this->mLink = null;
     }
 
-    //-----------------------------------------------------------------------------
-    // Get MySQL server version info
-    //      In: none
-    //      Out: Version string
-    //-----------------------------------------------------------------------------
+    /**
+    * Get MySQL server version info
+    * @return string MySQL Server version
+    */
     public function serverInfo()
     {
         if (!$this->mLink) {
@@ -69,11 +74,12 @@ class PDOMySQLDatabase
         return $this->mLink->getAttribute(PDO::ATTR_SERVER_VERSION);
     }
 
-    //-----------------------------------------------------------------------------
-    // Run a query
-    //      In: Query string
-    //      Out: MySQLi result
-    //-----------------------------------------------------------------------------
+    /**
+    * Run a query
+    * @param string  $query  Query string to run
+    * @param mixed[] $params Array of parameters to bind
+    * @return mixed[] Array of results
+    */
     public function runQuery($query, $params)
     {
         if (!$this->mLink) {
@@ -86,12 +92,11 @@ class PDOMySQLDatabase
         }
     }
 
-    //-----------------------------------------------------------------------------
-    // Get single row from a result
-    //      In: MySQLi result
-    //      Out: Single row
-    //   Returns next row on each call until end, then NULL
-    //-----------------------------------------------------------------------------
+    /**
+    * Get single row from a result, until no results left
+    * @param mixed[] $result Array of rows
+    * @return mixed[] One row array or null when none left
+    */
     public function getRow(&$result)
     {
         if (!$result) {
@@ -104,11 +109,11 @@ class PDOMySQLDatabase
         }
     }
 
-    //-----------------------------------------------------------------------------
-    // Get number of rows
-    //      In: MySQLi result
-    //      Out: Number of rows (can be fetched with GetRow()
-    //-----------------------------------------------------------------------------
+    /**
+    * Get number of rows
+    * @param mixed[] $result Array of results
+    * @return int Number of rows in result
+    */
     public function getNumRows($result)
     {
         if (!$result) {

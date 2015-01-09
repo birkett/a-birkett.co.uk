@@ -36,7 +36,7 @@ class FeedPageController extends BasePageController
 
         $itemloop = $this->templateEngine->logicTag("{LOOP}", "{/LOOP}", $output);
 
-        while (list($id, $timestamp, $title, $content, $draft) = $this->model->database->GetRow($posts)) {
+        while (list($id, $timestamp, $title, $content) = $this->model->database->GetRow($posts)) {
             $temp = $itemloop;
             $tags = [
                 "{POSTTITLE}" => $title,

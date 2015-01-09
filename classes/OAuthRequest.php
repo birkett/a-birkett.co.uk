@@ -1,15 +1,47 @@
 <?php
+/**
+* PHP OAuth request class
+*
+* PHP Version 5.5
+*
+* @category Classes
+* @package  PersonalWebsite
+* @author   Andy Smith <unknown@unknown.com>
+* @author   Anthony Birkett <anthony@a-birkett.co.uk>
+* @license  http://opensource.org/licenses/MIT MIT
+* @link     http://term.ie
+*/
 namespace ABirkett\classes;
 
 class OAuthRequest
 {
+    /*
+    * Request parameters array
+    * @var mixed[] $parameters
+    */
     private $parameters;
+
+    /*
+    * Request method
+    * @var string $http_method
+    */
     private $http_method;
+
+    /*
+    * Request URL
+    * @var string $http_url
+    */
     private $http_url;
 
-    public function __construct($http_method, $http_url, $parameters = null)
+    /**
+    * Create a new OAuth request
+    * @param string  $http_method Request method
+    * @param string  $http_url    Request URL
+    * @param mixed[] $parameters  Additional parameters as array
+    * @return none
+    */
+    public function __construct($http_method, $http_url, $parameters = array())
     {
-        @$parameters or $parameters = array();
         $parameters = array_merge($this->parseParameters(parse_url($http_url, PHP_URL_QUERY)), $parameters);
         $this->parameters = $parameters;
         $this->http_method = $http_method;
@@ -17,11 +49,16 @@ class OAuthRequest
     }
 
     /**
-    * pretty much a helper function to set up the request
+    * Pretty much a helper function to set up the request
+    * @param string  $c_key       Consumer key
+    * @param string  $o_token     OAuth token
+    * @param string  $http_method Request method
+    * @param string  $http_url    Request URL
+    * @param mixed[] $parameters  Additional parameters as array
+    * @return object OAuthRequest instance
     */
-    public static function fromConsumerAndToken($c_key, $o_token, $http_method, $http_url, $parameters = null)
+    public static function fromConsumerAndToken($c_key, $o_token, $http_method, $http_url, $parameters = array())
     {
-        @$parameters or $parameters = array();
         $defaults = array(
             "oauth_version" => "1.0",
             "oauth_nonce" => md5(microtime() . mt_rand()),
@@ -35,6 +72,13 @@ class OAuthRequest
         return new OAuthRequest($http_method, $http_url, $parameters);
     }
 
+    /**
+    * Set a request parameter
+    * @param string $name             Parameter name
+    * @param string $value            Parameter value
+    * @param bool   $allow_duplicates Boolean to allow duplicates in the params array
+    * @return none
+    */
     public function setParameter($name, $value, $allow_duplicates = true)
     {
         if ($allow_duplicates && isset($this->parameters[$name])) {
@@ -50,16 +94,30 @@ class OAuthRequest
         }
     }
 
+    /**
+    * Get a request parameter
+    * @param string $name Parameter name
+    * @return string Parameter value
+    */
     public function getParameter($name)
     {
         return isset($this->parameters[$name]) ? $this->parameters[$name] : null;
     }
 
+    /**
+    * Get all parameters
+    * @return mixed[] Array of parameters
+    */
     public function getParameters()
     {
         return $this->parameters;
     }
 
+    /**
+    * Remove (unset) a parameter
+    * @param string $name Parameter name
+    * @return none
+    */
     public function unsetParameter($name)
     {
         unset($this->parameters[$name]);
@@ -89,6 +147,8 @@ class OAuthRequest
     * The base string defined as the method, the url
     * and the parameters (normalized), each urlencoded
     * and the concated with &.
+    *
+    * @return string
     */
     public function getSignatureBaseString()
     {
@@ -104,7 +164,8 @@ class OAuthRequest
     }
 
     /**
-    * just uppercases the http method
+    * Just uppercases the http method
+    * @return string Uppercase method
     */
     public function getNormalizedHttpMethod()
     {
@@ -112,8 +173,8 @@ class OAuthRequest
     }
 
     /**
-    * parses the url and rebuilds it to be
-    * scheme://host/path
+    * Parses the url and rebuilds it to be scheme://host/path
+    * @return string Normalized URL
     */
     public function getNormalizedHttpUrl()
     {
@@ -136,7 +197,8 @@ class OAuthRequest
     }
 
     /**
-    * builds a url usable for a GET request
+    * Builds a URL usable for a GET request
+    * @return string URL
     */
     public function toUrl()
     {
@@ -149,7 +211,8 @@ class OAuthRequest
     }
 
     /**
-    * builds the data one would send in a POST request
+    * Builds the data one would send in a POST request
+    * @return string Data
     */
     public function toPostdata()
     {
@@ -157,7 +220,9 @@ class OAuthRequest
     }
 
     /**
-    * builds the Authorization: header
+    * Builds the Authorization: header
+    * @param string $realm Realm the request is part of
+    * @return string Authorization header
     */
     public function toHeader($realm = null)
     {
@@ -186,6 +251,14 @@ class OAuthRequest
         return $out;
     }
 
+    /**
+    * Sign an OAuth request
+    * @param string $consumer_key    Consumer key
+    * @param string $consumer_secret Consumer secret
+    * @param string $oauth_token     OAuth token
+    * @param string $oauth_secret    OAuth token secret
+    * @return none
+    */
     public function signRequest($consumer_key, $consumer_secret, $oauth_token, $oauth_secret)
     {
         $this->setParameter(
@@ -197,6 +270,14 @@ class OAuthRequest
         $this->setParameter("oauth_signature", $signature, false);
     }
 
+    /**
+    * Build an OAuth request signature
+    * @param string $consumer_key    Consumer key
+    * @param string $consumer_secret Consumer secret
+    * @param string $oauth_token     OAuth token
+    * @param string $oauth_secret    OAuth token secret
+    * @return string Signature
+    */
     public function buildSignature($consumer_key, $consumer_secret, $oauth_token, $oauth_secret)
     {
         $base_string = $this->getSignatureBaseString();
@@ -213,7 +294,11 @@ class OAuthRequest
         return base64_encode(hash_hmac('sha1', $base_string, $key, true));
     }
 
-
+    /**
+    * Encode data
+    * @param string $input Unencoded input
+    * @return string Encoded output
+    */
     public static function urlencodeRFC3986($input)
     {
         if (is_array($input)) {
@@ -229,18 +314,32 @@ class OAuthRequest
         }
     }
 
-
-    // This decode function isn't taking into consideration the above
-    // modifications to the encoding process. However, this method doesn't
-    // seem to be used anywhere so leaving it as is.
+    /**
+    * Decode data
+    *
+    * This decode function isn't taking into consideration the above
+    * modifications to the encoding process. However, this method doesn't
+    * seem to be used anywhere so leaving it as is.
+    *
+    * @param string $string Encoded data
+    * @return string Decoded data
+    */
     public static function urldecodeRFC3986($string)
     {
         return urldecode($string);
     }
 
-    // Utility function for turning the Authorization: header into
-    // parameters, has to do some unescaping
-    // Can filter out any non-oauth parameters if needed (default behaviour)
+    /**
+    * Split a header
+    *
+    * Utility function for turning the Authorization: header into
+    * parameters, has to do some unescaping
+    * Can filter out any non-oauth parameters if needed (default behaviour)
+    *
+    * @param string $header                      Request header
+    * @param bool   $only_allow_oauth_parameters Unknown
+    * @return mixed[] Parameters array           Output parameters array
+    */
     public static function splitHeader($header, $only_allow_oauth_parameters = true)
     {
         $pattern = '/(([-_a-z]*)=("([^"]*)"|([^,]*)),?)/';
@@ -263,7 +362,10 @@ class OAuthRequest
         return $params;
     }
 
-    // helper to try to sort out headers for people who aren't running apache
+    /**
+    * Helper to try to sort out headers for people who aren't running apache
+    * @return string Headers
+    */
     public static function getHeaders()
     {
         if (function_exists('apache_request_headers')) {
@@ -292,9 +394,16 @@ class OAuthRequest
         return $out;
     }
 
-    // This function takes a input like a=b&a=c&d=e and returns the parsed
-    // parameters like this
-    // array('a' => array('b','c'), 'd' => 'e')
+    /**
+    * Parse parameters
+    *
+    * This function takes a input like a=b&a=c&d=e and returns the parsed
+    * parameters like this
+    * array('a' => array('b','c'), 'd' => 'e')
+    *
+    * @param mixed[] $input Parameters array
+    * @return mixed[] Parsed parameters array
+    */
     public static function parseParameters($input)
     {
         if (!isset($input) || !$input) {
@@ -320,6 +429,11 @@ class OAuthRequest
         return $parsed_parameters;
     }
 
+    /**
+    * Build a HTTP query
+    * @param mixed[] $params Array of parameters
+    * @return string HTTP query string
+    */
     public static function buildHttpQuery($params)
     {
         if (!$params) {

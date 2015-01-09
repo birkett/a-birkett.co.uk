@@ -19,7 +19,7 @@ session_start();
 require_once "../config.php";
 require_once "../functions.php";
 
-DeclareAdminPage(); //Set so the page class will include admin controllers
+declareAdminPage(); //Set so the page class will include admin controllers
 PHPDefaults();
 
 if (isset($_POST['mode'])) {
