@@ -15,12 +15,6 @@ namespace ABirkett\controllers;
 class AdminServerInfoPageController extends AdminBasePageController
 {
     /**
-    * Store an instance of the model for this controller to use
-    * @var object $model
-    */
-    private $model;
-
-    /**
     * Build the Server Info page
     * @param string $output Unparsed template passed by reference
     * @return none

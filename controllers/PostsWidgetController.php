@@ -15,12 +15,6 @@ namespace ABirkett\controllers;
 class PostsWidgetController extends BasePageController
 {
     /**
-    * Store an instance of the model for this controller to use
-    * @var object $model
-    */
-    private $model;
-
-    /**
     * Build the posts widget
     * @param string $output Unparsed template passed by reference
     * @return none

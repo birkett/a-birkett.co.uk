@@ -15,12 +15,6 @@ namespace ABirkett\controllers;
 class AdminListCommentsPageController extends AdminBasePageController
 {
     /**
-    * Store an instance of the model for this controller to use
-    * @var object $model
-    */
-    private $model;
-
-    /**
     * Build the List Comments page
     * @param string $output Unparsed template passed by reference
     * @return none

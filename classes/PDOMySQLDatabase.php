@@ -30,7 +30,9 @@ class PDOMySQLDatabase
     {
         try {
             $this->mLink = new PDO(
-                "mysql:host=" . DATABASE_HOSTNAME . ";dbname=" . DATABASE_NAME . ";port=" . DATABASE_PORT,
+                "mysql:host=" . DATABASE_HOSTNAME .
+                ";dbname=" . DATABASE_NAME .
+                ";port=" . DATABASE_PORT,
                 DATABASE_USERNAME,
                 DATABASE_PASSWORD,
                 array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
@@ -120,5 +122,17 @@ class PDOMySQLDatabase
             return;
         }
         return count($result);
+    }
+
+    /**
+    * Get the last inserted row ID
+    * @return string Row ID
+    */
+    public function lastInsertedID()
+    {
+        if (!$this->mLink) {
+            return null;
+        }
+        return $this->mLink->lastInsertId();
     }
 }

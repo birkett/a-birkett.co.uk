@@ -15,12 +15,6 @@ namespace ABirkett\controllers;
 class GenericPageController extends BasePageController
 {
     /**
-    * Store an instance of the model for this controller to use
-    * @var object $model
-    */
-    private $model;
-
-    /**
     * Build a generic page, with contents stored in the database
     * @param string $output Unparsed template passed by reference
     * @param string $name   Page name to fetch

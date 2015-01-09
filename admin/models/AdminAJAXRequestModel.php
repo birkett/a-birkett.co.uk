@@ -1,6 +1,6 @@
 <?php
 /**
-* AdminAJAXRequestModel - glue between the database and AdminAJAXRequestController
+* AdminAJAXRequestModel - glue between the database and Controller
 *
 * PHP Version 5.5
 *
@@ -26,7 +26,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         $draft = ($draft == "true") ? 1 : 0; //bool to int
         $this->database->runQuery(
             "INSERT INTO blog_posts(" .
-            "post_timestamp, post_title, post_content, post_draft, post_tweeted" .
+            "post_timestamp,post_title,post_content,post_draft,post_tweeted" .
             ") VALUES(:timestamp, :title, :content, :draft, 0)",
             array(
                 ":timestamp" => time(),
@@ -35,12 +35,8 @@ class AdminAJAXRequestModel extends AJAXRequestModel
                 ":draft" => $draft
             )
         );
-        $data = $this->database->runQuery(
-            "SELECT post_id FROM blog_posts ORDER BY post_timestamp DESC LIMIT 1",
-            array()
-        );
-        $row = $this->database->getRow($data);
-        $this->tweetPost($row['post_id']); //Tweet this if not already done
+        $id = $this->database->lastInsertedID();
+        $this->tweetPost($id); //Tweet this
     }
 
     /**
@@ -55,13 +51,13 @@ class AdminAJAXRequestModel extends AJAXRequestModel
     {
         $draft = ($draft == "true") ? 1 : 0; //bool to int
         $this->database->runQuery(
-            "UPDATE blog_posts SET post_title = :title, post_content = :content, " .
-            "post_draft = :draft WHERE post_id = :postid LIMIT 1",
+            "UPDATE blog_posts SET post_title = :ti, post_content = :txt, " .
+            "post_draft = :draft WHERE post_id = :pid LIMIT 1",
             array(
-                ":title" => $title,
-                ":content" => $content,
+                ":ti" => $title,
+                ":txt" => $content,
                 ":draft" => $draft,
-                ":postid" => $postid
+                ":pid" => $postid
             )
         );
         $this->tweetPost($postid);
@@ -138,7 +134,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         $hash = $this->hashPassword($newp);
 
         $this->database->runQuery(
-            "UPDATE site_users SET password='$hash' WHERE user_id='1'"
+            "UPDATE site_users SET password='$hash' WHERE user_id='1'",
             array()
         );
 
@@ -175,6 +171,9 @@ class AdminAJAXRequestModel extends AJAXRequestModel
     */
     public function tweetPost($postid)
     {
+        if (!isset($postid)) {
+            return; //Post ID not set, maybe newPost() failed
+        }
         $post = parent::getSinglePost($postid);
         if ($this->database->GetNumRows($post) == 0) {
             return; //Post doesnt exist or is a draft

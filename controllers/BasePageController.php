@@ -15,10 +15,10 @@ namespace ABirkett\controllers;
 class BasePageController
 {
     /**
-    * Store an instance of the model for this controller to use
+    * Store an instance of the model for child controller to use
     * @var object $model
     */
-    private $model;
+    public $model;
 
     /**
     * Store an instance of the template engine for child controllers to use

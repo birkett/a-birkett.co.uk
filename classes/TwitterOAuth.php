@@ -100,8 +100,9 @@ class TwitterOAuth
     */
     private function oAuthRequest($url, $method, $parameters)
     {
+        $test = 'json';
         if (strrpos($url, 'https://') !== 0 && strrpos($url, 'http://') !== 0) {
-            $url = "{$this->host}{$url}.{$this->format}";
+            $url = "{$this->host}{$url}.{$test}";
         }
         $request = OAuthRequest::fromConsumerAndToken(
             $this->consumer_key,

@@ -15,10 +15,10 @@ namespace ABirkett\controllers;
 class AJAXRequestController
 {
     /**
-     * Store an instance of the model for this controller to use
+     * Store an instance of the model for child controllers to use
      * @var object $model
      */
-    private $model;
+    public $model;
 
     /**
      * Exit the script with a success HTTP code

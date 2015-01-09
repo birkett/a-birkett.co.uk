@@ -15,12 +15,6 @@ namespace ABirkett\controllers;
 class AdminAJAXRequestController extends AJAXRequestController
 {
     /**
-    * Store an instance of the model for this controller to use
-    * @var object $model
-    */
-    private $model;
-
-    /**
     * Handle private POST requests from AJAX
     * @return none
     */

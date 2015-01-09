@@ -40,8 +40,9 @@ class OAuthRequest
     * @param mixed[] $parameters  Additional parameters as array
     * @return none
     */
-    public function __construct($http_method, $http_url, $parameters = array())
+    public function __construct($http_method, $http_url, $parameters = null)
     {
+        @$parameters or $parameters = array();
         $parameters = array_merge($this->parseParameters(parse_url($http_url, PHP_URL_QUERY)), $parameters);
         $this->parameters = $parameters;
         $this->http_method = $http_method;
@@ -57,8 +58,9 @@ class OAuthRequest
     * @param mixed[] $parameters  Additional parameters as array
     * @return object OAuthRequest instance
     */
-    public static function fromConsumerAndToken($c_key, $o_token, $http_method, $http_url, $parameters = array())
+    public static function fromConsumerAndToken($c_key, $o_token, $http_method, $http_url, $parameters = null)
     {
+        @$parameters or $parameters = array();
         $defaults = array(
             "oauth_version" => "1.0",
             "oauth_nonce" => md5(microtime() . mt_rand()),

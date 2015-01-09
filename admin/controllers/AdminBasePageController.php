@@ -15,12 +15,6 @@ namespace ABirkett\controllers;
 class AdminBasePageController extends BasePageController
 {
     /**
-    * Store an instance of the model for this controller to use
-    * @var object $model
-    */
-    private $model;
-
-    /**
     * Basic tags common to most (if not all) admin pages
     * @param string $output Unparsed template passed by reference
     * @return none

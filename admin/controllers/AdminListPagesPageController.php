@@ -15,12 +15,6 @@ namespace ABirkett\controllers;
 class AdminListPagesPageController extends AdminBasePageController
 {
     /**
-    * Store an instance of the model for this controller to use
-    * @var object $model
-    */
-    private $model;
-
-    /**
     * Build the List Pages page
     * @param string $output Unparsed template passed by reference
     * @return none
