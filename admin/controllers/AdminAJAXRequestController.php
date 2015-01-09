@@ -46,7 +46,7 @@ class AdminAJAXRequestController extends AJAXRequestController
             //Edit page mode
             case "editpage":
                 if (!isset($_POST['pageid'])
-                    || is_numeric($_POST['pageid'])
+                    || !is_numeric($_POST['pageid'])
                     || !isset($_POST['content'])
                 ) {
                     parent::badRequest(

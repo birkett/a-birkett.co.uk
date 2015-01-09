@@ -24,10 +24,10 @@ class AdminIPFilterPageController extends AdminBasePageController
         parent::__construct($output);
         $this->model = new \ABirkett\models\AdminIPFilterPageModel();
         $result = $this->model->getBlockedAddresses();
-        while (list($ip_id, $address, $timestamp) = $this->model->database->GetRow($result)) {
+        while ($row = $this->model->database->GetRow($result)) {
             $tags = [
-                "{IP}" => $address,
-                "{TIMESTAMP}" => date(DATE_FORMAT, $timestamp)
+                "{IP}" => $row['address'],
+                "{TIMESTAMP}" => date(DATE_FORMAT, $row['blocked_timestamp'])
             ];
             $temp = $this->templateEngine->logicTag(
                 "{LOOP}",

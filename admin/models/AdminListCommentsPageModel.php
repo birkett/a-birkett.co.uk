@@ -28,7 +28,7 @@ class AdminListCommentsPageModel extends AdminBasePageModel
         }
 
         return $this->database->runQuery(
-            "SELECT * FROM blog_comments" . $extra .
+            "SELECT * FROM blog_comments" . $filter .
             "ORDER BY comment_timestamp DESC",
             array()
         );

@@ -25,12 +25,15 @@ class PostsWidgetController extends BasePageController
         $this->model = new \ABirkett\models\PostsWidgetModel();
         $posts = $this->model->getAllPosts();
         $post_array = [];
-        while (list($id, $timestamp, $title) = $this->model->database->GetRow($posts)) {
-            $month = date("F Y", $timestamp);
+        while ($post = $this->model->database->GetRow($posts)) {
+            $month = date("F Y", $post['post_timestamp']);
             if (!isset($post_array["$month"])) {
                 $post_array["$month"] = [];
             }
-            $post_array["$month"][] = array("title" => $title, "id" => $id);
+            $post_array["$month"][] = array(
+                "title" => $post['post_title'],
+                "id" => $post['post_id']
+            );
         }
 
         $monthloop = $this->templateEngine->logicTag(

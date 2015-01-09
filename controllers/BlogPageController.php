@@ -49,11 +49,14 @@ class BlogPageController extends BasePageController
             //Show comments
             $comments = $this->model->getCommentsOnPost($_GET['postid']);
             if ($this->model->database->GetNumRows($comments) != 0) {
-                while (list($cusername, $ctext, $ctimestamp) = $this->model->database->GetRow($comments)) {
+                while ($comment = $this->model->database->GetRow($comments)) {
                     $tags = [
-                        "{COMMENTAUTHOR}" => stripslashes($cusername),
-                        "{COMMENTTIMESTAMP}" => date(DATE_FORMAT, $ctimestamp),
-                        "{COMMENTCONTENT}" => stripslashes($ctext)
+                        "{COMMENTAUTHOR}" =>
+                            stripslashes($comment['comment_username']),
+                        "{COMMENTTIMESTAMP}" =>
+                            date(DATE_FORMAT, $comment['comment_timestamp']),
+                        "{COMMENTCONTENT}" =>
+                            stripslashes($comment['comment_text'])
                     ];
                     $temp = $this->templateEngine->logicTag(
                         "{COMMENT}",
@@ -122,13 +125,18 @@ class BlogPageController extends BasePageController
         }
 
         //Rendering code
-        while (list($id, $timestamp, $title, $content, $draft) = $this->model->database->GetRow($result)) {
+        while ($post = $this->model->database->GetRow($result)) {
             $tags = [
-                "{POSTTIMESTAMP}" => date(DATE_FORMAT, $timestamp),
-                "{POSTID}" => $id,
-                "{POSTTITLE}" => $title,
-                "{POSTCONTENT}" => stripslashes($content),
-                "{COMMENTCOUNT}" => $this->model->getNumberOfComments($id)
+                "{POSTTIMESTAMP}" =>
+                    date(DATE_FORMAT, $post['post_timestamp']),
+                "{POSTID}" =>
+                    $post['post_id'],
+                "{POSTTITLE}" =>
+                    $post['post_title'],
+                "{POSTCONTENT}" =>
+                    stripslashes($post['post_content']),
+                "{COMMENTCOUNT}" =>
+                    $this->model->getNumberOfComments($post['post_id'])
             ];
             $temp = $this->templateEngine->logicTag(
                 "{BLOGPOST}",

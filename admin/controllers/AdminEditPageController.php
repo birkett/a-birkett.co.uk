@@ -52,20 +52,18 @@ class AdminEditPageController extends AdminBasePageController
             //Post edit mode
             $post = $this->model->getSinglePost($_GET['postid']);
             $row = $this->model->database->getRow($post);
-            list($postid, $timestamp, $title, $content, $draft) = $row;
 
-            if ($draft) {
-                $draft = "checked";
-            }
+            $content = $row['post_content'];
+
             $vars .= 'var postid = document.getElementById("formpostid").value;';
             $vars .= 'var title = document.getElementById("formtitle").value;';
             $vars .= 'var draft = document.getElementById("formdraft").checked;';
             $vars .= 'var data = "mode=editpost&postid="+postid+"&title="+title+"&draft="+draft+"&content="+content;';
 
             $tags = [
-                "{POSTID}" => $postid,
-                "{POSTTITLE}" => $title,
-                "{DRAFT}" => $draft
+                "{POSTID}" => $row['post_id'],
+                "{POSTTITLE}" => $row['post_title'],
+                "{DRAFT}" => ($row['post_draft'] == "1") ? "checked" : ""
             ];
             $this->templateEngine->parseTags($tags, $output);
             $this->templateEngine->removeLogicTag(
@@ -80,6 +78,7 @@ class AdminEditPageController extends AdminBasePageController
             );
         } else {
             //New post mode
+            $content = "";
             $vars .= 'var title = document.getElementById("formtitle").value;';
             $vars .= 'var draft = document.getElementById("formdraft").checked;';
             $vars .= 'var data = "mode=newpost&title="+title+"&draft="+draft+"&content="+content;';
@@ -95,11 +94,10 @@ class AdminEditPageController extends AdminBasePageController
                 $output
             );
         }
-        isset($content) ? $content = stripslashes($content) : $content = "";
 
         $tags = [
             "{VARS}" => $vars,
-            "{CONTENT}" => $content
+            "{CONTENT}" => stripslashes($content)
         ];
         $this->templateEngine->parseTags($tags, $output);
         //Clean up the tags if not already replaced

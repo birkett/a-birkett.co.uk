@@ -178,15 +178,15 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         if ($this->database->GetNumRows($post) == 0) {
             return; //Post doesnt exist or is a draft
         }
-        list($id, $timestamp, $title, $content, $draft, $post_tweeted)
-            = $this->database->getRow($post);
-        if ($post_tweeted == 1) {
+
+        $row = $this->database->getRow($post);
+        if ($row['post_tweeted'] == "1") {
             return; //Already tweeted out
         }
 
-        $url = parent::getBaseURL() . "blog/" . $id;
+        $url = parent::getBaseURL() . "blog/" . $row['post_id'];
 
-        $tweet = "New Blog Post: " . $title . " - " . $url;
+        $tweet = "New Blog Post: " . $row['post_title'] . " - " . $url;
 
         $twitter = new \ABirkett\classes\TwitterOAuth(
             TWITTER_CONSUMER_KEY,
