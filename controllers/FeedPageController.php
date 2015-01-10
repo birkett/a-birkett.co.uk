@@ -40,7 +40,7 @@ class FeedPageController extends BasePageController
                 "{POSTTITLE}" =>
                     $post['post_title'],
                 "{POSTID}" =>
-                    $id,
+                    $post['post_id'],
                 "{POSTTIMESTAMP}" =>
                     date("D, d M Y H:i:s O", $post['post_timestamp']),
                 "{POSTCONTENT}" =>
