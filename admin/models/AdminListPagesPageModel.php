@@ -21,8 +21,7 @@ class AdminListPagesPageModel extends AdminBasePageModel
     public function getAllPages()
     {
         return $this->database->runQuery(
-            "SELECT page_id, page_title from site_pages",
-            array()
+            "SELECT page_id, page_title from site_pages"
         );
     }
 }

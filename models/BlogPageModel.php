@@ -38,8 +38,7 @@ class BlogPageModel extends BasePageModel
         $limitupper = BLOG_POSTS_PER_PAGE;
         return $this->database->runQuery(
             "SELECT * FROM blog_posts WHERE post_draft = '0'" .
-            " ORDER BY post_timestamp DESC LIMIT $limitlower,$limitupper",
-            array()
+            " ORDER BY post_timestamp DESC LIMIT $limitlower,$limitupper"
         );
     }
 
@@ -50,8 +49,7 @@ class BlogPageModel extends BasePageModel
     public function getNumberOfPosts()
     {
         $count = $this->database->runQuery(
-            "SELECT COUNT(*) from blog_posts WHERE post_draft = '0'",
-            array()
+            "SELECT COUNT(*) from blog_posts WHERE post_draft = '0'"
         );
         return $count[0]['COUNT(*)'];
     }

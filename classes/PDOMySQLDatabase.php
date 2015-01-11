@@ -82,7 +82,7 @@ class PDOMySQLDatabase
     * @param mixed[] $params Array of parameters to bind
     * @return mixed[] Array of results
     */
-    public function runQuery($query, $params)
+    public function runQuery($query, $params = array())
     {
         if (!$this->mLink) {
             return;

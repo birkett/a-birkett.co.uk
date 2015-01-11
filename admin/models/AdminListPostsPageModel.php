@@ -22,8 +22,7 @@ class AdminListPostsPageModel extends AdminBasePageModel
     {
         return $this->database->runQuery(
             "SELECT post_id, post_timestamp, post_title, post_draft" .
-            " FROM blog_posts ORDER BY post_timestamp DESC",
-            array()
+            " FROM blog_posts ORDER BY post_timestamp DESC"
         );
     }
 }

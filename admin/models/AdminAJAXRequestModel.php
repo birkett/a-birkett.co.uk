@@ -122,8 +122,8 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         }
 
         $data = $this->database->runQuery(
-            "SELECT username FROM site_users WHERE user_id='1'",
-            array()
+            "SELECT username FROM site_users WHERE user_id=:uid",
+            array(":uid" => 1)
         );
 
         $row = $this->database->getRow($data);
@@ -134,8 +134,8 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         $hash = $this->hashPassword($newp);
 
         $this->database->runQuery(
-            "UPDATE site_users SET password='$hash' WHERE user_id='1'",
-            array()
+            "UPDATE site_users SET password='$hash' WHERE user_id=:uid",
+            array(":uid" => 1)
         );
 
         return true;
