@@ -110,6 +110,11 @@ class Page
                     $page
                 );
             }
+            if ($widget == "twitterwidget") {
+                new \ABirkett\controllers\TwitterWidgetController(
+                    $page
+                );
+            }
         }
         echo $page;
     }

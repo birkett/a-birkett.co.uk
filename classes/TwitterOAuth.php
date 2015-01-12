@@ -53,18 +53,14 @@ class TwitterOAuth
 
     /**
     * Construct TwitterOAuth object
-    * @param string $cKey    API consumer key
-    * @param string $cSecret API consumer secret
-    * @param string $oToken  API OAuth token
-    * @param string $oSecret API OAuth token secret
     * @return none
     */
-    public function __construct($cKey, $cSecret, $oToken, $oSecret)
+    public function __construct()
     {
-        $this->consumerKey = $cKey;
-        $this->consumerSecret = $cSecret;
-        $this->oauthToken = $oToken;
-        $this->oauthTokenSecret = $oSecret;
+        $this->consumerKey = TWITTER_CONSUMER_KEY;
+        $this->consumerSecret = TWITTER_CONSUMER_SECRET;
+        $this->oauthToken = TWITTER_OAUTH_TOKEN;
+        $this->oauthTokenSecret = TWITTER_OAUTH_SECRET;
     }
 
     /**
@@ -104,7 +100,7 @@ class TwitterOAuth
         if (strrpos($url, 'https://') !== 0 && strrpos($url, 'http://') !== 0) {
             $url = "{$this->host}{$url}.{$test}";
         }
-        $request = OAuthRequest::fromConsumerAndToken(
+        $request = new OAuthRequest(
             $this->consumerKey,
             $this->oauthToken,
             $method,
@@ -112,9 +108,7 @@ class TwitterOAuth
             $parameters
         );
         $request->signRequest(
-            $this->consumerKey,
             $this->consumerSecret,
-            $this->oauthToken,
             $this->oauthTokenSecret
         );
         switch ($method) {

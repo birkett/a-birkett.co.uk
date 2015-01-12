@@ -196,12 +196,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
 
         $tweet = "New Blog Post: " . $row['post_title'] . " - " . $url;
 
-        $twitter = new \ABirkett\classes\TwitterOAuth(
-            TWITTER_CONSUMER_KEY,
-            TWITTER_CONSUMER_SECRET,
-            TWITTER_OAUTH_TOKEN,
-            TWITTER_OAUTH_SECRET
-        );
+        $twitter = new \ABirkett\classes\TwitterOAuth();
         $twitter->post('statuses/update', array('status' => $tweet));
 
         $this->database->runQuery(

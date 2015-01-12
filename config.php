@@ -30,6 +30,9 @@ define('CHRISTMAS', 0);
 //Number of posts per page for the blog pagniation
 define('BLOG_POSTS_PER_PAGE', 5);
 
+//Number of tweets to fetch and cache from Twitter
+define('TWEETS_WIDGET_MAX', 5);
+
 //Cost value when hashing passwords
 define('HASHING_COST', 10);
 
