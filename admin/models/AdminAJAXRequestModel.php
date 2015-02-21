@@ -1,225 +1,259 @@
 <?php
 /**
-* AdminAJAXRequestModel - glue between the database and Controller
-*
-* PHP Version 5.5
-*
-* @category AdminModels
-* @package  PersonalWebsite
-* @author   Anthony Birkett <anthony@a-birkett.co.uk>
-* @license  http://opensource.org/licenses/MIT MIT
-* @link     http://www.a-birkett.co.uk
-*/
+ * AdminAJAXRequestModel - glue between the database and Controller
+ *
+ * PHP Version 5.5
+ *
+ * @category  AdminModels
+ * @package   PersonalWebsite
+ * @author    Anthony Birkett <anthony@a-birkett.co.uk>
+ * @copyright 2015 Anthony Birkett
+ * @license   http://opensource.org/licenses/MIT MIT
+ * @link      http://www.a-birkett.co.uk
+ */
+
 namespace ABirkett\models;
 
 class AdminAJAXRequestModel extends AJAXRequestModel
 {
+
+
     /**
-    * Add a new post
-    * @param string $title   Title of the new post
-    * @param string $content Body text of the post
-    * @param bool   $draft   Is the post public yet
-    * @return none
-    */
+     * Add a new post
+     * @param string  $title   Title of the new post.
+     * @param string  $content Body text of the post.
+     * @param boolean $draft   Is the post public yet.
+     * @return void
+     */
     public function newPost($title, $content, $draft)
     {
-        $draft = ($draft == "true") ? 1 : 0; //bool to int
+        // bool to int.
+        $draft = ($draft === 'true') ? 1 : 0;
         $this->database->runQuery(
-            "INSERT INTO blog_posts(" .
-            "post_timestamp,post_title,post_content,post_draft,post_tweeted" .
-            ") VALUES(:timestamp, :title, :content, :draft, 0)",
+            'INSERT INTO blog_posts(' .
+            'post_timestamp,post_title,post_content,post_draft,post_tweeted'.
+            ') VALUES(:timestamp, :title, :content, :draft, 0)',
             array(
-                ":timestamp" => time(),
-                ":title" => $title,
-                ":content" => $content,
-                ":draft" => $draft
+                ':timestamp' => time(),
+                ':title' => $title,
+                ':content' => $content,
+                ':draft' => $draft
             )
         );
         $id = $this->database->lastInsertedID();
-        $this->tweetPost($id); //Tweet this
-    }
+        // Tweet this.
+        $this->tweetPost($id);
+
+    }//end newPost()
+
 
     /**
-    * Update a post
-    * @param int    $postid  ID of the post to update
-    * @param string $title   Title of the post
-    * @param string $content Body text of the post
-    * @param bool   $draft   Is the post public
-    * @return none
-    */
+     * Update a post
+     * @param int     $postid  ID of the post to update.
+     * @param string  $title   Title of the post.
+     * @param string  $content Body text of the post.
+     * @param boolean $draft   Is the post public.
+     * @return void
+     */
     public function updatePost($postid, $title, $content, $draft)
     {
-        $draft = ($draft == "true") ? 1 : 0; //bool to int
+        // bool to int.
+        $draft = ($draft == 'true') ? 1 : 0;
         $this->database->runQuery(
-            "UPDATE blog_posts SET post_title = :ti, post_content = :txt, " .
-            "post_draft = :draft WHERE post_id = :pid LIMIT 1",
+            'UPDATE blog_posts SET post_title = :ti, post_content = :txt, '.
+            'post_draft = :draft WHERE post_id = :pid LIMIT 1',
             array(
-                ":ti" => $title,
-                ":txt" => $content,
-                ":draft" => $draft,
-                ":pid" => $postid
+                ':ti' => $title,
+                ':txt' => $content,
+                ':draft' => $draft,
+                ':pid' => $postid
             )
         );
         $this->tweetPost($postid);
-    }
+
+    }//end updatePost()
+
 
     /**
-    * Update a page
-    * @param int    $pageid  ID of the page to update
-    * @param string $content Body text of the page
-    * @return none
-    */
+     * Update a page
+     * @param  int    $pageid  ID of the page to update.
+     * @param  string $content Body text of the page.
+     * @return void
+     */
     public function updatePage($pageid, $content)
     {
         $this->database->runQuery(
-            "UPDATE site_pages SET page_content = :content " .
-            " WHERE page_id = :pageid LIMIT 1",
-            array(":content" => $content, ":pageid" => $pageid)
+            'UPDATE site_pages SET page_content = :content ' .
+            ' WHERE page_id = :pageid LIMIT 1',
+            array(':content' => $content, ':pageid' => $pageid)
         );
-    }
+
+    }//end updatePage()
+
 
     /**
-    * Add an IP address to the blacklist
-    * @param string $ip IP address to block
-    * @return none
-    */
+     * Add an IP address to the blacklist
+     * @param  string $ip IP address to block.
+     * @return void
+     */
     public function blockIP($ip)
     {
+        // Do nothing if already blocked.
         if (parent::checkIP($ip) != 0) {
-            return; //do nothing if already blocked
+            return;
         }
+
         $this->database->runQuery(
-            "INSERT INTO blocked_addresses(address, blocked_timestamp)" .
-            " VALUES(:ip, :timestamp)",
-            array(":ip" => $ip, ":timestamp" => time())
+            'INSERT INTO blocked_addresses(address, blocked_timestamp)' .
+            ' VALUES(:ip, :timestamp)',
+            array(':ip' => $ip, ':timestamp' => time())
         );
-    }
+
+    }//end blockIP()
+
 
     /**
-    * Remove an IP address from the blacklist
-    * @param string $ip IP address to be unblocked
-    * @return none
-    */
+     * Remove an IP address from the blacklist
+     * @param  string $ip IP address to be unblocked.
+     * @return void
+     */
     public function unblockIP($ip)
     {
         $this->database->runQuery(
-            "DELETE FROM blocked_addresses WHERE address = :ip",
-            array(":ip" => $ip)
+            'DELETE FROM blocked_addresses WHERE address = :ip',
+            array(':ip' => $ip)
         );
-    }
+
+    }//end unblockIP()
+
 
     /**
-    * Change a user password
-    * @param string $currentp   Current user password
-    * @param string $newp       Intended new password
-    * @param string $confirmedp Verification of the new password
-    * @return bool True on updated, False on error
-    */
+     * Change a user password
+     * @param  string  $currentp   Current user password.
+     * @param  string  $newp       Intended new password.
+     * @param  string  $confirmedp Verification of the new password.
+     * @return boolean True on updated, False on error
+     */
     public function changePassword($currentp, $newp, $confirmedp)
     {
-        if ($newp != $confirmedp) {
-            return false; //Passwords dont match
+        // Passwords dont match.
+        if ($newp !== $confirmedp) {
+            return false;
         }
 
         $data = $this->database->runQuery(
-            "SELECT username FROM site_users WHERE user_id=:uid",
-            array(":uid" => 1)
+            'SELECT username FROM site_users WHERE user_id=:uid',
+            array(':uid' => 1)
         );
 
         $row = $this->database->getRow($data);
 
+        // Current password is wrong.
         if (!$this->checkCredentials($row[0], $currentp)) {
-            return false; //Current password is wrong
+            return false;
         }
+
         $hash = $this->hashPassword($newp);
 
         $this->database->runQuery(
             "UPDATE site_users SET password='$hash' WHERE user_id=:uid",
-            array(":uid" => 1)
+            array(':uid' => 1)
         );
 
         return true;
-    }
+
+    }//end changePassword()
+
 
     /**
-    * Check if supplied credentials match the database (login function)
-    * @param string $username Input username
-    * @param string $password Input password
-    * @return bool True when verified, False otherwise
-    */
+     * Check if supplied credentials match the database (login function)
+     * @param  string  $username Input username.
+     * @param  string  $password Input password.
+     * @return boolean True when verified, False otherwise
+     */
     public function checkCredentials($username, $password)
     {
         $result = $this->database->runQuery(
-            "SELECT password FROM site_users WHERE username = :username",
-            array(":username" => $username)
+            'SELECT password FROM site_users WHERE username = :username',
+            array(':username' => $username)
         );
 
-        if ($this->database->getNumRows($result) == 1) {
+        if ($this->database->getNumRows($result) === 1) {
             $dbhash = $this->database->getRow($result);
 
             if (function_exists('password_verify')) {
                 $check = password_verify($password, $dbhash[0]);
             } else {
                 $hash = $this->hashPassword($password);
-                ($hash == $dbhash[0]) ? $check = true : $check = false;
+                ($hash === $dbhash[0]) ? $check = true : $check = false;
             }
 
             if ($check) {
                 $_SESSION['user'] = $username;
                 return true;
             }
+
         }
         return false;
-    }
+
+    }//end checkCredentials()
+
 
     /**
-    * Send a tweet about a new post
-    * @param int $postid Id of the post to be tweeted
-    * @return none
-    */
+     * Send a tweet about a new post
+     * @param  int $postid Id of the post to be tweeted.
+     * @return void
+     */
     public function tweetPost($postid)
     {
+        // Post ID not set, maybe newPost() failed.
         if (!isset($postid)) {
-            return; //Post ID not set, maybe newPost() failed
+            return;
         }
+
+        // Post doesnt exist or is a draft.
         $post = parent::getSinglePost($postid);
         if ($this->database->GetNumRows($post) == 0) {
-            return; //Post doesnt exist or is a draft
+            return;
         }
 
+        // Already tweeted out.
         $row = $this->database->getRow($post);
-        if ($row['post_tweeted'] == "1") {
-            return; //Already tweeted out
+        if ($row['post_tweeted'] == '1') {
+            return;
         }
 
-        $url = parent::getBaseURL() . "blog/" . $row['post_id'];
+        $url = parent::getBaseURL() . 'blog/' . $row['post_id'];
 
-        $tweet = "New Blog Post: " . $row['post_title'] . " - " . $url;
+        $tweet = 'New Blog Post: '.$row['post_title'].' - ' . $url;
 
         $twitter = new \ABirkett\classes\TwitterOAuth();
         $twitter->post('statuses/update', array('status' => $tweet));
 
         $this->database->runQuery(
-            "UPDATE blog_posts SET post_tweeted=1 WHERE post_id = :postid",
-            array(":postid" => $postid)
+            'UPDATE blog_posts SET post_tweeted=1 WHERE post_id = :postid',
+            array(':postid' => $postid)
         );
-    }
+
+    }//end tweetPost()
+
 
     /**
-    * Generate a new password hash using a random salt
-    * @param string $password Plain text password
-    * @return string Password hash
-    */
+     * Generate a new password hash using a random salt
+     * @param  string $password Plain text password.
+     * @return string Password hash
+     */
     public function hashPassword($password)
     {
         $options = [ 'cost' => HASHING_COST ];
-        //password_hash is PHP 5.5+, fall back when not available
-        if (function_exists('password_hash')) {
+        // Password_hash is PHP 5.5+, fall back when not available.
+        if (function_exists('password_hash') === true) {
             return password_hash($password, PASSWORD_BCRYPT, $options);
         } else {
             $salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
             $salt = str_replace('+', '.', $salt);
             return crypt($password, '$2y$'.$options['cost'].'$'.$salt.'$');
         }
-    }
-}
+
+    }//end hashPassword()
+}//end class

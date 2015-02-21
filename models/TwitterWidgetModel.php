@@ -4,30 +4,36 @@
  *
  * PHP Version 5.5
  *
- * @category Models
- * @package  PersonalWebsite
- * @author   Anthony Birkett <anthony@a-birkett.co.uk>
- * @license  http://opensource.org/licenses/MIT MIT
- * @link     http://www.a-birkett.co.uk
+ * @category  Models
+ * @package   PersonalWebsite
+ * @author    Anthony Birkett <anthony@a-birkett.co.uk>
+ * @copyright 2015 Anthony Birkett
+ * @license   http://opensource.org/licenses/MIT MIT
+ * @link      http://www.a-birkett.co.uk
  */
+
 namespace ABirkett\models;
 
 class TwitterWidgetModel extends BasePageModel
 {
+
+
     /**
      * Get latest tweets via Twitter API
-     * @return mixed[] Array of tweets data
+     * @return array Array of tweets data
      */
     private function getLatestTweets()
     {
-        $params = [
-            "screen_name" => "birkett26",
-            "count" => TWEETS_WIDGET_MAX,
-            "include_rts" => true
-        ];
+        $params = array(
+            'screen_name' => 'birkett26',
+            'count' => TWEETS_WIDGET_MAX,
+            'include_rts' => true
+        );
         $twitter = new \ABirkett\classes\TwitterOAuth();
-        return $twitter->get("statuses/user_timeline", $params);
-    }
+        return $twitter->get('statuses/user_timeline', $params);
+
+    }//end getLatestTweets()
+
 
     /**
      * Cache the latest tweets in the local DB to reduce Twitter API requests.
@@ -36,26 +42,26 @@ class TwitterWidgetModel extends BasePageModel
     private function updateTweetsDatabase()
     {
         $tweets = $this->getLatestTweets();
-
-        $this->database->runQuery("DELETE FROM site_tweets"); //WARNING
+        // WARNING.
+        $this->database->runQuery('DELETE FROM site_tweets');
 
         $exectime = time();
 
         foreach ($tweets as $tweet) {
             $tweetText = $tweet->text;
-            //Make links active
+            // Make links active.
             $tweetText = preg_replace(
                 '@(https?://([-\w\.]+)+(/([\w/_\.]*(\?\S+)?(#\S+)?)?)?)@',
                 '<a target="_blank" href="$1">$1</a>',
                 $tweetText
             );
-            //Linkify user mentions
+            // Linkify user mentions.
             $tweetText = preg_replace(
                 '/@(\w+)/',
                 '<a target="_blank" href="https://twitter.com/$1">@$1</a>',
                 $tweetText
             );
-            //Linkify tags
+            // Linkify tags.
             $tweetText = preg_replace(
                 '/\s+#(\w+)/',
                 ' <a target="_blank" href="https://twitter.com/search?q=%23$1">#$1</a>',
@@ -75,74 +81,78 @@ class TwitterWidgetModel extends BasePageModel
             }
 
             $this->database->runQuery(
-                "INSERT INTO site_tweets (tweet_id, tweet_timestamp," .
-                " tweet_text, tweet_avatar, tweet_name, tweet_screenname," .
-                " tweet_updatetime) VALUES ( :id, :timestamp, :text, :image," .
-                " :name, :screenname, :updatetime )",
+                'INSERT INTO site_tweets (tweet_id, tweet_timestamp,' .
+                ' tweet_text, tweet_avatar, tweet_name, tweet_screenname,' .
+                ' tweet_updatetime) VALUES ( :id, :timestamp, :text, :image,' .
+                ' :name, :screenname, :updatetime )',
                 array(
-                    ":id" => $tweet->id_str,
-                    ":timestamp" => $timestamp,
-                    ":text" => $tweetText,
-                    ":image" => $avatar,
-                    ":name" => $name,
-                    ":screenname" => $screenname,
-                    ":updatetime" => $exectime,
+                    ':id' => $tweet->id_str,
+                    ':timestamp' => $timestamp,
+                    ':text' => $tweetText,
+                    ':image' => $avatar,
+                    ':name' => $name,
+                    ':screenname' => $screenname,
+                    ':updatetime' => $exectime,
                 )
             );
         }
-    }
+
+    }//end updateTweetsDatabase()
+
 
     /**
      * Get the latest tweets from the local database
-     * @return mixed[] Tweets data array
+     * @return array Tweets data array
      */
     public function getTweetsFromDatabase()
     {
-        //Get the last twitter update time
+        // Get the last twitter update time.
         $lastfetchtime = $this->database->runQuery(
-            "SELECT tweet_updatetime FROM site_tweets LIMIT 1"
+            'SELECT tweet_updatetime FROM site_tweets LIMIT 1'
         );
         $lastfetchtime = $lastfetchtime[0]['tweet_updatetime'];
 
-        //Update the tweets if not done in the last 15 mins
+        // Update the tweets if not done in the last 15 mins.
         if ($lastfetchtime < (time() - 900)) {
             $this->updateTweetsDatabase();
         }
 
-        //Get the tweets
+        // Get the tweets.
         $limit = TWEETS_WIDGET_MAX;
         return $this->database->runQuery(
             "SELECT * FROM site_tweets ORDER BY tweet_timestamp ASC LIMIT $limit"
         );
-    }
+
+    }//end getTweetsFromDatabase()
+
 
     /**
      * Get the time elapsed since a unix timestamp i.e. "3 hours"
-     * @param int $timestamp Unix timestamp
+     * @param int $timestamp Unix timestamp.
      * @return string Time elapsed
      */
     public function timeElapsed($timestamp)
     {
         $periods = array(
-            "second",
-            "minute",
-            "hour",
-            "day",
-            "week",
-            "month",
-            "year",
-            "decade");
+            'second',
+            'minute',
+            'hour',
+            'day',
+            'week',
+            'month',
+            'year',
+            'decade');
 
-        $lengths = array("60","60","24","7","4.35","12","10");
+        $lengths = array('60','60','24','7','4.35','12','10');
 
         $now = time();
 
         if ($now > $timestamp) {
             $difference = $now - $timestamp;
-            $tense = "ago";
+            $tense = 'ago';
         } else {
             $difference = $timestamp - $now;
-            $tense = "from now";
+            $tense = 'from now';
         }
 
         for ($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) {
@@ -152,9 +162,10 @@ class TwitterWidgetModel extends BasePageModel
         $difference = round($difference);
 
         if ($difference != 1) {
-            $periods[$j].= "s";
+            $periods[$j].= 's';
         }
 
         return "$difference $periods[$j] {$tense}";
-    }
-}
+
+    }//end timeElapsed()
+}//end class

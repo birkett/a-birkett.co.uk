@@ -1,42 +1,44 @@
 <?php
 /**
-* Site configuration options
-*
-* PHP Version 5.5
-*
-* @category Config
-* @package  PersonalWebsite
-* @author   Anthony Birkett <anthony@a-birkett.co.uk>
-* @license  http://opensource.org/licenses/MIT MIT
-* @link     http://www.a-birkett.co.uk
-*/
+ * Site configuration options
+ *
+ * PHP Version 5.5
+ *
+ * @category  Config
+ * @package   PersonalWebsite
+ * @author    Anthony Birkett <anthony@a-birkett.co.uk>
+ * @copyright 2015 Anthony Birkett
+ * @license   http://opensource.org/licenses/MIT MIT
+ * @link      http://www.a-birkett.co.uk
+ */
+
 namespace ABirkett;
 
-//Default display format for timestamps
+// Default display format for timestamps.
 define('DATE_FORMAT', 'l dS F Y');
 
-//Allows admin folder to be renamed
+// Allows admin folder to be renamed.
 define('ADMIN_FOLDER', 'admin/');
 
-//Allows template folder to be renamed
+// Allows template folder to be renamed.
 define('TEMPLATE_FOLDER', 'template/');
 
-//Base title for web pages
+// Base title for web pages.
 define('SITE_TITLE', 'Anthony Birkett');
 
-//Enables the Christmas decorations
+// Enables the Christmas decorations.
 define('CHRISTMAS', 0);
 
-//Number of posts per page for the blog pagniation
+// Number of posts per page for the blog pagniation.
 define('BLOG_POSTS_PER_PAGE', 5);
 
-//Number of tweets to fetch and cache from Twitter
+// Number of tweets to fetch and cache from Twitter.
 define('TWEETS_WIDGET_MAX', 5);
 
-//Cost value when hashing passwords
+// Cost value when hashing passwords.
 define('HASHING_COST', 10);
 
-//ReCaptcha comment verification keys
+// ReCaptcha comment verification keys.
 define(
     'RECAPTCHA_PUBLIC_KEY',
     'pub-key'
@@ -46,7 +48,7 @@ define(
     'priv-key'
 );
 
-//Twitter keys used when tweeting new blog posts
+// Twitter keys used when tweeting new blog posts.
 define(
     'TWITTER_CONSUMER_KEY',
     'cons-key'
@@ -64,7 +66,7 @@ define(
     'oauth-secret'
 );
 
-//Database connection
+// Database connection.
 define('DATABASE_HOSTNAME', 'localhost');
 define('DATABASE_USERNAME', 'root');
 define('DATABASE_PASSWORD', 'newpass');

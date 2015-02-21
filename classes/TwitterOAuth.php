@@ -1,105 +1,116 @@
 <?php
 /**
-* The first PHP Library to support OAuth for Twitter's REST API
-*
-* PHP Version 5.5
-*
-* @category Classes
-* @package  PersonalWebsite
-* @author   Abraham Williams <abraham@abrah.am>
-* @author   Anthony Birkett <anthony@a-birkett.co.uk>
-* @license  http://opensource.org/licenses/MIT MIT
-* @link     http://abrah.am
-*/
+ * The first PHP Library to support OAuth for Twitter's REST API
+ *
+ * PHP Version 5.5
+ *
+ * @category  Classes
+ * @package   PersonalWebsite
+ * @author    Abraham Williams <abraham@abrah.am>
+ * @author    Anthony Birkett <anthony@a-birkett.co.uk>
+ * @copyright 2015 Anthony Birkett
+ * @license   http://opensource.org/licenses/MIT MIT
+ * @link      http://abrah.am
+ */
+
 namespace ABirkett\classes;
 
 class TwitterOAuth
 {
+
     /**
-    * Contains the last HTTP status code returned
-    * @var int $httpCode
-    */
+     * Contains the last HTTP status code returned
+     * @var int $httpCode
+     */
     public $httpCode;
 
     /**
-    * Contains the last API call
-    * @var string $url
-    */
+     * Contains the last API call
+     * @var string $url
+     */
     public $url;
 
     /**
-    * Set up the API root URL
-    * @var string $host
-    */
+     * Set up the API root URL
+     * @var string $host
+     */
     public $host = "https://api.twitter.com/1.1/";
 
     /**
-    * Set timeout default
-    * @var int $timeout
-    */
+     * Set timeout default
+     * @var int $timeout
+     */
     public $timeout = 30;
 
     /**
-    * Contains the last HTTP headers returned
-    * @var mixed[] $httpInfo
-    */
+     * Contains the last HTTP headers returned
+     * @var mixed[] $httpInfo
+     */
     public $httpInfo;
 
     /**
-    * Set the useragnet
-    * @var string $userAgent
-    */
+     * Set the useragnet
+     * @var string $userAgent
+     */
     public $useragent = 'TwitterOAuth v0.2.0-beta2';
 
+
     /**
-    * Construct TwitterOAuth object
-    * @return none
-    */
+     * Construct TwitterOAuth object
+     * @return none
+     */
     public function __construct()
     {
         $this->consumerKey = TWITTER_CONSUMER_KEY;
         $this->consumerSecret = TWITTER_CONSUMER_SECRET;
         $this->oauthToken = TWITTER_OAUTH_TOKEN;
         $this->oauthTokenSecret = TWITTER_OAUTH_SECRET;
-    }
+
+    }//end __construct()
+
 
     /**
-    * GET wrapper for oAuthRequest.
-    * @param string  $url        Request string
-    * @param mixed[] $parameters Additional parameters
-    * @return mixed[] Response array
-    */
+     * GET wrapper for oAuthRequest.
+     * @param  string $url        Request string.
+     * @param  array  $parameters Additional parameters.
+     * @return array Response array
+     */
     public function get($url, $parameters = array())
     {
         $response = $this->oAuthRequest($url, 'GET', $parameters);
         return json_decode($response);
-    }
+
+    }//end get()
+
 
     /**
-    * POST wrapper for oAuthRequest.
-    * @param string  $url        Request string
-    * @param mixed[] $parameters Additional parameters
-    * @return mixed[] Response array
-    */
+     * POST wrapper for oAuthRequest.
+     * @param  string $url        Request string.
+     * @param  array  $parameters Additional parameters.
+     * @return array Response array
+     */
     public function post($url, $parameters = array())
     {
         $response = $this->oAuthRequest($url, 'POST', $parameters);
         return json_decode($response);
-    }
+
+    }//end post()
+
 
     /**
-    * Format and sign an OAuth / API request
-    * @param string  $url        Request string
-    * @param string  $method     Request method
-    * @param mixed[] $parameters Extra parameters array
-    * @return mixedp[] Response
-    */
+     * Format and sign an OAuth / API request
+     * @param  string $url        Request string.
+     * @param  string $method     Request method.
+     * @param  array  $parameters Extra parameters array.
+     * @return array Response
+     */
     private function oAuthRequest($url, $method, $parameters)
     {
         $test = 'json';
         if (strrpos($url, 'https://') !== 0 && strrpos($url, 'http://') !== 0) {
             $url = "{$this->host}{$url}.{$test}";
         }
+
         $request = new OAuthRequest(
             $this->consumerKey,
             $this->oauthToken,
@@ -121,15 +132,17 @@ class TwitterOAuth
                     $request->toPostdata()
                 );
         }
-    }
+
+    }//end oAuthRequest()
+
 
     /**
-    * Make an HTTP request
-    * @param string  $url        Request string
-    * @param string  $method     Request method
-    * @param mixed[] $postfields Extra parameters array
-    * @return mixedp[ API results
-    */
+     * Make an HTTP request
+     * @param  string $url        Request string.
+     * @param  string $method     Request method.
+     * @param  array  $postfields Extra parameters array.
+     * @return array API results
+     */
     private function http($url, $method, $postfields = null)
     {
         $this->httpInfo = array();
@@ -160,14 +173,16 @@ class TwitterOAuth
         $this->url = $url;
         curl_close($ci);
         return $response;
-    }
+
+    }//end http()
+
 
     /**
-    * Get the header info to store
-    * @param mixed[] $ch     Unknown
-    * @param string  $header Input header
-    * @return int Header length
-    */
+     * Get the header info to store
+     * @param array  $ch     Unknown.
+     * @param string $header Input header.
+     * @return int Header length
+     */
     private function getHeader($ch, $header)
     {
         $i = strpos($header, ':');
@@ -177,5 +192,6 @@ class TwitterOAuth
             $this->httpHeader[$key] = $value;
         }
         return strlen($header);
-    }
-}
+
+    }//end getHeader()
+}//end class
