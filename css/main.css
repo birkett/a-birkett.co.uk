@@ -50,21 +50,21 @@ p.tiletitle {
 }
 
 p.timestamp {
-    color: #ccc;
+    color: #CCC;
     font-size: 0.75em;
     margin-top: 0;
 }
 
 /*AJAX messages*/
 p.success {
-    background-color: #66FF00;
+    background-color: #6F0;
     color: #000;
     font-size: 1.5em;
 }
 
 p.failed {
-    background-color: #FF0000;
-    color: #fff;
+    background-color: #F00;
+    color: #FFF;
     font-size: 1.5em;
 }
 
@@ -181,8 +181,7 @@ p.failed {
     border: none;
     display: inline-block;
     box-shadow: 0px 0px 20px 6px #000;
-    box-sizing:
-    border-box;
+    box-sizing: border-box;
     transition: 0.5s ease;
 }
 

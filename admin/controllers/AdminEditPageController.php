@@ -28,18 +28,23 @@ class AdminEditPageController extends AdminBasePageController
         parent::__construct($output);
 
         $this->model = new \ABirkett\models\AdminEditPageModel();
-        if (isset($_GET['pageid']) === true) {
+
+        $pageid = filter_input(INPUT_GET, 'pageid', FILTER_SANITIZE_NUMBER_INT);
+        $postid = filter_input(INPUT_GET, 'postid', FILTER_SANITIZE_NUMBER_INT);
+
+        if (isset($pageid) === true) {
             // Page edit mode.
-            $page = $this->model->getPage($_GET['pageid']);
+            $page    = $this->model->getPage($pageid);
             $content = $page['page_content'];
 
-            $vars = 'var pageid = document.getElementById("formpageid").value;';
-            $vars .= 'var data = '.
-                '"mode=editpage&pageid="+pageid+"&content="+content;';
+            $vars  =
+                'var pageid=document.getElementById("formpageid").value;';
+            $vars .=
+                'var data="mode=editpage&pageid="+pageid+"&content="+content;';
 
             $this->templateEngine->replaceTag(
                 '{POSTID}',
-                $_GET['pageid'],
+                $pageid,
                 $output
             );
             $this->templateEngine->removeLogicTag(
@@ -52,10 +57,10 @@ class AdminEditPageController extends AdminBasePageController
                 '{/NEWPOST}',
                 $output
             );
-        } elseif (isset($_GET['postid']) === true) {
+        } elseif (isset($postid) === true) {
             // Post edit mode.
-            $post = $this->model->getSinglePost($_GET['postid']);
-            $row = $this->model->database->getRow($post);
+            $post = $this->model->getSinglePost($postid);
+            $row  = $this->model->database->getRow($post);
 
             $content = $row['post_content'];
 
@@ -70,7 +75,7 @@ class AdminEditPageController extends AdminBasePageController
             $tags = [
                 '{POSTID}' => $row['post_id'],
                 '{POSTTITLE}' => $row['post_title'],
-                '{DRAFT}' => ($row['post_draft'] == '1') ? 'checked' : ''
+                '{DRAFT}' => ($row['post_draft'] === '1') ? 'checked' : ''
             ];
             $this->templateEngine->parseTags($tags, $output);
             $this->templateEngine->removeLogicTag(
@@ -86,7 +91,7 @@ class AdminEditPageController extends AdminBasePageController
         } else {
             // New post mode.
             $content = '';
-            $vars = 'var title = document.getElementById("formtitle").value;';
+            $vars  = 'var title = document.getElementById("formtitle").value;';
             $vars .= 'var draft = '.
                 'document.getElementById("formdraft").checked;';
             $vars .= 'var data = '.
@@ -117,7 +122,7 @@ class AdminEditPageController extends AdminBasePageController
             '{PAGEEDIT}',
             '{/PAGEEDIT}',
             '{POSTEDIT}',
-            '{/POSTEDIT}'
+            '{/POSTEDIT}',
         );
         $this->templateEngine->removeTags($tags, $output);
 

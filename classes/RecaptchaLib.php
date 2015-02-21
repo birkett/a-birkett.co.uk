@@ -30,7 +30,8 @@ class RecaptchaLib
             $req .= $key.'='.urlencode(stripslashes($value)).'&';
         }
 
-        $req = substr($req, 0, strlen($req) - 1); // Cut the last '&'
+        // Cut the last '&'.
+        $req = substr($req, 0, strlen($req) - 1);
         return $req;
 
     }//end qsEncode()
@@ -64,7 +65,8 @@ class RecaptchaLib
         fwrite($fs, $httpRequest);
 
         while (!feof($fs)) {
-            $response .= fgets($fs, 1160); // One TCP-IP packet
+            // One TCP-IP packet.
+            $response .= fgets($fs, 1160);
         }
         fclose($fs);
         $response = explode("\r\n\r\n", $response, 2);
@@ -89,9 +91,9 @@ class RecaptchaLib
             '/recaptcha/api/verify',
             array(
                 'privatekey' => $privkey,
-                'remoteip' => $remoteip,
-                'challenge' => $challenge,
-                'response' => $response
+                'remoteip'   => $remoteip,
+                'challenge'  => $challenge,
+                'response'   => $response
             )
         );
 

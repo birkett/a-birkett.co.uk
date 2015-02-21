@@ -35,10 +35,10 @@ class Functions
 
         $relativeClass = substr($class, $len);
 
-        $baseDir = __DIR__ . "/";
+        $baseDir = __DIR__.'/';
 
-        $endpath = str_replace('\\', '/', $relativeClass) . '.php';
-        $file = $baseDir . $endpath;
+        $endpath = str_replace('\\', '/', $relativeClass).'.php';
+        $file    = $baseDir.$endpath;
 
         // Try the public folders.
         if (file_exists($file) === true) {
@@ -47,10 +47,10 @@ class Functions
         }
 
         // Try the admin folder.
-        if (defined('ADMINPAGE')) {
+        if (defined('ADMINPAGE') === true) {
             $baseDir .= ADMIN_FOLDER;
 
-            $file = $baseDir . $endpath;
+            $file = $baseDir.$endpath;
             if (file_exists($file) === true) {
                 require $file;
             }
@@ -67,13 +67,13 @@ class Functions
     {
         // Show PHP errors and warnings.
         error_reporting(E_ALL);
-        ini_set("display_errors", 1);
+        ini_set('display_errors', 1);
 
         // Timezone for converting timestamps.
-        date_default_timezone_set("Europe/London");
+        date_default_timezone_set('Europe/London');
 
         // Autoloader.
-        spl_autoload_register("ABirkett\Functions::autoloader");
+        spl_autoload_register('ABirkett\Functions::autoloader');
 
     }//end PHPDefaults()
 

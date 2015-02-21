@@ -27,17 +27,15 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      */
     public function newPost($title, $content, $draft)
     {
-        // bool to int.
-        $draft = ($draft === 'true') ? 1 : 0;
         $this->database->runQuery(
-            'INSERT INTO blog_posts(' .
+            'INSERT INTO blog_posts('.
             'post_timestamp,post_title,post_content,post_draft,post_tweeted'.
             ') VALUES(:timestamp, :title, :content, :draft, 0)',
             array(
                 ':timestamp' => time(),
                 ':title' => $title,
                 ':content' => $content,
-                ':draft' => $draft
+                ':draft' => ($draft === "true") ? 1 : 0,
             )
         );
         $id = $this->database->lastInsertedID();
@@ -49,7 +47,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
 
     /**
      * Update a post
-     * @param int     $postid  ID of the post to update.
+     * @param integer $postid  ID of the post to update.
      * @param string  $title   Title of the post.
      * @param string  $content Body text of the post.
      * @param boolean $draft   Is the post public.
@@ -57,15 +55,13 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      */
     public function updatePost($postid, $title, $content, $draft)
     {
-        // bool to int.
-        $draft = ($draft == 'true') ? 1 : 0;
         $this->database->runQuery(
             'UPDATE blog_posts SET post_title = :ti, post_content = :txt, '.
             'post_draft = :draft WHERE post_id = :pid LIMIT 1',
             array(
                 ':ti' => $title,
                 ':txt' => $content,
-                ':draft' => $draft,
+                ':draft' => ($draft === "true") ? 1 : 0,
                 ':pid' => $postid
             )
         );
@@ -76,8 +72,8 @@ class AdminAJAXRequestModel extends AJAXRequestModel
 
     /**
      * Update a page
-     * @param  int    $pageid  ID of the page to update.
-     * @param  string $content Body text of the page.
+     * @param  integer $pageid  ID of the page to update.
+     * @param  string  $content Body text of the page.
      * @return void
      */
     public function updatePage($pageid, $content)
@@ -85,7 +81,10 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         $this->database->runQuery(
             'UPDATE site_pages SET page_content = :content ' .
             ' WHERE page_id = :pageid LIMIT 1',
-            array(':content' => $content, ':pageid' => $pageid)
+            array(
+                ':content' => $content,
+                ':pageid' => $pageid
+            )
         );
 
     }//end updatePage()
@@ -99,14 +98,17 @@ class AdminAJAXRequestModel extends AJAXRequestModel
     public function blockIP($ip)
     {
         // Do nothing if already blocked.
-        if (parent::checkIP($ip) != 0) {
+        if (parent::checkIP($ip) !== '0') {
             return;
         }
 
         $this->database->runQuery(
             'INSERT INTO blocked_addresses(address, blocked_timestamp)' .
             ' VALUES(:ip, :timestamp)',
-            array(':ip' => $ip, ':timestamp' => time())
+            array(
+                ':ip' => $ip,
+                ':timestamp' => time()
+            )
         );
 
     }//end blockIP()
@@ -129,9 +131,9 @@ class AdminAJAXRequestModel extends AJAXRequestModel
 
     /**
      * Change a user password
-     * @param  string  $currentp   Current user password.
-     * @param  string  $newp       Intended new password.
-     * @param  string  $confirmedp Verification of the new password.
+     * @param  string $currentp   Current user password.
+     * @param  string $newp       Intended new password.
+     * @param  string $confirmedp Verification of the new password.
      * @return boolean True on updated, False on error
      */
     public function changePassword($currentp, $newp, $confirmedp)
@@ -149,7 +151,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         $row = $this->database->getRow($data);
 
         // Current password is wrong.
-        if (!$this->checkCredentials($row[0], $currentp)) {
+        if ($this->checkCredentials($row[0], $currentp) === false) {
             return false;
         }
 
@@ -167,8 +169,8 @@ class AdminAJAXRequestModel extends AJAXRequestModel
 
     /**
      * Check if supplied credentials match the database (login function)
-     * @param  string  $username Input username.
-     * @param  string  $password Input password.
+     * @param  string $username Input username.
+     * @param  string $password Input password.
      * @return boolean True when verified, False otherwise
      */
     public function checkCredentials($username, $password)
@@ -181,19 +183,19 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         if ($this->database->getNumRows($result) === 1) {
             $dbhash = $this->database->getRow($result);
 
-            if (function_exists('password_verify')) {
+            if (function_exists('password_verify') === true) {
                 $check = password_verify($password, $dbhash[0]);
             } else {
                 $hash = $this->hashPassword($password);
                 ($hash === $dbhash[0]) ? $check = true : $check = false;
             }
 
-            if ($check) {
+            if ($check === true) {
                 $_SESSION['user'] = $username;
                 return true;
             }
-
         }
+
         return false;
 
     }//end checkCredentials()
@@ -201,25 +203,25 @@ class AdminAJAXRequestModel extends AJAXRequestModel
 
     /**
      * Send a tweet about a new post
-     * @param  int $postid Id of the post to be tweeted.
+     * @param  integer $postid Id of the post to be tweeted.
      * @return void
      */
     public function tweetPost($postid)
     {
         // Post ID not set, maybe newPost() failed.
-        if (!isset($postid)) {
+        if (isset($postid) === false) {
             return;
         }
 
         // Post doesnt exist or is a draft.
         $post = parent::getSinglePost($postid);
-        if ($this->database->GetNumRows($post) == 0) {
+        if ($this->database->GetNumRows($post) === 0) {
             return;
         }
 
         // Already tweeted out.
         $row = $this->database->getRow($post);
-        if ($row['post_tweeted'] == '1') {
+        if ($row['post_tweeted'] === '1') {
             return;
         }
 

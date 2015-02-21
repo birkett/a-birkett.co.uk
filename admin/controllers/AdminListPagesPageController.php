@@ -27,11 +27,12 @@ class AdminListPagesPageController extends AdminBasePageController
     {
         parent::__construct($output);
         $this->model = new \ABirkett\models\AdminListPagesPageModel();
-        $result = $this->model->getAllPages();
+        $result      = $this->model->getAllPages();
+
         while ($row = $this->model->database->getRow($result)) {
             $tags = array(
                 '{PAGEID}' => $row['page_id'],
-                '{PAGETITLE}' => $row['page_title']
+                '{PAGETITLE}' => $row['page_title'],
             );
             $temp = $this->templateEngine->logicTag(
                 '{LOOP}',

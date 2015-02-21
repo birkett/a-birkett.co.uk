@@ -36,11 +36,12 @@ class Page
             $page = $te->loadPageTemplate('page.tpl');
 
             $tags = array(
-                '{PAGE}' => $te->loadSubTemplate("$template.tpl"),
-                '{WIDGET}' => $te->loadSubTemplate("$widget.tpl"),
+                '{PAGE}' => $te->loadSubTemplate($template.'.tpl'),
+                '{WIDGET}' => $te->loadSubTemplate($widget.'.tpl'),
                 '{TITLE}' => $title
             );
         }
+
         $te->parseTags($tags, $page);
 
         if (defined('ADMINPAGE') === true) {
@@ -50,36 +51,43 @@ class Page
                         $page
                     );
                     break;
+
                 case 'listposts':
                     new \ABirkett\controllers\AdminListPostsPageController(
                         $page
                     );
                     break;
+
                 case 'listpages':
                     new \ABirkett\controllers\AdminListPagesPageController(
                         $page
                     );
                     break;
+
                 case 'serverinfo':
                     new \ABirkett\controllers\AdminServerInfoPageController(
                         $page
                     );
                     break;
+
                 case 'ipfilter':
                     new \ABirkett\controllers\AdminIPFilterPageController(
                         $page
                     );
                     break;
+
                 case 'edit':
                     new \ABirkett\controllers\AdminEditPageController(
                         $page
                     );
                     break;
+
                 default:
                     new \ABirkett\controllers\AdminBasePageController(
                         $page
                     );
-            }
+                    break;
+            }//end switch
             if ($widget === 'userwidget') {
                 new \ABirkett\controllers\AdminUserWidgetController(
                     $page
@@ -88,38 +96,45 @@ class Page
         } else {
             switch ($template) {
                 case 'generic':
-                    $e = explode(' ', $title);  //Get name from title last word
+                    // Get name from title last word.
+                    $e = explode(' ', $title);
                     new \ABirkett\controllers\GenericPageController(
                         $page,
                         strtolower(array_pop($e))
                     );
                     break;
+
                 case 'blog':
                     new \ABirkett\controllers\BlogPageController(
                         $page
                     );
                     break;
+
                 case 'feed':
                     new \ABirkett\controllers\FeedPageController(
                         $page
                     );
                     break;
+
                 default:
                     new \ABirkett\controllers\BasePageController(
                         $page
                     );
-            }
+                    break;
+            }//end switch
             if ($widget === 'postswidget') {
                 new \ABirkett\controllers\PostsWidgetController(
                     $page
                 );
             }
+
             if ($widget === 'twitterwidget') {
                 new \ABirkett\controllers\TwitterWidgetController(
                     $page
                 );
             }
-        }
+        }//end if
+
         echo $page;
 
     }//end __construct()

@@ -20,7 +20,7 @@ class AdminIPFilterPageModel extends AdminBasePageModel
 
     /**
      * Fetch a list of all blacklisted addresses
-     * @return mixed[] Array of blacklist entries
+     * @return array Array of blacklist entries
      */
     public function getBlockedAddresses()
     {

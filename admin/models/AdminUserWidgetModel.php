@@ -1,6 +1,6 @@
 <?php
 /**
- * AdminUserWidgetModel - glue between the database and AdminUserWidgetController
+ * AdminUserWidgetModel - glue between database and AdminUserWidgetController
  *
  * PHP Version 5.5
  *

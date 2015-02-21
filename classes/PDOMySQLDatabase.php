@@ -34,9 +34,8 @@ class PDOMySQLDatabase
     {
         try {
             $this->mLink = new PDO(
-                'mysql:host='.DATABASE_HOSTNAME.
-                ';dbname='.DATABASE_NAME.
-                ';port='.DATABASE_PORT,
+                'mysql:host='.DATABASE_HOSTNAME.';dbname='.
+                DATABASE_NAME.';port='.DATABASE_PORT,
                 DATABASE_USERNAME,
                 DATABASE_PASSWORD,
                 array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
@@ -104,7 +103,7 @@ class PDOMySQLDatabase
 
         $statement = $this->mLink->prepare($query);
         $statement->execute($params);
-        if ($statement->columnCount() != 0) {
+        if ($statement->columnCount() !== 0) {
             return $statement->fetchAll();
         }
 
@@ -122,7 +121,7 @@ class PDOMySQLDatabase
             return;
         }
 
-        if (count($result) != 0) {
+        if (count($result) !== 0) {
             return array_shift($result);
         } else {
             return null;

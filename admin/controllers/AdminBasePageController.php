@@ -33,7 +33,7 @@ class AdminBasePageController extends BasePageController
 
         $tags = array(
             '{ADMINSTYLESHEET}',
-            '{/ADMINSTYLESHEET}'
+            '{/ADMINSTYLESHEET}',
         );
         $this->templateEngine->removeTags($tags, $output);
 

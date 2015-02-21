@@ -11,6 +11,7 @@
  * @license   http://opensource.org/licenses/MIT MIT
  * @link      http://www.a-birkett.co.uk
  */
+
 namespace ABirkett\models;
 
 class GenericPageModel extends BasePageModel
@@ -25,7 +26,8 @@ class GenericPageModel extends BasePageModel
     public function getPage($pagename)
     {
         $page = $this->database->runQuery(
-            'SELECT page_title, page_content FROM site_pages WHERE page_name = :pn',
+            'SELECT page_title, page_content FROM site_pages'.
+            ' WHERE page_name = :pn',
             array(':pn' => $pagename)
         );
         return $page[0];

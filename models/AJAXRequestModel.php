@@ -24,13 +24,13 @@ class AJAXRequestModel extends BasePageModel
      * @param string  $username Comment author.
      * @param string  $comment  Comment text.
      * @param string  $clientip IP address of the author.
-     * @return none
+     * @return void
      */
     public function postComment($postid, $username, $comment, $clientip)
     {
         $this->database->runQuery(
-            'INSERT INTO blog_comments(' .
-            'post_id, comment_username, comment_text, comment_timestamp, ' .
+            'INSERT INTO blog_comments('.
+            'post_id, comment_username, comment_text, comment_timestamp, '.
             'client_ip) VALUES(:pid, :uname, :cmnt, :time, :ip)',
             array(
                 ':pid' => $postid,

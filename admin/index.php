@@ -32,41 +32,46 @@ if (isset($_POST['mode']) === true) {
             case 'password':
                 new Page('Admin :: Password', 'userwidget', 'password');
                 break;
+
             case 'serverinfo':
                 new Page('Admin :: Server Info', 'userwidget', 'serverinfo');
                 break;
+
             case 'ipfilter':
                 new Page('Admin :: IP Filter', 'userwidget', 'ipfilter');
                 break;
+
             case 'listpages':
-                new Page('Admin :: List Pages', 'userwidget', 'listpages');
+                new Page('Admin :: Pages', 'userwidget', 'listpages');
                 break;
+
             case 'listcomments':
-                new Page(
-                    'Admin :: List Comments',
-                    'userwidget',
-                    'listcomments'
-                );
+                new Page('Admin :: Comments', 'userwidget', 'listcomments');
                 break;
+
             case 'listposts':
-                new Page('Admin :: List Posts', 'userwidget', 'listposts');
+                new Page('Admin :: Posts', 'userwidget', 'listposts');
                 break;
+
             case 'edit':
                 new Page('Admin :: Editor', 'userwidget', 'edit');
                 break;
+
             case 'logout':
-                if (isset($_SESSION['user'])) {
+                if (isset($_SESSION['user']) === true) {
                     unset($_SESSION['user']);
                     session_destroy();
                 }
+
                 new Page('Admin :: Login', 'userwidget', 'login');
                 break;
+
             default:
                 new Page('Admin :: Main', 'userwidget', 'index');
                 break;
         }//end switch
     } else {
-        new Page('Admin :: Main', 'userwidget', 'index'); // Default request.
+        new Page('Admin :: Main', 'userwidget', 'index');
     }//end if
 } else {
     new Page('Admin :: Login', 'userwidget', 'login');

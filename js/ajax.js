@@ -13,6 +13,7 @@ function AJAXOpen(target, data, SuccessCallBack)
                     document.getElementById("response").innerHTML = '<p class="success">' + xmlhttp.response + '</p>';
                     SuccessCallBack();
                     break;
+
                 default:
                     document.getElementById("response").innerHTML = '<p class="failed">' + xmlhttp.response + '</p>';
                     break;

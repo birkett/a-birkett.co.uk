@@ -27,8 +27,9 @@ class PostsWidgetController extends BasePageController
     {
         parent::__construct($output);
         $this->model = new \ABirkett\models\PostsWidgetModel();
-        $posts = $this->model->getAllPosts();
-        $postArray = array();
+        $posts       = $this->model->getAllPosts();
+        $postArray   = array();
+
         while ($post = $this->model->database->GetRow($posts)) {
             $month = date('F Y', $post['post_timestamp']);
             $postArray['$month'][] = array(
@@ -42,7 +43,7 @@ class PostsWidgetController extends BasePageController
             '{/MONTHLOOP}',
             $output
         );
-        $itemloop = $this->templateEngine->logicTag(
+        $itemloop  = $this->templateEngine->logicTag(
             '{ITEMLOOP}',
             '{/ITEMLOOP}',
             $output
@@ -54,7 +55,7 @@ class PostsWidgetController extends BasePageController
                 $tempitem = $itemloop;
                 $tags = [
                     '{POSTID}' => $post['id'],
-                    '{POSTTITLE}' => $post['title']
+                    '{POSTTITLE}' => $post['title'],
                 ];
                 $this->templateEngine->parseTags($tags, $tempitem);
                 $tempitem .= "\n{ITEMLOOP}";
@@ -81,7 +82,7 @@ class PostsWidgetController extends BasePageController
         );
         $tags = array(
             '{ITEMS}',
-            '{MONTHS}'
+            '{MONTHS}',
         );
         $this->templateEngine->removeTags($tags, $output);
 

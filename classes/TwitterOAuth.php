@@ -34,7 +34,7 @@ class TwitterOAuth
      * Set up the API root URL
      * @var string $host
      */
-    public $host = "https://api.twitter.com/1.1/";
+    public $host = 'https://api.twitter.com/1.1/';
 
     /**
      * Set timeout default
@@ -61,9 +61,9 @@ class TwitterOAuth
      */
     public function __construct()
     {
-        $this->consumerKey = TWITTER_CONSUMER_KEY;
-        $this->consumerSecret = TWITTER_CONSUMER_SECRET;
-        $this->oauthToken = TWITTER_OAUTH_TOKEN;
+        $this->consumerKey      = TWITTER_CONSUMER_KEY;
+        $this->consumerSecret   = TWITTER_CONSUMER_SECRET;
+        $this->oauthToken       = TWITTER_OAUTH_TOKEN;
         $this->oauthTokenSecret = TWITTER_OAUTH_SECRET;
 
     }//end __construct()
@@ -147,7 +147,7 @@ class TwitterOAuth
     {
         $this->httpInfo = array();
         $ci = curl_init();
-        /* Curl settings */
+        // Curl settings.
         curl_setopt($ci, CURLOPT_USERAGENT, $this->useragent);
         curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, $this->timeout);
         curl_setopt($ci, CURLOPT_TIMEOUT, $this->timeout);
@@ -160,17 +160,17 @@ class TwitterOAuth
         switch ($method) {
             case 'POST':
                 curl_setopt($ci, CURLOPT_POST, true);
-                if (!empty($postfields)) {
+                if (empty($postfields) === false) {
                     curl_setopt($ci, CURLOPT_POSTFIELDS, $postfields);
                 }
                 break;
         }
 
         curl_setopt($ci, CURLOPT_URL, $url);
-        $response = curl_exec($ci);
+        $response       = curl_exec($ci);
         $this->httpCode = curl_getinfo($ci, CURLINFO_HTTP_CODE);
         $this->httpInfo = array_merge($this->httpInfo, curl_getinfo($ci));
-        $this->url = $url;
+        $this->url      = $url;
         curl_close($ci);
         return $response;
 
@@ -186,11 +186,12 @@ class TwitterOAuth
     private function getHeader($ch, $header)
     {
         $i = strpos($header, ':');
-        if (!empty($i)) {
-            $key = str_replace('-', '_', strtolower(substr($header, 0, $i)));
+        if (empty($i) === false) {
+            $key   = str_replace('-', '_', strtolower(substr($header, 0, $i)));
             $value = trim(substr($header, $i + 2));
             $this->httpHeader[$key] = $value;
         }
+
         return strlen($header);
 
     }//end getHeader()

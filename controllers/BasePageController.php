@@ -37,7 +37,7 @@ class BasePageController
      */
     public function __construct(&$output)
     {
-        $this->model = new \ABirkett\models\BasePageModel();
+        $this->model          = new \ABirkett\models\BasePageModel();
         $this->templateEngine = \ABirkett\classes\TemplateEngine::getInstance();
 
         $tags = [
@@ -53,7 +53,7 @@ class BasePageController
         if (CHRISTMAS === 1) {
             $tags = array(
                 '{EXTRASTYLESHEETS}',
-                '{/EXTRASTYLESHEETS}'
+                '{/EXTRASTYLESHEETS}',
             );
             $this->templateEngine->removeTags($tags, $output);
         } else {
@@ -63,6 +63,7 @@ class BasePageController
                 $output
             );
         }
+
         if (defined('ADMINPAGE') === false) {
             $this->templateEngine->removeLogicTag(
                 '{ADMINSTYLESHEET}',

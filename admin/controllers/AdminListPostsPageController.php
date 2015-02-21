@@ -27,13 +27,14 @@ class AdminListPostsPageController extends AdminBasePageController
     {
         parent::__construct($output);
         $this->model = new \ABirkett\models\AdminListPostsPageModel();
-        $result = $this->model->getAllPosts();
+        $result      = $this->model->getAllPosts();
+
         while ($row = $this->model->database->getRow($result)) {
             ($row['post_draft'] === '1') ? $draft = ' (DRAFT)' : $draft = '';
             $tags = array(
                 '{ADMINFOLDER}' => ADMIN_FOLDER,
                 '{POSTID}' => $row['post_id'],
-                '{POSTTITLE}' => $row['post_title'] . $draft
+                '{POSTTITLE}' => $row['post_title'].$draft
             );
             $temp = $this->templateEngine->logicTag(
                 '{LOOP}',

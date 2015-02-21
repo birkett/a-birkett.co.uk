@@ -49,7 +49,7 @@ if (isset($_GET['page']) === true) {
             break;
         default:
             new Page(SITE_TITLE.' :: Home', 'twitterwidget', 'index');
-    }
+    }//end switch
 } elseif (isset($_POST['mode']) === true) {
     new \ABirkett\controllers\AJAXRequestController();
 } else {

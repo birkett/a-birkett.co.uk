@@ -27,33 +27,35 @@ class BlogPageController extends BasePageController
     {
         parent::__construct($output);
         $this->model = new \ABirkett\models\BlogPageModel();
+
+        $offset = filter_input(INPUT_GET, 'offset', FILTER_SANITIZE_NUMBER_INT);
+        $postid = filter_input(INPUT_GET, 'postid', FILTER_SANITIZE_NUMBER_INT);
+
         // Clamp pagniation offset.
-        if (isset($_GET['offset']) === true
-            && is_numeric($_GET['offset'])
-            && $_GET['offset'] >= 1
-            && $_GET['offset'] < 100000
+        if (isset($offset) === true
+            && $offset >= 1
+            && $offset< 100000
         ) {
-            $offset = $_GET['offset'] - 1;
+            $offset = $offset - 1;
         } else {
             $offset = 0;
         }
 
         // Single post mode.
-        if (isset($_GET['postid']) === true
-            && is_numeric($_GET['postid'])
-            && $_GET['postid'] >= 0
-            && $_GET['postid'] < 500000
+        if (isset($postid) === true
+            && $postid >= 0
+            && $postid < 500000
             ) {
-            $result = $this->model->getSinglePost($_GET['postid']);
+            $result = $this->model->getSinglePost($postid);
             // Back out if we didnt find any posts.
-            if ($this->model->database->GetNumRows($result) == 0) {
+            if ($this->model->database->GetNumRows($result) === 0) {
                 header('Location: /404');
                 return;
             }
 
             // Show comments.
-            $comments = $this->model->getCommentsOnPost($_GET['postid']);
-            if ($this->model->database->GetNumRows($comments) != 0) {
+            $comments = $this->model->getCommentsOnPost($postid);
+            if ($this->model->database->GetNumRows($comments) !== 0) {
                 while ($comment = $this->model->database->GetRow($comments)) {
                     $tags = array(
                         '{COMMENTAUTHOR}' =>
@@ -76,13 +78,14 @@ class BlogPageController extends BasePageController
                         $temp,
                         $output
                     );
-                }
-            }
+                }//end while
+
+            }//end if
 
             // Snow new comments box.
             $tags = array(
-                '{COMMENTPOSTID}' => $_GET['postid'],
-                '{RECAPTCHAKEY}' => RECAPTCHA_PUBLIC_KEY
+                '{COMMENTPOSTID}' => $postid,
+                '{RECAPTCHAKEY}' => RECAPTCHA_PUBLIC_KEY,
             );
             $this->templateEngine->parseTags($tags, $output);
             // No pagination.
@@ -95,7 +98,7 @@ class BlogPageController extends BasePageController
             // Normal mode.
             $result = $this->model->getMultiplePosts($offset);
             // Back out if we didnt find any posts.
-            if ($this->model->database->GetNumRows($result) == 0) {
+            if ($this->model->database->GetNumRows($result) === 0) {
                 header('Location: /404');
                 return;
             }
@@ -106,16 +109,17 @@ class BlogPageController extends BasePageController
                 if ($offset > 0) {
                     $tags = array(
                         '{PAGEPREVIOUSLINK}' => "/blog/page/$offset",
-                        '{PAGEPREVIOUSTEXT}' => 'Previous Page'
+                        '{PAGEPREVIOUSTEXT}' => 'Previous Page',
                     );
                     $this->templateEngine->parseTags($tags, $output);
                 }
+
                 if (($offset + 1) * BLOG_POSTS_PER_PAGE < $numberofposts) {
                     $linkoffset = $offset + 2;
-                    $tags = [
+                    $tags = array(
                         '{PAGENEXTLINK}' => "/blog/page/$linkoffset",
-                        '{PAGENEXTTEXT}' => 'Next Page'
-                    ];
+                        '{PAGENEXTTEXT}' => 'Next Page',
+                    );
                     $this->templateEngine->parseTags($tags, $output);
                 }
             } else {
@@ -137,14 +141,10 @@ class BlogPageController extends BasePageController
         // Rendering code.
         while ($post = $this->model->database->GetRow($result)) {
             $tags = array(
-                '{POSTTIMESTAMP}' =>
-                    date(DATE_FORMAT, $post['post_timestamp']),
-                '{POSTID}' =>
-                    $post['post_id'],
-                '{POSTTITLE}' =>
-                    $post['post_title'],
-                '{POSTCONTENT}' =>
-                    stripslashes($post['post_content']),
+                '{POSTTIMESTAMP}' => date(DATE_FORMAT, $post['post_timestamp']),
+                '{POSTID}' => $post['post_id'],
+                '{POSTTITLE}' => $post['post_title'],
+                '{POSTCONTENT}' => stripslashes($post['post_content']),
                 '{COMMENTCOUNT}' =>
                     $this->model->getNumberOfComments($post['post_id'])
             );
@@ -169,7 +169,7 @@ class BlogPageController extends BasePageController
             $output
         );
 
-        //Clean up the tags if not already replaced
+        // Clean up the tags if not already replaced.
         $cleantags = array(
             '{PAGEPREVIOUSLINK}',
             '{PAGEPREVIOUSTEXT}',
@@ -178,7 +178,7 @@ class BlogPageController extends BasePageController
             '{PAGINATION}',
             '{/PAGINATION}',
             '{NEWCOMMENT}',
-            '{/NEWCOMMENT}'
+            '{/NEWCOMMENT}',
         );
         $this->templateEngine->removeTags($cleantags, $output);
 

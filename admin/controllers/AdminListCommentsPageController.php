@@ -28,8 +28,10 @@ class AdminListCommentsPageController extends AdminBasePageController
         parent::__construct($output);
         $this->model = new \ABirkett\models\AdminListCommentsPageModel();
 
-        if (isset($_GET['ip']) === true) {
-            $result = $this->model->getAllComments($_GET['ip']);
+        $ip = filter_input(INPUT_GET, 'ip', FILTER_UNSAFE_RAW);
+
+        if (isset($ip) === true) {
+            $result = $this->model->getAllComments($ip);
         } else {
             $result = $this->model->getAllComments();
         }

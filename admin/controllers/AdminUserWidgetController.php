@@ -50,7 +50,7 @@ class AdminUserWidgetController extends AdminBasePageController
             '{LOGIN}',
             '{/LOGIN}',
             '{LOGGEDIN}',
-            '{/LOGGEDIN}'
+            '{/LOGGEDIN}',
         );
         $this->templateEngine->removeTags($cleantags, $output);
 

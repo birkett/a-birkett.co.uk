@@ -31,10 +31,10 @@ class AdminServerInfoPageController extends AdminBasePageController
             '{APACHEVERSION}' => $_SERVER['SERVER_SOFTWARE'],
             '{PHPVERSION}' => phpversion(),
             '{MYSQLVERSION}' => $this->model->database->ServerInfo(),
-            '{MYSQLIEXT}' => (extension_loaded('MySQLi') ? 'Yes' : 'No'),
-            '{PDOMYSQLEXT}' => (extension_loaded('PDO_MySQL') ? 'Yes' : 'No'),
-            '{PHPCURLEXT}' => (extension_loaded('CURL') ? 'Yes' : 'No'),
-            '{PASSWORDHASH}' => (function_exists('password_hash') ? 'Yes' : 'No')
+            '{MYSQLIEXT}' => (extension_loaded('MySQLi') ? 'Y' : 'N'),
+            '{PDOMYSQLEXT}' => (extension_loaded('PDO_MySQL') ? 'Y' : 'N'),
+            '{PHPCURLEXT}' => (extension_loaded('CURL') ? 'Y' : 'N'),
+            '{PASSWORDHASH}' => (function_exists('password_hash') ? 'Y' : 'N')
         );
         $this->templateEngine->parseTags($tags, $output);
 

@@ -26,7 +26,7 @@ class TwitterWidgetModel extends BasePageModel
     {
         $params = array(
             'screen_name' => 'birkett26',
-            'count' => TWEETS_WIDGET_MAX,
+            'count'       => TWEETS_WIDGET_MAX,
             'include_rts' => true
         );
         $twitter = new \ABirkett\classes\TwitterOAuth();
@@ -37,7 +37,7 @@ class TwitterWidgetModel extends BasePageModel
 
     /**
      * Cache the latest tweets in the local DB to reduce Twitter API requests.
-     * @return none
+     * @return void
      */
     private function updateTweetsDatabase()
     {
@@ -58,17 +58,18 @@ class TwitterWidgetModel extends BasePageModel
             // Linkify user mentions.
             $tweetText = preg_replace(
                 '/@(\w+)/',
-                '<a target="_blank" href="https://twitter.com/$1">@$1</a>',
+                '<a target="_blank" href="http://twitter.com/$1">@$1</a>',
                 $tweetText
             );
             // Linkify tags.
             $tweetText = preg_replace(
                 '/\s+#(\w+)/',
-                ' <a target="_blank" href="https://twitter.com/search?q=%23$1">#$1</a>',
+                ' <a target="_blank" href="http://twitter.com/search?q=#$1">'.
+                '#$1</a>',
                 $tweetText
             );
 
-            if (isset($tweet->retweeted_status)) {
+            if (isset($tweet->retweeted_status) === true) {
                 $timestamp = strtotime($tweet->retweeted_status->created_at);
                 $name = $tweet->retweeted_status->user->name;
                 $screenname = $tweet->retweeted_status->user->screen_name;
@@ -81,9 +82,9 @@ class TwitterWidgetModel extends BasePageModel
             }
 
             $this->database->runQuery(
-                'INSERT INTO site_tweets (tweet_id, tweet_timestamp,' .
-                ' tweet_text, tweet_avatar, tweet_name, tweet_screenname,' .
-                ' tweet_updatetime) VALUES ( :id, :timestamp, :text, :image,' .
+                'INSERT INTO site_tweets (tweet_id, tweet_timestamp,'.
+                ' tweet_text, tweet_avatar, tweet_name, tweet_screenname,'.
+                ' tweet_updatetime) VALUES ( :id, :timestamp, :text, :image,'.
                 ' :name, :screenname, :updatetime )',
                 array(
                     ':id' => $tweet->id_str,
@@ -118,9 +119,9 @@ class TwitterWidgetModel extends BasePageModel
         }
 
         // Get the tweets.
-        $limit = TWEETS_WIDGET_MAX;
         return $this->database->runQuery(
-            "SELECT * FROM site_tweets ORDER BY tweet_timestamp ASC LIMIT $limit"
+            'SELECT * FROM site_tweets ORDER BY tweet_timestamp ASC LIMIT '.
+            TWEETS_WIDGET_MAX
         );
 
     }//end getTweetsFromDatabase()
@@ -128,7 +129,7 @@ class TwitterWidgetModel extends BasePageModel
 
     /**
      * Get the time elapsed since a unix timestamp i.e. "3 hours"
-     * @param int $timestamp Unix timestamp.
+     * @param integer $timestamp Unix timestamp.
      * @return string Time elapsed
      */
     public function timeElapsed($timestamp)
@@ -141,31 +142,40 @@ class TwitterWidgetModel extends BasePageModel
             'week',
             'month',
             'year',
-            'decade');
+            'decade',
+        );
 
-        $lengths = array('60','60','24','7','4.35','12','10');
+        $lengths = array(
+            '60',
+            '60',
+            '24',
+            '7',
+            '4.35',
+            '12',
+            '10',
+        );
 
         $now = time();
 
         if ($now > $timestamp) {
-            $difference = $now - $timestamp;
+            $diff  = $now - $timestamp;
             $tense = 'ago';
         } else {
-            $difference = $timestamp - $now;
+            $diff  = $timestamp - $now;
             $tense = 'from now';
         }
 
-        for ($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) {
-            $difference /= $lengths[$j];
+        for ($j = 0; $diff >= $lengths[$j] && $j < count($lengths) - 1; $j++) {
+            $diff /= $lengths[$j];
         }
 
-        $difference = round($difference);
+        $diff = round($diff);
 
-        if ($difference != 1) {
+        if ($diff !== 1) {
             $periods[$j].= 's';
         }
 
-        return "$difference $periods[$j] {$tense}";
+        return "$diff $periods[$j] {$tense}";
 
     }//end timeElapsed()
 }//end class

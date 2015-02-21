@@ -1,6 +1,7 @@
 var spans = document.getElementsByTagName('span');
 for (var i = 0; i < spans.length; i++) {
-    spans[i].onclick = function() {
+    spans[i].onclick = function()
+    {
         if (this.parentNode) {
             var childList = this.parentNode.getElementsByTagName('UL');
             for (var j = 0; j < childList.length; j++) {
@@ -10,16 +11,15 @@ for (var i = 0; i < spans.length; i++) {
                 } else {
                     childList[j].style.display = "none";
                 }
-
             }
-
         }
 
-        return false; // Prevent redirect on click.
+        // Prevent redirect on click.
+        return false;
     }
-    spans[i].onclick();
 
-}
+    spans[i].onclick();
+}//end for
 
 function toggleposts()
 {

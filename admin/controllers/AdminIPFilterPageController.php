@@ -27,7 +27,8 @@ class AdminIPFilterPageController extends AdminBasePageController
     {
         parent::__construct($output);
         $this->model = new \ABirkett\models\AdminIPFilterPageModel();
-        $result = $this->model->getBlockedAddresses();
+        $result      = $this->model->getBlockedAddresses();
+
         while ($row = $this->model->database->GetRow($result)) {
             $tags = [
                 '{IP}' => $row['address'],

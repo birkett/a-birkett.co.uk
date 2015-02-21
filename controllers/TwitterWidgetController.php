@@ -26,9 +26,8 @@ class TwitterWidgetController extends BasePageController
     {
         parent::__construct($output);
         $this->model = new \ABirkett\models\TwitterWidgetModel();
-
-        $tweets = $this->model->getTweetsFromDatabase();
-        $tweetloop = $this->templateEngine->LogicTag(
+        $tweets      = $this->model->getTweetsFromDatabase();
+        $tweetloop   = $this->templateEngine->LogicTag(
             '{TWEETLOOP}',
             '{/TWEETLOOP}',
             $output
@@ -50,7 +49,7 @@ class TwitterWidgetController extends BasePageController
 
             $tags = array(
                 '{TWEETLOOP}',
-                '{/TWEETLOOP}'
+                '{/TWEETLOOP}',
             );
             $this->templateEngine->removeTags($tags, $temp);
 

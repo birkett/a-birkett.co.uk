@@ -17,6 +17,7 @@ namespace ABirkett\models;
 class BlogPageModel extends BasePageModel
 {
 
+
     /**
      * Get the post data and return it as an array
      * @param  integer $postid ID of the post to fetch.
@@ -25,7 +26,7 @@ class BlogPageModel extends BasePageModel
     public function getSinglePost($postid)
     {
         return $this->database->runQuery(
-            "SELECT * FROM blog_posts WHERE post_id = :id AND post_draft = '0'",
+            'SELECT * FROM blog_posts WHERE post_id = :id AND post_draft = "0"',
             array(':id' => $postid)
         );
 
@@ -39,11 +40,10 @@ class BlogPageModel extends BasePageModel
      */
     public function getMultiplePosts($page)
     {
-        $limitlower = $page * BLOG_POSTS_PER_PAGE;
-        $limitupper = BLOG_POSTS_PER_PAGE;
         return $this->database->runQuery(
-            "SELECT * FROM blog_posts WHERE post_draft = '0'" .
-            " ORDER BY post_timestamp DESC LIMIT $limitlower,$limitupper"
+            'SELECT * FROM blog_posts WHERE post_draft = "0"'.
+            ' ORDER BY post_timestamp DESC LIMIT '.
+            ($page * BLOG_POSTS_PER_PAGE).','.BLOG_POSTS_PER_PAGE
         );
 
     }//end getMultiplePosts()
@@ -56,7 +56,7 @@ class BlogPageModel extends BasePageModel
     public function getNumberOfPosts()
     {
         $count = $this->database->runQuery(
-            "SELECT COUNT(*) from blog_posts WHERE post_draft = '0'"
+            'SELECT COUNT(*) from blog_posts WHERE post_draft = "0"'
         );
         return $count[0]['COUNT(*)'];
 
@@ -71,7 +71,7 @@ class BlogPageModel extends BasePageModel
     public function getNumberOfComments($postid)
     {
         $count = $this->database->runQuery(
-            "SELECT COUNT(*) FROM blog_comments WHERE post_id = :postid",
+            'SELECT COUNT(*) FROM blog_comments WHERE post_id = :postid',
             array(":postid" => $postid)
         );
         return $count[0]['COUNT(*)'];
@@ -87,9 +87,9 @@ class BlogPageModel extends BasePageModel
     public function getCommentsOnPost($postid)
     {
         return $this->database->runQuery(
-            "SELECT comment_username, comment_text, comment_timestamp" .
-            " FROM blog_comments WHERE post_id = :pid" .
-            " ORDER BY comment_timestamp ASC",
+            'SELECT comment_username, comment_text, comment_timestamp'.
+            ' FROM blog_comments WHERE post_id = :pid'.
+            ' ORDER BY comment_timestamp ASC',
             array(":pid" => $postid)
         );
 

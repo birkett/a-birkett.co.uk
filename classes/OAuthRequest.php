@@ -43,31 +43,26 @@ class OAuthRequest
      * @param  string $oToken     OAuth token.
      * @param  string $httpMethod Request method.
      * @param  string $httpUrl    Request URL.
-     * @param  array  $parameters Additional parameters as array.
+     * @param  array  $params     Additional parameters as array.
      * @return object OAuthRequest instance
      */
-    public function __construct(
-        $cKey,
-        $oToken,
-        $httpMethod,
-        $httpUrl,
-        $parameters = null
-    ) {
-        @$parameters || $parameters = array();
+    public function __construct($cKey, $oToken, $httpMethod, $httpUrl, $params)
+    {
+        @$params || $params = array();
         $defaults = array(
             'oauth_version' => '1.0',
             'oauth_nonce' => md5(microtime() . mt_rand()),
             'oauth_timestamp' => time(),
             'oauth_consumer_key' => $cKey,
-            'oauth_token' => $oToken
+            'oauth_token' => $oToken,
         );
 
-        $parameters = array_merge($defaults, $parameters);
-        $parameters = array_merge(
+        $params = array_merge($defaults, $params);
+        $params = array_merge(
             $this->parseParameters(parse_url($httpUrl, PHP_URL_QUERY)),
-            $parameters
+            $params
         );
-        $this->parameters = $parameters;
+        $this->parameters = $params;
         $this->httpMethod = $httpMethod;
         $this->httpUrl = $httpUrl;
 
@@ -76,20 +71,21 @@ class OAuthRequest
 
     /**
      * Set a request parameter
-     * @param string $name             Parameter name.
-     * @param string $value            Parameter value.
-     * @param bool   $allowDuplicates  Boolean to allow duplicates in the array.
+     * @param string $name            Parameter name.
+     * @param string $value           Parameter value.
+     * @param bool   $allowDuplicates Boolean to allow duplicates in the array.
      * @return none
      */
     public function setParameter($name, $value, $allowDuplicates = true)
     {
-        if ($allowDuplicates && isset($this->parameters[$name])) {
-            // Already added parameter(s) with this name, so add to the list
-            if (is_scalar($this->parameters[$name])) {
-                // This is the first duplicate, so transform scalar (string)
-                // into an array so we can add the duplicates
+        if ($allowDuplicates && isset($this->parameters[$name]) === true) {
+            // Already added parameter(s) with this name, so add to the list.
+            if (is_scalar($this->parameters[$name]) === true) {
+                // This is the first duplicate, so transform scalar (string),
+                // into an array so we can add the duplicates.
                 $this->parameters[$name] = array($this->parameters[$name]);
             }
+
             $this->parameters[$name][] = $value;
         } else {
                 $this->parameters[$name] = $value;
@@ -107,9 +103,9 @@ class OAuthRequest
         // Grab all parameters
         $params = $this->parameters;
 
-        // Remove oauth_signature if present
-        // Ref: Spec: 9.1.1 ("The oauth_signature parameter MUST be excluded.")
-        if (isset($params['oauth_signature'])) {
+        // Remove oauth_signature if present.
+        // Ref: Spec: 9.1.1 ("The oauth_signature parameter MUST be excluded.").
+        if (isset($params['oauth_signature']) === true) {
             unset($params['oauth_signature']);
         }
 
@@ -166,10 +162,9 @@ class OAuthRequest
         $host = $parts['host'];
         $path = @$parts['path'];
 
-        $port or $port = ($scheme == 'https') ? '443' : '80';
+        $port or $port = ($scheme === 'https') ? '443' : '80';
 
-        if (
-            ($scheme === 'https' && $port !== '443')
+        if (($scheme === 'https' && $port !== '443')
             || ($scheme === 'http' && $port !== '80')
         ) {
             $host = "$host:$port";
@@ -208,8 +203,8 @@ class OAuthRequest
 
     /**
      * Sign an OAuth request
-     * @param string $cSec   Consumer secret.
-     * @param string $oSec   OAuth token secret.
+     * @param string $cSec Consumer secret.
+     * @param string $oSec OAuth token secret.
      * @return none
      */
     public function signRequest($cSec, $oSec)
@@ -220,7 +215,7 @@ class OAuthRequest
 
         $keyParts = array(
             $cSec,
-            $oSec
+            $oSec,
         );
 
         $keyParts = $this->urlencodeRFC3986($keyParts);
@@ -270,7 +265,7 @@ class OAuthRequest
      */
     public function parseParameters($input)
     {
-        if (!isset($input) || !$input) {
+        if (isset($input) === false) {
             return array();
         }
         $pairs = explode('&', $input);
@@ -298,7 +293,7 @@ class OAuthRequest
 
     /**
      * Build a HTTP query
-     * @param  array  $params Array of parameters.
+     * @param  array $params Array of parameters.
      * @return string HTTP query string
      */
     public function buildHttpQuery($params)
@@ -312,14 +307,14 @@ class OAuthRequest
         $params = array_combine($keys, $values);
 
         // Parameters are sorted by name, using lexicographical byte ordering.
-        // Ref: Spec: 9.1.1 (1)
+        // Ref: Spec: 9.1.1 (1).
         uksort($params, 'strcmp');
 
         $pairs = array();
         foreach ($params as $parameter => $value) {
             if (is_array($value)) {
-                // If two or more parameters share the same name, store by value
-                // Ref: Spec: 9.1.1 (1)
+                // If two or more params share the same name, store by value.
+                // Ref: Spec: 9.1.1 (1).
                 natsort($value);
                 foreach ($value as $duplicateValue) {
                     $pairs[] = $parameter.'='.$duplicateValue;
@@ -329,9 +324,9 @@ class OAuthRequest
             }
         }
 
-        // For each parameter, the name is separated from the corresponding
-        // value by an '=' character (ASCII code 61)
-        // Each name-value pair is separated by an '&' character (ASCII code 38)
+        // For each parameter, the name is separated from the corresponding,
+        // value by an '=' character (ASCII code 61).
+        // Each name-value pair is separated by an '&' (ASCII code 38).
         return implode('&', $pairs);
 
     }//end buildHttpQuery()

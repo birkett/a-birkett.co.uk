@@ -57,68 +57,72 @@ class AJAXRequestController
     public function __construct()
     {
         $this->model = new \ABirkett\models\AJAXRequestModel();
-        switch($_POST['mode']) {
+
+        // Basic.
+        $mode = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
+        // Used for comments
+        $post = filter_input(INPUT_POST, 'postid', FILTER_SANITIZE_NUMBER_INT);
+        $user = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+        $comm = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
+        $chal = filter_input(INPUT_POST, 'challenge', FILTER_UNSAFE_RAW);
+        $resp = filter_input(INPUT_POST, 'response', FILTER_UNSAFE_RAW);
+        $ip   = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_UNSAFE_RAW);
+
+        switch($mode) {
             // Handle a new comment request.
             case 'postcomment':
-                if (isset($_POST['postid']) === false
-                    || is_numeric($_POST['postid']) === false
-                    || isset($_POST['username']) === false
-                    || isset($_POST['comment']) === false
-                    || isset($_POST['challenge']) === false
-                    || isset($_POST['response']) === false
+                if (isset($post) === false
+                    || isset($user) === false
+                    || isset($comm)  === false
+                    || isset($chal) === false
+                    || isset($resp) === false
                 ) {
                     $this->badRequest('Something did not send correctly.');
                 }
 
-                $p = $_POST['postid'];
-                // Strip HTML tags.
-                $u = strip_tags($_POST['username']);
-                $c = strip_tags($_POST['comment']);
-                $ip = $_SERVER['REMOTE_ADDR'];
-                $ch = $_POST['challenge'];
-                $resp = $_POST['response'];
-
                 $postcheck = $this->model->database->GetNumRows(
-                    $this->model->getSinglePost($p)
+                    $this->model->getSinglePost($post)
                 );
 
-                if ($postcheck != 1) {
+                if ($postcheck !== 1) {
                     $this->badRequest('Invalid Post ID.');
                 }
 
-                if ($u === '' || $c === '' || $ch === '' || $resp === '') {
+                if ($user === ''
+                    || $comm === ''
+                    || $chal === ''
+                    || $resp === ''
+                ) {
                     $this->badRequest('Please fill out all details.');
                 }
 
-                if (strlen($u) < 3 || strlen($u) > 20) {
+                if (strlen($user) < 3 || strlen($user) > 20) {
                     $this->badRequest('Username should be 3 - 20 characters');
                 }
 
-                if (strlen($c) < 10 || strlen($c) > 500) {
+                if (strlen($chal) < 10 || strlen($chal) > 500) {
                     $this->badRequest('Comment should be 10 - 500 characters');
                 }
 
                 if ($this->model->checkIP($ip) !== "0") {
                     $this->badRequest(
-                        'Your address is blocked.' .
-                        ' This is most likely due to spam.'
+                        'Your address is blocked, likely due to spam.'
                     );
                 }
 
                 $recaptcha = new \ABirkett\classes\RecaptchaLib();
-                $captcha = $recaptcha->checkAnswer(
+                $captcha   = $recaptcha->checkAnswer(
                     RECAPTHCA_PRIVATE_KEY,
                     $ip,
-                    $ch,
+                    $chal,
                     $resp
                 );
                 if ($captcha['is_valid'] === true) {
-                    $this->model->postComment($p, $u, $c, $ip);
+                    $this->model->postComment($post, $user, $comm, $ip);
                     $this->goodRequest('Comment Posted!');
                 } else {
                     $this->badRequest('Captcha verification failed');
                 }
-
         }//end switch
 
     }//end __construct()
