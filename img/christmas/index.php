@@ -2,7 +2,7 @@
 /**
  * Small index page to prevent browser navigation to this folder
  *
- * PHP Version 5.5
+ * PHP Version 5.4
  *
  * @category  Index
  * @package   PersonalWebsite

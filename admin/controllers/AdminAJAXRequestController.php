@@ -2,7 +2,7 @@
 /**
  * AdminAJAXRequestController - Handle private POST requests from AJAX
  *
- * PHP Version 5.5
+ * PHP Version 5.4
  *
  * @category  AdminControllers
  * @package   PersonalWebsite

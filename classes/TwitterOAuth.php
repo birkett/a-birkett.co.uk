@@ -2,7 +2,7 @@
 /**
  * The first PHP Library to support OAuth for Twitter's REST API
  *
- * PHP Version 5.5
+ * PHP Version 5.4
  *
  * @category  Classes
  * @package   PersonalWebsite

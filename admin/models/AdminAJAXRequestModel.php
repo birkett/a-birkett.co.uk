@@ -2,7 +2,7 @@
 /**
  * AdminAJAXRequestModel - glue between the database and Controller
  *
- * PHP Version 5.5
+ * PHP Version 5.4
  *
  * @category  AdminModels
  * @package   PersonalWebsite
@@ -183,6 +183,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         if ($this->database->getNumRows($result) === 1) {
             $dbhash = $this->database->getRow($result);
 
+            // Password_verify is PHP 5.5+, fall back on older versions
             if (function_exists('password_verify') === true) {
                 $check = password_verify($password, $dbhash[0]);
             } else {

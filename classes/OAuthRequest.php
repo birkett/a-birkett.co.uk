@@ -2,7 +2,7 @@
 /**
  * PHP OAuth request class
  *
- * PHP Version 5.5
+ * PHP Version 5.4
  *
  * @category  Classes
  * @package   PersonalWebsite

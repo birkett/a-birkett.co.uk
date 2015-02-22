@@ -2,7 +2,7 @@
 /**
  * AdminUserWidgetModel - glue between database and AdminUserWidgetController
  *
- * PHP Version 5.5
+ * PHP Version 5.4
  *
  * @category  AdminModels
  * @package   PersonalWebsite

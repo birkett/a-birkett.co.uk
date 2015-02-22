@@ -2,7 +2,7 @@
 /**
  * BlogPageModel - glue between the database and BlogPageController
  *
- * PHP Version 5.5
+ * PHP Version 5.4
  *
  * @category  Models
  * @package   PersonalWebsite

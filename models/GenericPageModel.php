@@ -2,7 +2,7 @@
 /**
  * GenericPageModel - glue between the database and GenericPageController
  *
- * PHP Version 5.5
+ * PHP Version 5.4
  *
  * @category  Models
  * @package   PersonalWebsite
