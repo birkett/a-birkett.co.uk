@@ -27,8 +27,7 @@ class FeedPageModel extends BasePageModel
         return $this->database->runQuery(
             'SELECT post_id, post_timestamp, post_title, post_content'.
             ' FROM blog_posts WHERE post_draft = "0"'.
-            ' ORDER BY post_timestamp DESC LIMIT 0,:lim',
-            array(":lim" => BLOG_POSTS_PER_PAGE)
+            ' ORDER BY post_timestamp DESC LIMIT 0,'.BLOG_POSTS_PER_PAGE
         );
 
     }//end getLatestPosts()

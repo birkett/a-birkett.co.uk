@@ -105,7 +105,7 @@ class RecaptchaLib
 
         if (trim($answers[0]) !== 'true') {
             $recaptchaResponse['is_valid'] = false;
-            $recaptchaResponse['error'] = $answers[1];
+            $recaptchaResponse['error']    = $answers[1];
         }
 
         return $recaptchaResponse;

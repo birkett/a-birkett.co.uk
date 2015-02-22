@@ -126,14 +126,15 @@ class BlogPageController extends BasePageController
                     '{/PAGINATION}',
                     $output
                 );
-            }
+            }//end if
+
             // Hide new comment box.
             $this->templateEngine->removeLogicTag(
                 '{NEWCOMMENT}',
                 '{/NEWCOMMENT}',
                 $output
             );
-        }
+        }//end if
 
         // Rendering code.
         while ($post = $this->model->database->GetRow($result)) {

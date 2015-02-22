@@ -64,7 +64,7 @@ class OAuthRequest
         );
         $this->parameters = $params;
         $this->httpMethod = $httpMethod;
-        $this->httpUrl = $httpUrl;
+        $this->httpUrl    = $httpUrl;
 
     }//end __construct()
 
@@ -157,10 +157,10 @@ class OAuthRequest
     {
         $parts = parse_url($this->httpUrl);
 
-        $port = @$parts['port'];
+        $port   = @$parts['port'];
         $scheme = $parts['scheme'];
-        $host = $parts['host'];
-        $path = @$parts['path'];
+        $host   = $parts['host'];
+        $path   = @$parts['path'];
 
         $port or $port = ($scheme === 'https') ? '443' : '80';
 
@@ -181,7 +181,7 @@ class OAuthRequest
     public function toUrl()
     {
         $postData = $this->toPostdata();
-        $out = $this->getNormalizedHttpUrl();
+        $out      = $this->getNormalizedHttpUrl();
         if ($postData) {
             $out .= '?'.$postData;
         }
@@ -235,9 +235,12 @@ class OAuthRequest
      */
     public static function urlencodeRFC3986($input)
     {
-        if (is_array($input)) {
+        if (is_array($input) === true) {
             return array_map(
-                array('ABirkett\classes\OAuthRequest', 'urlencodeRFC3986'),
+                array(
+                    'ABirkett\classes\OAuthRequest',
+                    'urlencodeRFC3986',
+                ),
                 $input
             );
         } elseif (is_scalar($input)) {
@@ -277,8 +280,8 @@ class OAuthRequest
             $param = urldecode($split[0]);
             $value = isset($split[1]) ? urldecode($split[1]) : '';
 
-            if (isset($parsedParams[$param])) {
-                if (is_scalar($parsedParams[$param])) {
+            if (isset($parsedParams[$param]) === true) {
+                if (is_scalar($parsedParams[$param]) === true) {
                     $parsedParams[$param] = array($parsedParams[$param]);
                 }
                 $parsedParams[$param][] = $value;
@@ -299,7 +302,7 @@ class OAuthRequest
      */
     public function buildHttpQuery($params)
     {
-        if (!$params) {
+        if (empty($params) === true) {
             return '';
         }
         // Urlencode both keys and values
@@ -313,7 +316,7 @@ class OAuthRequest
 
         $pairs = array();
         foreach ($params as $parameter => $value) {
-            if (is_array($value)) {
+            if (is_array($value) === true) {
                 // If two or more params share the same name, store by value.
                 // Ref: Spec: 9.1.1 (1).
                 natsort($value);

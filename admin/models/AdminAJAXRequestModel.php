@@ -79,11 +79,10 @@ class AdminAJAXRequestModel extends AJAXRequestModel
     public function updatePage($pageid, $content)
     {
         $this->database->runQuery(
-            'UPDATE site_pages SET page_content = :content ' .
-            ' WHERE page_id = :pageid LIMIT 1',
+            'UPDATE site_pages SET page_content = :cont WHERE page_id = :pid',
             array(
-                ':content' => $content,
-                ':pageid' => $pageid
+                ':cont' => $content,
+                ':pid' => $pageid,
             )
         );
 
@@ -183,7 +182,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         if ($this->database->getNumRows($result) === 1) {
             $dbhash = $this->database->getRow($result);
 
-            // Password_verify is PHP 5.5+, fall back on older versions
+            // Password_verify is PHP 5.5+, fall back on older versions.
             if (function_exists('password_verify') === true) {
                 $check = password_verify($password, $dbhash[0]);
             } else {
@@ -248,7 +247,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      */
     public function hashPassword($password)
     {
-        $options = array('cost' => HASHING_COST,);
+        $options = array('cost' => HASHING_COST);
         // Password_hash is PHP 5.5+, fall back when not available.
         if (function_exists('password_hash') === true) {
             return password_hash($password, PASSWORD_BCRYPT, $options);

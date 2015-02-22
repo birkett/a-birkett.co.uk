@@ -68,7 +68,7 @@ class AJAXRequestController
 
         // Basic.
         $mode = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
-        // Used for comments
+        // Used for comments.
         $post = filter_input(INPUT_POST, 'postid', FILTER_SANITIZE_NUMBER_INT);
         $user = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
         $comm = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);

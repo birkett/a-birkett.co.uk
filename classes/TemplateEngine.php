@@ -128,7 +128,7 @@ class TemplateEngine
     public function removeLogicTag($start, $end, &$content)
     {
         $beginningPos = strpos($content, $start);
-        $endPos = strpos($content, $end);
+        $endPos       = strpos($content, $end);
         if ($beginningPos === false || $endPos === false) {
             return;
         }
@@ -138,7 +138,7 @@ class TemplateEngine
             $beginningPos,
             ($endPos + strlen($end)) - $beginningPos
         );
-        $content = str_replace($textToDelete, '', $content);
+        $content      = str_replace($textToDelete, '', $content);
 
     }//end removeLogicTag()
 }//end class

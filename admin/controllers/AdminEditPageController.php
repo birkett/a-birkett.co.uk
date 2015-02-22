@@ -35,7 +35,7 @@ class AdminEditPageController extends AdminBasePageController
         if (isset($pageid) === true) {
             // Page edit mode.
             $page    = $this->model->getPage($pageid);
-            $content = $page['page_content'];
+            $cont = $page['page_content'];
 
             $vars  = 'var pageid=document.getElementById("formpageid").value;';
             $vars .=
@@ -61,14 +61,13 @@ class AdminEditPageController extends AdminBasePageController
             $post = $this->model->getSinglePost($postid);
             $row  = $this->model->database->getRow($post);
 
-            $content = $row['post_content'];
+            $cont = $row['post_content'];
 
-            $vars = 'var postid = document.getElementById("formpostid").value;';
-            $vars .= 'var title = document.getElementById("formtitle").value;';
-            $vars .= 'var draft = '.
+            $vars  = 'var postid=document.getElementById("formpostid").value;';
+            $vars .= 'var title=document.getElementById("formtitle").value;';
+            $vars .= 'var draft='.
                 'document.getElementById("formdraft").checked;';
-            $vars .= 'var data = '.
-                '"mode=editpost&postid="+postid+"&title="' .
+            $vars .= 'var data="mode=editpost&postid="+postid+"&title="'.
                 '+title+"&draft="+draft+"&content="+content;';
 
             $tags = array(
@@ -89,12 +88,10 @@ class AdminEditPageController extends AdminBasePageController
             );
         } else {
             // New post mode.
-            $content = '';
-            $vars  = 'var title = document.getElementById("formtitle").value;';
-            $vars .= 'var draft = '.
-                'document.getElementById("formdraft").checked;';
-            $vars .= 'var data = '.
-                '"mode=newpost&title="+title+"&draft="'.
+            $cont  = '';
+            $vars  = 'var title=document.getElementById("formtitle").value;';
+            $vars .= 'var draft=document.getElementById("formdraft").checked;';
+            $vars .= 'var data="mode=newpost&title="+title+"&draft="'.
                 '+draft+"&content="+content;';
 
             $this->templateEngine->removeLogicTag(
@@ -111,7 +108,7 @@ class AdminEditPageController extends AdminBasePageController
 
         $tags = array(
             '{VARS}' => $vars,
-            '{CONTENT}' => stripslashes($content)
+            '{CONTENT}' => stripslashes($cont)
         );
         $this->templateEngine->parseTags($tags, $output);
         // Clean up the tags if not already replaced.
