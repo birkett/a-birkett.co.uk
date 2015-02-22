@@ -60,9 +60,9 @@ class TemplateEngine
 
     /**
      * Replace a tag with a string (for inserting sub templates into the output)
-     * @param string $tag     Tag to replace.
-     * @param string $string  String that will replace Tag.
-     * @param string &$output Unparsed template passed by reference.
+     * @param string $tag    Tag to replace.
+     * @param string $string String that will replace Tag.
+     * @param string $output Unparsed template passed by reference.
      * @return none
      */
     public function replaceTag($tag, $string, &$output)
@@ -74,8 +74,8 @@ class TemplateEngine
 
     /**
      * Parse the tags in a given array to the template
-     * @param array  &$tags   Array of tags to replace by reference.
-     * @param string &$output Unparsed template passed by reference.
+     * @param array  $tags   Array of tags to replace by reference.
+     * @param string $output Unparsed template passed by reference.
      * @return none
      */
     public function parseTags(&$tags, &$output)
@@ -87,8 +87,8 @@ class TemplateEngine
 
     /**
      * Remove any left over tags from the parsed template
-     * @param array  &$tags   Array of tags to replace by reference.
-     * @param string &$output Unparsed template passed by reference
+     * @param array  $tags   Array of tags to replace by reference.
+     * @param string $output Unparsed template passed by reference
      * @return none
      */
     public function removeTags(&$tags, &$output)
@@ -100,9 +100,9 @@ class TemplateEngine
 
     /**
      * Return the contents of a logic tag
-     * @param string $start    Starting tag.
-     * @param string $end      End tag.
-     * @param string &$content Unparsed template
+     * @param string $start   Starting tag.
+     * @param string $end     End tag.
+     * @param string $content Unparsed template
      * @return string Contents between Start and End tag
      */
     public function logicTag($start, $end, &$content)
@@ -120,9 +120,9 @@ class TemplateEngine
 
     /**
      * Remove any left over logic tags from the parsed template
-     * @param string $start    Starting tag.
-     * @param string $end      End tag.
-     * @param string &$content Unparsed template.
+     * @param string $start   Starting tag.
+     * @param string $end     End tag.
+     * @param string $content Unparsed template.
      * @return none
      */
     public function removeLogicTag($start, $end, &$content)

@@ -17,6 +17,7 @@ namespace ABirkett;
 class Config
 {
 
+
     /**
      * Set up the environment
      * @return void

@@ -42,7 +42,7 @@ class Functions
 
         // Try the public folders.
         if (file_exists($file) === true) {
-            require $file;
+            include $file;
             return;
         }
 
@@ -52,7 +52,7 @@ class Functions
 
             $file = $baseDir.$endpath;
             if (file_exists($file) === true) {
-                require $file;
+                include $file;
             }
         }
 

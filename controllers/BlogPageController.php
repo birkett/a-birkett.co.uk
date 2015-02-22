@@ -42,10 +42,7 @@ class BlogPageController extends BasePageController
         }
 
         // Single post mode.
-        if (isset($postid) === true
-            && $postid >= 0
-            && $postid < 500000
-            ) {
+        if (isset($postid) === true && $postid >= 0 && $postid < 500000) {
             $result = $this->model->getSinglePost($postid);
             // Back out if we didnt find any posts.
             if ($this->model->database->GetNumRows($result) === 0) {

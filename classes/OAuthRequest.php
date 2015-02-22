@@ -260,8 +260,9 @@ class OAuthRequest
      * parameters like this
      * array('a' => array('b','c'), 'd' => 'e')
      *
-     * @param  array $input Parameters array.
-     * @return array Parsed parameters array
+     * @param string $input Parameters.
+     *
+     * @return array Parsed array
      */
     public function parseParameters($input)
     {

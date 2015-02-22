@@ -37,8 +37,7 @@ class AdminEditPageController extends AdminBasePageController
             $page    = $this->model->getPage($pageid);
             $content = $page['page_content'];
 
-            $vars  =
-                'var pageid=document.getElementById("formpageid").value;';
+            $vars  = 'var pageid=document.getElementById("formpageid").value;';
             $vars .=
                 'var data="mode=editpage&pageid="+pageid+"&content="+content;';
 

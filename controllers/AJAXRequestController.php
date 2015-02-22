@@ -31,7 +31,7 @@ class AJAXRequestController
      */
     protected function goodRequest($m = '')
     {
-        if(function_exists("http_response_code") === true) {
+        if (function_exists("http_response_code") === true) {
             http_response_code(200);
         } else {
             header("HTTP/1.0 200 OK", true, 200);
@@ -48,7 +48,7 @@ class AJAXRequestController
      */
     protected function badRequest($m = '')
     {
-        if(function_exists("http_response_code") === true) {
+        if (function_exists("http_response_code") === true) {
             http_response_code(400);
         } else {
             header("HTTP/1.0 400 Bad Request", true, 400);
