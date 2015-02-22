@@ -35,7 +35,7 @@ class TwitterWidgetController extends BasePageController
 
         foreach ($tweets as $tweet) {
             $temp = $tweetloop;
-            $tags = [
+            $tags = array(
                     '{TWEETID}' => $tweet['tweet_id'],
                     '{TWEETSCREENNAME}' => $tweet['tweet_screenname'],
                     '{TWEETNAME}' => $tweet['tweet_name'],
@@ -43,7 +43,7 @@ class TwitterWidgetController extends BasePageController
                     '{TWEETTEXT}' => $tweet['tweet_text'],
                     '{TWEETTIMESTAMP}' =>
                         $this->model->timeElapsed($tweet['tweet_timestamp']),
-            ];
+            );
 
             $this->templateEngine->parseTags($tags, $temp);
 

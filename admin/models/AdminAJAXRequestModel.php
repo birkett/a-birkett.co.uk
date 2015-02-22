@@ -248,7 +248,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      */
     public function hashPassword($password)
     {
-        $options = [ 'cost' => HASHING_COST ];
+        $options = array('cost' => HASHING_COST,);
         // Password_hash is PHP 5.5+, fall back when not available.
         if (function_exists('password_hash') === true) {
             return password_hash($password, PASSWORD_BCRYPT, $options);

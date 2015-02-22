@@ -98,7 +98,11 @@ class RecaptchaLib
         );
 
         $answers = explode("\n", $reply[1]);
-        $recaptchaResponse = [ 'is_valid' => true, 'error' => '' ];
+        $recaptchaResponse = array(
+            'is_valid' => true,
+            'error' => '',
+        );
+
         if (trim($answers[0]) !== 'true') {
             $recaptchaResponse['is_valid'] = false;
             $recaptchaResponse['error'] = $answers[1];

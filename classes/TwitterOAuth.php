@@ -44,7 +44,7 @@ class TwitterOAuth
 
     /**
      * Contains the last HTTP headers returned
-     * @var mixed[] $httpInfo
+     * @var array $httpInfo
      */
     public $httpInfo;
 

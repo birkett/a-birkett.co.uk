@@ -53,10 +53,10 @@ class PostsWidgetController extends BasePageController
             $this->templateEngine->replaceTag('{MONTH}', $month, $temp);
             foreach ($data as $post) {
                 $tempitem = $itemloop;
-                $tags = [
+                $tags = array(
                     '{POSTID}' => $post['id'],
                     '{POSTTITLE}' => $post['title'],
-                ];
+                );
                 $this->templateEngine->parseTags($tags, $tempitem);
                 $tempitem .= "\n{ITEMLOOP}";
                 $this->templateEngine->replaceTag(

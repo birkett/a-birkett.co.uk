@@ -20,7 +20,7 @@ class AdminListPagesPageModel extends AdminBasePageModel
 
     /**
      * Fetch a list of all pages
-     * @return mixed[] Array of pages data
+     * @return array Array of pages data
      */
     public function getAllPages()
     {

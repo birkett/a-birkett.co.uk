@@ -72,11 +72,11 @@ class AdminEditPageController extends AdminBasePageController
                 '"mode=editpost&postid="+postid+"&title="' .
                 '+title+"&draft="+draft+"&content="+content;';
 
-            $tags = [
+            $tags = array(
                 '{POSTID}' => $row['post_id'],
                 '{POSTTITLE}' => $row['post_title'],
-                '{DRAFT}' => ($row['post_draft'] === '1') ? 'checked' : ''
-            ];
+                '{DRAFT}' => ($row['post_draft'] === '1') ? 'checked' : '',
+            );
             $this->templateEngine->parseTags($tags, $output);
             $this->templateEngine->removeLogicTag(
                 '{PAGEEDIT}',

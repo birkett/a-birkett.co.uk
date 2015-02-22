@@ -20,7 +20,7 @@ class OAuthRequest
 
     /**
      * Request parameters array
-     * @var mixed[] $parameters
+     * @var array $parameters
      */
     private $parameters;
 
