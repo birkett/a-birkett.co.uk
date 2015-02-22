@@ -2,7 +2,7 @@
 /**
  * AdminListCommentsPageController - pull data from model to populate template
  *
- * PHP Version 5.4
+ * PHP Version 5.3
  *
  * @category  AdminControllers
  * @package   PersonalWebsite

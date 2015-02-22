@@ -2,7 +2,7 @@
 /**
  * Basic wrapper for working with a MySQL database via PDO
  *
- * PHP Version 5.4
+ * PHP Version 5.3
  *
  * @category  Classes
  * @package   PersonalWebsite

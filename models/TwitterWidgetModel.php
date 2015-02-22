@@ -2,7 +2,7 @@
 /**
  * TwitterWidgetModel - glue between the database and TwitterWidgetController
  *
- * PHP Version 5.4
+ * PHP Version 5.3
  *
  * @category  Models
  * @package   PersonalWebsite

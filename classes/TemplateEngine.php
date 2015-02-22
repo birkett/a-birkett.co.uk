@@ -2,7 +2,7 @@
 /**
  * Templating engine functionality
  *
- * PHP Version 5.4
+ * PHP Version 5.3
  *
  * @category  Classes
  * @package   PersonalWebsite

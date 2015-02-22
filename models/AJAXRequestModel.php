@@ -2,7 +2,7 @@
 /**
  * AJAXRequestModel - glue between the database and AJAXRequestController
  *
- * PHP Version 5.4
+ * PHP Version 5.3
  *
  * @category  Models
  * @package   PersonalWebsite

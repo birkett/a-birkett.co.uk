@@ -2,7 +2,7 @@
 /**
  * Page router - Routes GET and POST requests
  *
- * PHP Version 5.4
+ * PHP Version 5.3
  *
  * @category  Index
  * @package   PersonalWebsite

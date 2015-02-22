@@ -2,7 +2,7 @@
 /**
  * RecaptchaLib - Send and process a Recaptcha request. Original code (c) Google
  *
- * PHP Version 5.4
+ * PHP Version 5.3
  *
  * @category  Classes
  * @package   PersonalWebsite

@@ -2,7 +2,7 @@
 /**
  * AdminBasePageModel - glue between the database and AdminBasePageController
  *
- * PHP Version 5.4
+ * PHP Version 5.3
  *
  * @category  AdminModels
  * @package   PersonalWebsite

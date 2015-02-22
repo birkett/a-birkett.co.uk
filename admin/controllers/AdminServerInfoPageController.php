@@ -2,7 +2,7 @@
 /**
  * AdminServeInfoPageController - pull data from model to populate the template
  *
- * PHP Version 5.4
+ * PHP Version 5.3
  *
  * @category  AdminControllers
  * @package   PersonalWebsite
