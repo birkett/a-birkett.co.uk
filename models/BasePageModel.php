@@ -30,13 +30,24 @@ class BasePageModel
      */
     public function getBaseURL()
     {
-        if (stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true) {
+        $serverProtocol = filter_input(
+            INPUT_SERVER,
+            'SERVER_PROTOCOL',
+            FILTER_SANITIZE_STRING
+        );
+        $serverHost     = filter_input(
+            INPUT_SERVER,
+            'HTTP_HOST',
+            FILTER_UNSAFE_RAW
+        );
+
+        if (stripos($serverProtocol, 'https') === true) {
             $proto = 'https://';
         } else {
             $proto = 'http://';
         }
 
-        return $proto . $_SERVER['HTTP_HOST'].'/';
+        return $proto.$serverHost.'/';
 
     }//end getBaseURL()
 

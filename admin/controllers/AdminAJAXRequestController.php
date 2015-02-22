@@ -33,14 +33,14 @@ class AdminAJAXRequestController extends AJAXRequestController
         $cont  = filter_input(INPUT_POST, 'content', FILTER_UNSAFE_RAW);
         $draft = filter_input(INPUT_POST, 'draft', FILTER_SANITIZE_STRING);
         // Used for the IP filter.
-        $ip = filter_input(INPUT_POST, 'ip', FILTER_UNSAFE_RAW);
+        $ip = filter_input(INPUT_POST, 'ip', FILTER_SANITIZE_STRING);
         // Used for the password change.
-        $cp  = filter_input(INPUT_POST, 'cp', FILTER_UNSAFE_RAW);
-        $np  = filter_input(INPUT_POST, 'np', FILTER_UNSAFE_RAW);
-        $cnp = filter_input(INPUT_POST, 'cnp', FILTER_UNSAFE_RAW);
+        $cp  = filter_input(INPUT_POST, 'cp', FILTER_SANITIZE_STRING);
+        $np  = filter_input(INPUT_POST, 'np', FILTER_SANITIZE_STRING);
+        $cnp = filter_input(INPUT_POST, 'cnp', FILTER_SANITIZE_STRING);
         // Used for the login.
-        $user = filter_input(INPUT_POST, 'username', FILTER_UNSAFE_RAW);
-        $pass = filter_input(INPUT_POST, 'password', FILTER_UNSAFE_RAW);
+        $user = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+        $pass = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
         $this->model = new \ABirkett\models\AdminAJAXRequestModel();
         switch($mode) {

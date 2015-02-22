@@ -26,11 +26,17 @@ class AdminServerInfoPageController extends AdminBasePageController
     public function __construct(&$output)
     {
         parent::__construct($output);
-        $this->model = new \ABirkett\models\AdminServerInfoPageModel();
+        $this->model    = new \ABirkett\models\AdminServerInfoPageModel();
+        $serverSoftware = filter_input(
+            INPUT_SERVER,
+            'SERVER_SOFTWARE',
+            FILTER_SANITIZE_STRING
+        );
+
         $tags = array(
-            '{APACHEVERSION}' => $_SERVER['SERVER_SOFTWARE'],
+            '{APACHEVERSION}' => $serverSoftware,
             '{PHPVERSION}' => phpversion(),
-            '{MYSQLVERSION}' => $this->model->database->ServerInfo(),
+            '{MYSQLVERSION}' => $this->model->database->serverInfo(),
             '{MYSQLIEXT}' => (extension_loaded('MySQLi') ? 'Y' : 'N'),
             '{PDOMYSQLEXT}' => (extension_loaded('PDO_MySQL') ? 'Y' : 'N'),
             '{PHPCURLEXT}' => (extension_loaded('CURL') ? 'Y' : 'N'),

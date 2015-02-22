@@ -25,7 +25,7 @@ class TwitterWidgetModel extends BasePageModel
     private function getLatestTweets()
     {
         $params = array(
-            'screen_name' => 'birkett26',
+            'screen_name' => TWEETS_WIDGET_USER,
             'count'       => TWEETS_WIDGET_MAX,
             'include_rts' => true
         );

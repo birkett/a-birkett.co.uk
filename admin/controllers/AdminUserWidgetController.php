@@ -27,6 +27,7 @@ class AdminUserWidgetController extends AdminBasePageController
     {
         parent::__construct($output);
         $this->model = new \ABirkett\models\AdminUserWidgetModel();
+
         if (isset($_SESSION['user']) === true) {
             $this->templateEngine->removeLogicTag(
                 '{LOGIN}',

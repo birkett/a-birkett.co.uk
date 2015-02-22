@@ -75,6 +75,9 @@ class Functions
         // Autoloader.
         spl_autoload_register('ABirkett\Functions::autoloader');
 
+        //Site config
+        Config::init();
+
     }//end PHPDefaults()
 
 

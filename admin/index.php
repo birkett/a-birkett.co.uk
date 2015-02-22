@@ -18,17 +18,19 @@ use ABirkett\classes\Page as Page;
 
 session_start();
 
-require_once '../config.php';
 require_once '../functions.php';
 
 Functions::declareAdminPage();
 Functions::PHPDefaults();
 
-if (isset($_POST['mode']) === true) {
+$mode   = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
+$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
+
+if (isset($mode) === true) {
     new \ABirkett\controllers\AdminAJAXRequestController();
 } elseif (isset($_SESSION['user']) === true) {
-    if (isset($_GET['action']) === true) {
-        switch($_GET['action']) {
+    if (isset($action) === true) {
+        switch($action) {
             case 'password':
                 new Page('Admin :: Password', 'userwidget', 'password');
                 break;
@@ -58,11 +60,8 @@ if (isset($_POST['mode']) === true) {
                 break;
 
             case 'logout':
-                if (isset($_SESSION['user']) === true) {
-                    unset($_SESSION['user']);
-                    session_destroy();
-                }
-
+                unset($_SESSION['user']);
+                session_destroy();
                 new Page('Admin :: Login', 'userwidget', 'login');
                 break;
 
