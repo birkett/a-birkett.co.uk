@@ -234,7 +234,11 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         $tweet = 'New Blog Post: '.$row['post_title'].' - ' . $url;
 
         $twitter = new \ABirkett\classes\TwitterOAuth();
-        $twitter->post('statuses/update', array('status' => $tweet));
+        $twitter->oAuthRequest(
+            'statuses/update',
+            'POST',
+            array('status' => $tweet)
+        );
 
         $this->database->runQuery(
             'UPDATE blog_posts SET post_tweeted=1 WHERE post_id = :postid',

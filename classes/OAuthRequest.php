@@ -48,7 +48,10 @@ class OAuthRequest
      */
     public function __construct($cKey, $oToken, $httpMethod, $httpUrl, $params)
     {
-        @$params || $params = array();
+        if (isset($params) === false) {
+            $params = array();
+        }
+
         $defaults = array(
             'oauth_version' => '1.0',
             'oauth_nonce' => md5(microtime() . mt_rand()),

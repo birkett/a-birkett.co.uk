@@ -30,7 +30,11 @@ class TwitterWidgetModel extends BasePageModel
             'include_rts' => true
         );
         $twitter = new \ABirkett\classes\TwitterOAuth();
-        return $twitter->get('statuses/user_timeline', $params);
+        return $twitter->oAuthRequest(
+            'statuses/user_timeline',
+            'GET',
+            $params
+        );
 
     }//end getLatestTweets()
 
@@ -42,6 +46,12 @@ class TwitterWidgetModel extends BasePageModel
     private function updateTweetsDatabase()
     {
         $tweets = $this->getLatestTweets();
+
+        if (isset($tweets->errors) === true || empty($tweets) === true) {
+            echo $tweets->errors[0]->message;
+            return;
+        }
+
         // WARNING.
         $this->database->runQuery('DELETE FROM site_tweets');
 
@@ -111,6 +121,7 @@ class TwitterWidgetModel extends BasePageModel
         $lastfetchtime = $this->database->runQuery(
             'SELECT tweet_updatetime FROM site_tweets LIMIT 1'
         );
+
         $lastfetchtime = $lastfetchtime[0]['tweet_updatetime'];
 
         // Update the tweets if not done in the last 15 mins.

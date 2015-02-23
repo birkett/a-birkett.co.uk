@@ -17,44 +17,6 @@ namespace ABirkett\classes;
 
 class TwitterOAuth
 {
-
-    /**
-     * Contains the last HTTP status code returned
-     * @var int $httpCode
-     */
-    public $httpCode;
-
-    /**
-     * Contains the last API call
-     * @var string $url
-     */
-    public $url;
-
-    /**
-     * Set up the API root URL
-     * @var string $host
-     */
-    public $host = 'https://api.twitter.com/1.1/';
-
-    /**
-     * Set timeout default
-     * @var int $timeout
-     */
-    public $timeout = 30;
-
-    /**
-     * Contains the last HTTP headers returned
-     * @var array $httpInfo
-     */
-    public $httpInfo;
-
-    /**
-     * Set the useragnet
-     * @var string $userAgent
-     */
-    public $useragent = 'TwitterOAuth v0.2.0-beta2';
-
-
     /**
      * Construct TwitterOAuth object
      * @return none
@@ -70,46 +32,15 @@ class TwitterOAuth
 
 
     /**
-     * GET wrapper for oAuthRequest.
-     * @param  string $url        Request string.
-     * @param  array  $parameters Additional parameters.
-     * @return array Response array
-     */
-    public function get($url, $parameters = array())
-    {
-        $response = $this->oAuthRequest($url, 'GET', $parameters);
-        return json_decode($response);
-
-    }//end get()
-
-
-    /**
-     * POST wrapper for oAuthRequest.
-     * @param  string $url        Request string.
-     * @param  array  $parameters Additional parameters.
-     * @return array Response array
-     */
-    public function post($url, $parameters = array())
-    {
-        $response = $this->oAuthRequest($url, 'POST', $parameters);
-        return json_decode($response);
-
-    }//end post()
-
-
-    /**
      * Format and sign an OAuth / API request
      * @param  string $url        Request string.
      * @param  string $method     Request method.
      * @param  array  $parameters Extra parameters array.
      * @return array Response
      */
-    private function oAuthRequest($url, $method, $parameters)
+    public function oAuthRequest($url, $method, $parameters)
     {
-        $test = 'json';
-        if (strrpos($url, 'https://') !== 0 && strrpos($url, 'http://') !== 0) {
-            $url = "{$this->host}{$url}.{$test}";
-        }
+        $url = 'https://api.twitter.com/1.1/'.$url.'.json';
 
         $request = new OAuthRequest(
             $this->consumerKey,
@@ -124,14 +55,18 @@ class TwitterOAuth
         );
         switch ($method) {
             case 'GET':
-                return $this->http($request->toUrl(), 'GET');
+                $response = $this->http($request->toUrl(), 'GET');
+                break;
             default:
-                return $this->http(
+                $response = $this->http(
                     $request->getNormalizedHttpUrl(),
                     $method,
                     $request->toPostdata()
                 );
+                break;
         }
+
+        return json_decode($response);
 
     }//end oAuthRequest()
 
@@ -145,32 +80,25 @@ class TwitterOAuth
      */
     private function http($url, $method, $postfields = null)
     {
-        $this->httpInfo = array();
         $ci = curl_init();
         // Curl settings.
-        curl_setopt($ci, CURLOPT_USERAGENT, $this->useragent);
-        curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, $this->timeout);
-        curl_setopt($ci, CURLOPT_TIMEOUT, $this->timeout);
+        curl_setopt($ci, CURLOPT_USERAGENT, 'twitterAPI/PHP');
+        curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, 30);
         curl_setopt($ci, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ci, CURLOPT_HTTPHEADER, array('Expect:'));
         curl_setopt($ci, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ci, CURLOPT_HEADERFUNCTION, array($this, 'getHeader'));
         curl_setopt($ci, CURLOPT_HEADER, false);
 
-        switch ($method) {
-            case 'POST':
-                curl_setopt($ci, CURLOPT_POST, true);
-                if (empty($postfields) === false) {
-                    curl_setopt($ci, CURLOPT_POSTFIELDS, $postfields);
-                }
-                break;
+        if ($method === 'POST') {
+            curl_setopt($ci, CURLOPT_POST, true);
+            if (empty($postfields) === false) {
+                curl_setopt($ci, CURLOPT_POSTFIELDS, $postfields);
+            }
         }
 
         curl_setopt($ci, CURLOPT_URL, $url);
         $response       = curl_exec($ci);
-        $this->httpCode = curl_getinfo($ci, CURLINFO_HTTP_CODE);
-        $this->httpInfo = array_merge($this->httpInfo, curl_getinfo($ci));
-        $this->url      = $url;
         curl_close($ci);
         return $response;
 
