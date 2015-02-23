@@ -11,7 +11,7 @@
 					</div>
 					<div class="fadeout"></div>
 					{/BLOGPOST}
-					
+
 					{COMMENT}
 					<div class="fadein"></div>
 					<div class="post">
@@ -20,7 +20,7 @@
 					</div>
 					<div class="fadeout"></div>
 					{/COMMENT}
-					
+
 					{PAGINATION}
 					<div class="fadein"></div>
 					<div class="post commentbox">
@@ -29,7 +29,7 @@
 					</div>
 					<div class="fadeout"></div>
 					{/PAGINATION}
-					
+
 					{NEWCOMMENT}
 					<script type="text/javascript" src="js/ajax.js"></script>
 					<script type="text/javascript">
@@ -40,16 +40,17 @@
 								document.getElementById("formusername").value="";
 								document.getElementById("formcomment").value="";
 							}
-							
+
 							var p = document.getElementById("formpostid").value;
 							var u = document.getElementById("formusername").value;
 							var c = document.getElementById("formcomment").value;
-							var data = "mode=postcomment&postid="+p+"&username="+u+"&comment="+c+"&challenge="+Recaptcha.get_challenge()+"&response="+Recaptcha.get_response();
+							var data = "mode=postcomment&postid="+p+"&username="+u+"&comment="+c+"&response="+grecaptcha.getResponse();
 
 							AJAXOpen("/", data, SuccessCallBack);
-							Recaptcha.reload();
+							grecaptcha.reset();
 						}
 					</script>
+					<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 					<div class="fadein"></div>
 					<div class="post commentbox">
 						<h2>New comment</h2>
@@ -60,10 +61,9 @@
 							<input id="formusername" type="text" size="50">
 							<p>Comment (10 - 500 characters):</p>
 							<textarea id="formcomment" rows="5" cols="40"></textarea>
+							<div class="g-recaptcha" data-sitekey="{RECAPTCHAKEY}"></div>
 						</form>
 						<p>Verification:</p>
-						<script type="text/javascript">var RecaptchaOptions = { theme : "blackglass" };</script>
-						<script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k={RECAPTCHAKEY}"></script><br />
 						<a href="" onClick="newcomment(); return false;">Submit</a>
 						<br /><br />
 					</div>

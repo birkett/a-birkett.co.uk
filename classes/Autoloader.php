@@ -26,7 +26,7 @@ class Autoloader
     {
         // Autoloader.
         spl_autoload_register(
-            function($class){
+            function($class) {
                 $prefix = 'ABirkett\\';
 
                 // Does the class use this namespace prefix?

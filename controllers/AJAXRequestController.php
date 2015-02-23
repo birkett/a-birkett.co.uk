@@ -72,7 +72,6 @@ class AJAXRequestController
         $post = filter_input(INPUT_POST, 'postid', FILTER_SANITIZE_NUMBER_INT);
         $user = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
         $comm = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
-        $chal = filter_input(INPUT_POST, 'challenge', FILTER_UNSAFE_RAW);
         $resp = filter_input(INPUT_POST, 'response', FILTER_UNSAFE_RAW);
         $ip   = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_UNSAFE_RAW);
 
@@ -80,7 +79,6 @@ class AJAXRequestController
             if (isset($post) === false
                 || isset($user) === false
                 || isset($comm)  === false
-                || isset($chal) === false
                 || isset($resp) === false
             ) {
                 $this->badRequest('Something did not send correctly.');
@@ -96,7 +94,6 @@ class AJAXRequestController
 
             if ($user === ''
                 || $comm === ''
-                || $chal === ''
                 || $resp === ''
             ) {
                 $this->badRequest('Please fill out all details.');
@@ -106,7 +103,7 @@ class AJAXRequestController
                 $this->badRequest('Username should be 3 - 20 characters');
             }
 
-            if (strlen($chal) < 10 || strlen($chal) > 500) {
+            if (strlen($comm) < 10 || strlen($comm) > 500) {
                 $this->badRequest('Comment should be 10 - 500 characters');
             }
 
@@ -116,14 +113,13 @@ class AJAXRequestController
                 );
             }
 
-            $recaptcha = new \ABirkett\classes\RecaptchaLib();
-            $captcha   = $recaptcha->checkAnswer(
+            $recaptcha = new \ABirkett\classes\Recaptcha(
                 RECAPTHCA_PRIVATE_KEY,
                 $ip,
-                $chal,
                 $resp
             );
-            if ($captcha['is_valid'] === true) {
+
+            if ($recaptcha->response->success === true) {
                 $this->model->postComment($post, $user, $comm, $ip);
                 $this->goodRequest('Comment Posted!');
             } else {
