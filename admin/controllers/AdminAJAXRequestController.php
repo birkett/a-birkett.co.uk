@@ -19,6 +19,21 @@ class AdminAJAXRequestController extends AJAXRequestController
 
 
     /**
+     * Is a user logged in
+     * @return boolean Is logged in
+     */
+    private function isLoggedIn()
+    {
+        if (isset($_SESSION['user']) === true) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }//end isLoggedIn()
+
+
+    /**
      * Handle private POST requests from AJAX
      * @return none
      */
@@ -46,6 +61,10 @@ class AdminAJAXRequestController extends AJAXRequestController
         switch($mode) {
             // Edit post mode.
             case 'editpost':
+                if ($this->isLoggedIn() === false) {
+                    parent::badRequest();
+                }
+
                 if (isset($posid) === false
                     || isset($title) === false
                     || isset($cont) === false
@@ -62,6 +81,10 @@ class AdminAJAXRequestController extends AJAXRequestController
 
             // Edit page mode.
             case 'editpage':
+                if ($this->isLoggedIn() === false) {
+                    parent::badRequest();
+                }
+
                 if (isset($pagid) === false || isset($cont) === false) {
                     parent::badRequest(
                         'Something was rejected. Check all fields are correct.'
@@ -74,6 +97,10 @@ class AdminAJAXRequestController extends AJAXRequestController
 
             // New post mode.
             case 'newpost':
+                if ($this->isLoggedIn() === false) {
+                    parent::badRequest();
+                }
+
                 if (isset($title) === false
                     || isset($cont) === false
                     || isset($draft) === false
@@ -89,6 +116,10 @@ class AdminAJAXRequestController extends AJAXRequestController
 
             // Add blocked IP mode.
             case 'addip':
+                if ($this->isLoggedIn() === false) {
+                    parent::badRequest();
+                }
+
                 if (isset($ip) === false || $ip === '') {
                     parent::badRequest('No address specified');
                 } else {
@@ -99,6 +130,10 @@ class AdminAJAXRequestController extends AJAXRequestController
 
             // Remove blocked IP mode.
             case 'removeip':
+                if ($this->isLoggedIn() === false) {
+                    parent::badRequest();
+                }
+
                 if (isset($ip) === false || $ip === '') {
                     parent::badRequest('No address specified');
                 } else {
@@ -109,6 +144,10 @@ class AdminAJAXRequestController extends AJAXRequestController
 
             // Change the admin password.
             case 'password':
+                if ($this->isLoggedIn() === false) {
+                    parent::badRequest();
+                }
+
                 if (isset($cp) === false
                     || isset($np) === false
                     || isset($cnp) === false

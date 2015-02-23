@@ -44,6 +44,7 @@ class AdminServerInfoPageModel extends AdminBasePageModel
             'extension_filter' => extension_loaded('filter'),
 
             'function_password_hash' => function_exists('password_hash'),
+            'function_http_resp_code' => function_exists('http_response_code'),
         );
 
         return $data;

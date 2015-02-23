@@ -40,6 +40,7 @@ class AdminServerInfoPageController extends AdminBasePageController
             '{PHPDATEEXT}' => $serverData['extension_date'],
             '{PHPFILTEREXT}' => $serverData['extension_filter'],
             '{PASSWORDHASH}' => $serverData['function_password_hash'],
+            '{HTTPRESPONSECODE}' => $serverData['function_http_resp_code'],
         );
         $this->templateEngine->parseTags($tags, $output);
 

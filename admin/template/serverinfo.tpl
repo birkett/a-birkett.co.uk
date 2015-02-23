@@ -12,6 +12,7 @@
 							PHP Date Support: {PHPDATEEXT}<br />
 							PHP Filter Support: {PHPFILTEREXT}<br />
 							<br />
-							PHP password_hash Support: {PASSWORDHASH}</br />
+							PHP password_hash Support: {PASSWORDHASH}<br />
+							PHP http_reponse_code Support: {HTTPRESPONSECODE}<br />
 						</div>
 						<div class="fadeout"></div>
