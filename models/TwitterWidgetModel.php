@@ -47,8 +47,13 @@ class TwitterWidgetModel extends BasePageModel
     {
         $tweets = $this->getLatestTweets();
 
-        if (isset($tweets->errors) === true || empty($tweets) === true) {
-            echo $tweets->errors[0]->message;
+        if (isset($tweets->errors) === true) {
+            echo 'Twitter error: '.$tweets->errors[0]->message;
+            return;
+        }
+
+        if (empty($tweets) === true) {
+            echo 'Could not connect to Twitter';
             return;
         }
 

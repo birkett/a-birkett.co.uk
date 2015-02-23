@@ -14,18 +14,17 @@
 
 namespace ABirkett;
 
-session_start();
-
 require_once '../classes/Autoloader.php';
 
 classes\Autoloader::init();
+classes\SessionManager::begin();
 
 $mode = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING);
 
 if (isset($mode) === true) {
     new controllers\AdminAJAXRequestController();
-} elseif (isset($_SESSION['user']) === true) {
+} elseif (classes\SessionManager::isLoggedIn() === true) {
     // Logged in and requesting a page.
     if (isset($page) === true) {
         switch($page) {
@@ -93,8 +92,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'logout':
-                unset($_SESSION['user']);
-                session_destroy();
+                classes\SessionManager::destroy();
                 new classes\Page(
                     'Admin :: Login',
                     'userwidget',

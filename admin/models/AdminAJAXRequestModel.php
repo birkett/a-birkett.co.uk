@@ -161,6 +161,8 @@ class AdminAJAXRequestModel extends AJAXRequestModel
             array(':uid' => 1)
         );
 
+        // Regenerate the session ID when changing password.
+        \ABirkett\classes\SessionManager::regenerateID();
         return true;
 
     }//end changePassword()
@@ -195,7 +197,9 @@ class AdminAJAXRequestModel extends AJAXRequestModel
             }
 
             if ($check === true) {
-                $_SESSION['user'] = $username;
+                // Set the user and regen the session ID on successful login.
+                \ABirkett\classes\SessionManager::setUser($username);
+                \ABirkett\classes\SessionManager::regenerateID();
                 return true;
             }
         }//end if
