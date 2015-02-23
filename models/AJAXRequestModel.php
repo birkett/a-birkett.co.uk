@@ -70,6 +70,7 @@ class AJAXRequestModel extends BasePageModel
             'SELECT COUNT(*) from blocked_addresses WHERE address = :ip',
             array(':ip' => $ip)
         );
+
         return $count[0]['COUNT(*)'];
 
     }//end checkIP()

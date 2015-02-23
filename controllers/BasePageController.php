@@ -40,14 +40,14 @@ class BasePageController
         $this->model          = new \ABirkett\models\BasePageModel();
         $this->templateEngine = \ABirkett\classes\TemplateEngine::getInstance();
 
-        $tags = [
+        $tags = array(
             '{BASEURL}' => $this->model->getBaseURL(),
             '{RAND2551}' => rand(0, 255),
             '{RAND2552}' => rand(0, 255),
             '{RAND2553}' => rand(0, 255),
             '{RAND12}' => rand(1, 2),
             '{THISYEAR}' => date('Y'),
-        ];
+        );
         $this->templateEngine->parseTags($tags, $output);
 
         if (CHRISTMAS === 1) {

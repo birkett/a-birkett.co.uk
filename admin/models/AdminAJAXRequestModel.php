@@ -150,7 +150,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         $row = $this->database->getRow($data);
 
         // Current password is wrong.
-        if ($this->checkCredentials($row[0], $currentp) === false) {
+        if ($this->checkCredentials($row['username'], $currentp) === false) {
             return false;
         }
 
@@ -184,10 +184,10 @@ class AdminAJAXRequestModel extends AJAXRequestModel
 
             // Password_verify is PHP 5.5+, fall back on older versions.
             if (function_exists('password_verify') === true) {
-                $check = password_verify($password, $dbhash[0]);
+                $check = password_verify($password, $dbhash['password']);
             } else {
                 $hash = $this->hashPassword($password);
-                ($hash === $dbhash[0]) ? $check = true : $check = false;
+                ($hash === $dbhash['password']) ? $check = true : $check = false;
             }
 
             if ($check === true) {
@@ -215,7 +215,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
 
         // Post doesnt exist or is a draft.
         $post = parent::getSinglePost($postid);
-        if ($this->database->GetNumRows($post) === 0) {
+        if ($this->database->getNumRows($post) === 0) {
             return;
         }
 

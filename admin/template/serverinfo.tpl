@@ -8,6 +8,10 @@
 							PHP MySQLi Support: {MYSQLIEXT}<br />
 							PHP PDO-MySQL Support: {PDOMYSQLEXT}<br />
 							PHP CURL Support: {PHPCURLEXT}<br />
+							PHP JSON Support: {PHPJSONEXT}<br />
+							PHP Date Support: {PHPDATEEXT}<br />
+							PHP Filter Support: {PHPFILTEREXT}<br />
+							<br />
 							PHP password_hash Support: {PASSWORDHASH}</br />
 						</div>
 						<div class="fadeout"></div>

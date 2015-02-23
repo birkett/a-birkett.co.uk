@@ -26,21 +26,20 @@ class AdminServerInfoPageController extends AdminBasePageController
     public function __construct(&$output)
     {
         parent::__construct($output);
-        $this->model    = new \ABirkett\models\AdminServerInfoPageModel();
-        $serverSoftware = filter_input(
-            INPUT_SERVER,
-            'SERVER_SOFTWARE',
-            FILTER_SANITIZE_STRING
-        );
+        $this->model = new \ABirkett\models\AdminServerInfoPageModel();
+        $serverData  = $this->model->getServerInfo();
 
         $tags = array(
-            '{APACHEVERSION}' => $serverSoftware,
-            '{PHPVERSION}' => phpversion(),
-            '{MYSQLVERSION}' => $this->model->database->serverInfo(),
-            '{MYSQLIEXT}' => (extension_loaded('MySQLi') ? 'Y' : 'N'),
-            '{PDOMYSQLEXT}' => (extension_loaded('PDO_MySQL') ? 'Y' : 'N'),
-            '{PHPCURLEXT}' => (extension_loaded('CURL') ? 'Y' : 'N'),
-            '{PASSWORDHASH}' => (function_exists('password_hash') ? 'Y' : 'N')
+            '{APACHEVERSION}' => $serverData['version_apache'],
+            '{PHPVERSION}' => $serverData['version_php'],
+            '{MYSQLVERSION}' => $serverData['version_mysql'],
+            '{MYSQLIEXT}' => $serverData['extension_mysqli'],
+            '{PDOMYSQLEXT}' => $serverData['extension_pdo_mysql'],
+            '{PHPCURLEXT}' => $serverData['extension_curl'],
+            '{PHPJSONEXT}' => $serverData['extension_json'],
+            '{PHPDATEEXT}' => $serverData['extension_date'],
+            '{PHPFILTEREXT}' => $serverData['extension_filter'],
+            '{PASSWORDHASH}' => $serverData['function_password_hash'],
         );
         $this->templateEngine->parseTags($tags, $output);
 

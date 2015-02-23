@@ -29,7 +29,7 @@ class AdminIPFilterPageController extends AdminBasePageController
         $this->model = new \ABirkett\models\AdminIPFilterPageModel();
         $result      = $this->model->getBlockedAddresses();
 
-        while ($row = $this->model->database->GetRow($result)) {
+        while ($row = $this->model->database->getRow($result)) {
             $tags = array(
                 '{IP}' => $row['address'],
                 '{TIMESTAMP}' => date(DATE_FORMAT, $row['blocked_timestamp']),
