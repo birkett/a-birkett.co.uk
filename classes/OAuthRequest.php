@@ -128,7 +128,7 @@ class OAuthRequest
         $parts = array(
             $this->getNormalizedHttpMethod(),
             $this->getNormalizedHttpUrl(),
-            $this->getSignableParameters()
+            $this->getSignableParameters(),
         );
 
         $parts = $this->urlencodeRFC3986($parts);
@@ -169,6 +169,7 @@ class OAuthRequest
         ) {
             $host = "$host:$port";
         }
+
         return "$scheme://$host$path";
 
     }//end getNormalizedHttpUrl()
@@ -182,9 +183,10 @@ class OAuthRequest
     {
         $postData = $this->toPostdata();
         $out      = $this->getNormalizedHttpUrl();
-        if ($postData) {
+        if (isset($postData) === true) {
             $out .= '?'.$postData;
         }
+
         return $out;
 
     }//end toUrl()
@@ -243,7 +245,7 @@ class OAuthRequest
                 ),
                 $input
             );
-        } elseif (is_scalar($input)) {
+        } elseif (is_scalar($input) === true) {
             return str_replace(
                 '+',
                 ' ',
@@ -272,18 +274,20 @@ class OAuthRequest
         if (isset($input) === false) {
             return array();
         }
+
         $pairs = explode('&', $input);
 
         $parsedParams = array();
         foreach ($pairs as $pair) {
             $split = explode('=', $pair, 2);
             $param = urldecode($split[0]);
-            $value = isset($split[1]) ? urldecode($split[1]) : '';
+            $value = (isset($split[1]) === true) ? urldecode($split[1]) : '';
 
             if (isset($parsedParams[$param]) === true) {
                 if (is_scalar($parsedParams[$param]) === true) {
                     $parsedParams[$param] = array($parsedParams[$param]);
                 }
+
                 $parsedParams[$param][] = $value;
             } else {
                 $parsedParams[$param] = $value;
@@ -305,7 +309,7 @@ class OAuthRequest
         if (empty($params) === true) {
             return '';
         }
-        // Urlencode both keys and values
+        // Urlencode both keys and values.
         $keys = $this->urlencodeRFC3986(array_keys($params));
         $values = $this->urlencodeRFC3986(array_values($params));
         $params = array_combine($keys, $values);

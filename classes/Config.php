@@ -93,7 +93,7 @@ class Config
         define('DATABASE_PORT', 3306);
         define('DATABASE_NAME', 'database');
 
-        // Define a symbol when requesting an admin page
+        // Define a symbol when requesting an admin page.
         $file = filter_input(INPUT_SERVER, 'PHP_SELF', FILTER_SANITIZE_STRING);
         if (strpos($file, ADMIN_FOLDER) !== false) {
             define('ADMINPAGE', 1);

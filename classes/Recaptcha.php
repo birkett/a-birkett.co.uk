@@ -63,5 +63,5 @@ class Recaptcha
         curl_close($ci);
         return $response;
 
-    }//end httpPost()
+    }//end http()
 }//end class

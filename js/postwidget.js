@@ -16,6 +16,7 @@ for (var i = 0; i < spans.length; i++) {
 
         // Prevent redirect on click.
         return false;
+
     }
 
     spans[i].onclick();

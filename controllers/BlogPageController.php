@@ -76,7 +76,6 @@ class BlogPageController extends BasePageController
                         $output
                     );
                 }//end while
-
             }//end if
 
             // Snow new comments box.

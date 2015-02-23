@@ -36,6 +36,7 @@ class AJAXRequestController
         } else {
             header("HTTP/1.0 200 OK", true, 200);
         }
+
         exit($m);
 
     }//end goodRequest()
@@ -53,6 +54,7 @@ class AJAXRequestController
         } else {
             header("HTTP/1.0 400 Bad Request", true, 400);
         }
+
         exit($m);
 
     }//end badRequest()

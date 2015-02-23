@@ -187,14 +187,18 @@ class AdminAJAXRequestModel extends AJAXRequestModel
                 $check = password_verify($password, $dbhash['password']);
             } else {
                 $hash = $this->hashPassword($password);
-                ($hash === $dbhash['password']) ? $check = true : $check = false;
+                if ($hash === $dbhash['password']) {
+                    $check = true;
+                } else {
+                    $check = false;
+                }
             }
 
             if ($check === true) {
                 $_SESSION['user'] = $username;
                 return true;
             }
-        }
+        }//end if
 
         return false;
 

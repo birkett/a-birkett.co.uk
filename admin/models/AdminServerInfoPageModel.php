@@ -20,8 +20,7 @@ class AdminServerInfoPageModel extends AdminBasePageModel
 
     /**
      * Grab some basic server info, like versions and PHP module support
-     * @param string $output Unparsed template passed by reference.
-     * @return none
+     * @return array Server data
      */
     public function getServerInfo()
     {
