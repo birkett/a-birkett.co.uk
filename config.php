@@ -24,6 +24,13 @@ class Config
      */
     public static function init()
     {
+        // Show PHP errors and warnings.
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+
+        // Timezone for converting timestamps.
+        date_default_timezone_set('Europe/London');
+
         // Default display format for timestamps.
         define('DATE_FORMAT', 'l dS F Y');
 
@@ -85,6 +92,12 @@ class Config
         define('DATABASE_PASSWORD', 'password');
         define('DATABASE_PORT', 3306);
         define('DATABASE_NAME', 'database');
+
+        // Define a symbol when requesting an admin page
+        $file = filter_input(INPUT_SERVER, 'PHP_SELF', FILTER_SANITIZE_STRING);
+        if (strpos($file, ADMIN_FOLDER) !== false) {
+            define('ADMINPAGE', 1);
+        }
 
     }//end init()
 }//end class

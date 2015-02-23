@@ -172,7 +172,7 @@ class TwitterWidgetModel extends BasePageModel
         $diff = round($diff);
 
         if ($diff !== 1) {
-            $periods[$j].= 's';
+            $periods[$j] .= 's';
         }
 
         return "$diff $periods[$j] {$tense}";

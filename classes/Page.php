@@ -25,7 +25,7 @@ class Page
      * @param string $template Requested template.
      * @return none
      */
-    public function __construct($title, $widget, $template)
+    public function __construct($title, $widget, $template, $controller)
     {
         $te = \ABirkett\classes\TemplateEngine::getInstance();
 
@@ -38,102 +38,39 @@ class Page
             $tags = array(
                 '{PAGE}' => $te->loadSubTemplate($template.'.tpl'),
                 '{WIDGET}' => $te->loadSubTemplate($widget.'.tpl'),
-                '{TITLE}' => $title
+                '{TITLE}' => $title,
             );
         }
 
         $te->parseTags($tags, $page);
 
-        if (defined('ADMINPAGE') === true) {
-            switch ($template) {
-                case 'listcomments':
-                    new \ABirkett\controllers\AdminListCommentsPageController(
-                        $page
-                    );
-                    break;
+        $controller = '\ABirkett\Controllers\\'.$controller;
 
-                case 'listposts':
-                    new \ABirkett\controllers\AdminListPostsPageController(
-                        $page
-                    );
-                    break;
-
-                case 'listpages':
-                    new \ABirkett\controllers\AdminListPagesPageController(
-                        $page
-                    );
-                    break;
-
-                case 'serverinfo':
-                    new \ABirkett\controllers\AdminServerInfoPageController(
-                        $page
-                    );
-                    break;
-
-                case 'ipfilter':
-                    new \ABirkett\controllers\AdminIPFilterPageController(
-                        $page
-                    );
-                    break;
-
-                case 'edit':
-                    new \ABirkett\controllers\AdminEditPageController(
-                        $page
-                    );
-                    break;
-
-                default:
-                    new \ABirkett\controllers\AdminBasePageController(
-                        $page
-                    );
-                    break;
-            }//end switch
-            if ($widget === 'userwidget') {
-                new \ABirkett\controllers\AdminUserWidgetController(
-                    $page
-                );
-            }
+        if ($template === 'generic') {
+            // Get name from title last word.
+            $e = explode(' ', $title);
+            new $controller($page, strtolower(array_pop($e)));
         } else {
-            switch ($template) {
-                case 'generic':
-                    // Get name from title last word.
-                    $e = explode(' ', $title);
-                    new \ABirkett\controllers\GenericPageController(
-                        $page,
-                        strtolower(array_pop($e))
-                    );
-                    break;
+            new $controller($page);
+        }
 
-                case 'blog':
-                    new \ABirkett\controllers\BlogPageController(
-                        $page
-                    );
-                    break;
+        if ($widget === 'postswidget') {
+            new \ABirkett\controllers\PostsWidgetController(
+                $page
+            );
+        }
 
-                case 'feed':
-                    new \ABirkett\controllers\FeedPageController(
-                        $page
-                    );
-                    break;
+        if ($widget === 'twitterwidget') {
+            new \ABirkett\controllers\TwitterWidgetController(
+                $page
+            );
+        }
 
-                default:
-                    new \ABirkett\controllers\BasePageController(
-                        $page
-                    );
-                    break;
-            }//end switch
-            if ($widget === 'postswidget') {
-                new \ABirkett\controllers\PostsWidgetController(
-                    $page
-                );
-            }
-
-            if ($widget === 'twitterwidget') {
-                new \ABirkett\controllers\TwitterWidgetController(
-                    $page
-                );
-            }
-        }//end if
+        if ($widget === 'userwidget') {
+            new \ABirkett\controllers\AdminUserWidgetController(
+                $page
+            );
+        }
 
         echo $page;
 

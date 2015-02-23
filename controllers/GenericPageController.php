@@ -29,7 +29,7 @@ class GenericPageController extends BasePageController
         parent::__construct($output);
         $this->model = new \ABirkett\models\GenericPageModel();
         $page        = $this->model->getPage($name);
-        $tags = array(
+        $tags        = array(
             '{PAGETITLE}' => $page['page_title'],
             '{PAGECONTENT}' => stripslashes($page['page_content']),
         );

@@ -28,7 +28,7 @@
 								<td>{IP}</td>
 								<td>{TIMESTAMP}</td>
 								<td><a href="" onClick="ipblock('{IP}'); return false;">Unblock</a></td>
-								<td><a href="{ADMINFOLDER}index.php?action=listcomments&ip={IP}">Comments</a></td>
+								<td><a href="{ADMINFOLDER}index.php?page=listcomments&ip={IP}">Comments</a></td>
 							</tr>
 							{/LOOP}
 						</table>

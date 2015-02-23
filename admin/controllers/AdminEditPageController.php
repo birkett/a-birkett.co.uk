@@ -34,7 +34,7 @@ class AdminEditPageController extends AdminBasePageController
 
         if (isset($pageid) === true) {
             // Page edit mode.
-            $page    = $this->model->getPage($pageid);
+            $page = $this->model->getPage($pageid);
             $cont = $page['page_content'];
 
             $vars  = 'var pageid=document.getElementById("formpageid").value;';

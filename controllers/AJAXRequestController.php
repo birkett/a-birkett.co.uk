@@ -76,62 +76,60 @@ class AJAXRequestController
         $resp = filter_input(INPUT_POST, 'response', FILTER_UNSAFE_RAW);
         $ip   = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_UNSAFE_RAW);
 
-        switch($mode) {
-            // Handle a new comment request.
-            case 'postcomment':
-                if (isset($post) === false
-                    || isset($user) === false
-                    || isset($comm)  === false
-                    || isset($chal) === false
-                    || isset($resp) === false
-                ) {
-                    $this->badRequest('Something did not send correctly.');
-                }
+        if ($mode === 'postcomment') {
+            if (isset($post) === false
+                || isset($user) === false
+                || isset($comm)  === false
+                || isset($chal) === false
+                || isset($resp) === false
+            ) {
+                $this->badRequest('Something did not send correctly.');
+            }
 
-                $postcheck = $this->model->database->GetNumRows(
-                    $this->model->getSinglePost($post)
+            $postcheck = $this->model->database->GetNumRows(
+                $this->model->getSinglePost($post)
+            );
+
+            if ($postcheck !== 1) {
+                $this->badRequest('Invalid Post ID.');
+            }
+
+            if ($user === ''
+                || $comm === ''
+                || $chal === ''
+                || $resp === ''
+            ) {
+                $this->badRequest('Please fill out all details.');
+            }
+
+            if (strlen($user) < 3 || strlen($user) > 20) {
+                $this->badRequest('Username should be 3 - 20 characters');
+            }
+
+            if (strlen($chal) < 10 || strlen($chal) > 500) {
+                $this->badRequest('Comment should be 10 - 500 characters');
+            }
+
+            if ($this->model->checkIP($ip) !== "0") {
+                $this->badRequest(
+                    'Your address is blocked, likely due to spam.'
                 );
+            }
 
-                if ($postcheck !== 1) {
-                    $this->badRequest('Invalid Post ID.');
-                }
-
-                if ($user === ''
-                    || $comm === ''
-                    || $chal === ''
-                    || $resp === ''
-                ) {
-                    $this->badRequest('Please fill out all details.');
-                }
-
-                if (strlen($user) < 3 || strlen($user) > 20) {
-                    $this->badRequest('Username should be 3 - 20 characters');
-                }
-
-                if (strlen($chal) < 10 || strlen($chal) > 500) {
-                    $this->badRequest('Comment should be 10 - 500 characters');
-                }
-
-                if ($this->model->checkIP($ip) !== "0") {
-                    $this->badRequest(
-                        'Your address is blocked, likely due to spam.'
-                    );
-                }
-
-                $recaptcha = new \ABirkett\classes\RecaptchaLib();
-                $captcha   = $recaptcha->checkAnswer(
-                    RECAPTHCA_PRIVATE_KEY,
-                    $ip,
-                    $chal,
-                    $resp
-                );
-                if ($captcha['is_valid'] === true) {
-                    $this->model->postComment($post, $user, $comm, $ip);
-                    $this->goodRequest('Comment Posted!');
-                } else {
-                    $this->badRequest('Captcha verification failed');
-                }
-        }//end switch
+            $recaptcha = new \ABirkett\classes\RecaptchaLib();
+            $captcha   = $recaptcha->checkAnswer(
+                RECAPTHCA_PRIVATE_KEY,
+                $ip,
+                $chal,
+                $resp
+            );
+            if ($captcha['is_valid'] === true) {
+                $this->model->postComment($post, $user, $comm, $ip);
+                $this->goodRequest('Comment Posted!');
+            } else {
+                $this->badRequest('Captcha verification failed');
+            }
+        }//end if
 
     }//end __construct()
 }//end class

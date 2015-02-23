@@ -20,58 +20,113 @@ session_start();
 
 require_once '../functions.php';
 
-Functions::declareAdminPage();
 Functions::PHPDefaults();
 
-$mode   = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
-$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
+$mode = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
+$page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING);
 
 if (isset($mode) === true) {
     new \ABirkett\controllers\AdminAJAXRequestController();
 } elseif (isset($_SESSION['user']) === true) {
-    if (isset($action) === true) {
-        switch($action) {
+    // Logged in and requesting a page.
+    if (isset($page) === true) {
+        switch($page) {
             case 'password':
-                new Page('Admin :: Password', 'userwidget', 'password');
+                new Page(
+                    'Admin :: Password',
+                    'userwidget',
+                    'password',
+                    'AdminBasePageController'
+                );
                 break;
 
             case 'serverinfo':
-                new Page('Admin :: Server Info', 'userwidget', 'serverinfo');
+                new Page(
+                    'Admin :: Server Info',
+                    'userwidget',
+                    'serverinfo',
+                    'AdminServerInfoPageController'
+                );
                 break;
 
             case 'ipfilter':
-                new Page('Admin :: IP Filter', 'userwidget', 'ipfilter');
+                new Page(
+                    'Admin :: IP Filter',
+                    'userwidget',
+                    'ipfilter',
+                    'AdminIPFilterPageController'
+                );
                 break;
 
             case 'listpages':
-                new Page('Admin :: Pages', 'userwidget', 'listpages');
+                new Page(
+                    'Admin :: Pages',
+                    'userwidget',
+                    'listpages',
+                    'AdminListPagesPageController'
+                );
                 break;
 
             case 'listcomments':
-                new Page('Admin :: Comments', 'userwidget', 'listcomments');
+                new Page(
+                    'Admin :: Comments',
+                    'userwidget',
+                    'listcomments',
+                    'AdminListCommentsPageController'
+                );
                 break;
 
             case 'listposts':
-                new Page('Admin :: Posts', 'userwidget', 'listposts');
+                new Page(
+                    'Admin :: Posts',
+                    'userwidget',
+                    'listposts',
+                    'AdminListPostsPageController'
+                );
                 break;
 
             case 'edit':
-                new Page('Admin :: Editor', 'userwidget', 'edit');
+                new Page(
+                    'Admin :: Editor',
+                    'userwidget',
+                    'edit',
+                    'AdminEditPageController'
+                );
                 break;
 
             case 'logout':
                 unset($_SESSION['user']);
                 session_destroy();
-                new Page('Admin :: Login', 'userwidget', 'login');
+                new Page(
+                    'Admin :: Login',
+                    'userwidget',
+                    'login',
+                    'AdminBasePageController'
+                );
                 break;
 
             default:
-                new Page('Admin :: Main', 'userwidget', 'index');
+                new Page(
+                    'Admin :: Main',
+                    'userwidget',
+                    'index',
+                    'AdminBasePageController'
+                );
                 break;
         }//end switch
     } else {
-        new Page('Admin :: Main', 'userwidget', 'index');
+        new Page(
+            'Admin :: Main',
+            'userwidget',
+            'index',
+            'AdminBasePageController'
+        );
     }//end if
 } else {
-    new Page('Admin :: Login', 'userwidget', 'login');
+    new Page(
+        'Admin :: Login',
+        'userwidget',
+        'login',
+        'AdminBasePageController'
+    );
 }//end if

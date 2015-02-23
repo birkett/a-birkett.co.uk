@@ -32,7 +32,6 @@ class AdminListPostsPageController extends AdminBasePageController
         while ($row = $this->model->database->getRow($result)) {
             ($row['post_draft'] === '1') ? $draft = ' (DRAFT)' : $draft = '';
             $tags = array(
-                '{ADMINFOLDER}' => ADMIN_FOLDER,
                 '{POSTID}' => $row['post_id'],
                 '{POSTTITLE}' => $row['post_title'].$draft
             );

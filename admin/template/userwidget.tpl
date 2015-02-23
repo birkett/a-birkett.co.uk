@@ -1,5 +1,5 @@
 					{LOGGEDIN}
-					<p>Logged in as {USERNAME} <a href="{ADMINFOLDER}index.php?action=logout">(Logout)</a></p>
+					<p>Logged in as {USERNAME} <a href="{ADMINFOLDER}index.php?page=logout">(Logout)</a></p>
 					{/LOGGEDIN}
 					{LOGIN}
 					<script type="text/javascript" src="js/ajax.js"></script>

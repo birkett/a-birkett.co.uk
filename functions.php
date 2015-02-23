@@ -48,9 +48,7 @@ class Functions
 
         // Try the admin folder.
         if (defined('ADMINPAGE') === true) {
-            $baseDir .= ADMIN_FOLDER;
-
-            $file = $baseDir.$endpath;
+            $file = $baseDir.ADMIN_FOLDER.$endpath;
             if (file_exists($file) === true) {
                 include $file;
             }
@@ -65,13 +63,6 @@ class Functions
      */
     public static function PHPDefaults()
     {
-        // Show PHP errors and warnings.
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
-
-        // Timezone for converting timestamps.
-        date_default_timezone_set('Europe/London');
-
         // Autoloader.
         spl_autoload_register('ABirkett\Functions::autoloader');
 
@@ -79,15 +70,4 @@ class Functions
         Config::init();
 
     }//end PHPDefaults()
-
-
-    /**
-     * Define a symbol so public functions can act accordingly on an admin page
-     * @return void
-     */
-    public static function declareAdminPage()
-    {
-        define('ADMINPAGE', 1);
-
-    }//end declareAdminPage()
 }//end class
