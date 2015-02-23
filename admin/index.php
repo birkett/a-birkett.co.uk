@@ -14,25 +14,23 @@
 
 namespace ABirkett;
 
-use ABirkett\classes\Page as Page;
-
 session_start();
 
-require_once '../functions.php';
+require_once '../classes/Autoloader.php';
 
-Functions::PHPDefaults();
+classes\Autoloader::init();
 
 $mode = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING);
 
 if (isset($mode) === true) {
-    new \ABirkett\controllers\AdminAJAXRequestController();
+    new controllers\AdminAJAXRequestController();
 } elseif (isset($_SESSION['user']) === true) {
     // Logged in and requesting a page.
     if (isset($page) === true) {
         switch($page) {
             case 'password':
-                new Page(
+                new classes\Page(
                     'Admin :: Password',
                     'userwidget',
                     'password',
@@ -41,7 +39,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'serverinfo':
-                new Page(
+                new classes\Page(
                     'Admin :: Server Info',
                     'userwidget',
                     'serverinfo',
@@ -50,7 +48,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'ipfilter':
-                new Page(
+                new classes\Page(
                     'Admin :: IP Filter',
                     'userwidget',
                     'ipfilter',
@@ -59,7 +57,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'listpages':
-                new Page(
+                new classes\Page(
                     'Admin :: Pages',
                     'userwidget',
                     'listpages',
@@ -68,7 +66,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'listcomments':
-                new Page(
+                new classes\Page(
                     'Admin :: Comments',
                     'userwidget',
                     'listcomments',
@@ -77,7 +75,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'listposts':
-                new Page(
+                new classes\Page(
                     'Admin :: Posts',
                     'userwidget',
                     'listposts',
@@ -86,7 +84,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'edit':
-                new Page(
+                new classes\Page(
                     'Admin :: Editor',
                     'userwidget',
                     'edit',
@@ -97,7 +95,7 @@ if (isset($mode) === true) {
             case 'logout':
                 unset($_SESSION['user']);
                 session_destroy();
-                new Page(
+                new classes\Page(
                     'Admin :: Login',
                     'userwidget',
                     'login',
@@ -106,7 +104,7 @@ if (isset($mode) === true) {
                 break;
 
             default:
-                new Page(
+                new classes\Page(
                     'Admin :: Main',
                     'userwidget',
                     'index',
@@ -115,7 +113,7 @@ if (isset($mode) === true) {
                 break;
         }//end switch
     } else {
-        new Page(
+        new classes\Page(
             'Admin :: Main',
             'userwidget',
             'index',
@@ -123,7 +121,7 @@ if (isset($mode) === true) {
         );
     }//end if
 } else {
-    new Page(
+    new classes\Page(
         'Admin :: Login',
         'userwidget',
         'login',

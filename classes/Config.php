@@ -12,7 +12,7 @@
  * @link      http://www.a-birkett.co.uk
  */
 
-namespace ABirkett;
+namespace ABirkett\classes;
 
 class Config
 {

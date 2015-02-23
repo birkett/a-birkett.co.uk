@@ -14,11 +14,9 @@
 
 namespace ABirkett;
 
-use ABirkett\classes\Page as Page;
+require_once 'classes\Autoloader.php';
 
-require_once 'functions.php';
-
-Functions::PHPDefaults();
+classes\Autoloader::init();
 
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING);
 $mode = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
@@ -26,7 +24,7 @@ $mode = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
 if (isset($page) === true) {
     switch($page) {
         case 'about':
-            new Page(
+            new classes\Page(
                 SITE_TITLE.' :: About',
                 'twitterwidget',
                 'generic',
@@ -35,7 +33,7 @@ if (isset($page) === true) {
             break;
 
         case 'blog':
-            new Page(
+            new classes\Page(
                 SITE_TITLE.' :: Blog',
                 'postswidget',
                 'blog',
@@ -44,7 +42,7 @@ if (isset($page) === true) {
             break;
 
         case 'contact':
-            new Page(
+            new classes\Page(
                 SITE_TITLE.' :: Contact',
                 'twitterwidget',
                 'generic',
@@ -53,7 +51,7 @@ if (isset($page) === true) {
             break;
 
         case 'photos':
-            new Page(
+            new classes\Page(
                 SITE_TITLE.' :: Photos',
                 'twitterwidget',
                 'generic',
@@ -62,7 +60,7 @@ if (isset($page) === true) {
             break;
 
         case 'videos':
-            new Page(
+            new classes\Page(
                 SITE_TITLE.' :: Videos',
                 'twitterwidget',
                 'generic',
@@ -71,7 +69,7 @@ if (isset($page) === true) {
             break;
 
         case 'projects':
-            new Page(
+            new classes\Page(
                 SITE_TITLE.' :: Projects',
                 'twitterwidget',
                 'generic',
@@ -80,7 +78,7 @@ if (isset($page) === true) {
             break;
 
         case '404':
-            new Page(
+            new classes\Page(
                 SITE_TITLE.' :: Error',
                 'twitterwidget',
                 'generic',
@@ -89,7 +87,7 @@ if (isset($page) === true) {
             break;
 
         case 'feed':
-            new Page(
+            new classes\Page(
                 SITE_TITLE.' :: Blog Feed',
                 'none',
                 'feed',
@@ -98,7 +96,7 @@ if (isset($page) === true) {
             break;
 
         default:
-            new Page(
+            new classes\Page(
                 SITE_TITLE.' :: Home',
                 'twitterwidget',
                 'index',
@@ -107,9 +105,9 @@ if (isset($page) === true) {
             break;
     }//end switch
 } elseif (isset($mode) === true) {
-    new \ABirkett\controllers\AJAXRequestController();
+    new controllers\AJAXRequestController();
 } else {
-    new Page(
+    new classes\Page(
         SITE_TITLE.' :: Home',
         'twitterwidget',
         'index',
