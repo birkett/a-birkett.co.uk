@@ -32,9 +32,9 @@ class PostsWidgetController extends BasePageController
 
         while ($post = $this->model->database->getRow($posts)) {
             $month = date('F Y', $post['post_timestamp']);
-            $postArray["$month"][] = array(
+            $postArray[$month][] = array(
                                       'title' => $post['post_title'],
-                                      'id'    => $post['post_id']
+                                      'id'    => $post['post_id'],
                                      );
         }
 
@@ -53,10 +53,10 @@ class PostsWidgetController extends BasePageController
             $this->templateEngine->replaceTag('{MONTH}', $month, $temp);
             foreach ($data as $post) {
                 $tempitem = $itemloop;
-                $tags = array(
-                         '{POSTID}' => $post['id'],
-                         '{POSTTITLE}' => $post['title'],
-                        );
+                $tags     = array(
+                             '{POSTID}'    => $post['id'],
+                             '{POSTTITLE}' => $post['title'],
+                            );
                 $this->templateEngine->parseTags($tags, $tempitem);
                 $tempitem .= "\n{ITEMLOOP}";
                 $this->templateEngine->replaceTag(

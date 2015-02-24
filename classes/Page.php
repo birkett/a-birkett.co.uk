@@ -37,9 +37,9 @@ class Page
             $page = $te->loadPageTemplate('page.tpl');
 
             $tags = array(
-                     '{PAGE}' => $te->loadSubTemplate($template.'.tpl'),
+                     '{PAGE}'   => $te->loadSubTemplate($template.'.tpl'),
                      '{WIDGET}' => $te->loadSubTemplate($widget.'.tpl'),
-                     '{TITLE}' => $title,
+                     '{TITLE}'  => $title,
                     );
         }
 
@@ -50,21 +50,21 @@ class Page
         if ($template === 'generic') {
             // Get name from title last word.
             $e = explode(' ', $title);
-            new $controller($page, strtolower(array_pop($e)));
+            $p = new $controller($page, strtolower(array_pop($e)));
         } else {
-            new $controller($page);
+            $p = new $controller($page);
         }
 
         if ($widget === 'postswidget') {
-            new \ABirkett\controllers\PostsWidgetController($page);
+            $p = new \ABirkett\controllers\PostsWidgetController($page);
         }
 
         if ($widget === 'twitterwidget') {
-            new \ABirkett\controllers\TwitterWidgetController($page);
+            $p = new \ABirkett\controllers\TwitterWidgetController($page);
         }
 
         if ($widget === 'userwidget') {
-            new \ABirkett\controllers\AdminUserWidgetController($page);
+            $p = new \ABirkett\controllers\AdminUserWidgetController($page);
         }
 
         echo $page;

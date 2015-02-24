@@ -174,20 +174,21 @@ class TwitterWidgetModel extends BasePageModel
         $now = time();
 
         if ($now > $timestamp) {
-            $diff  = $now - $timestamp;
+            $diff  = ($now - $timestamp);
             $tense = 'ago';
         } else {
-            $diff  = $timestamp - $now;
+            $diff  = ($timestamp - $now);
             $tense = 'from now';
         }
 
-        for ($j = 0; $diff >= $lengths[$j] && $j < count($lengths) - 1; $j++) {
+        $lengthsCount = count($lengths);
+        for ($j = 0; $diff >= $lengths[$j] && $j < ($lengthsCount - 1); $j++) {
             $diff /= $lengths[$j];
         }
 
         $diff = round($diff);
 
-        // Test the float value to 5 digit precision
+        // Test the float value to 5 digit precision.
         if (abs($diff - 1) > 0.0001) {
             $periods[$j] .= 's';
         }

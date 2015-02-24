@@ -59,6 +59,7 @@ class TwitterOAuth
             case 'GET':
                 $response = $this->http($request->toUrl(), 'GET');
                 break;
+
             default:
                 $response = $this->http(
                     $request->getNormalizedHttpUrl(),
@@ -118,7 +119,7 @@ class TwitterOAuth
         $i = strpos($header, ':');
         if (empty($i) === false) {
             $key   = str_replace('-', '_', strtolower(substr($header, 0, $i)));
-            $value = trim(substr($header, $i + 2));
+            $value = trim(substr($header, ($i + 2)));
             $this->httpHeader[$key] = $value;
         }
 

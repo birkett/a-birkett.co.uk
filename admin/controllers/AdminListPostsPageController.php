@@ -39,7 +39,7 @@ class AdminListPostsPageController extends AdminBasePageController
 
             $tags = array(
                      '{POSTID}'    => $row['post_id'],
-                     '{POSTTITLE}' => $row['post_title'].$draft
+                     '{POSTTITLE}' => $row['post_title'].$draft,
                     );
             $temp = $this->templateEngine->logicTag(
                 '{LOOP}',

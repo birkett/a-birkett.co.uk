@@ -62,7 +62,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
              ':ti'    => $title,
              ':txt'   => $content,
              ':draft' => ($draft === 'true') ? 1 : 0,
-             ':pid'   => $postid
+             ':pid'   => $postid,
             )
         );
         $this->tweetPost($postid);
@@ -102,7 +102,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         }
 
         $this->database->runQuery(
-            'INSERT INTO blocked_addresses(address, blocked_timestamp)' .
+            'INSERT INTO blocked_addresses(address, blocked_timestamp)'.
             ' VALUES(:ip, :timestamp)',
             array(
              ':ip'        => $ip,
@@ -230,9 +230,9 @@ class AdminAJAXRequestModel extends AJAXRequestModel
             return;
         }
 
-        $url = parent::getBaseURL() . 'blog/' . $row['post_id'];
+        $url = parent::getBaseURL().'blog/'.$row['post_id'];
 
-        $tweet = 'New Blog Post: '.$row['post_title'].' - ' . $url;
+        $tweet = 'New Blog Post: '.$row['post_title'].' - '.$url;
 
         $twitter = new \ABirkett\classes\TwitterOAuth();
         $twitter->oAuthRequest(

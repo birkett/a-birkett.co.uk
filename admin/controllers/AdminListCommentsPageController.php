@@ -33,7 +33,7 @@ class AdminListCommentsPageController extends AdminBasePageController
         if (isset($ip) === true) {
             $result = $this->model->getAllComments($ip);
         } else {
-            $result = $this->model->getAllComments();
+            $result = $this->model->getAllComments(null);
         }
 
         while ($row = $this->model->database->getRow($result)) {
@@ -43,7 +43,7 @@ class AdminListCommentsPageController extends AdminBasePageController
                      '{USERNAME}'  => $row['comment_username'],
                      '{TIMESTAMP}' => date(DATE_FORMAT, $time),
                      '{IP}'        => $row['client_ip'],
-                     '{POSTID}'    => $row['post_id']
+                     '{POSTID}'    => $row['post_id'],
                     );
             $temp = $this->templateEngine->logicTag(
                 '{LOOP}',

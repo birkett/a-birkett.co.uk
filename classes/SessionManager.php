@@ -59,7 +59,7 @@ class SessionManager
         $_SESSION['user']    = $user;
         $_SESSION['ip']      = $ip;
         $_SESSION['ua']      = $ua;
-        $_SESSION['EXPIRES'] = time() + SESSION_EXPIRY_TIME;
+        $_SESSION['EXPIRES'] = (time() + SESSION_EXPIRY_TIME);
 
         self::regenerateID();
 

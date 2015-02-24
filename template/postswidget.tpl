@@ -1,4 +1,4 @@
-							<a href="#"><h2 onClick="toggleposts(); return false;">All Posts &#x25BC;</h2></a>
+							<a href="#"><h2 onClick="togglePosts(); return false;">All Posts &#x25BC;</h2></a>
 							<div id="allposts">
 							<ul>
 								{MONTHLOOP}

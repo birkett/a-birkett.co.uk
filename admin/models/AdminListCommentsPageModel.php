@@ -23,9 +23,9 @@ class AdminListCommentsPageModel extends AdminBasePageModel
      * @param  string $ip Optional IP address to filter fetched comments.
      * @return array  Array of comments data
      */
-    public function getAllComments($ip = '')
+    public function getAllComments($ip)
     {
-        if ($ip === '') {
+        if ($ip === null) {
             $filter = ' ';
         } else {
             $filter = ' WHERE client_ip="'.$ip.'"';

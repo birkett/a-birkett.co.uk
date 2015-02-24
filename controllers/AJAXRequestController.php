@@ -126,7 +126,7 @@ class AJAXRequestController
                 $this->badRequest('Comment should be 10 - 500 characters');
             }
 
-            if ($this->model->checkIP($ip) !== "0") {
+            if ($this->model->checkIP($ip) !== '0') {
                 $this->badRequest(
                     'Your address is blocked, likely due to spam.'
                 );

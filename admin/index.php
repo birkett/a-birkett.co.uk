@@ -23,13 +23,13 @@ $mode = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING);
 
 if (isset($mode) === true) {
-    new controllers\AdminAJAXRequestController();
+    $p = new controllers\AdminAJAXRequestController();
 } elseif (classes\SessionManager::isLoggedIn() === true) {
     // Logged in and requesting a page.
     if (isset($page) === true) {
         switch($page) {
             case 'password':
-                new classes\Page(
+                $p = new classes\Page(
                     'Admin :: Password',
                     'userwidget',
                     'password',
@@ -38,7 +38,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'serverinfo':
-                new classes\Page(
+                $p = new classes\Page(
                     'Admin :: Server Info',
                     'userwidget',
                     'serverinfo',
@@ -47,7 +47,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'ipfilter':
-                new classes\Page(
+                $p = new classes\Page(
                     'Admin :: IP Filter',
                     'userwidget',
                     'ipfilter',
@@ -56,7 +56,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'listpages':
-                new classes\Page(
+                $p = new classes\Page(
                     'Admin :: Pages',
                     'userwidget',
                     'listpages',
@@ -65,7 +65,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'listcomments':
-                new classes\Page(
+                $p = new classes\Page(
                     'Admin :: Comments',
                     'userwidget',
                     'listcomments',
@@ -74,7 +74,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'listposts':
-                new classes\Page(
+                $p = new classes\Page(
                     'Admin :: Posts',
                     'userwidget',
                     'listposts',
@@ -83,7 +83,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'edit':
-                new classes\Page(
+                $p = new classes\Page(
                     'Admin :: Editor',
                     'userwidget',
                     'edit',
@@ -92,7 +92,7 @@ if (isset($mode) === true) {
                 break;
 
             default:
-                new classes\Page(
+                $p = new classes\Page(
                     'Admin :: Main',
                     'userwidget',
                     'index',
@@ -101,7 +101,7 @@ if (isset($mode) === true) {
                 break;
         }//end switch
     } else {
-        new classes\Page(
+        $p = new classes\Page(
             'Admin :: Main',
             'userwidget',
             'index',
@@ -109,7 +109,7 @@ if (isset($mode) === true) {
         );
     }//end if
 } else {
-    new classes\Page(
+    $p = new classes\Page(
         'Admin :: Login',
         'userwidget',
         'login',

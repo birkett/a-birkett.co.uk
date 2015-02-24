@@ -110,8 +110,8 @@ class BlogPageController extends BasePageController
                     $this->templateEngine->parseTags($tags, $output);
                 }
 
-                if (($offset + 1) * BLOG_POSTS_PER_PAGE < $numberofposts) {
-                    $linkoffset = $offset + 2;
+                if (($offset + 1) * (BLOG_POSTS_PER_PAGE < $numberofposts)) {
+                    $linkoffset = ($offset + 2);
                     $tags = array(
                              '{PAGENEXTLINK}' => '/blog/page/'.$linkoffset,
                              '{PAGENEXTTEXT}' => 'Next Page',

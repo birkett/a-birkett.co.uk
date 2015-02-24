@@ -136,7 +136,7 @@ class TemplateEngine
         $textToDelete = substr(
             $content,
             $beginningPos,
-            ($endPos + strlen($end)) - $beginningPos
+            (($endPos + strlen($end)) - $beginningPos)
         );
         $content      = str_replace($textToDelete, '', $content);
 

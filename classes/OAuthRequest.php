@@ -65,6 +65,7 @@ class OAuthRequest
             $this->parseParameters(parse_url($httpUrl, PHP_URL_QUERY)),
             $params
         );
+
         $this->parameters = $params;
         $this->httpMethod = $httpMethod;
         $this->httpUrl    = $httpUrl;
@@ -76,23 +77,11 @@ class OAuthRequest
      * Set a request parameter
      * @param string $name            Parameter name.
      * @param string $value           Parameter value.
-     * @param bool   $allowDuplicates Boolean to allow duplicates in the array.
      * @return none
      */
-    public function setParameter($name, $value, $allowDuplicates = true)
+    public function setParameter($name, $value)
     {
-        if ($allowDuplicates && isset($this->parameters[$name]) === true) {
-            // Already added parameter(s) with this name, so add to the list.
-            if (is_scalar($this->parameters[$name]) === true) {
-                // This is the first duplicate, so transform scalar (string),
-                // into an array so we can add the duplicates.
-                $this->parameters[$name] = array($this->parameters[$name]);
-            }
-
-            $this->parameters[$name][] = $value;
-        } else {
-                $this->parameters[$name] = $value;
-        }
+        $this->parameters[$name] = $value;
 
     }//end setParameter()
 
@@ -170,10 +159,10 @@ class OAuthRequest
         if (($scheme === 'https' && $port !== '443')
             || ($scheme === 'http' && $port !== '80')
         ) {
-            $host = "$host:$port";
+            $host = $host.':'.$port;
         }
 
-        return "$scheme://$host$path";
+        return $scheme.'://'.$host.$path;
 
     }//end getNormalizedHttpUrl()
 
@@ -214,7 +203,7 @@ class OAuthRequest
      */
     public function signRequest($cSec, $oSec)
     {
-        $this->setParameter('oauth_signature_method', 'HMAC-SHA1', false);
+        $this->setParameter('oauth_signature_method', 'HMAC-SHA1');
 
         $baseString = $this->getSignatureBaseString();
 
@@ -228,7 +217,7 @@ class OAuthRequest
 
         $signature = base64_encode(hash_hmac('sha1', $baseString, $key, true));
 
-        $this->setParameter('oauth_signature', $signature, false);
+        $this->setParameter('oauth_signature', $signature);
 
     }//end signRequest()
 
