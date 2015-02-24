@@ -31,6 +31,9 @@ class Config
         // Timezone for converting timestamps.
         date_default_timezone_set('Europe/London');
 
+        // Time to make sessions expire after (in seconds).
+        define('SESSION_EXPIRY_TIME', 3600);
+
         // Default display format for timestamps.
         define('DATE_FORMAT', 'l dS F Y');
 

@@ -47,7 +47,7 @@ class AdminAJAXRequestController extends AJAXRequestController
             // Edit post mode.
             case 'editpost':
                 if (\ABirkett\classes\SessionManager::isLoggedIn() === false) {
-                    parent::badRequest();
+                    parent::badRequest('Not logged in.');
                 }
 
                 if (isset($posid) === false
@@ -67,7 +67,7 @@ class AdminAJAXRequestController extends AJAXRequestController
             // Edit page mode.
             case 'editpage':
                 if (\ABirkett\classes\SessionManager::isLoggedIn() === false) {
-                    parent::badRequest();
+                    parent::badRequest('Not logged in.');
                 }
 
                 if (isset($pagid) === false || isset($cont) === false) {
@@ -83,7 +83,7 @@ class AdminAJAXRequestController extends AJAXRequestController
             // New post mode.
             case 'newpost':
                 if (\ABirkett\classes\SessionManager::isLoggedIn() === false) {
-                    parent::badRequest();
+                    parent::badRequest('Not logged in.');
                 }
 
                 if (isset($title) === false
@@ -102,7 +102,7 @@ class AdminAJAXRequestController extends AJAXRequestController
             // Add blocked IP mode.
             case 'addip':
                 if (\ABirkett\classes\SessionManager::isLoggedIn() === false) {
-                    parent::badRequest();
+                    parent::badRequest('Not logged in.');
                 }
 
                 if (isset($ip) === false || $ip === '') {
@@ -116,7 +116,7 @@ class AdminAJAXRequestController extends AJAXRequestController
             // Remove blocked IP mode.
             case 'removeip':
                 if (\ABirkett\classes\SessionManager::isLoggedIn() === false) {
-                    parent::badRequest();
+                    parent::badRequest('Not logged in.');
                 }
 
                 if (isset($ip) === false || $ip === '') {
@@ -130,7 +130,7 @@ class AdminAJAXRequestController extends AJAXRequestController
             // Change the admin password.
             case 'password':
                 if (\ABirkett\classes\SessionManager::isLoggedIn() === false) {
-                    parent::badRequest();
+                    parent::badRequest('Not logged in.');
                 }
 
                 if (isset($cp) === false
@@ -153,7 +153,8 @@ class AdminAJAXRequestController extends AJAXRequestController
                     parent::badRequest('Incorrect username or password.');
                 } else {
                     if ($this->model->checkCredentials($user, $pass) === true) {
-                        \ABirkett\classes\SessionManager::regenerateID();
+                        // Set up the session on successful login.
+                        \ABirkett\classes\SessionManager::doLogin($user);
                         parent::goodRequest();
                     } else {
                         parent::badRequest('Incorrect username or password.');

@@ -24,6 +24,11 @@ class SessionManager
      */
     public static function begin()
     {
+        session_name('ABirkettAdmin');
+        session_set_cookie_params(
+            SESSION_EXPIRY_TIME,
+            '/'.ADMIN_FOLDER
+        );
         session_start();
 
     }//end begin()
@@ -46,9 +51,17 @@ class SessionManager
      * @param string $user Username to store.
      * @return void
      */
-    public static function setUser($user)
+    public static function doLogin($user)
     {
-        $_SESSION['user'] = $user;
+        $ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_UNSAFE_RAW);
+        $ua = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_UNSAFE_RAW);
+
+        $_SESSION['user']    = $user;
+        $_SESSION['ip']      = $ip;
+        $_SESSION['ua']      = $ua;
+        $_SESSION['EXPIRES'] = time() + SESSION_EXPIRY_TIME;
+
+        SessionManager::regenerateID();
 
     }//end setUser()
 
@@ -70,11 +83,35 @@ class SessionManager
      */
     public static function isLoggedIn()
     {
-        if (isset($_SESSION['user']) === true) {
-            return true;
-        } else {
+        $ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_UNSAFE_RAW);
+        $ua = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_UNSAFE_RAW);
+
+        if (isset($_SESSION['user']) === false) {
             return false;
         }
+
+        if (isset($_SESSION['ip']) === false) {
+            return false;
+        }
+
+        if (isset($_SESSION['ua']) === false) {
+            return false;
+        }
+
+        if (isset($_SESSION['EXPIRES']) === false) {
+            return false;
+        }
+
+        if ($_SESSION['ip'] !== $ip
+            || $_SESSION['ua'] !== $ua
+            || $_SESSION['EXPIRES'] < time()
+        ) {
+            SessionManager::destroy();
+            return false;
+        }
+
+        // If everything passed, session is valid.
+        return true;
 
     }//end isLoggedIn()
 
@@ -85,7 +122,7 @@ class SessionManager
      */
     public static function regenerateID()
     {
-        session_regenerate_id();
+        session_regenerate_id(true);
 
     }//end regenerateID()
 }//end class

@@ -197,9 +197,6 @@ class AdminAJAXRequestModel extends AJAXRequestModel
             }
 
             if ($check === true) {
-                // Set the user and regen the session ID on successful login.
-                \ABirkett\classes\SessionManager::setUser($username);
-                \ABirkett\classes\SessionManager::regenerateID();
                 return true;
             }
         }//end if
