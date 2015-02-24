@@ -20,9 +20,10 @@ class Page
 
     /**
      * Generate a page
-     * @param string $title    Page title.
-     * @param string $widget   Request widget.
-     * @param string $template Requested template.
+     * @param string $title      Page title.
+     * @param string $widget     Request widget.
+     * @param string $template   Requested template.
+     * @param string $controller Page controller to use.
      * @return none
      */
     public function __construct($title, $widget, $template, $controller)
@@ -55,21 +56,15 @@ class Page
         }
 
         if ($widget === 'postswidget') {
-            new \ABirkett\controllers\PostsWidgetController(
-                $page
-            );
+            new \ABirkett\controllers\PostsWidgetController($page);
         }
 
         if ($widget === 'twitterwidget') {
-            new \ABirkett\controllers\TwitterWidgetController(
-                $page
-            );
+            new \ABirkett\controllers\TwitterWidgetController($page);
         }
 
         if ($widget === 'userwidget') {
-            new \ABirkett\controllers\AdminUserWidgetController(
-                $page
-            );
+            new \ABirkett\controllers\AdminUserWidgetController($page);
         }
 
         echo $page;

@@ -164,15 +164,20 @@ p.failed {
 
 .tweet {
     text-align: left;
+    padding: 16px;
+    margin-top: 16px;
+    background: rgba(1, 1, 1, 0.5);
+    border-radius: 36px;
 }
 
 .tweet img {
     float: left;
+    margin-bottom: 36px;
+    margin-right: 12px;
 }
 
 /*Tile defaults*/
-.tile, .rectile
-{
+.tile, .rectile {
     background-color: #87C2ED;
     background-repeat: no-repeat;
     padding: 0;

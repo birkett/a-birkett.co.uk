@@ -1,3 +1,4 @@
+							<img src="img/twitter.png" alt="twitter" />
 							<div class="tweets">
 							{TWEETLOOP}
 								<div class="tweet">

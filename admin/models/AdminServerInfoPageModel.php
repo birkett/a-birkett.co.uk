@@ -35,12 +35,15 @@ class AdminServerInfoPageModel extends AdminBasePageModel
             'version_apache' => $serverSoftware,
             'version_mysql' => $this->database->serverInfo(),
 
-            'extension_mysqli' => extension_loaded('mysqli'),
             'extension_pdo_mysql' => extension_loaded('pdo_mysql'),
             'extension_curl' => extension_loaded('curl'),
             'extension_json' => extension_loaded('json'),
             'extension_date' => extension_loaded('date'),
             'extension_filter' => extension_loaded('filter'),
+            'extension_hash' => extension_loaded('hash'),
+            'extension_session' => extension_loaded('session'),
+            'extension_pcre' => extension_loaded('pcre'),
+            'extension_mcrypt' => extension_loaded('mcrypt'),
 
             'function_password_hash' => function_exists('password_hash'),
             'function_http_resp_code' => function_exists('http_response_code'),
