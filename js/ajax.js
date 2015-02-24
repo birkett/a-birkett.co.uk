@@ -10,12 +10,16 @@ function AJAXOpen(target, data, SuccessCallBack)
         if (xmlhttp.readyState === 4) {
             switch(xmlhttp.status) {
                 case 200:
-                    document.getElementById("response").innerHTML = '<p class="success">' + xmlhttp.response + '</p>';
+                    document.getElementById("response").innerHTML = '<p class="success">' + xmlhttp.responseText + '</p>';
                     SuccessCallBack();
                     break;
 
+                case 205:
+                    location.reload();
+                    break;
+
                 default:
-                    document.getElementById("response").innerHTML = '<p class="failed">' + xmlhttp.response + '</p>';
+                    document.getElementById("response").innerHTML = '<p class="failed">' + xmlhttp.responseText + '</p>';
                     break;
             }
         }

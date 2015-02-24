@@ -27,8 +27,10 @@ class AdminUserWidgetController extends AdminBasePageController
     {
         parent::__construct($output);
         $this->model = new \ABirkett\models\AdminUserWidgetModel();
+        $username    = \ABirkett\classes\SessionManager::getUser();
 
-        if (\ABirkett\classes\SessionManager::isLoggedIn() === true) {
+        // Username will not be set if not logged in.
+        if (isset($username) === true) {
             $this->templateEngine->removeLogicTag(
                 '{LOGIN}',
                 '{/LOGIN}',
@@ -36,7 +38,7 @@ class AdminUserWidgetController extends AdminBasePageController
             );
             $this->templateEngine->replaceTag(
                 '{USERNAME}',
-                \ABirkett\classes\SessionManager::getUser(),
+                $username,
                 $output
             );
         } else {

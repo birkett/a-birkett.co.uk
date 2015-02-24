@@ -162,6 +162,12 @@ class AdminAJAXRequestController extends AJAXRequestController
                 }
                 break;
 
+            // Logout.
+            case 'logout':
+                    \ABirkett\classes\SessionManager::doLogout();
+                    parent::resetRequest();
+                break;
+
             default:
                 parent::badRequest();
                 break;

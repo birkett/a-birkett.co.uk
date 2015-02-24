@@ -91,16 +91,6 @@ if (isset($mode) === true) {
                 );
                 break;
 
-            case 'logout':
-                classes\SessionManager::destroy();
-                new classes\Page(
-                    'Admin :: Login',
-                    'userwidget',
-                    'login',
-                    'AdminBasePageController'
-                );
-                break;
-
             default:
                 new classes\Page(
                     'Admin :: Main',

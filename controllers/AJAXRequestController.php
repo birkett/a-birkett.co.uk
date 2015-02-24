@@ -43,6 +43,23 @@ class AJAXRequestController
 
 
     /**
+     * Exit the script with a reset content code, used for redirecting
+     * @return void
+     */
+    protected function resetRequest()
+    {
+        if (function_exists("http_response_code") === true) {
+            http_response_code(205);
+        } else {
+            header("HTTP/1.0 205 Reset Content", true, 205);
+        }
+
+        exit();
+
+    }//end goodRequest()
+
+
+    /**
      * Exit the script with a failed HTTP code
      * @param string $m Optional message.
      * @return void

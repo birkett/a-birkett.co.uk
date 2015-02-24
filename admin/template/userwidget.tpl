@@ -6,7 +6,7 @@
 					<script type="text/javascript">
 					function login()
 					{
-						SuccessCallBack = function() { self.location="{ADMINFOLDER}index.php"; }
+						SuccessCallBack = function() { location.reload(); }
 						var username = document.getElementById("username").value;
 						var password = document.getElementById("password").value;
 						var data = "mode=login&username="+username+"&password="+password;

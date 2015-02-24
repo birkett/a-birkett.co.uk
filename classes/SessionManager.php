@@ -38,7 +38,7 @@ class SessionManager
      * Destroy the open session
      * @return void
      */
-    public static function destroy()
+    public static function doLogout()
     {
         session_unset();
         session_destroy();
@@ -68,11 +68,15 @@ class SessionManager
 
     /**
      * Get the username from the session
-     * @return string Username
+     * @return string Username or null on not logged in
      */
     public static function getUser()
     {
-        return $_SESSION['user'];
+        if (isset($_SESSION['user']) === true) {
+            return $_SESSION['user'];
+        } else {
+            return null;
+        }
 
     }//end getUser()
 
@@ -106,7 +110,7 @@ class SessionManager
             || $_SESSION['ua'] !== $ua
             || $_SESSION['EXPIRES'] < time()
         ) {
-            SessionManager::destroy();
+            SessionManager::doLogout();
             return false;
         }
 
