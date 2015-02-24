@@ -18,9 +18,10 @@
 						<div id="response"></div>
 						<form>
 							<p>IP Address:</p>
-							<input id="formip" type="text" size="65" value="">
+							<input id="formip" type="text" size="65" value=""/>
+							<br /><br />
+							<input type="submit" class="submit" onClick="ipblock(); return false;"/>
 						</form>
-						<a href="" onClick="ipblock(); return false;"><p>Submit</p></a>
 
 						<table><tr><th>IP</th><th>Time blocked</th><th>Unblock</th><th>Comments</th></tr>
 							{LOOP}

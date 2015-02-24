@@ -43,7 +43,7 @@ class SessionManager
         session_unset();
         session_destroy();
 
-    }//end destroy()
+    }//end doLogout()
 
 
     /**
@@ -63,7 +63,7 @@ class SessionManager
 
         SessionManager::regenerateID();
 
-    }//end setUser()
+    }//end doLogin()
 
 
     /**

@@ -56,16 +56,16 @@
 						<h2>New comment</h2>
 						<div id="response"></div>
 						<form>
-							<input id="formpostid" type="hidden" value="{COMMENTPOSTID}">
+							<input id="formpostid" type="hidden" value="{COMMENTPOSTID}"/>
 							<p>Your name (3 - 20 characters):</p>
-							<input id="formusername" type="text" size="50">
+							<input id="formusername" type="text" size="50"/>
 							<p>Comment (10 - 500 characters):</p>
 							<textarea id="formcomment" rows="5" cols="40"></textarea>
+							<p>Human verification:</p>
 							<div class="g-recaptcha" data-sitekey="{RECAPTCHAKEY}"></div>
+							<br /><br />
+							<input type="submit" class="submit" onClick="newcomment(); return false;"/>
 						</form>
-						<p>Verification:</p>
-						<a href="" onClick="newcomment(); return false;">Submit</a>
-						<br /><br />
 					</div>
 					<div class="fadeout"></div>
 					{/NEWCOMMENT}

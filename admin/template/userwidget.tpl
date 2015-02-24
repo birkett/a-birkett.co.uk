@@ -18,6 +18,7 @@
 					<form>
 						<input type="text" name="username" id="username"/>
 						<input type="password" name="password" id="password"/>
+						<br /><br />
+						<input type="submit" class="submit" onClick="login(); return false;"/>
 					</form>
-					<a href="" onClick="login(); return false;"><p>Submit</p></a>
 					{/LOGIN}

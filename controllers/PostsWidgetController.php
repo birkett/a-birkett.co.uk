@@ -30,9 +30,9 @@ class PostsWidgetController extends BasePageController
         $posts       = $this->model->getAllPosts();
         $postArray   = array();
 
-        while ($post = $this->model->database->GetRow($posts)) {
+        while ($post = $this->model->database->getRow($posts)) {
             $month = date('F Y', $post['post_timestamp']);
-            $postArray['$month'][] = array(
+            $postArray["$month"][] = array(
                 'title' => $post['post_title'],
                 'id' => $post['post_id']
             );

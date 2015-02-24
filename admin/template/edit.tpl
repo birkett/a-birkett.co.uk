@@ -1,34 +1,3 @@
-						<div class="fadein"></div>
-						<div class="post">
-						{PAGEEDIT}
-							<h2>Edit Page</h2>
-							<div id="response"></div>
-							<form>
-								<input id="formpageid" type="hidden" value="{POSTID}">
-							</form>
-						{/PAGEEDIT}
-						{POSTEDIT}
-							<h2>Edit Post</h2>
-							<div id="response"></div>
-							<form>
-								<input id="formpostid" type="hidden" value="{POSTID}">
-								<p>Post Title:</p>
-								<input id="formtitle" type="text" size="65" value="{POSTTITLE}">
-								<p>Draft</p>
-								<input id="formdraft" type="checkbox" {DRAFT}>
-							</form>
-						{/POSTEDIT}
-						{NEWPOST}
-							<h2>New Post</h2>
-							<div id="response"></div>
-							<form>
-								<p>Post Title:</p>
-								<input id="formtitle" type="text" size="65" value="">
-								<p>Draft</p>
-								<input id="formdraft" type="checkbox">
-							</form>
-						{/NEWPOST}
-
 						<script type="text/javascript" src="http://tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 						<script type="text/javascript">
 							tinymce.init({
@@ -53,10 +22,36 @@
 								AJAXOpen("{ADMINFOLDER}", data, SuccessCallBack);
 							}
 						</script>
-						<form method="post">
-							<textarea>{CONTENT}</textarea>
-						</form>
 
-						<a href="" onClick="doedit(); return false;"><p>Submit</p></a>
+						<div class="fadein"></div>
+						<div class="post">
+							<div id="response"></div>
+							{PAGEEDIT}
+								<h2>Edit Page</h2>
+
+								<form>
+									<input id="formpageid" type="hidden" value="{POSTID}"/>
+							{/PAGEEDIT}
+							{POSTEDIT}
+								<h2>Edit Post</h2>
+								<form>
+									<input id="formpostid" type="hidden" value="{POSTID}"/>
+									<p>Post Title:</p>
+									<input id="formtitle" type="text" size="65" value="{POSTTITLE}"/>
+									<p>Draft</p>
+									<input id="formdraft" type="checkbox" {DRAFT}/>
+							{/POSTEDIT}
+							{NEWPOST}
+								<h2>New Post</h2>
+								<form>
+									<p>Post Title:</p>
+									<input id="formtitle" type="text" size="65" value=""/>
+									<p>Draft</p>
+									<input id="formdraft" type="checkbox"/>
+							{/NEWPOST}
+								<textarea>{CONTENT}</textarea>
+								<br /><br />
+								<input type="submit" class="submit" onClick="doedit(); return false;"/>
+							</form>
 						</div>
 						<div class="fadeout"></div>

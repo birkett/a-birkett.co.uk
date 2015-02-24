@@ -187,7 +187,8 @@ class TwitterWidgetModel extends BasePageModel
 
         $diff = round($diff);
 
-        if ($diff !== 1) {
+        // Test the float value to 5 digit precision
+        if (abs($diff - 1) > 0.0001) {
             $periods[$j] .= 's';
         }
 

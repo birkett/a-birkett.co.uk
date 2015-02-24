@@ -17,12 +17,13 @@
 						<div id="response"></div>
 						<form>
 							<p>Current Password:</p>
-							<input id="formcp" type="password" size="65" value="">
+							<input id="formcp" type="password" size="65" value=""/>
 							<p>New Password:</p>
-							<input id="formnp" type="password" size="65" value="">
+							<input id="formnp" type="password" size="65" value=""/>
 							<p>Confirm New Password:</p>
-							<input id="formcnp" type="password" size="65" value="">
+							<input id="formcnp" type="password" size="65" value=""/>
+							<br /><br />
+							<input type="submit" class="submit" onClick="setpassword(); return false;"/>
 						</form>
-						<a href="" onClick="setpassword(); return false;"><p>Submit</p></a>
 						</div>
 						<div class="fadeout"></div>
