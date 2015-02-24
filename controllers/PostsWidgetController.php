@@ -33,9 +33,9 @@ class PostsWidgetController extends BasePageController
         while ($post = $this->model->database->getRow($posts)) {
             $month = date('F Y', $post['post_timestamp']);
             $postArray[$month][] = array(
-                                      'title' => $post['post_title'],
-                                      'id'    => $post['post_id'],
-                                     );
+                                    'title' => $post['post_title'],
+                                    'id'    => $post['post_id'],
+                                   );
         }
 
         $monthloop = $this->templateEngine->logicTag(

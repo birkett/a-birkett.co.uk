@@ -37,7 +37,7 @@ class AJAXRequestModel extends BasePageModel
              ':uname' => $username,
              ':cmnt'  => $comment,
              ':time'  => time(),
-             ':ip'    => $clientip
+             ':ip'    => $clientip,
             )
         );
 

@@ -49,7 +49,7 @@ class AdminListPostsPageController extends AdminBasePageController
             $this->templateEngine->parseTags($tags, $temp);
             $temp .= "\n{LOOP}";
             $this->templateEngine->replaceTag('{LOOP}', $temp, $output);
-        }
+        }//end while
 
         $this->templateEngine->removeLogicTag('{LOOP}', '{/LOOP}', $output);
 

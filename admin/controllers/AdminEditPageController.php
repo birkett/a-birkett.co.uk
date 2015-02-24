@@ -111,7 +111,7 @@ class AdminEditPageController extends AdminBasePageController
                 '{/POSTEDIT}',
                 $output
             );
-        }
+        }//end if
 
         $tags = array(
                  '{VARS}'    => $vars,

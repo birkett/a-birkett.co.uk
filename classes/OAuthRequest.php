@@ -75,8 +75,8 @@ class OAuthRequest
 
     /**
      * Set a request parameter
-     * @param string $name            Parameter name.
-     * @param string $value           Parameter value.
+     * @param string $name  Parameter name.
+     * @param string $value Parameter value.
      * @return none
      */
     public function setParameter($name, $value)
@@ -92,7 +92,7 @@ class OAuthRequest
      */
     public function getSignableParameters()
     {
-        // Grab all parameters
+        // Grab all parameters.
         $params = $this->parameters;
 
         // Remove oauth_signature if present.
@@ -206,16 +206,13 @@ class OAuthRequest
         $this->setParameter('oauth_signature_method', 'HMAC-SHA1');
 
         $baseString = $this->getSignatureBaseString();
-
-        $keyParts = array(
-                     $cSec,
-                     $oSec,
-                    );
-
-        $keyParts = $this->urlencodeRFC3986($keyParts);
-        $key = implode('&', $keyParts);
-
-        $signature = base64_encode(hash_hmac('sha1', $baseString, $key, true));
+        $keyParts   = array(
+                       $cSec,
+                       $oSec,
+                      );
+        $keyParts   = $this->urlencodeRFC3986($keyParts);
+        $key        = implode('&', $keyParts);
+        $signature  = base64_encode(hash_hmac('sha1', $baseString, $key, true));
 
         $this->setParameter('oauth_signature', $signature);
 
@@ -301,8 +298,9 @@ class OAuthRequest
         if (empty($params) === true) {
             return '';
         }
+
         // Urlencode both keys and values.
-        $keys = $this->urlencodeRFC3986(array_keys($params));
+        $keys   = $this->urlencodeRFC3986(array_keys($params));
         $values = $this->urlencodeRFC3986(array_values($params));
         $params = array_combine($keys, $values);
 

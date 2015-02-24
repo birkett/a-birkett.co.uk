@@ -24,11 +24,11 @@ class TwitterWidgetModel extends BasePageModel
      */
     private function getLatestTweets()
     {
-        $params = array(
-                   'screen_name' => TWEETS_WIDGET_USER,
-                   'count'       => TWEETS_WIDGET_MAX,
-                   'include_rts' => true
-                  );
+        $params  = array(
+                    'screen_name' => TWEETS_WIDGET_USER,
+                    'count'       => TWEETS_WIDGET_MAX,
+                    'include_rts' => true
+                   );
         $twitter = new \ABirkett\classes\TwitterOAuth();
         return $twitter->oAuthRequest(
             'statuses/user_timeline',
@@ -111,7 +111,7 @@ class TwitterWidgetModel extends BasePageModel
                  ':updatetime' => $exectime,
                 )
             );
-        }
+        }//end foreach
 
     }//end updateTweetsDatabase()
 

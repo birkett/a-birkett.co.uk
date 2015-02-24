@@ -106,7 +106,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
             ' VALUES(:ip, :timestamp)',
             array(
              ':ip'        => $ip,
-             ':timestamp' => time()
+             ':timestamp' => time(),
             )
         );
 

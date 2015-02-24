@@ -101,7 +101,7 @@ class TwitterOAuth
         }
 
         curl_setopt($ci, CURLOPT_URL, $url);
-        $response       = curl_exec($ci);
+        $response = curl_exec($ci);
         curl_close($ci);
         return $response;
 

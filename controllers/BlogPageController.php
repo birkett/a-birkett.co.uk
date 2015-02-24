@@ -56,11 +56,11 @@ class BlogPageController extends BasePageController
                 while ($comment = $this->model->database->GetRow($comments)) {
                     $tags = array(
                              '{COMMENTAUTHOR}' =>
-                             stripslashes($comment['comment_username']),
+                               stripslashes($comment['comment_username']),
                              '{COMMENTTIMESTAMP}' =>
-                             date(DATE_FORMAT, $comment['comment_timestamp']),
+                               date(DATE_FORMAT, $comment['comment_timestamp']),
                              '{COMMENTCONTENT}' =>
-                             stripslashes($comment['comment_text'])
+                               stripslashes($comment['comment_text'])
                             );
                     $temp = $this->templateEngine->logicTag(
                         '{COMMENT}',
@@ -139,15 +139,12 @@ class BlogPageController extends BasePageController
         while ($post = $this->model->database->GetRow($result)) {
             $tags = array(
                      '{POSTTIMESTAMP}' =>
-                     date(DATE_FORMAT, $post['post_timestamp']),
-                     '{POSTID}' =>
-                     $post['post_id'],
-                     '{POSTTITLE}' =>
-                     $post['post_title'],
-                     '{POSTCONTENT}' =>
-                     stripslashes($post['post_content']),
+                         date(DATE_FORMAT, $post['post_timestamp']),
+                     '{POSTID}' => $post['post_id'],
+                     '{POSTTITLE}' => $post['post_title'],
+                     '{POSTCONTENT}' => stripslashes($post['post_content']),
                      '{COMMENTCOUNT}' =>
-                     $this->model->getNumberOfComments($post['post_id'])
+                         $this->model->getNumberOfComments($post['post_id'])
                     );
             $temp = $this->templateEngine->logicTag(
                 '{BLOGPOST}',
@@ -157,7 +154,7 @@ class BlogPageController extends BasePageController
             $this->templateEngine->parseTags($tags, $temp);
             $temp .= "\n{BLOGPOST}";
             $this->templateEngine->replaceTag('{BLOGPOST}', $temp, $output);
-        }
+        }//end while
 
         $this->templateEngine->removeLogicTag(
             '{BLOGPOST}',

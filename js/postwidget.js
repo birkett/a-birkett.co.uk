@@ -12,14 +12,16 @@
  */
 
 // This is not inside a function, so it runs on page load.
-var spans = document.getElementsByTagName('span');
+var spans       = document.getElementsByTagName('span');
 var spansLength = spans.length;
+
 for (var i = 0; i < spansLength; i++) {
     spans[i].onclick = function()
     {
         if (this.parentNode) {
-            var childList = this.parentNode.getElementsByTagName('UL');
+            var childList       = this.parentNode.getElementsByTagName('UL');
             var childListLength = childList.length;
+
             for (var j = 0; j < childListLength; j++) {
                 var currentState = childList[j].style.display;
                 if (currentState === "none") {
