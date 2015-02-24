@@ -72,7 +72,7 @@ class BlogPageModel extends BasePageModel
     {
         $count = $this->database->runQuery(
             'SELECT COUNT(*) FROM blog_comments WHERE post_id = :postid',
-            array(":postid" => $postid)
+            array(':postid' => $postid)
         );
         return $count[0]['COUNT(*)'];
 
@@ -90,7 +90,7 @@ class BlogPageModel extends BasePageModel
             'SELECT comment_username, comment_text, comment_timestamp'.
             ' FROM blog_comments WHERE post_id = :pid'.
             ' ORDER BY comment_timestamp ASC',
-            array(":pid" => $postid)
+            array(':pid' => $postid)
         );
 
     }//end getCommentsOnPost()

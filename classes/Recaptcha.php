@@ -35,7 +35,7 @@ class Recaptcha
     {
         $reply = $this->http(
             'https://www.google.com/recaptcha/api/siteverify',
-            "?secret=".$privkey."&response=".$response."&remoteip=".$remoteip
+            '?secret='.$privkey.'&response='.$response.'&remoteip='.$remoteip
         );
 
         $this->response = json_decode($reply);

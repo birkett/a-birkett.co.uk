@@ -53,12 +53,12 @@ class OAuthRequest
         }
 
         $defaults = array(
-            'oauth_version' => '1.0',
-            'oauth_nonce' => md5(microtime() . mt_rand()),
-            'oauth_timestamp' => time(),
-            'oauth_consumer_key' => $cKey,
-            'oauth_token' => $oToken,
-        );
+                     'oauth_version'      => '1.0',
+                     'oauth_nonce'        => md5(microtime() . mt_rand()),
+                     'oauth_timestamp'    => time(),
+                     'oauth_consumer_key' => $cKey,
+                     'oauth_token'        => $oToken,
+                    );
 
         $params = array_merge($defaults, $params);
         $params = array_merge(
@@ -129,10 +129,10 @@ class OAuthRequest
     public function getSignatureBaseString()
     {
         $parts = array(
-            $this->getNormalizedHttpMethod(),
-            $this->getNormalizedHttpUrl(),
-            $this->getSignableParameters(),
-        );
+                  $this->getNormalizedHttpMethod(),
+                  $this->getNormalizedHttpUrl(),
+                  $this->getSignableParameters(),
+                 );
 
         $parts = $this->urlencodeRFC3986($parts);
 
@@ -219,9 +219,9 @@ class OAuthRequest
         $baseString = $this->getSignatureBaseString();
 
         $keyParts = array(
-            $cSec,
-            $oSec,
-        );
+                     $cSec,
+                     $oSec,
+                    );
 
         $keyParts = $this->urlencodeRFC3986($keyParts);
         $key = implode('&', $keyParts);
@@ -243,8 +243,8 @@ class OAuthRequest
         if (is_array($input) === true) {
             return array_map(
                 array(
-                    'ABirkett\classes\OAuthRequest',
-                    'urlencodeRFC3986',
+                 'ABirkett\classes\OAuthRequest',
+                 'urlencodeRFC3986',
                 ),
                 $input
             );

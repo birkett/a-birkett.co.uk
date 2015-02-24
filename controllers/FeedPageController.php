@@ -40,13 +40,13 @@ class FeedPageController extends BasePageController
 
         while ($post = $this->model->database->GetRow($posts)) {
             $temp = $itemloop;
+            $time = $post['post_timestamp'];
             $tags = array(
-                '{POSTTITLE}' => $post['post_title'],
-                '{POSTID}' => $post['post_id'],
-                '{POSTTIMESTAMP}' =>
-                    date('D, d M Y H:i:s O', $post['post_timestamp']),
-                '{POSTCONTENT}' => $post['post_content'],
-            );
+                     '{POSTTITLE}'     => $post['post_title'],
+                     '{POSTID}'        => $post['post_id'],
+                     '{POSTTIMESTAMP}' => date('D, d M Y H:i:s O', $time),
+                     '{POSTCONTENT}'   => $post['post_content'],
+                    );
             $this->templateEngine->parseTags($tags, $temp);
             $temp .= "\n{LOOP}";
             $this->templateEngine->replaceTag('{LOOP}', $temp, $output);

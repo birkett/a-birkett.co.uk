@@ -30,11 +30,17 @@ class AdminListPostsPageController extends AdminBasePageController
         $result      = $this->model->getAllPosts();
 
         while ($row = $this->model->database->getRow($result)) {
-            ($row['post_draft'] === '1') ? $draft = ' (DRAFT)' : $draft = '';
+            // Small conversion to the correct strings.
+            if ($row['post_draft'] === '1') {
+                $draft = ' (DRAFT)';
+            } else {
+                $draft = '';
+            }
+
             $tags = array(
-                '{POSTID}' => $row['post_id'],
-                '{POSTTITLE}' => $row['post_title'].$draft
-            );
+                     '{POSTID}'    => $row['post_id'],
+                     '{POSTTITLE}' => $row['post_title'].$draft
+                    );
             $temp = $this->templateEngine->logicTag(
                 '{LOOP}',
                 '{/LOOP}',

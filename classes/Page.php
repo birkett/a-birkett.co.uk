@@ -37,10 +37,10 @@ class Page
             $page = $te->loadPageTemplate('page.tpl');
 
             $tags = array(
-                '{PAGE}' => $te->loadSubTemplate($template.'.tpl'),
-                '{WIDGET}' => $te->loadSubTemplate($widget.'.tpl'),
-                '{TITLE}' => $title,
-            );
+                     '{PAGE}' => $te->loadSubTemplate($template.'.tpl'),
+                     '{WIDGET}' => $te->loadSubTemplate($widget.'.tpl'),
+                     '{TITLE}' => $title,
+                    );
         }
 
         $te->parseTags($tags, $page);

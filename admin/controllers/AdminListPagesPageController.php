@@ -31,9 +31,9 @@ class AdminListPagesPageController extends AdminBasePageController
 
         while ($row = $this->model->database->getRow($result)) {
             $tags = array(
-                '{PAGEID}' => $row['page_id'],
-                '{PAGETITLE}' => $row['page_title'],
-            );
+                     '{PAGEID}'    => $row['page_id'],
+                     '{PAGETITLE}' => $row['page_title'],
+                    );
             $temp = $this->templateEngine->logicTag(
                 '{LOOP}',
                 '{/LOOP}',

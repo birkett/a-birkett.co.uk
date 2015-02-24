@@ -30,21 +30,21 @@ class AdminServerInfoPageController extends AdminBasePageController
         $serverData  = $this->model->getServerInfo();
 
         $tags = array(
-            '{APACHEVERSION}' => $serverData['version_apache'],
-            '{PHPVERSION}' => $serverData['version_php'],
-            '{MYSQLVERSION}' => $serverData['version_mysql'],
-            '{PDOMYSQLEXT}' => $serverData['extension_pdo_mysql'],
-            '{PHPCURLEXT}' => $serverData['extension_curl'],
-            '{PHPJSONEXT}' => $serverData['extension_json'],
-            '{PHPDATEEXT}' => $serverData['extension_date'],
-            '{PHPFILTEREXT}' => $serverData['extension_filter'],
-            '{PHPHASHEXT}' => $serverData['extension_hash'],
-            '{PHPSESSIONEXT}' => $serverData['extension_session'],
-            '{PHPPCREEXT}' => $serverData['extension_pcre'],
-            '{PHPMCRYPTEXT}' => $serverData['extension_mcrypt'],
-            '{PASSWORDHASH}' => $serverData['function_password_hash'],
-            '{HTTPRESPONSECODE}' => $serverData['function_http_resp_code'],
-        );
+                 '{APACHEVERSION}'    => $serverData['version_apache'],
+                 '{PHPVERSION}'       => $serverData['version_php'],
+                 '{MYSQLVERSION}'     => $serverData['version_mysql'],
+                 '{PDOMYSQLEXT}'      => $serverData['extension_pdo_mysql'],
+                 '{PHPCURLEXT}'       => $serverData['extension_curl'],
+                 '{PHPJSONEXT}'       => $serverData['extension_json'],
+                 '{PHPDATEEXT}'       => $serverData['extension_date'],
+                 '{PHPFILTEREXT}'     => $serverData['extension_filter'],
+                 '{PHPHASHEXT}'       => $serverData['extension_hash'],
+                 '{PHPSESSIONEXT}'    => $serverData['extension_session'],
+                 '{PHPPCREEXT}'       => $serverData['extension_pcre'],
+                 '{PHPMCRYPTEXT}'     => $serverData['extension_mcrypt'],
+                 '{PASSWORDHASH}'     => $serverData['function_pass_hash'],
+                 '{HTTPRESPONSECODE}' => $serverData['function_http_code'],
+                );
         $this->templateEngine->parseTags($tags, $output);
 
     }//end __construct()

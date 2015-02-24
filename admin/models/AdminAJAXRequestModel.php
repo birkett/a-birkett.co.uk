@@ -32,10 +32,10 @@ class AdminAJAXRequestModel extends AJAXRequestModel
             'post_timestamp,post_title,post_content,post_draft,post_tweeted'.
             ') VALUES(:timestamp, :title, :content, :draft, 0)',
             array(
-                ':timestamp' => time(),
-                ':title' => $title,
-                ':content' => $content,
-                ':draft' => ($draft === "true") ? 1 : 0,
+             ':timestamp' => time(),
+             ':title'     => $title,
+             ':content'   => $content,
+             ':draft'     => ($draft === 'true') ? 1 : 0,
             )
         );
         $id = $this->database->lastInsertedID();
@@ -59,10 +59,10 @@ class AdminAJAXRequestModel extends AJAXRequestModel
             'UPDATE blog_posts SET post_title = :ti, post_content = :txt, '.
             'post_draft = :draft WHERE post_id = :pid LIMIT 1',
             array(
-                ':ti' => $title,
-                ':txt' => $content,
-                ':draft' => ($draft === "true") ? 1 : 0,
-                ':pid' => $postid
+             ':ti'    => $title,
+             ':txt'   => $content,
+             ':draft' => ($draft === 'true') ? 1 : 0,
+             ':pid'   => $postid
             )
         );
         $this->tweetPost($postid);
@@ -81,8 +81,8 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         $this->database->runQuery(
             'UPDATE site_pages SET page_content = :cont WHERE page_id = :pid',
             array(
-                ':cont' => $content,
-                ':pid' => $pageid,
+             ':cont' => $content,
+             ':pid'  => $pageid,
             )
         );
 
@@ -105,8 +105,8 @@ class AdminAJAXRequestModel extends AJAXRequestModel
             'INSERT INTO blocked_addresses(address, blocked_timestamp)' .
             ' VALUES(:ip, :timestamp)',
             array(
-                ':ip' => $ip,
-                ':timestamp' => time()
+             ':ip'        => $ip,
+             ':timestamp' => time()
             )
         );
 

@@ -70,11 +70,18 @@ class AdminEditPageController extends AdminBasePageController
             $vars .= 'var data="mode=editpost&postid="+postid+"&title="'.
                 '+title+"&draft="+draft+"&content="+content;';
 
+            // Small conversion to set checkbox value.
+            if ($row['post_draft'] === '1') {
+                $checked = 'checked';
+            } else {
+                $checked = '';
+            }
+
             $tags = array(
-                '{POSTID}' => $row['post_id'],
-                '{POSTTITLE}' => $row['post_title'],
-                '{DRAFT}' => ($row['post_draft'] === '1') ? 'checked' : '',
-            );
+                     '{POSTID}'    => $row['post_id'],
+                     '{POSTTITLE}' => $row['post_title'],
+                     '{DRAFT}'     => $checked,
+                    );
             $this->templateEngine->parseTags($tags, $output);
             $this->templateEngine->removeLogicTag(
                 '{PAGEEDIT}',
@@ -107,19 +114,19 @@ class AdminEditPageController extends AdminBasePageController
         }
 
         $tags = array(
-            '{VARS}' => $vars,
-            '{CONTENT}' => stripslashes($cont)
-        );
+                 '{VARS}'    => $vars,
+                 '{CONTENT}' => stripslashes($cont),
+                );
         $this->templateEngine->parseTags($tags, $output);
         // Clean up the tags if not already replaced.
         $tags = array(
-            '{NEWPOST}',
-            '{/NEWPOST}',
-            '{PAGEEDIT}',
-            '{/PAGEEDIT}',
-            '{POSTEDIT}',
-            '{/POSTEDIT}',
-        );
+                 '{NEWPOST}',
+                 '{/NEWPOST}',
+                 '{PAGEEDIT}',
+                 '{/PAGEEDIT}',
+                 '{POSTEDIT}',
+                 '{/POSTEDIT}',
+                );
         $this->templateEngine->removeTags($tags, $output);
 
     }//end __construct()

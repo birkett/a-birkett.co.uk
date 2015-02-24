@@ -33,11 +33,11 @@ class AJAXRequestModel extends BasePageModel
             'post_id, comment_username, comment_text, comment_timestamp, '.
             'client_ip) VALUES(:pid, :uname, :cmnt, :time, :ip)',
             array(
-                ':pid' => $postid,
-                ':uname' => $username,
-                ':cmnt' => $comment,
-                ':time' => time(),
-                ':ip' => $clientip
+             ':pid' => $postid,
+             ':uname' => $username,
+             ':cmnt' => $comment,
+             ':time' => time(),
+             ':ip' => $clientip
             )
         );
 

@@ -63,7 +63,7 @@ class TemplateEngine
      * @param string $tag    Tag to replace.
      * @param string $string String that will replace Tag.
      * @param string $output Unparsed template passed by reference.
-     * @return none
+     * @return void
      */
     public function replaceTag($tag, $string, &$output)
     {
@@ -76,7 +76,7 @@ class TemplateEngine
      * Parse the tags in a given array to the template
      * @param array  $tags   Array of tags to replace by reference.
      * @param string $output Unparsed template passed by reference.
-     * @return none
+     * @return void
      */
     public function parseTags(&$tags, &$output)
     {
@@ -88,12 +88,12 @@ class TemplateEngine
     /**
      * Remove any left over tags from the parsed template
      * @param array  $tags   Array of tags to replace by reference.
-     * @param string $output Unparsed template passed by reference
-     * @return none
+     * @param string $output Unparsed template passed by reference.
+     * @return void
      */
     public function removeTags(&$tags, &$output)
     {
-        $output = str_replace($tags, "", $output);
+        $output = str_replace($tags, '', $output);
 
     }//end removeTags()
 
@@ -102,7 +102,7 @@ class TemplateEngine
      * Return the contents of a logic tag
      * @param string $start   Starting tag.
      * @param string $end     End tag.
-     * @param string $content Unparsed template
+     * @param string $content Unparsed template.
      * @return string Contents between Start and End tag
      */
     public function logicTag($start, $end, &$content)
@@ -123,7 +123,7 @@ class TemplateEngine
      * @param string $start   Starting tag.
      * @param string $end     End tag.
      * @param string $content Unparsed template.
-     * @return none
+     * @return void
      */
     public function removeLogicTag($start, $end, &$content)
     {

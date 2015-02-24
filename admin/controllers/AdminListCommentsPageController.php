@@ -37,13 +37,14 @@ class AdminListCommentsPageController extends AdminBasePageController
         }
 
         while ($row = $this->model->database->getRow($result)) {
+            $time = $row['comment_timestamp'];
             $tags = array(
-                '{COMMENT}' => $row['comment_text'],
-                '{USERNAME}' => $row['comment_username'],
-                '{TIMESTAMP}' => date(DATE_FORMAT, $row['comment_timestamp']),
-                '{IP}' => $row['client_ip'],
-                '{POSTID}' => $row['post_id']
-            );
+                     '{COMMENT}'   => $row['comment_text'],
+                     '{USERNAME}'  => $row['comment_username'],
+                     '{TIMESTAMP}' => date(DATE_FORMAT, $time),
+                     '{IP}'        => $row['client_ip'],
+                     '{POSTID}'    => $row['post_id']
+                    );
             $temp = $this->templateEngine->logicTag(
                 '{LOOP}',
                 '{/LOOP}',

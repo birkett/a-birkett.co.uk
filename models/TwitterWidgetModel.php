@@ -25,10 +25,10 @@ class TwitterWidgetModel extends BasePageModel
     private function getLatestTweets()
     {
         $params = array(
-            'screen_name' => TWEETS_WIDGET_USER,
-            'count'       => TWEETS_WIDGET_MAX,
-            'include_rts' => true
-        );
+                   'screen_name' => TWEETS_WIDGET_USER,
+                   'count'       => TWEETS_WIDGET_MAX,
+                   'include_rts' => true
+                  );
         $twitter = new \ABirkett\classes\TwitterOAuth();
         return $twitter->oAuthRequest(
             'statuses/user_timeline',
@@ -102,13 +102,13 @@ class TwitterWidgetModel extends BasePageModel
                 ' tweet_updatetime) VALUES ( :id, :timestamp, :text, :image,'.
                 ' :name, :screenname, :updatetime )',
                 array(
-                    ':id' => $tweet->id_str,
-                    ':timestamp' => $timestamp,
-                    ':text' => $tweetText,
-                    ':image' => $avatar,
-                    ':name' => $name,
-                    ':screenname' => $screenname,
-                    ':updatetime' => $exectime,
+                 ':id'         => $tweet->id_str,
+                 ':timestamp'  => $timestamp,
+                 ':text'       => $tweetText,
+                 ':image'      => $avatar,
+                 ':name'       => $name,
+                 ':screenname' => $screenname,
+                 ':updatetime' => $exectime,
                 )
             );
         }
@@ -151,25 +151,25 @@ class TwitterWidgetModel extends BasePageModel
     public function timeElapsed($timestamp)
     {
         $periods = array(
-            'second',
-            'minute',
-            'hour',
-            'day',
-            'week',
-            'month',
-            'year',
-            'decade',
-        );
+                    'second',
+                    'minute',
+                    'hour',
+                    'day',
+                    'week',
+                    'month',
+                    'year',
+                    'decade',
+                   );
 
         $lengths = array(
-            '60',
-            '60',
-            '24',
-            '7',
-            '4.35',
-            '12',
-            '10',
-        );
+                    '60',
+                    '60',
+                    '24',
+                    '7',
+                    '4.35',
+                    '12',
+                    '10',
+                   );
 
         $now = time();
 
@@ -192,7 +192,7 @@ class TwitterWidgetModel extends BasePageModel
             $periods[$j] .= 's';
         }
 
-        return "$diff $periods[$j] {$tense}";
+        return $diff.' '.$periods[$j].$tense;
 
     }//end timeElapsed()
 }//end class

@@ -34,9 +34,9 @@ class BlogPageController extends BasePageController
         // Clamp pagniation offset.
         if (isset($offset) === true
             && $offset >= 1
-            && $offset< 100000
+            && $offset < 100000
         ) {
-            $offset = $offset - 1;
+            $offset--;
         } else {
             $offset = 0;
         }
@@ -55,13 +55,13 @@ class BlogPageController extends BasePageController
             if ($this->model->database->GetNumRows($comments) !== 0) {
                 while ($comment = $this->model->database->GetRow($comments)) {
                     $tags = array(
-                        '{COMMENTAUTHOR}' =>
-                            stripslashes($comment['comment_username']),
-                        '{COMMENTTIMESTAMP}' =>
-                            date(DATE_FORMAT, $comment['comment_timestamp']),
-                        '{COMMENTCONTENT}' =>
-                            stripslashes($comment['comment_text'])
-                    );
+                             '{COMMENTAUTHOR}' =>
+                             stripslashes($comment['comment_username']),
+                             '{COMMENTTIMESTAMP}' =>
+                             date(DATE_FORMAT, $comment['comment_timestamp']),
+                             '{COMMENTCONTENT}' =>
+                             stripslashes($comment['comment_text'])
+                            );
                     $temp = $this->templateEngine->logicTag(
                         '{COMMENT}',
                         '{/COMMENT}',
@@ -80,9 +80,9 @@ class BlogPageController extends BasePageController
 
             // Snow new comments box.
             $tags = array(
-                '{COMMENTPOSTID}' => $postid,
-                '{RECAPTCHAKEY}' => RECAPTCHA_PUBLIC_KEY,
-            );
+                     '{COMMENTPOSTID}' => $postid,
+                     '{RECAPTCHAKEY}'  => RECAPTCHA_PUBLIC_KEY,
+                    );
             $this->templateEngine->parseTags($tags, $output);
             // No pagination.
             $this->templateEngine->removeLogicTag(
@@ -104,18 +104,18 @@ class BlogPageController extends BasePageController
             if ($numberofposts > BLOG_POSTS_PER_PAGE) {
                 if ($offset > 0) {
                     $tags = array(
-                        '{PAGEPREVIOUSLINK}' => "/blog/page/$offset",
-                        '{PAGEPREVIOUSTEXT}' => 'Previous Page',
-                    );
+                             '{PAGEPREVIOUSLINK}' => '/blog/page/'.$offset,
+                             '{PAGEPREVIOUSTEXT}' => 'Previous Page',
+                            );
                     $this->templateEngine->parseTags($tags, $output);
                 }
 
                 if (($offset + 1) * BLOG_POSTS_PER_PAGE < $numberofposts) {
                     $linkoffset = $offset + 2;
                     $tags = array(
-                        '{PAGENEXTLINK}' => "/blog/page/$linkoffset",
-                        '{PAGENEXTTEXT}' => 'Next Page',
-                    );
+                             '{PAGENEXTLINK}' => '/blog/page/'.$linkoffset,
+                             '{PAGENEXTTEXT}' => 'Next Page',
+                            );
                     $this->templateEngine->parseTags($tags, $output);
                 }
             } else {
@@ -138,13 +138,17 @@ class BlogPageController extends BasePageController
         // Rendering code.
         while ($post = $this->model->database->GetRow($result)) {
             $tags = array(
-                '{POSTTIMESTAMP}' => date(DATE_FORMAT, $post['post_timestamp']),
-                '{POSTID}' => $post['post_id'],
-                '{POSTTITLE}' => $post['post_title'],
-                '{POSTCONTENT}' => stripslashes($post['post_content']),
-                '{COMMENTCOUNT}' =>
-                    $this->model->getNumberOfComments($post['post_id'])
-            );
+                     '{POSTTIMESTAMP}' =>
+                     date(DATE_FORMAT, $post['post_timestamp']),
+                     '{POSTID}' =>
+                     $post['post_id'],
+                     '{POSTTITLE}' =>
+                     $post['post_title'],
+                     '{POSTCONTENT}' =>
+                     stripslashes($post['post_content']),
+                     '{COMMENTCOUNT}' =>
+                     $this->model->getNumberOfComments($post['post_id'])
+                    );
             $temp = $this->templateEngine->logicTag(
                 '{BLOGPOST}',
                 '{/BLOGPOST}',
@@ -168,15 +172,15 @@ class BlogPageController extends BasePageController
 
         // Clean up the tags if not already replaced.
         $cleantags = array(
-            '{PAGEPREVIOUSLINK}',
-            '{PAGEPREVIOUSTEXT}',
-            '{PAGENEXTLINK}',
-            '{PAGENEXTTEXT}',
-            '{PAGINATION}',
-            '{/PAGINATION}',
-            '{NEWCOMMENT}',
-            '{/NEWCOMMENT}',
-        );
+                      '{PAGEPREVIOUSLINK}',
+                      '{PAGEPREVIOUSTEXT}',
+                      '{PAGENEXTLINK}',
+                      '{PAGENEXTTEXT}',
+                      '{PAGINATION}',
+                      '{/PAGINATION}',
+                      '{NEWCOMMENT}',
+                      '{/NEWCOMMENT}',
+                     );
         $this->templateEngine->removeTags($cleantags, $output);
 
     }//end __construct()

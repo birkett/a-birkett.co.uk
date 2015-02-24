@@ -50,11 +50,11 @@ class AdminUserWidgetController extends AdminBasePageController
         }
 
         $cleantags = array(
-            '{LOGIN}',
-            '{/LOGIN}',
-            '{LOGGEDIN}',
-            '{/LOGGEDIN}',
-        );
+                      '{LOGIN}',
+                      '{/LOGIN}',
+                      '{LOGGEDIN}',
+                      '{/LOGGEDIN}',
+                     );
         $this->templateEngine->removeTags($cleantags, $output);
 
     }//end __construct()

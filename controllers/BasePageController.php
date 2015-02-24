@@ -41,20 +41,20 @@ class BasePageController
         $this->templateEngine = \ABirkett\classes\TemplateEngine::getInstance();
 
         $tags = array(
-            '{BASEURL}' => $this->model->getBaseURL(),
-            '{RAND2551}' => rand(0, 255),
-            '{RAND2552}' => rand(0, 255),
-            '{RAND2553}' => rand(0, 255),
-            '{RAND12}' => rand(1, 2),
-            '{THISYEAR}' => date('Y'),
-        );
+                 '{BASEURL}'  => $this->model->getBaseURL(),
+                 '{RAND2551}' => rand(0, 255),
+                 '{RAND2552}' => rand(0, 255),
+                 '{RAND2553}' => rand(0, 255),
+                 '{RAND12}'   => rand(1, 2),
+                 '{THISYEAR}' => date('Y'),
+                );
         $this->templateEngine->parseTags($tags, $output);
 
         if (CHRISTMAS === 1) {
             $tags = array(
-                '{EXTRASTYLESHEETS}',
-                '{/EXTRASTYLESHEETS}',
-            );
+                     '{EXTRASTYLESHEETS}',
+                     '{/EXTRASTYLESHEETS}',
+                    );
             $this->templateEngine->removeTags($tags, $output);
         } else {
             $this->templateEngine->removeLogicTag(

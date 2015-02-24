@@ -32,9 +32,9 @@ class AdminBasePageController extends BasePageController
         $this->templateEngine->parseTags($tags, $output);
 
         $tags = array(
-            '{ADMINSTYLESHEET}',
-            '{/ADMINSTYLESHEET}',
-        );
+                 '{ADMINSTYLESHEET}',
+                 '{/ADMINSTYLESHEET}',
+                );
         $this->templateEngine->removeTags($tags, $output);
 
     }//end __construct()

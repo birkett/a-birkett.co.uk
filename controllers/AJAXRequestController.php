@@ -31,10 +31,10 @@ class AJAXRequestController
      */
     protected function goodRequest($m = '')
     {
-        if (function_exists("http_response_code") === true) {
+        if (function_exists('http_response_code') === true) {
             http_response_code(200);
         } else {
-            header("HTTP/1.0 200 OK", true, 200);
+            header('HTTP/1.0 200 OK', true, 200);
         }
 
         exit($m);
@@ -48,15 +48,15 @@ class AJAXRequestController
      */
     protected function resetRequest()
     {
-        if (function_exists("http_response_code") === true) {
+        if (function_exists('http_response_code') === true) {
             http_response_code(205);
         } else {
-            header("HTTP/1.0 205 Reset Content", true, 205);
+            header('HTTP/1.0 205 Reset Content', true, 205);
         }
 
         exit();
 
-    }//end goodRequest()
+    }//end resetRequest()
 
 
     /**
@@ -66,10 +66,10 @@ class AJAXRequestController
      */
     protected function badRequest($m = '')
     {
-        if (function_exists("http_response_code") === true) {
+        if (function_exists('http_response_code') === true) {
             http_response_code(400);
         } else {
-            header("HTTP/1.0 400 Bad Request", true, 400);
+            header('HTTP/1.0 400 Bad Request', true, 400);
         }
 
         exit($m);
@@ -97,7 +97,7 @@ class AJAXRequestController
         if ($mode === 'postcomment') {
             if (isset($post) === false
                 || isset($user) === false
-                || isset($comm)  === false
+                || isset($comm) === false
                 || isset($resp) === false
             ) {
                 $this->badRequest('Something did not send correctly.');

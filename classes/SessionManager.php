@@ -61,7 +61,7 @@ class SessionManager
         $_SESSION['ua']      = $ua;
         $_SESSION['EXPIRES'] = time() + SESSION_EXPIRY_TIME;
 
-        SessionManager::regenerateID();
+        self::regenerateID();
 
     }//end doLogin()
 
@@ -110,7 +110,7 @@ class SessionManager
             || $_SESSION['ua'] !== $ua
             || $_SESSION['EXPIRES'] < time()
         ) {
-            SessionManager::doLogout();
+            self::doLogout();
             return false;
         }
 
