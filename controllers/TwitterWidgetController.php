@@ -11,6 +11,7 @@
  * @license   http://opensource.org/licenses/MIT MIT
  * @link      http://www.a-birkett.co.uk
  */
+
 namespace ABirkett\controllers;
 
 class TwitterWidgetController extends BasePageController
@@ -33,30 +34,41 @@ class TwitterWidgetController extends BasePageController
             $output
         );
 
+        // Bail if the database is down.
+        if (empty($tweets) === true) {
+            $tweets = array();
+        }
+
         foreach ($tweets as $tweet) {
             $temp = $tweetloop;
+            $time = $tweet['tweet_timestamp'];
             $tags = array(
-                    '{TWEETID}' => $tweet['tweet_id'],
-                    '{TWEETSCREENNAME}' => $tweet['tweet_screenname'],
-                    '{TWEETNAME}' => $tweet['tweet_name'],
-                    '{TWEETAVATAR}' => $tweet['tweet_avatar'],
-                    '{TWEETTEXT}' => $tweet['tweet_text'],
-                    '{TWEETTIMESTAMP}' =>
-                        $this->model->timeElapsed($tweet['tweet_timestamp']),
-            );
+                     '{TWEETID}'         => $tweet['tweet_id'],
+                     '{TWEETSCREENNAME}' => $tweet['tweet_screenname'],
+                     '{TWEETNAME}'       => $tweet['tweet_name'],
+                     '{TWEETAVATAR}'     => $tweet['tweet_avatar'],
+                     '{TWEETTEXT}'       => $tweet['tweet_text'],
+                     '{TWEETTIMESTAMP}'  => $this->model->timeElapsed($time),
+                    );
 
             $this->templateEngine->parseTags($tags, $temp);
 
             $tags = array(
-                '{TWEETLOOP}',
-                '{/TWEETLOOP}',
-            );
+                     '{TWEETLOOP}',
+                     '{/TWEETLOOP}',
+                    );
             $this->templateEngine->removeTags($tags, $temp);
 
-            $temp = '{/TWEETLOOP}' . $temp;
+            $temp = '{/TWEETLOOP}'.$temp;
 
             $this->templateEngine->replaceTag('{/TWEETLOOP}', $temp, $output);
         }//end foreach
+
+        $this->templateEngine->replaceTag(
+            '{TWITTERUSER}',
+            TWEETS_WIDGET_USER,
+            $output
+        );
 
         $this->templateEngine->removeLogicTag(
             '{TWEETLOOP}',

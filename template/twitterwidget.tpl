@@ -1,4 +1,6 @@
-							<img src="img/twitter.png" alt="twitter" />
+							<a target="_blank" href="https://www.twitter.com/{TWITTERUSER}">
+								<img src="img/twitter.png" alt="twitter" />
+							</a>
 							<div class="tweets">
 							{TWEETLOOP}
 								<div class="tweet">
