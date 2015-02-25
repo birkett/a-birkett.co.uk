@@ -9,7 +9,7 @@
  * @author    Andy Smith <unknown@unknown.com>
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
  * @copyright 2014 Andy Smith
- * @license   http://opensource.org/licenses/MIT MIT
+ * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://term.ie
  */
 
@@ -73,7 +73,6 @@ class OAuthRequest
     }//end __construct()
 
 
-
     /**
      * Builds a URL usable for a GET request
      * @return string URL
@@ -112,13 +111,13 @@ class OAuthRequest
     {
         $this->parameters['oauth_signature_method'] = 'HMAC-SHA1';
 
-        $parts      = array(
+        $parts = array(
                        strtoupper($this->httpMethod),
                        $this->httpUrl,
-                       $this->buildHttpQuery($this->parameters)
+                       $this->buildHttpQuery($this->parameters),
                       );
 
-        $parts      = $this->urlencodeRFC3986($parts);
+        $parts = $this->urlencodeRFC3986($parts);
 
         $baseString = implode('&', $parts);
         $keyParts   = array(

@@ -9,7 +9,7 @@
  * @author    Abraham Williams <abraham@abrah.am>
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
  * @copyright 2015 Anthony Birkett
- * @license   http://opensource.org/licenses/MIT MIT
+ * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://abrah.am
  */
 

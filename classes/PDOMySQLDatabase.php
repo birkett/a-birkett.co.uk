@@ -1,6 +1,27 @@
 <?php
 /**
- * Basic wrapper for working with a MySQL database via PDO
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 Anthony Birkett
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
  *
  * PHP Version 5.3
  *
@@ -8,7 +29,7 @@
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
  * @copyright 2015 Anthony Birkett
- * @license   http://opensource.org/licenses/MIT MIT
+ * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
 
@@ -16,6 +37,27 @@ namespace ABirkett\classes;
 
 use PDO;
 
+/**
+ * Basic wrapper for working with a MySQL database via PDO.
+ *
+ * The functions here wrap up the PDO functions, an artifact from the days of
+ * old, when the site used mysql_*() for database access.
+ *
+ * Becase this began life as mysql_*() based code, the return values should be
+ * compatible with the old methods, while allowing the input to take advantage
+ * of new PDO features, like bound paramters.
+ *
+ * The majority of this class should be database independant. Changing between
+ * MySQL, Postgre, Oracle and SQLite should consist of nothing more than a basic
+ * change to the connection string in __construc().
+ *
+ * @category  Classes
+ * @package   PersonalWebsite
+ * @author    Anthony Birkett <anthony@a-birkett.co.uk>
+ * @copyright 2015 Anthony Birkett
+ * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
+ * @link      http://www.a-birkett.co.uk
+ */
 class PDOMySQLDatabase
 {
 
