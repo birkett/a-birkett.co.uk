@@ -45,6 +45,7 @@ class Autoloader
                 // Try the public folders.
                 if (file_exists($file) === true) {
                     include $file;
+
                     return;
                 }
 

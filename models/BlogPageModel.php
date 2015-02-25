@@ -58,6 +58,7 @@ class BlogPageModel extends BasePageModel
         $count = $this->database->runQuery(
             'SELECT COUNT(*) from blog_posts WHERE post_draft = "0"'
         );
+
         return $count[0]['COUNT(*)'];
 
     }//end getNumberOfPosts()
@@ -74,6 +75,7 @@ class BlogPageModel extends BasePageModel
             'SELECT COUNT(*) FROM blog_comments WHERE post_id = :postid',
             array(':postid' => $postid)
         );
+
         return $count[0]['COUNT(*)'];
 
     }//end getNumberOfComments()

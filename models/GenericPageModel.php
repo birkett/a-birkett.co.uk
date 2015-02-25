@@ -30,7 +30,12 @@ class GenericPageModel extends BasePageModel
             ' WHERE page_name = :pn',
             array(':pn' => $pagename)
         );
-        return $page[0];
+
+        if (empty($page) === true) {
+            return null;
+        } else {
+            return $page[0];
+        }
 
     }//end getPage()
 }//end class

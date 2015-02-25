@@ -30,11 +30,8 @@ class TwitterWidgetModel extends BasePageModel
                     'include_rts' => true
                    );
         $twitter = new \ABirkett\classes\TwitterOAuth();
-        return $twitter->oAuthRequest(
-            'statuses/user_timeline',
-            'GET',
-            $params
-        );
+
+        return $twitter->oAuthRequest('statuses/user_timeline', 'GET', $params);
 
     }//end getLatestTweets()
 
@@ -49,11 +46,13 @@ class TwitterWidgetModel extends BasePageModel
 
         if (isset($tweets->errors) === true) {
             echo 'Twitter error: '.$tweets->errors[0]->message;
+
             return;
         }
 
         if (empty($tweets) === true) {
             echo 'Could not connect to Twitter';
+
             return;
         }
 

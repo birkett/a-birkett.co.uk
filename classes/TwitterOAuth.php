@@ -62,7 +62,7 @@ class TwitterOAuth
 
             default:
                 $response = $this->http(
-                    $request->getNormalizedHttpUrl(),
+                    $url,
                     $method,
                     $request->toPostdata()
                 );
@@ -103,6 +103,7 @@ class TwitterOAuth
         curl_setopt($ci, CURLOPT_URL, $url);
         $response = curl_exec($ci);
         curl_close($ci);
+
         return $response;
 
     }//end http()

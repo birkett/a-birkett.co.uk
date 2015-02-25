@@ -110,6 +110,7 @@ class TemplateEngine
         $r = explode($start, $content);
         if (isset($r[1]) === true) {
             $r = explode($end, $r[1]);
+
             return $r[0];
         }
 

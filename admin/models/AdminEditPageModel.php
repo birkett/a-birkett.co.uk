@@ -30,6 +30,7 @@ class AdminEditPageModel extends AdminBasePageModel
             'WHERE page_id = :pid',
             array(':pid' => $pageid)
         );
+
         return $page[0];
 
     }//end getPage()

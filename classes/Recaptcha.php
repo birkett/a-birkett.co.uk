@@ -61,6 +61,7 @@ class Recaptcha
 
         $response = curl_exec($ci);
         curl_close($ci);
+
         return $response;
 
     }//end http()

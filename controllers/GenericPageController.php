@@ -21,14 +21,17 @@ class GenericPageController extends BasePageController
     /**
      * Build a generic page, with contents stored in the database
      * @param string $output Unparsed template passed by reference.
-     * @param string $name   Page name to fetch.
      * @return none
      */
-    public function __construct(&$output, $name)
+    public function __construct(&$output)
     {
         parent::__construct($output);
         $this->model = new \ABirkett\models\GenericPageModel();
+        $pagetitle   = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING);
+        $e           = explode(' ', $pagetitle);
+        $name        = strtolower(array_pop($e));
         $page        = $this->model->getPage($name);
+
         $tags        = array(
                         '{PAGETITLE}'   => $page['page_title'],
                         '{PAGECONTENT}' => stripslashes($page['page_content']),

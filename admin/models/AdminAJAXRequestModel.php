@@ -157,12 +157,16 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         $hash = $this->hashPassword($newp);
 
         $this->database->runQuery(
-            "UPDATE site_users SET password='$hash' WHERE user_id=:uid",
-            array(':uid' => 1)
+            'UPDATE site_users SET password = :hash WHERE user_id = :uid',
+            array(
+             ':hash' => $hash,
+             ':uid'  => 1,
+            )
         );
 
         // Regenerate the session ID when changing password.
         \ABirkett\classes\SessionManager::regenerateID();
+
         return true;
 
     }//end changePassword()
@@ -263,6 +267,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         } else {
             $salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
             $salt = str_replace('+', '.', $salt);
+
             return crypt($password, '$2y$'.$options['cost'].'$'.$salt.'$');
         }
 

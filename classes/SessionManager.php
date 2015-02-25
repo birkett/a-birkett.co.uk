@@ -111,6 +111,7 @@ class SessionManager
             || $_SESSION['EXPIRES'] < time()
         ) {
             self::doLogout();
+
             return false;
         }
 

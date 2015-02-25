@@ -47,24 +47,18 @@ class Page
 
         $controller = '\ABirkett\Controllers\\'.$controller;
 
-        if ($template === 'generic') {
-            // Get name from title last word.
-            $e = explode(' ', $title);
-            $p = new $controller($page, strtolower(array_pop($e)));
-        } else {
-            $p = new $controller($page);
-        }
+        $p = new $controller($page);
 
         if ($widget === 'postswidget') {
-            $p = new \ABirkett\controllers\PostsWidgetController($page);
+            $w = new \ABirkett\controllers\PostsWidgetController($page);
         }
 
         if ($widget === 'twitterwidget') {
-            $p = new \ABirkett\controllers\TwitterWidgetController($page);
+            $w = new \ABirkett\controllers\TwitterWidgetController($page);
         }
 
         if ($widget === 'userwidget') {
-            $p = new \ABirkett\controllers\AdminUserWidgetController($page);
+            $w = new \ABirkett\controllers\AdminUserWidgetController($page);
         }
 
         echo $page;

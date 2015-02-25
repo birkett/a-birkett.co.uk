@@ -73,99 +73,6 @@ class OAuthRequest
     }//end __construct()
 
 
-    /**
-     * Set a request parameter
-     * @param string $name  Parameter name.
-     * @param string $value Parameter value.
-     * @return none
-     */
-    public function setParameter($name, $value)
-    {
-        $this->parameters[$name] = $value;
-
-    }//end setParameter()
-
-
-    /**
-     * The request parameters, sorted and concatenated into a normalized string.
-     * @return string
-     */
-    public function getSignableParameters()
-    {
-        // Grab all parameters.
-        $params = $this->parameters;
-
-        // Remove oauth_signature if present.
-        // Ref: Spec: 9.1.1 ("The oauth_signature parameter MUST be excluded.").
-        if (isset($params['oauth_signature']) === true) {
-            unset($params['oauth_signature']);
-        }
-
-        return $this->buildHttpQuery($params);
-
-    }//end getSignableParameters()
-
-
-    /**
-     * Returns the base string of this request
-     *
-     * The base string defined as the method, the url
-     * and the parameters (normalized), each urlencoded
-     * and the concated with &.
-     *
-     * @return string
-     */
-    public function getSignatureBaseString()
-    {
-        $parts = array(
-                  $this->getNormalizedHttpMethod(),
-                  $this->getNormalizedHttpUrl(),
-                  $this->getSignableParameters(),
-                 );
-
-        $parts = $this->urlencodeRFC3986($parts);
-
-        return implode('&', $parts);
-
-    }//end getSignatureBaseString()
-
-
-    /**
-     * Just uppercases the http method
-     * @return string Uppercase method
-     */
-    public function getNormalizedHttpMethod()
-    {
-        return strtoupper($this->httpMethod);
-
-    }//end getNormalizedHttpMethod()
-
-
-    /**
-     * Parses the url and rebuilds it to be scheme://host/path
-     * @return string Normalized URL
-     */
-    public function getNormalizedHttpUrl()
-    {
-        $parts = parse_url($this->httpUrl);
-
-        $port   = @$parts['port'];
-        $scheme = $parts['scheme'];
-        $host   = $parts['host'];
-        $path   = @$parts['path'];
-
-        $port or $port = ($scheme === 'https') ? '443' : '80';
-
-        if (($scheme === 'https' && $port !== '443')
-            || ($scheme === 'http' && $port !== '80')
-        ) {
-            $host = $host.':'.$port;
-        }
-
-        return $scheme.'://'.$host.$path;
-
-    }//end getNormalizedHttpUrl()
-
 
     /**
      * Builds a URL usable for a GET request
@@ -174,7 +81,7 @@ class OAuthRequest
     public function toUrl()
     {
         $postData = $this->toPostdata();
-        $out      = $this->getNormalizedHttpUrl();
+        $out      = $this->httpUrl;
         if (isset($postData) === true) {
             $out .= '?'.$postData;
         }
@@ -203,9 +110,17 @@ class OAuthRequest
      */
     public function signRequest($cSec, $oSec)
     {
-        $this->setParameter('oauth_signature_method', 'HMAC-SHA1');
+        $this->parameters['oauth_signature_method'] = 'HMAC-SHA1';
 
-        $baseString = $this->getSignatureBaseString();
+        $parts      = array(
+                       strtoupper($this->httpMethod),
+                       $this->httpUrl,
+                       $this->buildHttpQuery($this->parameters)
+                      );
+
+        $parts      = $this->urlencodeRFC3986($parts);
+
+        $baseString = implode('&', $parts);
         $keyParts   = array(
                        $cSec,
                        $oSec,
@@ -214,7 +129,7 @@ class OAuthRequest
         $key        = implode('&', $keyParts);
         $signature  = base64_encode(hash_hmac('sha1', $baseString, $key, true));
 
-        $this->setParameter('oauth_signature', $signature);
+        $this->parameters['oauth_signature'] = $signature;
 
     }//end signRequest()
 

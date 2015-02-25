@@ -1,4 +1,4 @@
-config\.php
+classes/Config\.php
 sql/.*
 psd/.*
 tools/.*

@@ -47,6 +47,7 @@ class BlogPageController extends BasePageController
             // Back out if we didnt find any posts.
             if ($this->model->database->GetNumRows($result) === 0) {
                 header('Location: /404');
+
                 return;
             }
 
@@ -96,6 +97,7 @@ class BlogPageController extends BasePageController
             // Back out if we didnt find any posts.
             if ($this->model->database->GetNumRows($result) === 0) {
                 header('Location: /404');
+
                 return;
             }
 
