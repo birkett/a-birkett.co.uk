@@ -1,5 +1,8 @@
 					{LOGGEDIN}
-					<p>Logged in as {USERNAME} <a href="{ADMINFOLDER}index.php?page=logout">(Logout)</a></p>
+					<form>
+						<p>Logged in as {USERNAME}</p>
+						<input type="submit" class="submit" value="Logout" onClick="dologout(); return false;"/>
+					</form>
 					{/LOGGEDIN}
 					{LOGIN}
 					<script type="text/javascript" src="js/ajax.js"></script>
