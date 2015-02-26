@@ -94,7 +94,7 @@ class TwitterWidgetModel extends BasePageModel
         }
 
         // WARNING.
-        $this->database->runQuery('DELETE FROM site_tweets');
+        $this->database->runQuery('DELETE FROM site_tweets', array());
 
         $exectime = time();
 
@@ -161,7 +161,8 @@ class TwitterWidgetModel extends BasePageModel
     {
         // Get the last twitter update time.
         $lastfetchtime = $this->database->runQuery(
-            'SELECT tweet_updatetime FROM site_tweets LIMIT 1'
+            'SELECT tweet_updatetime FROM site_tweets LIMIT 1',
+            array()
         );
 
         $lastfetchtime = $lastfetchtime[0]['tweet_updatetime'];
@@ -174,7 +175,8 @@ class TwitterWidgetModel extends BasePageModel
         // Get the tweets.
         return $this->database->runQuery(
             'SELECT * FROM site_tweets ORDER BY tweet_timestamp ASC LIMIT '.
-            TWEETS_WIDGET_MAX
+            TWEETS_WIDGET_MAX,
+            array()
         );
 
     }//end getTweetsFromDatabase()

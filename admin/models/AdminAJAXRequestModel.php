@@ -154,8 +154,8 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         }
 
         // Do nothing if already blocked.
-        if (parent::checkIP($ipaddress) !== '0') {
-            return false;
+        if (parent::checkIP($ipaddress) === true) {
+            return true;
         }
 
         $this->database->runQuery(

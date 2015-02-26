@@ -144,12 +144,12 @@ class AJAXRequestController
                 return;
             }
 
-            if ($this->strClamp($user, 10, 500) !== true) {
+            if ($this->strClamp($comm, 10, 500) !== true) {
                 $this->badRequest('Comment should be 10 - 500 characters');
                 return;
             }
 
-            if ($this->model->checkIP($cip) !== '0') {
+            if ($this->model->checkIP($cip) !== false) {
                 $this->badRequest('Your address is blocked.');
                 return;
             }

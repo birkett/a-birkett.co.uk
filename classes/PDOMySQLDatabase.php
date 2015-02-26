@@ -69,6 +69,22 @@ class PDOMySQLDatabase
 
 
     /**
+     * Open a database handle
+     * @return object Database handle
+     */
+    public static function getInstance()
+    {
+        static $database = null;
+        if (isset($database) === false) {
+            $database = new PDOMySQLDatabase();
+        }
+
+        return $database;
+
+    }//end getInstance()
+
+
+    /**
      * Constructor
      * @return void
      */
@@ -87,22 +103,6 @@ class PDOMySQLDatabase
         }
 
     }//end __construct()
-
-
-    /**
-     * Open a database handle
-     * @return object Database handle
-     */
-    public static function getInstance()
-    {
-        static $database = null;
-        if (isset($database) === false) {
-            $database = new PDOMySQLDatabase();
-        }
-
-        return $database;
-
-    }//end getInstance()
 
 
     /**
@@ -137,7 +137,7 @@ class PDOMySQLDatabase
      * @param  array  $params Array of parameters to bind.
      * @return array  Array of results
      */
-    public function runQuery($query, $params = array())
+    public function runQuery($query, $params)
     {
         if ($this->mLink === null) {
             return;
@@ -165,7 +165,7 @@ class PDOMySQLDatabase
             return null;
         }
 
-        if (count($result) !== 0) {
+        if ($this->getNumRows($result) !== 0) {
             return array_shift($result);
         }
 

@@ -78,7 +78,8 @@ class BlogPageModel extends BasePageModel
         return $this->database->runQuery(
             'SELECT * FROM blog_posts WHERE post_draft = "0"'.
             ' ORDER BY post_timestamp DESC LIMIT '.
-            ($page * BLOG_POSTS_PER_PAGE).','.BLOG_POSTS_PER_PAGE
+            ($page * BLOG_POSTS_PER_PAGE).','.BLOG_POSTS_PER_PAGE,
+            array()
         );
 
     }//end getMultiplePosts()
@@ -86,15 +87,18 @@ class BlogPageModel extends BasePageModel
 
     /**
      * Get the total number of public blog posts
-     * @return array Array containing post count
+     * @return integer Total number of blog posts
      */
     public function getNumberOfPosts()
     {
-        $count = $this->database->runQuery(
-            'SELECT COUNT(*) from blog_posts WHERE post_draft = "0"'
+        $rows = $this->database->runQuery(
+            'SELECT post_id from blog_posts WHERE post_draft = "0"',
+            array()
         );
 
-        return $count[0]['COUNT(*)'];
+        $count = $this->database->getNumRows($rows);
+
+        return $count;
 
     }//end getNumberOfPosts()
 
@@ -102,16 +106,18 @@ class BlogPageModel extends BasePageModel
     /**
      * Get the total number of comments on a post
      * @param  integer $postid ID of the post to count comments on.
-     * @return array   Array containing comment count
+     * @return integer Total number of comments on post
      */
     public function getNumberOfComments($postid)
     {
-        $count = $this->database->runQuery(
-            'SELECT COUNT(*) FROM blog_comments WHERE post_id = :postid',
+        $rows = $this->database->runQuery(
+            'SELECT comment_id FROM blog_comments WHERE post_id = :postid',
             array(':postid' => $postid)
         );
 
-        return $count[0]['COUNT(*)'];
+        $count = $this->database->getNumRows($rows);
+
+        return $count;
 
     }//end getNumberOfComments()
 

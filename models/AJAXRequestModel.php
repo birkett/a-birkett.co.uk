@@ -110,17 +110,21 @@ class AJAXRequestModel extends BasePageModel
 
     /**
      * Check if an IP address is blacklisted
-     * @param  string $ipaddress IP address to check for.
-     * @return string 1 on found, 0 when not found
+     * @param  string  $ipaddress IP address to check for.
+     * @return boolean True if address is blacklisted, false otherwise
      */
     public function checkIP($ipaddress)
     {
-        $count = $this->database->runQuery(
-            'SELECT COUNT(*) from blocked_addresses WHERE address = :ip',
+        $rows = $this->database->runQuery(
+            'SELECT ip_id from blocked_addresses WHERE address = :ip',
             array(':ip' => $ipaddress)
         );
 
-        return $count[0]['COUNT(*)'];
+        if ($this->database->getNumRows($rows) !== 0) {
+            return true;
+        }
+        
+        return false;
 
     }//end checkIP()
 }//end class
