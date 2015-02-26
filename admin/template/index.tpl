@@ -1,12 +1,3 @@
-						<script type="text/javascript" src="js/ajax.js"></script>
-						<script type="text/javascript">
-							function dologout(inip)
-							{
-								SuccessCallBack = function() { return; }
-								var data = "mode=logout";
-								AJAXOpen("{ADMINFOLDER}", data, SuccessCallBack);
-							}
-						</script>
 						<div class="fadein"></div>
 						<div id="response"></div>
 						<div class="post">
