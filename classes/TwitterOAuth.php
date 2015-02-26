@@ -116,26 +116,26 @@ class TwitterOAuth
      */
     private function http($url, $method, $postfields = null)
     {
-        $ci = curl_init();
+        $curl = curl_init();
         // Curl settings.
-        curl_setopt($ci, CURLOPT_USERAGENT, 'twitterAPI/PHP');
-        curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, 30);
-        curl_setopt($ci, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ci, CURLOPT_HTTPHEADER, array('Expect:'));
-        curl_setopt($ci, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ci, CURLOPT_HEADERFUNCTION, array($this, 'getHeader'));
-        curl_setopt($ci, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_USERAGENT, 'twitterAPI/PHP');
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Expect:'));
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_HEADERFUNCTION, array($this, 'getHeader'));
+        curl_setopt($curl, CURLOPT_HEADER, false);
 
         if ($method === 'POST') {
-            curl_setopt($ci, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POST, true);
             if (empty($postfields) === false) {
-                curl_setopt($ci, CURLOPT_POSTFIELDS, $postfields);
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $postfields);
             }
         }
 
-        curl_setopt($ci, CURLOPT_URL, $url);
-        $response = curl_exec($ci);
-        curl_close($ci);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        $response = curl_exec($curl);
+        curl_close($curl);
 
         return $response;
 
@@ -144,16 +144,17 @@ class TwitterOAuth
 
     /**
      * Get the header info to store
-     * @param array  $ch     Unknown.
+     * @param array  $curl   cURL instance.
      * @param string $header Input header.
      * @return int Header length
      */
-    private function getHeader($ch, $header)
+    private function getHeader($curl, $header)
     {
-        $i = strpos($header, ':');
-        if (empty($i) === false) {
-            $key   = str_replace('-', '_', strtolower(substr($header, 0, $i)));
-            $value = trim(substr($header, ($i + 2)));
+        $position = strpos($header, ':');
+        if (empty($position) === false) {
+            $lowercase = strtolower(substr($header, 0, $position));
+            $key       = str_replace('-', '_', $lowercase);
+            $value     = trim(substr($header, ($position + 2)));
             $this->httpHeader[$key] = $value;
         }
 

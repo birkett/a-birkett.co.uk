@@ -101,7 +101,8 @@ class Autoloader
         );
 
         // Auto load the site config.
-        $c = new Config();
+        $config = new Config();
+        unset($config);
 
     }//end init()
 }//end class

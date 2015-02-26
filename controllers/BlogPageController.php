@@ -69,10 +69,8 @@ class BlogPageController extends BasePageController
         $postid = filter_input(INPUT_GET, 'postid', FILTER_SANITIZE_NUMBER_INT);
 
         // Clamp pagniation offset.
-        if (isset($offset) === true && $offset >= 1 && $offset < 100000) {
-            $offset--;
-        } else {
-            $offset = 0;
+        if (isset($offset) !== true || $offset < 1 || $offset > 100000) {
+            $offset = 1;
         }
 
         // Single post mode.
@@ -127,7 +125,7 @@ class BlogPageController extends BasePageController
             );
         } else {
             // Normal mode.
-            $result = $this->model->getMultiplePosts($offset);
+            $result = $this->model->getMultiplePosts($offset - 1);
             // Back out if we didnt find any posts.
             if ($this->model->database->GetNumRows($result) === 0) {
                 header('Location: /404');
@@ -138,18 +136,17 @@ class BlogPageController extends BasePageController
             // Show Pagination.
             $numberofposts = $this->model->getNumberOfPosts();
             if ($numberofposts > BLOG_POSTS_PER_PAGE) {
-                if ($offset > 0) {
+                if ($offset > 1) {
                     $tags = array(
-                             '{PAGEPREVIOUSLINK}' => '/blog/page/'.$offset,
-                             '{PAGEPREVIOUSTEXT}' => 'Previous Page',
+                             '{PAGEPREVLINK}' => '/blog/page/'.($offset - 1),
+                             '{PAGEPREVTEXT}' => 'Previous Page',
                             );
                     $this->templateEngine->parseTags($tags, $output);
                 }
 
-                if (($offset + 1) * (BLOG_POSTS_PER_PAGE < $numberofposts)) {
-                    $linkoffset = ($offset + 2);
+                if ((($offset + 1) * BLOG_POSTS_PER_PAGE) < $numberofposts) {
                     $tags = array(
-                             '{PAGENEXTLINK}' => '/blog/page/'.$linkoffset,
+                             '{PAGENEXTLINK}' => '/blog/page/'.($offset + 1),
                              '{PAGENEXTTEXT}' => 'Next Page',
                             );
                     $this->templateEngine->parseTags($tags, $output);
@@ -205,8 +202,8 @@ class BlogPageController extends BasePageController
 
         // Clean up the tags if not already replaced.
         $cleantags = array(
-                      '{PAGEPREVIOUSLINK}',
-                      '{PAGEPREVIOUSTEXT}',
+                      '{PAGEPREVLINK}',
+                      '{PAGEPREVTEXT}',
                       '{PAGENEXTLINK}',
                       '{PAGENEXTTEXT}',
                       '{PAGINATION}',

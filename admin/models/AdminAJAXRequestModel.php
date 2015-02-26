@@ -60,6 +60,10 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      */
     public function newPost($title, $content, $draft)
     {
+        if ($title === null || $content === null || $draft === null) {
+            return false;
+        }
+
         $this->database->runQuery(
             'INSERT INTO blog_posts('.
             'post_timestamp,post_title,post_content,post_draft,post_tweeted'.
@@ -71,9 +75,11 @@ class AdminAJAXRequestModel extends AJAXRequestModel
              ':draft'     => ($draft === 'true') ? 1 : 0,
             )
         );
-        $id = $this->database->lastInsertedID();
+        $postid = $this->database->lastInsertedID();
         // Tweet this.
-        $this->tweetPost($id);
+        $this->tweetPost($postid);
+
+        return $postid;
 
     }//end newPost()
 
@@ -84,10 +90,18 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      * @param string  $title   Title of the post.
      * @param string  $content Body text of the post.
      * @param boolean $draft   Is the post public.
-     * @return void
+     * @return boolean True on success, false on failiure
      */
     public function updatePost($postid, $title, $content, $draft)
     {
+        if ($postid === null
+            || $title === null
+            || $content === null
+            || $draft === null
+        ) {
+            return false;
+        }
+
         $this->database->runQuery(
             'UPDATE blog_posts SET post_title = :ti, post_content = :txt, '.
             'post_draft = :draft WHERE post_id = :pid LIMIT 1',
@@ -98,7 +112,11 @@ class AdminAJAXRequestModel extends AJAXRequestModel
              ':pid'   => $postid,
             )
         );
+
+        // Tweet about this post if its status has changed from draft.
         $this->tweetPost($postid);
+
+        return true;
 
     }//end updatePost()
 
@@ -107,10 +125,14 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      * Update a page
      * @param  integer $pageid  ID of the page to update.
      * @param  string  $content Body text of the page.
-     * @return void
+     * @return boolean True on success, false on failiure
      */
     public function updatePage($pageid, $content)
     {
+        if ($pageid === null || $content === null) {
+            return false;
+        }
+
         $this->database->runQuery(
             'UPDATE site_pages SET page_content = :cont WHERE page_id = :pid',
             array(
@@ -119,44 +141,58 @@ class AdminAJAXRequestModel extends AJAXRequestModel
             )
         );
 
+        return true;
+
     }//end updatePage()
 
 
     /**
      * Add an IP address to the blacklist
-     * @param  string $ip IP address to block.
-     * @return void
+     * @param  string $ipaddress IP address to block.
+     * @return boolean True on success, false on failiure
      */
-    public function blockIP($ip)
+    public function blockIP($ipaddress)
     {
+        if ($ipaddress === null) {
+            return false;
+        }
+
         // Do nothing if already blocked.
-        if (parent::checkIP($ip) !== '0') {
-            return;
+        if (parent::checkIP($ipaddress) !== '0') {
+            return false;
         }
 
         $this->database->runQuery(
             'INSERT INTO blocked_addresses(address, blocked_timestamp)'.
             ' VALUES(:ip, :timestamp)',
             array(
-             ':ip'        => $ip,
+             ':ip'        => $ipaddress,
              ':timestamp' => time(),
             )
         );
+
+        return true;
 
     }//end blockIP()
 
 
     /**
      * Remove an IP address from the blacklist
-     * @param  string $ip IP address to be unblocked.
-     * @return void
+     * @param  string $ipaddress IP address to be unblocked.
+     * @return boolean True on success, false on failiure
      */
-    public function unblockIP($ip)
+    public function unblockIP($ipaddress)
     {
+        if ($ipaddress === null) {
+            return false;
+        }
+
         $this->database->runQuery(
             'DELETE FROM blocked_addresses WHERE address = :ip',
-            array(':ip' => $ip)
+            array(':ip' => $ipaddress)
         );
+
+        return true;
 
     }//end unblockIP()
 
@@ -170,6 +206,10 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      */
     public function changePassword($currentp, $newp, $confirmedp)
     {
+        if ($currentp === null || $newp === null || $confirmedp === null) {
+            return false;
+        }
+
         // Passwords dont match.
         if ($newp !== $confirmedp) {
             return false;
@@ -213,6 +253,10 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      */
     public function checkCredentials($username, $password)
     {
+        if ($username === null || $password === null) {
+            return false;
+        }
+
         $result = $this->database->runQuery(
             'SELECT password FROM site_users WHERE username = :username',
             array(':username' => $username)

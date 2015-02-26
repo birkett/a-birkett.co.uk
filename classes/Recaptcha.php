@@ -89,16 +89,16 @@ class Recaptcha
      */
     private function http($url, $data)
     {
-        $ci = curl_init();
+        $curlobj = curl_init();
         // Curl settings.
-        curl_setopt($ci, CURLOPT_URL, $url.$data);
-        curl_setopt($ci, CURLOPT_USERAGENT, 'reCAPTCHA/PHP');
-        curl_setopt($ci, CURLOPT_TIMEOUT, 30);
-        curl_setopt($ci, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ci, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curlobj, CURLOPT_URL, $url.$data);
+        curl_setopt($curlobj, CURLOPT_USERAGENT, 'reCAPTCHA/PHP');
+        curl_setopt($curlobj, CURLOPT_TIMEOUT, 30);
+        curl_setopt($curlobj, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curlobj, CURLOPT_SSL_VERIFYPEER, false);
 
-        $response = curl_exec($ci);
-        curl_close($ci);
+        $response = curl_exec($curlobj);
+        curl_close($curlobj);
 
         return $response;
 

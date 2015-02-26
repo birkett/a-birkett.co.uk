@@ -145,10 +145,10 @@ class OAuthRequest
         $this->parameters['oauth_signature_method'] = 'HMAC-SHA1';
 
         $parts = array(
-                       strtoupper($this->httpMethod),
-                       $this->httpUrl,
-                       $this->buildHttpQuery($this->parameters),
-                      );
+                  strtoupper($this->httpMethod),
+                  $this->httpUrl,
+                  $this->buildHttpQuery($this->parameters),
+                 );
 
         $parts = $this->urlencodeRFC3986($parts);
 
@@ -181,15 +181,17 @@ class OAuthRequest
                 ),
                 $input
             );
-        } elseif (is_scalar($input) === true) {
+        }
+
+        if (is_scalar($input) === true) {
             return str_replace(
                 '+',
                 ' ',
                 str_replace('%7E', '~', rawurlencode($input))
             );
-        } else {
-            return '';
         }
+
+        return '';
 
     }//end urlencodeRFC3986()
 

@@ -92,12 +92,12 @@ class SessionManager
      */
     public static function doLogin($user)
     {
-        $ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_UNSAFE_RAW);
-        $ua = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_UNSAFE_RAW);
+        $cip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_UNSAFE_RAW);
+        $cua = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_UNSAFE_RAW);
 
         $_SESSION['user']    = $user;
-        $_SESSION['ip']      = $ip;
-        $_SESSION['ua']      = $ua;
+        $_SESSION['ip']      = $cip;
+        $_SESSION['ua']      = $cua;
         $_SESSION['EXPIRES'] = (time() + SESSION_EXPIRY_TIME);
 
         self::regenerateID();
@@ -111,11 +111,13 @@ class SessionManager
      */
     public static function getUser()
     {
-        if (isset($_SESSION['user']) === true) {
-            return $_SESSION['user'];
-        } else {
-            return null;
+        $ses = $_SESSION;
+
+        if (isset($ses['user']) === true) {
+            return $ses['user'];
         }
+
+        return null;
 
     }//end getUser()
 
@@ -126,28 +128,29 @@ class SessionManager
      */
     public static function isLoggedIn()
     {
-        $ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_UNSAFE_RAW);
-        $ua = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_UNSAFE_RAW);
+        $cip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_UNSAFE_RAW);
+        $cua = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_UNSAFE_RAW);
+        $ses = $_SESSION;
 
-        if (isset($_SESSION['user']) === false) {
+        if (isset($ses['user']) === false) {
             return false;
         }
 
-        if (isset($_SESSION['ip']) === false) {
+        if (isset($ses['ip']) === false) {
             return false;
         }
 
-        if (isset($_SESSION['ua']) === false) {
+        if (isset($ses['ua']) === false) {
             return false;
         }
 
-        if (isset($_SESSION['EXPIRES']) === false) {
+        if (isset($ses['EXPIRES']) === false) {
             return false;
         }
 
-        if ($_SESSION['ip'] !== $ip
-            || $_SESSION['ua'] !== $ua
-            || $_SESSION['EXPIRES'] < time()
+        if ($ses['ip'] !== $cip
+            || $ses['ua'] !== $cua
+            || $ses['EXPIRES'] < time()
         ) {
             self::doLogout();
 

@@ -65,11 +65,7 @@ class AdminListPostsPageController extends AdminBasePageController
 
         while ($row = $this->model->database->getRow($result)) {
             // Small conversion to the correct strings.
-            if ($row['post_draft'] === '1') {
-                $draft = ' (DRAFT)';
-            } else {
-                $draft = '';
-            }
+            $draft = ($row['post_draft'] === '1') ? ' (DRAFT)' : '';
 
             $tags = array(
                      '{POSTID}'    => $row['post_id'],

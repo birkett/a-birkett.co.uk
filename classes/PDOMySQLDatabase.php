@@ -70,7 +70,7 @@ class PDOMySQLDatabase
 
     /**
      * Constructor
-     * @return none
+     * @return void
      */
     private function __construct()
     {
@@ -107,7 +107,7 @@ class PDOMySQLDatabase
 
     /**
      * Destructor
-     * @return none
+     * @return void
      */
     public function __destruct()
     {
@@ -149,6 +149,8 @@ class PDOMySQLDatabase
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        return array();
+
     }//end runQuery()
 
 
@@ -159,15 +161,15 @@ class PDOMySQLDatabase
      */
     public function getRow(&$result)
     {
-        if ($result === false) {
-            return;
+        if ($result === null) {
+            return null;
         }
 
         if (count($result) !== 0) {
             return array_shift($result);
-        } else {
-            return null;
         }
+
+        return null;
 
     }//end getRow()
 
@@ -179,7 +181,7 @@ class PDOMySQLDatabase
      */
     public function getNumRows($result)
     {
-        if ($result === false) {
+        if ($result === null) {
             return;
         }
 

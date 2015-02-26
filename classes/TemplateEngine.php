@@ -144,11 +144,11 @@ class TemplateEngine
      */
     public function logicTag($start, $end, &$content)
     {
-        $r = explode($start, $content);
-        if (isset($r[1]) === true) {
-            $r = explode($end, $r[1]);
+        $result = explode($start, $content);
+        if (isset($result[1]) === true) {
+            $result = explode($end, $result[1]);
 
-            return $r[0];
+            return $result[0];
         }
 
         return '';

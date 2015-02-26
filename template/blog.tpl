@@ -24,7 +24,7 @@
 					{PAGINATION}
 					<div class="fadein"></div>
 					<div class="post commentbox">
-						<a class="left" href="{PAGEPREVIOUSLINK}">{PAGEPREVIOUSTEXT}</a>
+						<a class="left" href="{PAGEPREVLINK}">{PAGEPREVTEXT}</a>
 						<a class="right" href="{PAGENEXTLINK}">{PAGENEXTTEXT}</a>
 					</div>
 					<div class="fadeout"></div>

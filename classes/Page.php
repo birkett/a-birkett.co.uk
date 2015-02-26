@@ -62,38 +62,49 @@ class Page
      */
     public function __construct($title, $widget, $template, $controller)
     {
-        $te = \ABirkett\classes\TemplateEngine::getInstance();
+        $tEngine = \ABirkett\classes\TemplateEngine::getInstance();
 
-        if ($template === 'feed') {
-            $page = $te->loadPageTemplate('feed.tpl');
-            $tags = array('{TITLE}' => $title);
-        } else {
-            $page = $te->loadPageTemplate('page.tpl');
+        $pagetemplate = ($template === 'feed') ? 'feed.tpl' : 'page.tpl';
 
-            $tags = array(
-                     '{PAGE}'   => $te->loadSubTemplate($template.'.tpl'),
-                     '{WIDGET}' => $te->loadSubTemplate($widget.'.tpl'),
-                     '{TITLE}'  => $title,
-                    );
+        $page = $tEngine->loadPageTemplate($pagetemplate);
+
+        $replacepage = $replacewidget = null;
+
+        if ($template !== 'none') {
+            $replacepage = $tEngine->loadSubTemplate($template.'.tpl');
         }
 
-        $te->parseTags($tags, $page);
+        if ($widget !== 'none') {
+            $replacewidget = $tEngine->loadSubTemplate($widget.'.tpl');
+        }
+
+        $tags = array(
+                 '{PAGE}'   => $replacepage,
+                 '{WIDGET}' => $replacewidget,
+                 '{TITLE}'  => $title,
+                );
+
+        $tEngine->parseTags($tags, $page);
 
         $controller = '\ABirkett\Controllers\\'.$controller;
 
-        $p = new $controller($page);
+        $pagecontroller = new $controller($page);
 
         if ($widget === 'postswidget') {
-            $w = new \ABirkett\controllers\PostsWidgetController($page);
+            $wcont = new \ABirkett\controllers\PostsWidgetController($page);
         }
 
         if ($widget === 'twitterwidget') {
-            $w = new \ABirkett\controllers\TwitterWidgetController($page);
+            $wcont = new \ABirkett\controllers\TwitterWidgetController($page);
         }
 
         if ($widget === 'userwidget') {
-            $w = new \ABirkett\controllers\AdminUserWidgetController($page);
+            $wcont = new \ABirkett\controllers\AdminUserWidgetController($page);
         }
+
+        // Destroy controller objects.
+        unset($pagecontroller);
+        unset($wcont);
 
         echo $page;
 

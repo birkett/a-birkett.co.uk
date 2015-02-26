@@ -78,11 +78,7 @@ class AdminEditPageController extends AdminBasePageController
             $vars .=
                 'var data="mode=editpage&pageid="+pageid+"&content="+content;';
 
-            $this->templateEngine->replaceTag(
-                '{POSTID}',
-                $pageid,
-                $output
-            );
+            $this->templateEngine->replaceTag('{POSTID}', $pageid, $output);
             $this->templateEngine->removeLogicTag(
                 '{POSTEDIT}',
                 '{/POSTEDIT}',
@@ -108,11 +104,7 @@ class AdminEditPageController extends AdminBasePageController
                 '+title+"&draft="+draft+"&content="+content;';
 
             // Small conversion to set checkbox value.
-            if ($row['post_draft'] === '1') {
-                $checked = 'checked';
-            } else {
-                $checked = '';
-            }
+            $checked = ($row['post_draft'] === '1') ? 'checked' : '';
 
             $tags = array(
                      '{POSTID}'    => $row['post_id'],

@@ -96,14 +96,14 @@ class AJAXRequestModel extends BasePageModel
 
     /**
      * Check if an IP address is blacklisted
-     * @param  string $ip IP address to check for.
+     * @param  string $ipaddress IP address to check for.
      * @return string 1 on found, 0 when not found
      */
-    public function checkIP($ip)
+    public function checkIP($ipaddress)
     {
         $count = $this->database->runQuery(
             'SELECT COUNT(*) from blocked_addresses WHERE address = :ip',
-            array(':ip' => $ip)
+            array(':ip' => $ipaddress)
         );
 
         return $count[0]['COUNT(*)'];

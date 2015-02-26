@@ -67,139 +67,105 @@ class AdminAJAXRequestController extends AJAXRequestController
         $cont  = filter_input(INPUT_POST, 'content', FILTER_UNSAFE_RAW);
         $draft = filter_input(INPUT_POST, 'draft', FILTER_SANITIZE_STRING);
         // Used for the IP filter.
-        $ip = filter_input(INPUT_POST, 'ip', FILTER_SANITIZE_STRING);
+        $ipaddress = filter_input(INPUT_POST, 'ip', FILTER_SANITIZE_STRING);
         // Used for the password change.
-        $cp  = filter_input(INPUT_POST, 'cp', FILTER_SANITIZE_STRING);
-        $np  = filter_input(INPUT_POST, 'np', FILTER_SANITIZE_STRING);
-        $cnp = filter_input(INPUT_POST, 'cnp', FILTER_SANITIZE_STRING);
+        $cup  = filter_input(INPUT_POST, 'cp', FILTER_SANITIZE_STRING);
+        $newp = filter_input(INPUT_POST, 'np', FILTER_SANITIZE_STRING);
+        $cnp  = filter_input(INPUT_POST, 'cnp', FILTER_SANITIZE_STRING);
         // Used for the login.
         $user = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
         $pass = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
         $this->model = new \ABirkett\models\AdminAJAXRequestModel();
+
+        // Bail if not logged in, and not requesting a login.
+        if (\ABirkett\classes\SessionManager::isLoggedIn() === false
+            && $mode !== 'login'
+        ) {
+            parent::badRequest('Not logged in.');
+        }
+
         switch($mode) {
             // Edit post mode.
             case 'editpost':
-                if (\ABirkett\classes\SessionManager::isLoggedIn() === false) {
-                    parent::badRequest('Not logged in.');
-                }
-
-                if (isset($posid) === false
-                    || isset($title) === false
-                    || isset($cont) === false
-                    || isset($draft) === false
-                ) {
+                if ($this->model->updatePost(
+                    $posid,
+                    $title,
+                    $cont,
+                    $draft
+                ) === false) {
                     parent::badRequest(
                         'Something was rejected. Check all fields are correct.'
                     );
-                } else {
-                    $this->model->updatePost($posid, $title, $cont, $draft);
-                    parent::goodRequest('Post updated.');
                 }
+
+                parent::goodRequest('Post updated.');
                 break;
 
             // Edit page mode.
             case 'editpage':
-                if (\ABirkett\classes\SessionManager::isLoggedIn() === false) {
-                    parent::badRequest('Not logged in.');
-                }
-
-                if (isset($pagid) === false || isset($cont) === false) {
+                if ($this->model->updatePage($pagid, $cont) === false) {
                     parent::badRequest(
                         'Something was rejected. Check all fields are correct.'
                     );
-                } else {
-                    $this->model->updatePage($pagid, $cont);
-                    parent::goodRequest('Page updated.');
                 }
+
+                parent::goodRequest('Page updated.');
                 break;
 
             // New post mode.
             case 'newpost':
-                if (\ABirkett\classes\SessionManager::isLoggedIn() === false) {
-                    parent::badRequest('Not logged in.');
-                }
-
-                if (isset($title) === false
-                    || isset($cont) === false
-                    || isset($draft) === false
-                ) {
+                if ($this->model->newPost($title, $cont, $draft) === false) {
                     parent::badRequest(
                         'Something was rejected. Check all fields are correct.'
                     );
-                } else {
-                    $this->model->newPost($title, $cont, $draft);
-                    parent::goodRequest('Posted!');
                 }
+
+                parent::goodRequest('Posted!');
                 break;
 
             // Add blocked IP mode.
             case 'addip':
-                if (\ABirkett\classes\SessionManager::isLoggedIn() === false) {
-                    parent::badRequest('Not logged in.');
+                if ($this->model->blockIP($ipaddress) === false) {
+                    parent::badRequest('No address specified');
                 }
 
-                if (isset($ip) === false || $ip === '') {
-                    parent::badRequest('No address specified');
-                } else {
-                    $this->model->blockIP($ip);
-                    parent::goodRequest('Address '.$ip.' was blocked');
-                }
+                parent::goodRequest('Address '.$ipaddress.' was blocked');
                 break;
 
             // Remove blocked IP mode.
             case 'removeip':
-                if (\ABirkett\classes\SessionManager::isLoggedIn() === false) {
-                    parent::badRequest('Not logged in.');
+                if ($this->model->unblockIP($ipaddress) === false) {
+                    parent::badRequest('No address specified');
                 }
 
-                if (isset($ip) === false || $ip === '') {
-                    parent::badRequest('No address specified');
-                } else {
-                    $this->model->unblockIP($ip);
-                    parent::goodRequest('Address '.$ip.' was unblocked');
-                }
+                parent::goodRequest('Address '.$ipaddress.' was unblocked');
                 break;
 
             // Change the admin password.
             case 'password':
-                if (\ABirkett\classes\SessionManager::isLoggedIn() === false) {
-                    parent::badRequest('Not logged in.');
+                if ($this->model->changePassword($cup, $newp, $cnp) === false) {
+                    parent::badRequest('Failed. Check passwords match.');
                 }
 
-                if (isset($cp) === false
-                    || isset($np) === false
-                    || isset($cnp) === false
-                ) {
-                    parent::badRequest();
-                } else {
-                    if ($this->model->changePassword($cp, $np, $cnp) === true) {
-                        parent::goodRequest('Password changed.');
-                    } else {
-                        parent::badRequest('Failed. Check passwords match.');
-                    }
-                }
+                parent::goodRequest('Password changed.');
                 break;
 
             // Login.
             case 'login':
-                if (isset($user) === false || isset($pass) === false) {
+                if ($this->model->checkCredentials($user, $pass) === false) {
                     parent::badRequest('Incorrect username or password.');
-                } else {
-                    if ($this->model->checkCredentials($user, $pass) === true) {
-                        // Set up the session on successful login.
-                        \ABirkett\classes\SessionManager::doLogin($user);
-                        parent::goodRequest();
-                    } else {
-                        parent::badRequest('Incorrect username or password.');
-                    }
                 }
+
+                // Set up the session on successful login.
+                \ABirkett\classes\SessionManager::doLogin($user);
+                parent::goodRequest();
                 break;
 
             // Logout.
             case 'logout':
-                    \ABirkett\classes\SessionManager::doLogout();
-                    parent::resetRequest();
+                \ABirkett\classes\SessionManager::doLogout();
+                parent::resetRequest();
                 break;
 
             default:
