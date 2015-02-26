@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 5.3
+ * PHP Version 5.5
  *
  * @category  AdminModels
  * @package   PersonalWebsite
@@ -60,7 +60,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      */
     public function newPost($title, $content, $draft)
     {
-        if ($title === null || $content === null || $draft === null) {
+        if ($title === '' || $content === '' || $draft === '') {
             return false;
         }
 
@@ -86,19 +86,15 @@ class AdminAJAXRequestModel extends AJAXRequestModel
 
     /**
      * Update a post
-     * @param integer $postid  ID of the post to update.
-     * @param string  $title   Title of the post.
-     * @param string  $content Body text of the post.
-     * @param boolean $draft   Is the post public.
+     * @param integer $postid ID of the post to update.
+     * @param string  $title  Title of the post.
+     * @param string  $cont   Body text of the post.
+     * @param boolean $draft  Is the post public.
      * @return boolean True on success, false on failiure
      */
-    public function updatePost($postid, $title, $content, $draft)
+    public function updatePost($postid, $title, $cont, $draft)
     {
-        if ($postid === null
-            || $title === null
-            || $content === null
-            || $draft === null
-        ) {
+        if ($postid === '' || $title === '' || $cont === '' || $draft === '') {
             return false;
         }
 
@@ -107,7 +103,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
             'post_draft = :draft WHERE post_id = :pid LIMIT 1',
             array(
              ':ti'    => $title,
-             ':txt'   => $content,
+             ':txt'   => $cont,
              ':draft' => ($draft === 'true') ? 1 : 0,
              ':pid'   => $postid,
             )
@@ -129,7 +125,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      */
     public function updatePage($pageid, $content)
     {
-        if ($pageid === null || $content === null) {
+        if ($pageid === '' || $content === '') {
             return false;
         }
 
@@ -153,7 +149,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      */
     public function blockIP($ipaddress)
     {
-        if ($ipaddress === null) {
+        if ($ipaddress === '') {
             return false;
         }
 
@@ -183,7 +179,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      */
     public function unblockIP($ipaddress)
     {
-        if ($ipaddress === null) {
+        if ($ipaddress === '') {
             return false;
         }
 
@@ -206,7 +202,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      */
     public function changePassword($currentp, $newp, $confirmedp)
     {
-        if ($currentp === null || $newp === null || $confirmedp === null) {
+        if ($currentp === '' || $newp === '' || $confirmedp === '') {
             return false;
         }
 
@@ -237,9 +233,6 @@ class AdminAJAXRequestModel extends AJAXRequestModel
             )
         );
 
-        // Regenerate the session ID when changing password.
-        \ABirkett\classes\SessionManager::regenerateID();
-
         return true;
 
     }//end changePassword()
@@ -253,7 +246,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      */
     public function checkCredentials($username, $password)
     {
-        if ($username === null || $password === null) {
+        if ($username === '' || $password === '') {
             return false;
         }
 
@@ -265,26 +258,40 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         if ($this->database->getNumRows($result) === 1) {
             $dbhash = $this->database->getRow($result);
 
-            // Password_verify is PHP 5.5+, fall back on older versions.
-            if (function_exists('password_verify') === true) {
-                $check = password_verify($password, $dbhash['password']);
-            } else {
-                $hash = $this->hashPassword($password);
-                if ($hash === $dbhash['password']) {
-                    $check = true;
-                } else {
-                    $check = false;
-                }
-            }
-
-            if ($check === true) {
+            // Password_verify is PHP 5.5+.
+            if (password_verify($password, $dbhash['password']) === true) {
                 return true;
             }
+
+            // The fallback for PHP 5.4 and below. Not supporting this for now.
+            /*
+            if ($this->hashPassword($password) === $dbhash['password'])
+                return true;
+            }
+            */
+
         }//end if
 
         return false;
 
     }//end checkCredentials()
+
+
+    /**
+     * Get the post data and return it as an array
+     * @param  integer $postid ID of the post to fetch.
+     * @return array Array of post data
+     */
+    private function getSinglePost($postid)
+    {
+        $rows = $this->database->runQuery(
+            "SELECT * FROM blog_posts WHERE post_id = :id AND post_draft = '0'",
+            array(':id' => $postid)
+        );
+
+        return $rows;
+
+    }//end getSinglePost()
 
 
     /**
@@ -300,7 +307,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         }
 
         // Post doesnt exist or is a draft.
-        $post = parent::getSinglePost($postid);
+        $post = $this->getSinglePost($postid);
         if ($this->database->getNumRows($post) === 0) {
             return;
         }
@@ -338,15 +345,15 @@ class AdminAJAXRequestModel extends AJAXRequestModel
     public function hashPassword($password)
     {
         $options = array('cost' => HASHING_COST);
-        // Password_hash is PHP 5.5+, fall back when not available.
-        if (function_exists('password_hash') === true) {
-            return password_hash($password, PASSWORD_BCRYPT, $options);
-        } else {
-            $salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
-            $salt = str_replace('+', '.', $salt);
+        // Password_hash is PHP 5.5+.
+        return password_hash($password, PASSWORD_BCRYPT, $options);
 
-            return crypt($password, '$2y$'.$options['cost'].'$'.$salt.'$');
-        }
+        // The fallback for PHP 5.4 and below. Not supporting this for now.
+        /*
+        $salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+        $salt = str_replace('+', '.', $salt);
+        return crypt($password, '$2y$'.$options['cost'].'$'.$salt.'$');
+        */
 
     }//end hashPassword()
 }//end class

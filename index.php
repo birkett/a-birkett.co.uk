@@ -46,7 +46,7 @@ $mode = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
 if (isset($page) === true) {
     switch($page) {
         case 'about':
-            $p = new classes\Page(
+            $obj = new classes\Page(
                 SITE_TITLE.' :: About',
                 'twitterwidget',
                 'generic',
@@ -55,7 +55,7 @@ if (isset($page) === true) {
             break;
 
         case 'blog':
-            $p = new classes\Page(
+            $obj = new classes\Page(
                 SITE_TITLE.' :: Blog',
                 'postswidget',
                 'blog',
@@ -64,7 +64,7 @@ if (isset($page) === true) {
             break;
 
         case 'contact':
-            $p = new classes\Page(
+            $obj = new classes\Page(
                 SITE_TITLE.' :: Contact',
                 'twitterwidget',
                 'generic',
@@ -73,7 +73,7 @@ if (isset($page) === true) {
             break;
 
         case 'photos':
-            $p = new classes\Page(
+            $obj = new classes\Page(
                 SITE_TITLE.' :: Photos',
                 'twitterwidget',
                 'generic',
@@ -82,7 +82,7 @@ if (isset($page) === true) {
             break;
 
         case 'videos':
-            $p = new classes\Page(
+            $obj = new classes\Page(
                 SITE_TITLE.' :: Videos',
                 'twitterwidget',
                 'generic',
@@ -91,7 +91,7 @@ if (isset($page) === true) {
             break;
 
         case 'projects':
-            $p = new classes\Page(
+            $obj = new classes\Page(
                 SITE_TITLE.' :: Projects',
                 'twitterwidget',
                 'generic',
@@ -100,7 +100,7 @@ if (isset($page) === true) {
             break;
 
         case '404':
-            $p = new classes\Page(
+            $obj = new classes\Page(
                 SITE_TITLE.' :: Error',
                 'twitterwidget',
                 'generic',
@@ -109,7 +109,7 @@ if (isset($page) === true) {
             break;
 
         case 'feed':
-            $p = new classes\Page(
+            $obj = new classes\Page(
                 SITE_TITLE.' :: Blog Feed',
                 'none',
                 'feed',
@@ -118,7 +118,7 @@ if (isset($page) === true) {
             break;
 
         default:
-            $p = new classes\Page(
+            $obj = new classes\Page(
                 SITE_TITLE.' :: Home',
                 'twitterwidget',
                 'index',
@@ -126,13 +126,18 @@ if (isset($page) === true) {
             );
             break;
     }//end switch
-} elseif (isset($mode) === true) {
-    $p = new controllers\AJAXRequestController();
-} else {
-    $p = new classes\Page(
-        SITE_TITLE.' :: Home',
-        'twitterwidget',
-        'index',
-        'BasePageController'
-    );
+
+    return;
 }//end if
+
+if (isset($mode) === true && isset($page) === false) {
+    $obj = new controllers\AJAXRequestController();
+    return;
+}
+
+$obj = new classes\Page(
+    SITE_TITLE.' :: Home',
+    'twitterwidget',
+    'index',
+    'BasePageController'
+);

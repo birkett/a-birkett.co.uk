@@ -38,8 +38,8 @@ namespace ABirkett\classes;
 /**
  * Serves GET requests, by generating a page to display.
  *
- * Essentially, this is just a wrapper for the TemplateEngine and Controller,
- * making calls to load the page template, and create a controller instance.
+ * Essentially, this is just a wrapper for the Controller, makeing calls to load
+ * the page template, and create a controller instance.
  *
  * @category  Classes
  * @package   PersonalWebsite
@@ -53,6 +53,30 @@ class Page
 
 
     /**
+     * Open a page template, taking into account if the page is in admin
+     * @param string $file Input template filename.
+     * @return string Template
+     */
+    private function loadPageTemplate($file)
+    {
+        return file_get_contents(__DIR__.'/../'.TEMPLATE_FOLDER.$file);
+
+    }//end loadPageTemplate()
+
+
+    /**
+     * Open a sub template (widget, page content)
+     * @param string $file Input subtemplate filename.
+     * @return string SubTemplate
+     */
+    private function loadSubTemplate($file)
+    {
+        return file_get_contents(TEMPLATE_FOLDER.$file);
+
+    }//end loadSubTemplate()
+
+
+    /**
      * Generate a page
      * @param string $title      Page title.
      * @param string $widget     Request widget.
@@ -62,20 +86,18 @@ class Page
      */
     public function __construct($title, $widget, $template, $controller)
     {
-        $tEngine = \ABirkett\classes\TemplateEngine::getInstance();
-
         $pagetemplate = ($template === 'feed') ? 'feed.tpl' : 'page.tpl';
 
-        $page = $tEngine->loadPageTemplate($pagetemplate);
+        $page = $this->loadPageTemplate($pagetemplate);
 
         $replacepage = $replacewidget = null;
 
         if ($template !== 'none') {
-            $replacepage = $tEngine->loadSubTemplate($template.'.tpl');
+            $replacepage = $this->loadSubTemplate($template.'.tpl');
         }
 
         if ($widget !== 'none') {
-            $replacewidget = $tEngine->loadSubTemplate($widget.'.tpl');
+            $replacewidget = $this->loadSubTemplate($widget.'.tpl');
         }
 
         $tags = array(
@@ -84,7 +106,7 @@ class Page
                  '{TITLE}'  => $title,
                 );
 
-        $tEngine->parseTags($tags, $page);
+        $page = str_replace(array_keys($tags), $tags, $page);
 
         $controller = '\ABirkett\Controllers\\'.$controller;
 

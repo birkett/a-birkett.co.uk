@@ -76,7 +76,7 @@ class BasePageController
     public function __construct(&$output)
     {
         $this->model          = new \ABirkett\models\BasePageModel();
-        $this->templateEngine = \ABirkett\classes\TemplateEngine::getInstance();
+        $this->templateEngine = new \ABirkett\classes\TemplateEngine();
 
         $tags = array(
                  '{BASEURL}'  => $this->model->getBaseURL(),
@@ -94,13 +94,14 @@ class BasePageController
                      '{/EXTRASTYLESHEETS}',
                     );
             $this->templateEngine->removeTags($tags, $output);
-        } else {
-            $this->templateEngine->removeLogicTag(
-                '{EXTRASTYLESHEETS}',
-                '{/EXTRASTYLESHEETS}',
-                $output
-            );
         }
+
+        // Remove the extra stylesheet tags if something above hanst used them.
+        $this->templateEngine->removeLogicTag(
+            '{EXTRASTYLESHEETS}',
+            '{/EXTRASTYLESHEETS}',
+            $output
+        );
 
         if (defined('ADMINPAGE') === false) {
             $this->templateEngine->removeLogicTag(

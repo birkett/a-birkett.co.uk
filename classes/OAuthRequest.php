@@ -227,7 +227,9 @@ class OAuthRequest
                 }
 
                 $parsedParams[$param][] = $value;
-            } else {
+            }
+
+            if (isset($parsedParams[$param]) === false) {
                 $parsedParams[$param] = $value;
             }
         }
@@ -266,7 +268,9 @@ class OAuthRequest
                 foreach ($value as $duplicateValue) {
                     $pairs[] = $parameter.'='.$duplicateValue;
                 }
-            } else {
+            }
+
+            if (is_array($value) === false) {
                 $pairs[] = $parameter.'='.$value;
             }
         }

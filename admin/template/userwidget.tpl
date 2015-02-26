@@ -1,7 +1,6 @@
 					{LOGGEDIN}
 					<form>
-						<p>Logged in as {USERNAME}</p>
-						<input type="submit" class="submit" value="Logout" onClick="dologout(); return false;"/>
+						<input type="submit" class="submit" value="Logout ({USERNAME})" onClick="dologout(); return false;"/>
 					</form>
 					{/LOGGEDIN}
 					{LOGIN}
@@ -22,7 +21,7 @@
 						<input type="text" name="username" id="username"/>
 						<input type="password" name="password" id="password"/>
 						<br /><br />
-						<input type="submit" class="submit" onClick="login(); return false;"/>
+						<input type="submit" class="submit" value="Login" onClick="login(); return false;"/>
 					</form>
 					{/LOGIN}
 					<script type="text/javascript" src="js/ajax.js"></script>

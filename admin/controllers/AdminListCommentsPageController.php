@@ -64,11 +64,8 @@ class AdminListCommentsPageController extends AdminBasePageController
 
         $ipaddress = filter_input(INPUT_GET, 'ip', FILTER_UNSAFE_RAW);
 
-        if (isset($ipaddress) === true) {
-            $result = $this->model->getAllComments($ipaddress);
-        } else {
-            $result = $this->model->getAllComments(null);
-        }
+        // Dont worry if $ipaddress is null, getAllComments() handles it.
+        $result = $this->model->getAllComments($ipaddress);
 
         while ($row = $this->model->database->getRow($result)) {
             $time = $row['comment_timestamp'];

@@ -38,20 +38,23 @@ namespace ABirkett;
 require_once '../classes/Autoloader.php';
 
 classes\Autoloader::init();
-classes\SessionManager::begin();
 
 // Page router. Handles GET and POST requests.
-$mode = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
-$page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING);
+$sessionManager = classes\SessionManager::getInstance();
+$mode           = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
+$page           = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING);
 
 if (isset($mode) === true) {
-    $p = new controllers\AdminAJAXRequestController();
-} elseif (classes\SessionManager::isLoggedIn() === true) {
+    $obj = new controllers\AdminAJAXRequestController();
+    return;
+}
+
+if ($sessionManager->isLoggedIn() === true) {
     // Logged in and requesting a page.
     if (isset($page) === true) {
         switch($page) {
             case 'password':
-                $p = new classes\Page(
+                $obj = new classes\Page(
                     'Admin :: Password',
                     'userwidget',
                     'password',
@@ -60,7 +63,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'serverinfo':
-                $p = new classes\Page(
+                $obj = new classes\Page(
                     'Admin :: Server Info',
                     'userwidget',
                     'serverinfo',
@@ -69,7 +72,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'ipfilter':
-                $p = new classes\Page(
+                $obj = new classes\Page(
                     'Admin :: IP Filter',
                     'userwidget',
                     'ipfilter',
@@ -78,7 +81,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'listpages':
-                $p = new classes\Page(
+                $obj = new classes\Page(
                     'Admin :: Pages',
                     'userwidget',
                     'listpages',
@@ -87,7 +90,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'listcomments':
-                $p = new classes\Page(
+                $obj = new classes\Page(
                     'Admin :: Comments',
                     'userwidget',
                     'listcomments',
@@ -96,7 +99,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'listposts':
-                $p = new classes\Page(
+                $obj = new classes\Page(
                     'Admin :: Posts',
                     'userwidget',
                     'listposts',
@@ -105,7 +108,7 @@ if (isset($mode) === true) {
                 break;
 
             case 'edit':
-                $p = new classes\Page(
+                $obj = new classes\Page(
                     'Admin :: Editor',
                     'userwidget',
                     'edit',
@@ -114,27 +117,31 @@ if (isset($mode) === true) {
                 break;
 
             default:
-                $p = new classes\Page(
+                $obj = new classes\Page(
                     'Admin :: Main',
                     'userwidget',
                     'index',
                     'AdminBasePageController'
                 );
                 break;
+
+            return;
         }//end switch
-    } else {
-        $p = new classes\Page(
-            'Admin :: Main',
-            'userwidget',
-            'index',
-            'AdminBasePageController'
-        );
     }//end if
-} else {
-    $p = new classes\Page(
-        'Admin :: Login',
+
+    $obj = new classes\Page(
+        'Admin :: Main',
         'userwidget',
-        'login',
+        'index',
         'AdminBasePageController'
     );
+    return;
+
 }//end if
+
+$obj = new classes\Page(
+    'Admin :: Login',
+    'userwidget',
+    'login',
+    'AdminBasePageController'
+);

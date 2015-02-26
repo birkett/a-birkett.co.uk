@@ -76,10 +76,10 @@ class BasePageModel
             FILTER_UNSAFE_RAW
         );
 
+        $proto = 'http://';
+
         if (stripos($serverProtocol, 'https') === true) {
             $proto = 'https://';
-        } else {
-            $proto = 'http://';
         }
 
         return $proto.$serverHost.'/';

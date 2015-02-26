@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 5.3
+ * PHP Version 5.4
  *
  * @category  Controllers
  * @package   PersonalWebsite
@@ -66,13 +66,8 @@ class AJAXRequestController
      */
     protected function goodRequest($message = '')
     {
-        if (function_exists('http_response_code') === true) {
-            http_response_code(200);
-        } else {
-            header('HTTP/1.0 200 OK', true, 200);
-        }
-
-        exit($message);
+        http_response_code(200);
+        echo $message;
 
     }//end goodRequest()
 
@@ -83,13 +78,7 @@ class AJAXRequestController
      */
     protected function resetRequest()
     {
-        if (function_exists('http_response_code') === true) {
-            http_response_code(205);
-        } else {
-            header('HTTP/1.0 205 Reset Content', true, 205);
-        }
-
-        exit();
+        http_response_code(205);
 
     }//end resetRequest()
 
@@ -101,15 +90,28 @@ class AJAXRequestController
      */
     protected function badRequest($message = '')
     {
-        if (function_exists('http_response_code') === true) {
-            http_response_code(400);
-        } else {
-            header('HTTP/1.0 400 Bad Request', true, 400);
-        }
-
-        exit($message);
+        http_response_code(400);
+        echo $message;
 
     }//end badRequest()
+
+
+    /**
+     * Super simple helper function to validate a strings length
+     * @param string  $string Input string to check.
+     * @param integer $min    Minimum expected string length.
+     * @param integer $max    Maximum expected string length.
+     * @return boolean True on valid, false otherwise
+     */
+    private function strClamp($string, $min, $max)
+    {
+        if (strlen($string) < $min || strlen($string) > $max) {
+            return false;
+        }
+
+        return true;
+
+    }//end strClamp()
 
 
     /**
@@ -130,41 +132,26 @@ class AJAXRequestController
         $cip  = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_UNSAFE_RAW);
 
         if ($mode === 'postcomment') {
-            if (isset($post) === false
-                || isset($user) === false
+            if (isset($user) === false
                 || isset($comm) === false
-                || isset($resp) === false
-            ) {
-                $this->badRequest('Something did not send correctly.');
-            }
-
-            $postcheck = $this->model->database->GetNumRows(
-                $this->model->getSinglePost($post)
-            );
-
-            if ($postcheck !== 1) {
-                $this->badRequest('Invalid Post ID.');
-            }
-
-            if ($user === ''
-                || $comm === ''
-                || $resp === ''
             ) {
                 $this->badRequest('Please fill out all details.');
+                return;
             }
 
-            if (strlen($user) < 3 || strlen($user) > 20) {
+            if ($this->strClamp($user, 3, 20) !== true) {
                 $this->badRequest('Username should be 3 - 20 characters');
+                return;
             }
 
-            if (strlen($comm) < 10 || strlen($comm) > 500) {
+            if ($this->strClamp($user, 10, 500) !== true) {
                 $this->badRequest('Comment should be 10 - 500 characters');
+                return;
             }
 
             if ($this->model->checkIP($cip) !== '0') {
-                $this->badRequest(
-                    'Your address is blocked, likely due to spam.'
-                );
+                $this->badRequest('Your address is blocked.');
+                return;
             }
 
             $recaptcha = new \ABirkett\classes\Recaptcha(
@@ -173,12 +160,17 @@ class AJAXRequestController
                 $resp
             );
 
-            if ($recaptcha->response->success === true) {
-                $this->model->postComment($post, $user, $comm, $cip);
-                $this->goodRequest('Comment Posted!');
+            if ($recaptcha->response->success !== true) {
+                $this->badRequest('Captcha verification failed');
+                return;
             }
 
-            $this->badRequest('Captcha verification failed');
+            if ($this->model->postComment($post, $user, $comm, $cip) !== true) {
+                $this->badRequest('Something was rejected.');
+                return;
+            }
+
+            $this->goodRequest('Comment Posted!');
         }//end if
 
     }//end __construct()

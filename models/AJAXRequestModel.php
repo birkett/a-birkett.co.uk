@@ -59,10 +59,14 @@ class AJAXRequestModel extends BasePageModel
      * @param string  $username Comment author.
      * @param string  $comment  Comment text.
      * @param string  $clientip IP address of the author.
-     * @return void
+     * @return boolean True on sucess, false on failiure
      */
     public function postComment($postid, $username, $comment, $clientip)
     {
+        if ($this->isValidPostID($postid) !== true) {
+            return false;
+        }
+
         $this->database->runQuery(
             'INSERT INTO blog_comments('.
             'post_id, comment_username, comment_text, comment_timestamp, '.
@@ -76,22 +80,32 @@ class AJAXRequestModel extends BasePageModel
             )
         );
 
+        return true;
+
     }//end postComment()
 
 
     /**
-     * Get the post data and return it as an array
+     * Check if a given postid matches a public post.
      * @param  integer $postid ID of the post to fetch.
-     * @return array   Array of post data
+     * @return boolean True if post exists, false if not
      */
-    public function getSinglePost($postid)
+    private function isValidPostID($postid)
     {
-        return $this->database->runQuery(
+        $rows = $this->database->runQuery(
             "SELECT * FROM blog_posts WHERE post_id = :id AND post_draft = '0'",
             array(':id' => $postid)
         );
 
-    }//end getSinglePost()
+        $result = $this->database->getNumRows($rows);
+
+        if ($result !== 1) {
+            return false;
+        }
+
+        return true;
+
+    }//end isValidPostID()
 
 
     /**

@@ -58,6 +58,9 @@ class AdminAJAXRequestController extends AJAXRequestController
      */
     public function __construct()
     {
+        $this->model    = new \ABirkett\models\AdminAJAXRequestModel();
+        $sessionManager = \ABirkett\classes\SessionManager::getInstance();
+
         // Basics.
         $mode = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
         // Used for post and page edits.
@@ -76,13 +79,12 @@ class AdminAJAXRequestController extends AJAXRequestController
         $user = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
         $pass = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
-        $this->model = new \ABirkett\models\AdminAJAXRequestModel();
-
         // Bail if not logged in, and not requesting a login.
-        if (\ABirkett\classes\SessionManager::isLoggedIn() === false
+        if ($sessionManager->isLoggedIn() === false
             && $mode !== 'login'
         ) {
-            parent::badRequest('Not logged in.');
+            $this->badRequest('Not logged in.');
+            return;
         }
 
         switch($mode) {
@@ -94,82 +96,98 @@ class AdminAJAXRequestController extends AJAXRequestController
                     $cont,
                     $draft
                 ) === false) {
-                    parent::badRequest(
+                    $this->badRequest(
                         'Something was rejected. Check all fields are correct.'
                     );
+                    return;
                 }
 
-                parent::goodRequest('Post updated.');
+                $this->goodRequest('Post updated.');
+                return;
                 break;
 
             // Edit page mode.
             case 'editpage':
                 if ($this->model->updatePage($pagid, $cont) === false) {
-                    parent::badRequest(
+                    $this->badRequest(
                         'Something was rejected. Check all fields are correct.'
                     );
+                    return;
                 }
 
-                parent::goodRequest('Page updated.');
+                $this->goodRequest('Page updated.');
+                return;
                 break;
 
             // New post mode.
             case 'newpost':
                 if ($this->model->newPost($title, $cont, $draft) === false) {
-                    parent::badRequest(
+                    $this->badRequest(
                         'Something was rejected. Check all fields are correct.'
                     );
+                    return;
                 }
 
-                parent::goodRequest('Posted!');
+                $this->goodRequest('Posted!');
+                return;
                 break;
 
             // Add blocked IP mode.
             case 'addip':
                 if ($this->model->blockIP($ipaddress) === false) {
-                    parent::badRequest('No address specified');
+                    $this->badRequest('No address specified');
+                    return;
                 }
 
-                parent::goodRequest('Address '.$ipaddress.' was blocked');
+                $this->goodRequest('Address '.$ipaddress.' was blocked');
+                return;
                 break;
 
             // Remove blocked IP mode.
             case 'removeip':
                 if ($this->model->unblockIP($ipaddress) === false) {
-                    parent::badRequest('No address specified');
+                    $this->badRequest('No address specified');
+                    return;
                 }
 
-                parent::goodRequest('Address '.$ipaddress.' was unblocked');
+                $this->goodRequest('Address '.$ipaddress.' was unblocked');
+                return;
                 break;
 
             // Change the admin password.
             case 'password':
                 if ($this->model->changePassword($cup, $newp, $cnp) === false) {
-                    parent::badRequest('Failed. Check passwords match.');
+                    $this->badRequest('Failed. Check passwords match.');
+                    return;
                 }
 
-                parent::goodRequest('Password changed.');
+                $this->goodRequest('Password changed.');
+                return;
                 break;
 
             // Login.
             case 'login':
                 if ($this->model->checkCredentials($user, $pass) === false) {
-                    parent::badRequest('Incorrect username or password.');
+                    $this->badRequest('Incorrect username or password.');
+                    return;
                 }
 
                 // Set up the session on successful login.
-                \ABirkett\classes\SessionManager::doLogin($user);
-                parent::goodRequest();
+                $sessionManager->doLogin($user);
+                $this->goodRequest();
+                return;
                 break;
 
             // Logout.
             case 'logout':
-                \ABirkett\classes\SessionManager::doLogout();
-                parent::resetRequest();
+                $sessionManager->doLogout();
+                $this->resetRequest();
+                return;
                 break;
 
             default:
-                parent::badRequest();
+                $this->badRequest();
+                return;
                 break;
         }//end switch
 

@@ -56,128 +56,58 @@ class BlogPageController extends BasePageController
 
 
     /**
-     * Build the blog page
-     * @param string $output Unparsed template passed by reference.
+     * Render comments to the output
+     * @param integer $postid Post ID for which to pull comments for.
+     * @param string  $output Page to render to.
      * @return none
      */
-    public function __construct(&$output)
+    private function renderComments($postid, &$output)
     {
-        parent::__construct($output);
-        $this->model = new \ABirkett\models\BlogPageModel();
-
-        $offset = filter_input(INPUT_GET, 'offset', FILTER_SANITIZE_NUMBER_INT);
-        $postid = filter_input(INPUT_GET, 'postid', FILTER_SANITIZE_NUMBER_INT);
-
-        // Clamp pagniation offset.
-        if (isset($offset) !== true || $offset < 1 || $offset > 100000) {
-            $offset = 1;
-        }
-
-        // Single post mode.
-        if (isset($postid) === true && $postid >= 0 && $postid < 500000) {
-            $result = $this->model->getSinglePost($postid);
-            // Back out if we didnt find any posts.
-            if ($this->model->database->GetNumRows($result) === 0) {
-                header('Location: /404');
-
-                return;
-            }
-
-            // Show comments.
-            $comments = $this->model->getCommentsOnPost($postid);
-            if ($this->model->database->GetNumRows($comments) !== 0) {
-                while ($comment = $this->model->database->GetRow($comments)) {
-                    $tags = array(
-                             '{COMMENTAUTHOR}' =>
-                               stripslashes($comment['comment_username']),
-                             '{COMMENTTIMESTAMP}' =>
-                               date(DATE_FORMAT, $comment['comment_timestamp']),
-                             '{COMMENTCONTENT}' =>
-                               stripslashes($comment['comment_text'])
-                            );
-                    $temp = $this->templateEngine->logicTag(
-                        '{COMMENT}',
-                        '{/COMMENT}',
-                        $output
-                    );
-                    $this->templateEngine->parseTags($tags, $temp);
-                    // Add this comment to the output.
-                    $temp .= '{COMMENT}';
-                    $this->templateEngine->replaceTag(
-                        '{COMMENT}',
-                        $temp,
-                        $output
-                    );
-                }//end while
-            }//end if
-
-            // Snow new comments box.
-            $tags = array(
-                     '{COMMENTPOSTID}' => $postid,
-                     '{RECAPTCHAKEY}'  => RECAPTCHA_PUBLIC_KEY,
-                    );
-            $this->templateEngine->parseTags($tags, $output);
-            // No pagination.
-            $this->templateEngine->removeLogicTag(
-                '{PAGINATION}',
-                '{/PAGINATION}',
-                $output
-            );
-        } else {
-            // Normal mode.
-            $result = $this->model->getMultiplePosts($offset - 1);
-            // Back out if we didnt find any posts.
-            if ($this->model->database->GetNumRows($result) === 0) {
-                header('Location: /404');
-
-                return;
-            }
-
-            // Show Pagination.
-            $numberofposts = $this->model->getNumberOfPosts();
-            if ($numberofposts > BLOG_POSTS_PER_PAGE) {
-                if ($offset > 1) {
-                    $tags = array(
-                             '{PAGEPREVLINK}' => '/blog/page/'.($offset - 1),
-                             '{PAGEPREVTEXT}' => 'Previous Page',
-                            );
-                    $this->templateEngine->parseTags($tags, $output);
-                }
-
-                if ((($offset + 1) * BLOG_POSTS_PER_PAGE) < $numberofposts) {
-                    $tags = array(
-                             '{PAGENEXTLINK}' => '/blog/page/'.($offset + 1),
-                             '{PAGENEXTTEXT}' => 'Next Page',
-                            );
-                    $this->templateEngine->parseTags($tags, $output);
-                }
-            } else {
-                // Hide pagniation.
-                $this->templateEngine->removeLogicTag(
-                    '{PAGINATION}',
-                    '{/PAGINATION}',
+        $comments = $this->model->getCommentsOnPost($postid);
+        if ($this->model->database->getNumRows($comments) !== 0) {
+            while ($comment = $this->model->database->getRow($comments)) {
+                $date = date(DATE_FORMAT, $comment['comment_timestamp']);
+                $tags = array(
+                         '{COMMENTAUTHOR}' => $comment['comment_username'],
+                         '{COMMENTTIMESTAMP}' => $date,
+                         '{COMMENTCONTENT}' => $comment['comment_text'],
+                        );
+                $temp = $this->templateEngine->logicTag(
+                    '{COMMENT}',
+                    '{/COMMENT}',
                     $output
                 );
-            }//end if
-
-            // Hide new comment box.
-            $this->templateEngine->removeLogicTag(
-                '{NEWCOMMENT}',
-                '{/NEWCOMMENT}',
-                $output
-            );
+                $this->templateEngine->parseTags($tags, $temp);
+                // Add this comment to the output.
+                $temp .= '{COMMENT}';
+                $this->templateEngine->replaceTag(
+                    '{COMMENT}',
+                    $temp,
+                    $output
+                );
+            }//end while
         }//end if
 
-        // Rendering code.
-        while ($post = $this->model->database->GetRow($result)) {
+    }//end renderComments()
+
+
+    /**
+     * Render posts to the output
+     * @param array  $posts  Array of posts to render.
+     * @param string $output Page to render to.
+     * @return none
+     */
+    private function renderPosts($posts, &$output)
+    {
+        while ($post = $this->model->database->getRow($posts)) {
+            $date = date(DATE_FORMAT, $post['post_timestamp']);
+            $numc = $this->model->getNumberOfComments($post['post_id']);
             $tags = array(
-                     '{POSTTIMESTAMP}' =>
-                         date(DATE_FORMAT, $post['post_timestamp']),
-                     '{POSTID}' => $post['post_id'],
-                     '{POSTTITLE}' => $post['post_title'],
-                     '{POSTCONTENT}' => stripslashes($post['post_content']),
-                     '{COMMENTCOUNT}' =>
-                         $this->model->getNumberOfComments($post['post_id'])
+                     '{POSTTIMESTAMP}' => $date,
+                     '{POSTID}'        => $post['post_id'],
+                     '{POSTTITLE}'     => $post['post_title'],
+                     '{POSTCONTENT}'   => stripslashes($post['post_content']),
+                     '{COMMENTCOUNT}'  => $numc,
                     );
             $temp = $this->templateEngine->logicTag(
                 '{BLOGPOST}',
@@ -189,6 +119,100 @@ class BlogPageController extends BasePageController
             $this->templateEngine->replaceTag('{BLOGPOST}', $temp, $output);
         }//end while
 
+    }//end renderPosts()
+
+
+    /**
+     * Render the new comment box to the output
+     * @param integer $postid Post ID for which to post comments for.
+     * @param string  $output Page to render to.
+     * @return none
+     */
+    private function renderNewCommentBox($postid, &$output)
+    {
+        $tags = array(
+                 '{COMMENTPOSTID}' => $postid,
+                 '{RECAPTCHAKEY}'  => RECAPTCHA_PUBLIC_KEY,
+                );
+        $this->templateEngine->parseTags($tags, $output);
+
+    }//end renderNewCommentBox()
+
+
+    /**
+     * Remove the new comment box from the output
+     * @param string $output Page to render to.
+     * @return none
+     */
+    private function removeNewCommentBox(&$output)
+    {
+        $this->templateEngine->removeLogicTag(
+            '{NEWCOMMENT}',
+            '{/NEWCOMMENT}',
+            $output
+        );
+
+    }//end removeNewCommentBox()
+
+
+    /**
+     * Render the pagination to the output
+     * @param integer $offset Page offset to calculate next and previous links.
+     * @param string  $output Page to render to.
+     * @return none
+     */
+    private function renderPagination($offset, $output)
+    {
+        // Render the previous page link when needed.
+        if ($offset > 1) {
+            $tags = array(
+                     '{PAGEPREVLINK}' => '/blog/page/'.($offset - 1),
+                     '{PAGEPREVTEXT}' => 'Previous Page',
+                    );
+            $this->templateEngine->parseTags($tags, $output);
+        }
+
+        // Render the next page link.
+        $numberofposts = $this->model->getNumberOfPosts();
+        if ((($offset + 1) * BLOG_POSTS_PER_PAGE) < $numberofposts) {
+            $tags = array(
+                     '{PAGENEXTLINK}' => '/blog/page/'.($offset + 1),
+                     '{PAGENEXTTEXT}' => 'Next Page',
+                    );
+            $this->templateEngine->parseTags($tags, $output);
+        }
+
+        // Hide pagniation when not enough posts in the blog.
+        if ($numberofposts < BLOG_POSTS_PER_PAGE) {
+            $this->removePagination($output);
+        }
+
+    }//end renderPagination()
+
+
+    /**
+     * Remove the pagination from the output
+     * @param string $output Page to render to.
+     * @return none
+     */
+    private function removePagination(&$output)
+    {
+        $this->templateEngine->removeLogicTag(
+            '{PAGINATION}',
+            '{/PAGINATION}',
+            $output
+        );
+
+    }//end removePagination()
+
+
+    /**
+     * Remove unused tags from the page
+     * @param string $output Page to render to.
+     * @return none
+     */
+    private function cleanupTags(&$output)
+    {
         $this->templateEngine->removeLogicTag(
             '{BLOGPOST}',
             '{/BLOGPOST}',
@@ -212,6 +236,71 @@ class BlogPageController extends BasePageController
                       '{/NEWCOMMENT}',
                      );
         $this->templateEngine->removeTags($cleantags, $output);
+
+    }//end cleanupTags()
+
+
+    /**
+     * Build the blog page
+     * @param string $output Unparsed template passed by reference.
+     * @return none
+     */
+    public function __construct(&$output)
+    {
+        parent::__construct($output);
+        $this->model = new \ABirkett\models\BlogPageModel();
+
+        $offset = filter_input(INPUT_GET, 'offset', FILTER_SANITIZE_NUMBER_INT);
+        $postid = filter_input(INPUT_GET, 'postid', FILTER_SANITIZE_NUMBER_INT);
+
+        // Default to multiple view when nothing specified.
+        if (isset($offset) === false && isset($postid) === false) {
+            $offset = 1;
+        }
+
+        // Single post mode.
+        if (isset($postid) === true) {
+            $result = $this->model->getSinglePost($postid);
+            // Back out if we didnt find any posts.
+            if ($this->model->database->getNumRows($result) === 0) {
+                header('Location: /404');
+
+                return;
+            }
+
+            // No pagination.
+            $this->removePagination($output);
+            // Show new comments box.
+            $this->renderNewCommentBox($postid, $output);
+            // Show comments.
+            $this->renderComments($postid, $output);
+        }//end if
+
+        // Page fetch mode. Only do this if postid not specified, just incase
+        // someone plays with the URL to request a post and page.
+        if (isset($offset) === true && isset($postid) === false) {
+            // Page 0 should be the same as page 1.
+            if ($offset === 0) {
+                $offset = 1;
+            }
+
+            $result = $this->model->getMultiplePosts($offset - 1);
+            // Back out if we didnt find any posts.
+            if ($this->model->database->getNumRows($result) === 0) {
+                header('Location: /404');
+
+                return;
+            }
+
+            // Hide new comment box.
+            $this->removeNewCommentBox($output);
+            // Pagination.
+            $this->renderPagination($offset, $output);
+        }//end if
+
+        // Rendering code.
+        $this->renderPosts($result, $output);
+        $this->cleanupTags($output);
 
     }//end __construct()
 }//end class

@@ -54,6 +54,26 @@ namespace ABirkett\controllers;
 class AdminEditPageController extends AdminBasePageController
 {
 
+    /**
+     * Remove unused tags from the page
+     * @param string $output Page to render to.
+     * @return none
+     */
+    private function cleanupTags(&$output)
+    {
+        // Clean up the tags if not already replaced.
+        $tags = array(
+                 '{NEWPOST}',
+                 '{/NEWPOST}',
+                 '{PAGEEDIT}',
+                 '{/PAGEEDIT}',
+                 '{POSTEDIT}',
+                 '{/POSTEDIT}',
+                );
+        $this->templateEngine->removeTags($tags, $output);
+
+    }//end cleanupTags()
+
 
     /**
      * Build an editor page
@@ -69,8 +89,8 @@ class AdminEditPageController extends AdminBasePageController
         $pageid = filter_input(INPUT_GET, 'pageid', FILTER_SANITIZE_NUMBER_INT);
         $postid = filter_input(INPUT_GET, 'postid', FILTER_SANITIZE_NUMBER_INT);
 
+        // Page edit mode.
         if (isset($pageid) === true) {
-            // Page edit mode.
             $page = $this->model->getPage($pageid);
             $cont = $page['page_content'];
 
@@ -89,8 +109,10 @@ class AdminEditPageController extends AdminBasePageController
                 '{/NEWPOST}',
                 $output
             );
-        } elseif (isset($postid) === true) {
-            // Post edit mode.
+        }//end if
+
+        // Post edit mode.
+        if (isset($postid) === true && isset($pageid) === false) {
             $post = $this->model->getSinglePost($postid);
             $row  = $this->model->database->getRow($post);
 
@@ -122,8 +144,10 @@ class AdminEditPageController extends AdminBasePageController
                 '{/NEWPOST}',
                 $output
             );
-        } else {
-            // New post mode.
+        }//end if
+
+        // New post mode.
+        if (isset($pageid) === false && isset($postid) === false) {
             $cont  = '';
             $vars  = 'var title=document.getElementById("formtitle").value;';
             $vars .= 'var draft=document.getElementById("formdraft").checked;';
@@ -147,16 +171,8 @@ class AdminEditPageController extends AdminBasePageController
                  '{CONTENT}' => stripslashes($cont),
                 );
         $this->templateEngine->parseTags($tags, $output);
-        // Clean up the tags if not already replaced.
-        $tags = array(
-                 '{NEWPOST}',
-                 '{/NEWPOST}',
-                 '{PAGEEDIT}',
-                 '{/PAGEEDIT}',
-                 '{POSTEDIT}',
-                 '{/POSTEDIT}',
-                );
-        $this->templateEngine->removeTags($tags, $output);
+
+        $this->cleanupTags($output);
 
     }//end __construct()
 }//end class

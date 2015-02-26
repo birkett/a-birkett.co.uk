@@ -60,7 +60,7 @@ class AdminBasePageController extends BasePageController
     public function __construct(&$output)
     {
         parent::__construct($output);
-        $this->model = new \ABirkett\models\AdminBasePageModel();
+        $this->model          = new \ABirkett\models\AdminBasePageModel();
 
         $tags = array('{ADMINFOLDER}' => ADMIN_FOLDER);
         $this->templateEngine->parseTags($tags, $output);

@@ -72,9 +72,9 @@ class GenericPageModel extends BasePageModel
 
         if (empty($page) === true) {
             return null;
-        } else {
-            return $page[0];
         }
+
+        return $page[0];
 
     }//end getPage()
 }//end class

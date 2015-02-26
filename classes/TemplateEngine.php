@@ -38,8 +38,6 @@ namespace ABirkett\classes;
 /**
  * Provides basic templating functionality.
  *
- * TemplateEngine is a singleton, so the value of getInstance() should be stored
- * in a class member.
  * Functions here will use by-reference parameters where appropriate, which
  * helps with saving some memory when passing the complete page template between
  * functions.
@@ -53,46 +51,6 @@ namespace ABirkett\classes;
  */
 class TemplateEngine
 {
-
-
-    /**
-     * Singleton - return the instance
-     * @return object Instance
-     */
-    public static function getInstance()
-    {
-        static $templateengine = null;
-        if (isset($templateengine) === false) {
-            $templateengine = new TemplateEngine();
-        }
-
-        return $templateengine;
-
-    }//end getInstance()
-
-
-    /**
-     * Open a page template, taking into account if the page is in admin
-     * @param string $file Input template filename.
-     * @return string Template
-     */
-    public function loadPageTemplate($file)
-    {
-        return file_get_contents(__DIR__.'/../'.TEMPLATE_FOLDER.$file);
-
-    }//end loadPageTemplate()
-
-
-    /**
-     * Open a sub template (widget, page content)
-     * @param string $file Input subtemplate filename.
-     * @return string SubTemplate
-     */
-    public function loadSubTemplate($file)
-    {
-        return file_get_contents(TEMPLATE_FOLDER.$file);
-
-    }//end loadSubTemplate()
 
 
     /**

@@ -120,16 +120,17 @@ class TwitterWidgetModel extends BasePageModel
                 $tweetText
             );
 
+            $timestamp  = strtotime($tweet->created_at);
+            $name       = $tweet->user->name;
+            $screenname = $tweet->user->screen_name;
+            $avatar     = $tweet->user->profile_image_url_https;
+
             if (isset($tweet->retweeted_status) === true) {
-                $timestamp = strtotime($tweet->retweeted_status->created_at);
-                $name = $tweet->retweeted_status->user->name;
+                $timestamp  = strtotime($tweet->retweeted_status->created_at);
+                $name       = $tweet->retweeted_status->user->name;
                 $screenname = $tweet->retweeted_status->user->screen_name;
-                $avatar = $tweet->retweeted_status->user->profile_image_url_https;
-            } else {
-                $timestamp = strtotime($tweet->created_at);
-                $name = $tweet->user->name;
-                $screenname = $tweet->user->screen_name;
-                $avatar = $tweet->user->profile_image_url_https;
+                $avatar     = $tweet->retweeted_status->user
+                    ->profile_image_url_https;
             }
 
             $this->database->runQuery(
@@ -209,12 +210,13 @@ class TwitterWidgetModel extends BasePageModel
 
         $now = time();
 
-        if ($now > $timestamp) {
-            $diff  = ($now - $timestamp);
-            $tense = 'ago';
-        } else {
+        $diff  = ($now - $timestamp);
+        $tense = ' ago';
+
+        // Just incase the clock is wrong and timestamps are in the future.
+        if ($now < $timestamp) {
             $diff  = ($timestamp - $now);
-            $tense = 'from now';
+            $tense = ' from now';
         }
 
         $lengthsCount = count($lengths);

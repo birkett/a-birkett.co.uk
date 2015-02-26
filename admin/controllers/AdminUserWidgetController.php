@@ -60,11 +60,12 @@ class AdminUserWidgetController extends AdminBasePageController
     public function __construct(&$output)
     {
         parent::__construct($output);
-        $this->model = new \ABirkett\models\AdminUserWidgetModel();
-        $username    = \ABirkett\classes\SessionManager::getUser();
+        $this->model    = new \ABirkett\models\AdminUserWidgetModel();
+        $sessionManager = \ABirkett\classes\SessionManager::getInstance();
+        $username       = $sessionManager->getVar('user');
 
         // Username will not be set if not logged in.
-        if (isset($username) === true) {
+        if ($sessionManager->isLoggedIn() === true) {
             $this->templateEngine->removeLogicTag(
                 '{LOGIN}',
                 '{/LOGIN}',
@@ -75,13 +76,19 @@ class AdminUserWidgetController extends AdminBasePageController
                 $username,
                 $output
             );
-        } else {
-            $this->templateEngine->removeLogicTag(
-                '{LOGGEDIN}',
-                '{/LOGGEDIN}',
-                $output
-            );
+            $tags = array(
+                     '{LOGGEDIN}',
+                     '{/LOGGEDIN}',
+                    );
+            $this->templateEngine->removeTags($tags, $output);
         }
+
+        // Removed the loggedin tag if not handled above.
+        $this->templateEngine->removeLogicTag(
+            '{LOGGEDIN}',
+            '{/LOGGEDIN}',
+            $output
+        );
 
         $cleantags = array(
                       '{LOGIN}',

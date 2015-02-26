@@ -39,7 +39,7 @@ namespace ABirkett\classes;
  * Wraps up the PHP session functions for handling user authentication.
  *
  * SessionManager handles the user login / logout, and validates the session.
- * A call to SessionManager::begin() should be one of the first calls in a
+ * A call to SessionManager::getInstance() should be one of the first calls in a
  * protected page. This will ensure that the isLoggedIn() function is available
  * immediatly after.
  *
@@ -61,10 +61,26 @@ class SessionManager
 
 
     /**
+     * Create or return a new instance of the SessionManager singleton
+     * @return object SessionManager instance
+     */
+    public static function getInstance()
+    {
+        static $sessionmanager = null;
+        if (isset($sessionmanager) === false) {
+            $sessionmanager = new SessionManager();
+        }
+
+        return $sessionmanager;
+
+    }//end getInstance()
+
+
+    /**
      * Start a session
      * @return void
      */
-    public static function begin()
+    private function __construct()
     {
         session_name('ABirkettAdmin');
         session_set_cookie_params(SESSION_EXPIRY_TIME, '/'.ADMIN_FOLDER);
@@ -74,10 +90,39 @@ class SessionManager
 
 
     /**
+     * Wrapper around the $_SESSION superglobal used for getting.
+     * @param string $var Variable to get.
+     * @return string Variable value
+     */
+    public function getVar($var)
+    {
+        if (isset($_SESSION[$var])) {
+            return $_SESSION[$var];
+        }
+
+        return null;
+
+    }//end getVar()
+
+
+    /**
+     * Wrapper around the $_SESSION superglobal used for setting.
+     * @param string $var   Variable to set.
+     * @param void   $value Variable value.
+     * @return void
+     */
+    private function setVar($var, $value)
+    {
+        $_SESSION[$var] = $value;
+
+    }//end setVar()
+
+
+    /**
      * Destroy the open session
      * @return void
      */
-    public static function doLogout()
+    public function doLogout()
     {
         session_unset();
         session_destroy();
@@ -90,69 +135,56 @@ class SessionManager
      * @param string $user Username to store.
      * @return void
      */
-    public static function doLogin($user)
+    public function doLogin($user)
     {
         $cip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_UNSAFE_RAW);
         $cua = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_UNSAFE_RAW);
 
-        $_SESSION['user']    = $user;
-        $_SESSION['ip']      = $cip;
-        $_SESSION['ua']      = $cua;
-        $_SESSION['EXPIRES'] = (time() + SESSION_EXPIRY_TIME);
+        $this->setVar('user', $user);
+        $this->setVar('ip', $cip);
+        $this->setVar('ua', $cua);
+        $this->setVar('EXPIRES', (time() + SESSION_EXPIRY_TIME));
 
-        self::regenerateID();
+        $this->regenerateID();
 
     }//end doLogin()
-
-
-    /**
-     * Get the username from the session
-     * @return string Username or null on not logged in
-     */
-    public static function getUser()
-    {
-        $ses = $_SESSION;
-
-        if (isset($ses['user']) === true) {
-            return $ses['user'];
-        }
-
-        return null;
-
-    }//end getUser()
 
 
     /**
      * Is a user logged in
      * @return boolean Is logged in
      */
-    public static function isLoggedIn()
+    public function isLoggedIn()
     {
         $cip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_UNSAFE_RAW);
         $cua = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_UNSAFE_RAW);
-        $ses = $_SESSION;
 
-        if (isset($ses['user']) === false) {
+        $sessionUser    = $this->getVar('user');
+        $sessionIP      = $this->getVar('ip');
+        $sessionUA      = $this->getVar('ua');
+        $sessionExpires = $this->getVar('EXPIRES');
+
+        if (isset($sessionUser) === false) {
             return false;
         }
 
-        if (isset($ses['ip']) === false) {
+        if (isset($sessionIP) === false) {
             return false;
         }
 
-        if (isset($ses['ua']) === false) {
+        if (isset($sessionUA) === false) {
             return false;
         }
 
-        if (isset($ses['EXPIRES']) === false) {
+        if (isset($sessionExpires) === false) {
             return false;
         }
 
-        if ($ses['ip'] !== $cip
-            || $ses['ua'] !== $cua
-            || $ses['EXPIRES'] < time()
+        if ($sessionIP !== $cip
+            || $sessionUA !== $cua
+            || $sessionExpires < time()
         ) {
-            self::doLogout();
+            $this->doLogout();
 
             return false;
         }
@@ -167,7 +199,7 @@ class SessionManager
      * Regenerate the session ID
      * @return void
      */
-    public static function regenerateID()
+    private function regenerateID()
     {
         session_regenerate_id(true);
 
