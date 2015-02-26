@@ -53,6 +53,150 @@ class AdminAJAXRequestController extends AJAXRequestController
 
 
     /**
+     * Handle the editpost request
+     * @param integer $posid Post ID to edit.
+     * @param string  $title Post title.
+     * @param string  $cont  Post content.
+     * @param string  $draft Post draft status.
+     * @return void
+     */
+    private function actionEditPost($posid, $title, $cont, $draft)
+    {
+        if ($this->model->updatePost($posid, $title, $cont, $draft) === false) {
+            $this->badRequest('Bad request. Check all fields are correct.');
+            return;
+        }
+
+        $this->goodRequest('Post updated.');
+
+    }//end actionEditPost()
+
+
+    /**
+     * Handle the editpage request
+     * @param integer $pageid  Page ID to edit.
+     * @param string  $content Page content.
+     * @return void
+     */
+    private function actionEditPage($pageid, $content)
+    {
+        if ($this->model->updatePage($pageid, $content) === false) {
+            $this->badRequest('Bad request. Check all fields are correct.');
+            return;
+        }
+
+        $this->goodRequest('Page updated.');
+
+    }//end actionEditPage()
+
+
+    /**
+     * Handle the newpost request
+     * @param string $title   Post title.
+     * @param string $content Post content.
+     * @param string $draft   Post draft status.
+     * @return void
+     */
+    private function actionNewPost($title, $content, $draft)
+    {
+        if ($this->model->newPost($title, $content, $draft) === false) {
+            $this->badRequest('Bad request. Check all fields are correct.');
+            return;
+        }
+
+        $this->goodRequest('Posted!');
+
+    }//end actionNewPost()
+
+
+    /**
+     * Handle the addip request
+     * @param string $ipaddress Address to blacklist.
+     * @return void
+     */
+    private function actionBlockIP($ipaddress)
+    {
+        if ($this->model->blockIP($ipaddress) === false) {
+            $this->badRequest('No address specified');
+            return;
+        }
+
+        $this->goodRequest('Address '.$ipaddress.' was blocked');
+
+    }//end actionBlockIP()
+
+
+    /**
+     * Handle the removeip request
+     * @param string $ipaddress Address to remove from the blacklist.
+     * @return void
+     */
+    private function actionUnblockIP($ipaddress)
+    {
+        if ($this->model->unblockIP($ipaddress) === false) {
+            $this->badRequest('No address specified');
+            return;
+        }
+
+        $this->goodRequest('Address '.$ipaddress.' was unblocked');
+
+    }//end actionUnblockIP()
+
+
+    /**
+     * Handle the password request
+     * @param string $current Current users password.
+     * @param string $new     New users password.
+     * @param string $confirm New users password again to confirm.
+     * @return void
+     */
+    private function actionChangePassword($current, $new, $confirm)
+    {
+        if ($this->model->changePassword($current, $new, $confirm) === false) {
+            $this->badRequest('Failed. Check passwords match.');
+            return;
+        }
+
+        $this->goodRequest('Password changed.');
+
+    }//end actionChangePassword()
+
+
+    /**
+     * Handle the login request
+     * @param object $sessionManager SessionManager instance to use.
+     * @param string $user           Username to log in as.
+     * @param string $pass           Users password.
+     * @return void
+     */
+    private function actionLogin(&$sessionManager, $user, $pass)
+    {
+        if ($this->model->checkCredentials($user, $pass) === false) {
+            $this->badRequest('Incorrect username or password.');
+            return;
+        }
+
+        // Set up the session on successful login.
+        $sessionManager->doLogin($user);
+        $this->goodRequest();
+
+    }//end actionLogin()
+
+
+    /**
+     * Handle the logout request
+     * @param object $sessionManager SessionManager instance to use.
+     * @return void
+     */
+    private function actionLogout(&$sessionManager)
+    {
+        $sessionManager->doLogout();
+        $this->resetRequest();
+
+    }//end actionLogout()
+
+
+    /**
      * Handle private POST requests from AJAX
      * @return none
      */
@@ -80,9 +224,7 @@ class AdminAJAXRequestController extends AJAXRequestController
         $pass = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
         // Bail if not logged in, and not requesting a login.
-        if ($sessionManager->isLoggedIn() === false
-            && $mode !== 'login'
-        ) {
+        if ($sessionManager->isLoggedIn() === false && $mode !== 'login') {
             $this->badRequest('Not logged in.');
             return;
         }
@@ -90,101 +232,53 @@ class AdminAJAXRequestController extends AJAXRequestController
         switch($mode) {
             // Edit post mode.
             case 'editpost':
-                if ($this->model->updatePost(
-                    $posid,
-                    $title,
-                    $cont,
-                    $draft
-                ) === false) {
-                    $this->badRequest(
-                        'Something was rejected. Check all fields are correct.'
-                    );
-                    return;
-                }
-
-                $this->goodRequest('Post updated.');
+                $this->actionEditPost($posid, $title, $cont, $draft);
                 return;
                 break;
 
             // Edit page mode.
             case 'editpage':
-                if ($this->model->updatePage($pagid, $cont) === false) {
-                    $this->badRequest(
-                        'Something was rejected. Check all fields are correct.'
-                    );
-                    return;
-                }
-
-                $this->goodRequest('Page updated.');
+                $this->actionEditPage($pagid, $cont);
                 return;
                 break;
 
             // New post mode.
             case 'newpost':
-                if ($this->model->newPost($title, $cont, $draft) === false) {
-                    $this->badRequest(
-                        'Something was rejected. Check all fields are correct.'
-                    );
-                    return;
-                }
-
-                $this->goodRequest('Posted!');
+                $this->actionNewPost($title, $cont, $draft);
                 return;
                 break;
 
             // Add blocked IP mode.
             case 'addip':
-                if ($this->model->blockIP($ipaddress) === false) {
-                    $this->badRequest('No address specified');
-                    return;
-                }
-
-                $this->goodRequest('Address '.$ipaddress.' was blocked');
+                $this->actionBlockIP($ipaddress);
                 return;
                 break;
 
             // Remove blocked IP mode.
             case 'removeip':
-                if ($this->model->unblockIP($ipaddress) === false) {
-                    $this->badRequest('No address specified');
-                    return;
-                }
-
-                $this->goodRequest('Address '.$ipaddress.' was unblocked');
+                $this->actionUnblockIP($ipaddress);
                 return;
                 break;
 
             // Change the admin password.
             case 'password':
-                if ($this->model->changePassword($cup, $newp, $cnp) === false) {
-                    $this->badRequest('Failed. Check passwords match.');
-                    return;
-                }
-
-                $this->goodRequest('Password changed.');
+                $this->actionChangePassword($cup, $newp, $cnp);
                 return;
                 break;
 
             // Login.
             case 'login':
-                if ($this->model->checkCredentials($user, $pass) === false) {
-                    $this->badRequest('Incorrect username or password.');
-                    return;
-                }
-
-                // Set up the session on successful login.
-                $sessionManager->doLogin($user);
-                $this->goodRequest();
+                $this->actionLogin($sessionManager, $user, $pass);
                 return;
                 break;
 
             // Logout.
             case 'logout':
-                $sessionManager->doLogout();
-                $this->resetRequest();
+                $this->actionLogout($sessionManager);
                 return;
                 break;
 
+            // Default, send a bad request response.
             default:
                 $this->badRequest();
                 return;

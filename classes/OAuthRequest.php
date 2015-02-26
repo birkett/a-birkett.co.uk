@@ -57,29 +57,16 @@ class OAuthRequest
      */
     private $parameters;
 
-    /**
-     * Request method
-     * @var string $httpMethod
-     */
-    private $httpMethod;
-
-    /**
-     * Request URL
-     * @var string $httpUrl
-     */
-    private $httpUrl;
-
 
     /**
      * Create an OAuth request
-     * @param  string $cKey       Consumer key.
-     * @param  string $oToken     OAuth token.
-     * @param  string $httpMethod Request method.
-     * @param  string $httpUrl    Request URL.
-     * @param  array  $params     Additional parameters as array.
+     * @param  string $cKey    Consumer key.
+     * @param  string $oToken  OAuth token.
+     * @param  string $httpUrl Request URL.
+     * @param  array  $params  Additional parameters as array.
      * @return object OAuthRequest instance
      */
-    public function __construct($cKey, $oToken, $httpMethod, $httpUrl, $params)
+    public function __construct($cKey, $oToken, $httpUrl, $params)
     {
         if (isset($params) === false) {
             $params = array();
@@ -100,20 +87,19 @@ class OAuthRequest
         );
 
         $this->parameters = $params;
-        $this->httpMethod = $httpMethod;
-        $this->httpUrl    = $httpUrl;
 
     }//end __construct()
 
 
     /**
      * Builds a URL usable for a GET request
+     * @param string $url HTTP URL.
      * @return string URL
      */
-    public function toUrl()
+    public function toUrl($url)
     {
         $postData = $this->toPostdata();
-        $out      = $this->httpUrl;
+        $out      = $url;
         if (isset($postData) === true) {
             $out .= '?'.$postData;
         }
@@ -136,17 +122,19 @@ class OAuthRequest
 
     /**
      * Sign an OAuth request
-     * @param string $cSec Consumer secret.
-     * @param string $oSec OAuth token secret.
+     * @param string $url    HTTP URL.
+     * @param string $method HTTP method.
+     * @param string $cSec   Consumer secret.
+     * @param string $oSec   OAuth token secret.
      * @return none
      */
-    public function signRequest($cSec, $oSec)
+    public function signRequest($url, $method, $cSec, $oSec)
     {
         $this->parameters['oauth_signature_method'] = 'HMAC-SHA1';
 
         $parts = array(
-                  strtoupper($this->httpMethod),
-                  $this->httpUrl,
+                  strtoupper($method),
+                  $url,
                   $this->buildHttpQuery($this->parameters),
                  );
 

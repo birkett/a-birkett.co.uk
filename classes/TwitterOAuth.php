@@ -80,25 +80,22 @@ class TwitterOAuth
         $request = new OAuthRequest(
             $this->consumerKey,
             $this->oauthToken,
-            $method,
             $url,
             $parameters
         );
         $request->signRequest(
+            $url,
+            $method,
             $this->consumerSecret,
             $this->oauthTokenSecret
         );
         switch ($method) {
             case 'GET':
-                $response = $this->http($request->toUrl(), 'GET');
+                $response = $this->http($request->toUrl($url), 'GET', null);
                 break;
 
             default:
-                $response = $this->http(
-                    $url,
-                    $method,
-                    $request->toPostdata()
-                );
+                $response = $this->http($url, $method, $request->toPostdata());
                 break;
         }
 
@@ -114,7 +111,7 @@ class TwitterOAuth
      * @param  array  $postfields Extra parameters array.
      * @return array API results
      */
-    private function http($url, $method, $postfields = null)
+    private function http($url, $method, $postfields)
     {
         $curl = curl_init();
         // Curl settings.
@@ -123,7 +120,6 @@ class TwitterOAuth
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Expect:'));
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_HEADERFUNCTION, array($this, 'getHeader'));
         curl_setopt($curl, CURLOPT_HEADER, false);
 
         if ($method === 'POST') {
@@ -136,30 +132,8 @@ class TwitterOAuth
         curl_setopt($curl, CURLOPT_URL, $url);
         $response = curl_exec($curl);
         curl_close($curl);
-        $curl = null;
 
         return $response;
 
     }//end http()
-
-
-    /**
-     * Get the header info to store
-     * @param array  $curl   cURL instance.
-     * @param string $header Input header.
-     * @return int Header length
-     */
-    private function getHeader($curl, $header)
-    {
-        $position = strpos($header, ':');
-        if (empty($position) === false) {
-            $lowercase = strtolower(substr($header, 0, $position));
-            $key       = str_replace('-', '_', $lowercase);
-            $value     = trim(substr($header, ($position + 2)));
-            $this->httpHeader[$key] = $value;
-        }
-
-        return strlen($header);
-
-    }//end getHeader()
 }//end class
