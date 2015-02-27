@@ -146,7 +146,7 @@ class PDOMySQLDatabase
         $statement = $this->mLink->prepare($query);
         $statement->execute($params);
         if ($statement->columnCount() !== 0) {
-            return $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $statement->fetchAll(PDO::FETCH_CLASS);
         }
 
         return array();

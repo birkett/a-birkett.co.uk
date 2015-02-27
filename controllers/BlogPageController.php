@@ -65,12 +65,12 @@ class BlogPageController extends BasePageController
     {
         $comments = $this->model->getCommentsOnPost($postid);
         if ($this->model->database->getNumRows($comments) !== 0) {
-            while ($comment = $this->model->database->getRow($comments)) {
-                $date = date(DATE_FORMAT, $comment['comment_timestamp']);
+            foreach ($comments as $comment) {
+                $date = date(DATE_FORMAT, $comment->comment_timestamp);
                 $tags = array(
-                         '{COMMENTAUTHOR}' => $comment['comment_username'],
+                         '{COMMENTAUTHOR}' => $comment->comment_username,
                          '{COMMENTTIMESTAMP}' => $date,
-                         '{COMMENTCONTENT}' => $comment['comment_text'],
+                         '{COMMENTCONTENT}' => $comment->comment_text,
                         );
                 $temp = $this->templateEngine->logicTag(
                     '{COMMENT}',
@@ -85,7 +85,7 @@ class BlogPageController extends BasePageController
                     $temp,
                     $output
                 );
-            }//end while
+            }//end foreach
         }//end if
 
     }//end renderComments()
@@ -99,14 +99,14 @@ class BlogPageController extends BasePageController
      */
     private function renderPosts($posts, &$output)
     {
-        while ($post = $this->model->database->getRow($posts)) {
-            $date = date(DATE_FORMAT, $post['post_timestamp']);
-            $numc = $this->model->getNumberOfComments($post['post_id']);
+        foreach ($posts as $post) {
+            $date = date(DATE_FORMAT, $post->post_timestamp);
+            $numc = $this->model->getNumberOfComments($post->post_id);
             $tags = array(
                      '{POSTTIMESTAMP}' => $date,
-                     '{POSTID}'        => $post['post_id'],
-                     '{POSTTITLE}'     => $post['post_title'],
-                     '{POSTCONTENT}'   => stripslashes($post['post_content']),
+                     '{POSTID}'        => $post->post_id,
+                     '{POSTTITLE}'     => $post->post_title,
+                     '{POSTCONTENT}'   => stripslashes($post->post_content),
                      '{COMMENTCOUNT}'  => $numc,
                     );
             $temp = $this->templateEngine->logicTag(
@@ -117,7 +117,7 @@ class BlogPageController extends BasePageController
             $this->templateEngine->parseTags($tags, $temp);
             $temp .= "\n{BLOGPOST}";
             $this->templateEngine->replaceTag('{BLOGPOST}', $temp, $output);
-        }//end while
+        }//end foreach
 
     }//end renderPosts()
 
@@ -161,7 +161,7 @@ class BlogPageController extends BasePageController
      * @param string  $output Page to render to.
      * @return none
      */
-    private function renderPagination($offset, $output)
+    private function renderPagination($offset, &$output)
     {
         // Render the previous page link when needed.
         if ($offset > 1) {
@@ -174,6 +174,7 @@ class BlogPageController extends BasePageController
 
         // Render the next page link.
         $numberofposts = $this->model->getNumberOfPosts();
+
         if ((($offset + 1) * BLOG_POSTS_PER_PAGE) < $numberofposts) {
             $tags = array(
                      '{PAGENEXTLINK}' => '/blog/page/'.($offset + 1),

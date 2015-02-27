@@ -92,7 +92,7 @@ class AdminEditPageController extends AdminBasePageController
         // Page edit mode.
         if (isset($pageid) === true) {
             $page = $this->model->getPage($pageid);
-            $cont = $page['page_content'];
+            $cont = $page->page_content;
 
             $vars  = 'var pageid=document.getElementById("formpageid").value;';
             $vars .=
@@ -114,9 +114,8 @@ class AdminEditPageController extends AdminBasePageController
         // Post edit mode.
         if (isset($postid) === true && isset($pageid) === false) {
             $post = $this->model->getSinglePost($postid);
-            $row  = $this->model->database->getRow($post);
 
-            $cont = $row['post_content'];
+            $cont = $post->post_content;
 
             $vars  = 'var postid=document.getElementById("formpostid").value;';
             $vars .= 'var title=document.getElementById("formtitle").value;';
@@ -126,11 +125,11 @@ class AdminEditPageController extends AdminBasePageController
                 '+title+"&draft="+draft+"&content="+content;';
 
             // Small conversion to set checkbox value.
-            $checked = ($row['post_draft'] === '1') ? 'checked' : '';
+            $checked = ($post->post_draft === '1') ? 'checked' : '';
 
             $tags = array(
-                     '{POSTID}'    => $row['post_id'],
-                     '{POSTTITLE}' => $row['post_title'],
+                     '{POSTID}'    => $post->post_id,
+                     '{POSTTITLE}' => $post->post_title,
                      '{DRAFT}'     => $checked,
                     );
             $this->templateEngine->parseTags($tags, $output);

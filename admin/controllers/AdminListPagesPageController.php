@@ -63,10 +63,10 @@ class AdminListPagesPageController extends AdminBasePageController
         $this->model = new \ABirkett\models\AdminListPagesPageModel();
         $result      = $this->model->getAllPages();
 
-        while ($row = $this->model->database->getRow($result)) {
+        foreach ($result as $row) {
             $tags = array(
-                     '{PAGEID}'    => $row['page_id'],
-                     '{PAGETITLE}' => $row['page_title'],
+                     '{PAGEID}'    => $row->page_id,
+                     '{PAGETITLE}' => $row->page_title,
                     );
             $temp = $this->templateEngine->logicTag(
                 '{LOOP}',
@@ -76,7 +76,7 @@ class AdminListPagesPageController extends AdminBasePageController
             $this->templateEngine->parseTags($tags, $temp);
             $temp .= "\n{LOOP}";
             $this->templateEngine->replaceTag('{LOOP}', $temp, $output);
-        }
+        }//end foreach
 
         $this->templateEngine->removeLogicTag('{LOOP}', '{/LOOP}', $output);
 

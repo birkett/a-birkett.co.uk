@@ -160,15 +160,15 @@ class TwitterWidgetModel extends BasePageModel
     public function getTweetsFromDatabase()
     {
         // Get the last twitter update time.
-        $lastfetchtime = $this->database->runQuery(
+        $results = $this->database->runQuery(
             'SELECT tweet_updatetime FROM site_tweets LIMIT 1',
             array()
         );
 
-        $lastfetchtime = $lastfetchtime[0]['tweet_updatetime'];
+        $lastfetchtime = $this->database->getRow($results);
 
         // Update the tweets if not done in the last 15 mins.
-        if ($lastfetchtime < (time() - 900)) {
+        if ($lastfetchtime->tweet_updatetime < (time() - 900)) {
             $this->updateTweetsDatabase();
         }
 

@@ -64,7 +64,7 @@ class AdminEditPageModel extends AdminBasePageModel
             array(':pid' => $pageid)
         );
 
-        return $page[0];
+        return $this->database->getRow($page);
 
     }//end getPage()
 
@@ -76,10 +76,12 @@ class AdminEditPageModel extends AdminBasePageModel
      */
     public function getSinglePost($postid)
     {
-        return $this->database->runQuery(
+        $post = $this->database->runQuery(
             'SELECT * FROM blog_posts WHERE post_id = :id',
             array(':id' => $postid)
         );
+
+        return $this->database->getRow($post);
 
     }//end getSinglePost()
 }//end class

@@ -67,14 +67,14 @@ class AdminListCommentsPageController extends AdminBasePageController
         // Dont worry if $ipaddress is null, getAllComments() handles it.
         $result = $this->model->getAllComments($ipaddress);
 
-        while ($row = $this->model->database->getRow($result)) {
-            $time = $row['comment_timestamp'];
+        foreach ($result as $row) {
+            $time = $row->comment_timestamp;
             $tags = array(
-                     '{COMMENT}'   => $row['comment_text'],
-                     '{USERNAME}'  => $row['comment_username'],
+                     '{COMMENT}'   => $row->comment_text,
+                     '{USERNAME}'  => $row->comment_username,
                      '{TIMESTAMP}' => date(DATE_FORMAT, $time),
-                     '{IP}'        => $row['client_ip'],
-                     '{POSTID}'    => $row['post_id'],
+                     '{IP}'        => $row->client_ip,
+                     '{POSTID}'    => $row->post_id,
                     );
             $temp = $this->templateEngine->logicTag(
                 '{LOOP}',
@@ -84,7 +84,7 @@ class AdminListCommentsPageController extends AdminBasePageController
             $this->templateEngine->parseTags($tags, $temp);
             $temp .= "\n{LOOP}";
             $this->templateEngine->replaceTag('{LOOP}', $temp, $output);
-        }
+        }//end foreach
 
         $this->templateEngine->removeLogicTag('{LOOP}', '{/LOOP}', $output);
 

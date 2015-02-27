@@ -63,10 +63,10 @@ class AdminIPFilterPageController extends AdminBasePageController
         $this->model = new \ABirkett\models\AdminIPFilterPageModel();
         $result      = $this->model->getBlockedAddresses();
 
-        while ($row = $this->model->database->getRow($result)) {
-            $time = $row['blocked_timestamp'];
+        foreach ($result as $row) {
+            $time = $row->blocked_timestamp;
             $tags = array(
-                     '{IP}'        => $row['address'],
+                     '{IP}'        => $row->address,
                      '{TIMESTAMP}' => date(DATE_FORMAT, $time),
                     );
             $temp = $this->templateEngine->logicTag(
@@ -77,7 +77,7 @@ class AdminIPFilterPageController extends AdminBasePageController
             $this->templateEngine->parseTags($tags, $temp);
             $temp .= "\n{LOOP}";
             $this->templateEngine->replaceTag('{LOOP}', $temp, $output);
-        }
+        }//end foreach
 
         $this->templateEngine->removeLogicTag('{LOOP}', '{/LOOP}', $output);
 

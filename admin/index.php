@@ -125,8 +125,9 @@ if ($sessionManager->isLoggedIn() === true) {
                 );
                 break;
 
-            return;
         }//end switch
+
+        return;
     }//end if
 
     $obj = new classes\Page(

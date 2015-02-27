@@ -219,7 +219,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         $row = $this->database->getRow($data);
 
         // Current password is wrong.
-        if ($this->checkCredentials($row['username'], $currentp) === false) {
+        if ($this->checkCredentials($row->username, $currentp) === false) {
             return false;
         }
 
@@ -259,7 +259,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
             $dbhash = $this->database->getRow($result);
 
             // Password_verify is PHP 5.5+.
-            if (password_verify($password, $dbhash['password']) === true) {
+            if (password_verify($password, $dbhash->password) === true) {
                 return true;
             }
 
@@ -314,13 +314,13 @@ class AdminAJAXRequestModel extends AJAXRequestModel
 
         // Already tweeted out.
         $row = $this->database->getRow($post);
-        if ($row['post_tweeted'] === '1') {
+        if ($row->post_tweeted === '1') {
             return;
         }
 
         $url = parent::getBaseURL().'blog/'.$row['post_id'];
 
-        $tweet = 'New Blog Post: '.$row['post_title'].' - '.$url;
+        $tweet = 'New Blog Post: '.$row->post_title.' - '.$url;
 
         $twitter = new \ABirkett\classes\TwitterOAuth();
         $twitter->oAuthRequest(

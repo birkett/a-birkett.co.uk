@@ -63,13 +63,13 @@ class AdminListPostsPageController extends AdminBasePageController
         $this->model = new \ABirkett\models\AdminListPostsPageModel();
         $result      = $this->model->getAllPosts();
 
-        while ($row = $this->model->database->getRow($result)) {
+        foreach ($result as $row) {
             // Small conversion to the correct strings.
-            $draft = ($row['post_draft'] === '1') ? ' (DRAFT)' : '';
+            $draft = ($row->post_draft === '1') ? ' (DRAFT)' : '';
 
             $tags = array(
-                     '{POSTID}'    => $row['post_id'],
-                     '{POSTTITLE}' => $row['post_title'].$draft,
+                     '{POSTID}'    => $row->post_id,
+                     '{POSTTITLE}' => $row->post_title.$draft,
                     );
             $temp = $this->templateEngine->logicTag(
                 '{LOOP}',
@@ -79,7 +79,7 @@ class AdminListPostsPageController extends AdminBasePageController
             $this->templateEngine->parseTags($tags, $temp);
             $temp .= "\n{LOOP}";
             $this->templateEngine->replaceTag('{LOOP}', $temp, $output);
-        }//end while
+        }//end foreach
 
         $this->templateEngine->removeLogicTag('{LOOP}', '{/LOOP}', $output);
 
