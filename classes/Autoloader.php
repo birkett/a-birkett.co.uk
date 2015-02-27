@@ -71,12 +71,12 @@ class Autoloader
                 $prefix = 'ABirkett\\';
 
                 // Does the class use this namespace prefix?
-                $len = strlen($prefix);
+                $len = mb_strlen($prefix);
                 if (strncmp($prefix, $class, $len) !== 0) {
                     return;
                 }
 
-                $relativeClass = substr($class, $len);
+                $relativeClass = mb_substr($class, $len);
 
                 $baseDir = __DIR__.'/../';
 

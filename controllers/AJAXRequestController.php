@@ -105,7 +105,7 @@ class AJAXRequestController
      */
     private function strClamp($string, $min, $max)
     {
-        if (strlen($string) < $min || strlen($string) > $max) {
+        if (mb_strlen($string) < $min || mb_strlen($string) > $max) {
             return false;
         }
 
@@ -139,13 +139,13 @@ class AJAXRequestController
                 return;
             }
 
-            if ($this->strClamp($user, 3, 20) !== true) {
-                $this->badRequest('Username should be 3 - 20 characters');
+            if ($this->strClamp($user, 3, 25) !== true) {
+                $this->badRequest('Username should be 3 - 25 characters');
                 return;
             }
 
-            if ($this->strClamp($comm, 10, 500) !== true) {
-                $this->badRequest('Comment should be 10 - 500 characters');
+            if ($this->strClamp($comm, 10, 1000) !== true) {
+                $this->badRequest('Comment should be 10 - 1000 characters');
                 return;
             }
 

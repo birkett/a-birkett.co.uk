@@ -15,7 +15,7 @@
 						<div class="post">
 						<h2>Password Reset</h2>
 						<div id="response"></div>
-						<form>
+						<form accept-charset="utf-8">
 							<p>Current Password:</p>
 							<input id="formcp" type="password" size="65" value=""/>
 							<p>New Password:</p>

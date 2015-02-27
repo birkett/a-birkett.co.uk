@@ -16,6 +16,7 @@
 							PHP Session Support:   {PHPSESSIONEXT}<br />
 							PHP PCRE Support:      {PHPPCREEXT}<br />
 							PHP mCrypt Support:    {PHPMCRYPTEXT}<br />
+							PHP mbstring Support:  {PHPMBSTRINGEXT}<br />
 							<br />
 							<p>Functions with fallbacks:</p>
 							PHP password_hash Support: {PASSWORDHASH}<br />

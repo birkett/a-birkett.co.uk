@@ -16,7 +16,7 @@
 						<div class="post">
 						<h2>IP Filter</h2>
 						<div id="response"></div>
-						<form>
+						<form accept-charset="utf-8">
 							<p>IP Address:</p>
 							<input id="formip" type="text" size="65" value=""/>
 							<br /><br />

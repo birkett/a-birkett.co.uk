@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta charset="utf-8" />
 		<meta name="description" content="Personal website of Anthony Birkett, IT guy, Engineer and Entrepreneur.">
 		<title>{TITLE}</title>

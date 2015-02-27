@@ -55,11 +55,11 @@
 					<div class="post commentbox">
 						<h2>New comment</h2>
 						<div id="response"></div>
-						<form>
+						<form accept-charset="utf-8">
 							<input id="formpostid" type="hidden" value="{COMMENTPOSTID}"/>
-							<p>Your name (3 - 20 characters):</p>
+							<p>Your name (3 - 25 characters):</p>
 							<input id="formusername" type="text" size="50"/>
-							<p>Comment (10 - 500 characters):</p>
+							<p>Comment (10 - 1000 characters):</p>
 							<textarea id="formcomment" rows="5" cols="40"></textarea>
 							<p>Human verification:</p>
 							<div class="g-recaptcha" data-sitekey="{RECAPTCHAKEY}"></div>

@@ -76,6 +76,7 @@ class AdminServerInfoPageController extends AdminBasePageController
                  '{PHPSESSIONEXT}'    => $serverData['extension_session'],
                  '{PHPPCREEXT}'       => $serverData['extension_pcre'],
                  '{PHPMCRYPTEXT}'     => $serverData['extension_mcrypt'],
+                 '{PHPMBSTRINGEXT}'   => $serverData['extension_mbstring'],
                  '{PASSWORDHASH}'     => $serverData['function_pass_hash'],
                  '{HTTPRESPONSECODE}' => $serverData['function_http_code'],
                 );

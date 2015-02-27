@@ -93,13 +93,13 @@ class PDOMySQLDatabase
         try {
             $this->mLink = new PDO(
                 'mysql:host='.DATABASE_HOSTNAME.';dbname='.
-                DATABASE_NAME.';port='.DATABASE_PORT,
+                DATABASE_NAME.';port='.DATABASE_PORT.';charset=utf8',
                 DATABASE_USERNAME,
                 DATABASE_PASSWORD,
                 array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
             );
-        } catch (\PDOException $e) {
-            echo 'DB no work :(';
+        } catch (\PDOException $exception) {
+            echo 'Database error: '.$exception->getMessage();
         }
 
     }//end __construct()

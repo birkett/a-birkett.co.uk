@@ -115,7 +115,7 @@ class TwitterWidgetModel extends BasePageModel
             // Linkify tags.
             $tweetText = preg_replace(
                 '/\s+#(\w+)/',
-                ' <a target="_blank" href="http://twitter.com/search?q=#$1">'.
+                ' <a target="_blank" href="http://twitter.com/search?q=%23$1">'.
                 '#$1</a>',
                 $tweetText
             );
@@ -136,8 +136,8 @@ class TwitterWidgetModel extends BasePageModel
             $this->database->runQuery(
                 'INSERT INTO site_tweets (tweetID, tweetTimestamp,'.
                 ' tweetText, tweetAvatar, tweetName, tweetScreenname,'.
-                ' tweetUpdatetime) VALUES ( :id, :timestamp, :text, :image,'.
-                ' :name, :screenname, :updatetime )',
+                ' tweetFetchTime) VALUES ( :id, :timestamp, :text, :image,'.
+                ' :name, :screenname, :fetchtime )',
                 array(
                  ':id'         => $tweet->id_str,
                  ':timestamp'  => $timestamp,
@@ -145,7 +145,7 @@ class TwitterWidgetModel extends BasePageModel
                  ':image'      => $avatar,
                  ':name'       => $name,
                  ':screenname' => $screenname,
-                 ':updatetime' => $exectime,
+                 ':fetchtime'  => $exectime,
                 )
             );
         }//end foreach
@@ -161,14 +161,21 @@ class TwitterWidgetModel extends BasePageModel
     {
         // Get the last twitter update time.
         $results = $this->database->runQuery(
-            'SELECT tweetUpdatetime FROM site_tweets LIMIT 1',
+            'SELECT tweetFetchTime FROM site_tweets LIMIT 1',
             array()
         );
 
         $lastfetchtime = $this->database->getRow($results);
 
+        // Populate the cache if its currently empty.
+        if (isset($lastfetchtime->tweetFetchTime) === false) {
+            $this->updateTweetsDatabase();
+        }
+
         // Update the tweets if not done in the last 15 mins.
-        if ($lastfetchtime->tweetUpdatetime < (time() - 900)) {
+        if (isset($lastfetchtime->tweetFetchTime) === true
+            && $lastfetchtime->tweetFetchTime < (time() - 900)
+        ) {
             $this->updateTweetsDatabase();
         }
 

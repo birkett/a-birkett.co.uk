@@ -1,5 +1,5 @@
 					{LOGGEDIN}
-					<form>
+					<form accept-charset="utf-8">
 						<input type="submit" class="submit" value="Logout ({USERNAME})" onClick="dologout(); return false;"/>
 					</form>
 					{/LOGGEDIN}
@@ -17,7 +17,7 @@
 					}
 					</script>
 					<div id="response"></div>
-					<form>
+					<form accept-charset="utf-8">
 						<input type="text" name="username" id="username"/>
 						<input type="password" name="password" id="password"/>
 						<br /><br />

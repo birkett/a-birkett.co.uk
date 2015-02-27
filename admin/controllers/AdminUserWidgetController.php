@@ -64,7 +64,6 @@ class AdminUserWidgetController extends AdminBasePageController
         $sessionManager = \ABirkett\classes\SessionManager::getInstance();
         $username       = $sessionManager->getVar('user');
 
-        // Username will not be set if not logged in.
         if ($sessionManager->isLoggedIn() === true) {
             $this->templateEngine->removeLogicTag(
                 '{LOGIN}',

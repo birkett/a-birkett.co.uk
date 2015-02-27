@@ -29,12 +29,12 @@
 							{PAGEEDIT}
 								<h2>Edit Page</h2>
 
-								<form>
+								<form accept-charset="utf-8">
 									<input id="formpageid" type="hidden" value="{POSTID}"/>
 							{/PAGEEDIT}
 							{POSTEDIT}
 								<h2>Edit Post</h2>
-								<form>
+								<form accept-charset="utf-8">
 									<input id="formpostid" type="hidden" value="{POSTID}"/>
 									<p>Post Title:</p>
 									<input id="formtitle" type="text" size="65" value="{POSTTITLE}"/>
@@ -43,7 +43,7 @@
 							{/POSTEDIT}
 							{NEWPOST}
 								<h2>New Post</h2>
-								<form>
+								<form accept-charset="utf-8">
 									<p>Post Title:</p>
 									<input id="formtitle" type="text" size="65" value=""/>
 									<p>Draft</p>

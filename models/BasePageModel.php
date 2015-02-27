@@ -78,7 +78,7 @@ class BasePageModel
 
         $proto = 'http://';
 
-        if (stripos($serverProtocol, 'https') === true) {
+        if (mb_stripos($serverProtocol, 'https') === true) {
             $proto = 'https://';
         }
 

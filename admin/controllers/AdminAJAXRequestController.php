@@ -159,6 +159,7 @@ class AdminAJAXRequestController extends AJAXRequestController
             return;
         }
 
+        $sessionManager->regenerateID();
         $this->goodRequest('Password changed.');
 
     }//end actionChangePassword()

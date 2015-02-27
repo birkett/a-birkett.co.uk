@@ -133,7 +133,7 @@ class OAuthRequest
         $this->parameters['oauth_signature_method'] = 'HMAC-SHA1';
 
         $parts = array(
-                  strtoupper($method),
+                  mb_strtoupper($method),
                   $url,
                   $this->buildHttpQuery($this->parameters),
                  );

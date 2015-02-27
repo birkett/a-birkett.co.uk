@@ -196,10 +196,10 @@ class SessionManager
 
 
     /**
-     * Regenerate the session ID
+     * Regenerate the session ID, destroying the old one after copying values.
      * @return void
      */
-    private function regenerateID()
+    public function regenerateID()
     {
         session_regenerate_id(true);
 

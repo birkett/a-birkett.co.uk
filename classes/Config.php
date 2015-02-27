@@ -70,6 +70,9 @@ class Config
         // Timezone for converting timestamps.
         date_default_timezone_set('Europe/London');
 
+        // Set up UTF-8 encoding as the default.
+        ini_set('default_charset', 'utf-8');
+
         // Time to make sessions expire after (in seconds).
         define('SESSION_EXPIRY_TIME', 3600);
 
@@ -137,7 +140,7 @@ class Config
 
         // Define a symbol when requesting an admin page.
         $file = filter_input(INPUT_SERVER, 'PHP_SELF', FILTER_SANITIZE_STRING);
-        if (strpos($file, ADMIN_FOLDER) !== false) {
+        if (mb_strpos($file, ADMIN_FOLDER) !== false) {
             define('ADMINPAGE', 1);
         }
 

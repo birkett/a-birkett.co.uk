@@ -77,6 +77,7 @@ class AdminServerInfoPageModel extends AdminBasePageModel
                  'extension_session'   => extension_loaded('session'),
                  'extension_pcre'      => extension_loaded('pcre'),
                  'extension_mcrypt'    => extension_loaded('mcrypt'),
+                 'extension_mbstring'  => extension_loaded('mbstring'),
 
                  'function_pass_hash'  => function_exists('password_hash'),
                  'function_http_code'  => function_exists('http_response_code'),
