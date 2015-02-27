@@ -195,14 +195,19 @@ class AdminAJAXRequestModel extends AJAXRequestModel
 
     /**
      * Change a user password
+     * @param  string $user       Username.
      * @param  string $currentp   Current user password.
      * @param  string $newp       Intended new password.
      * @param  string $confirmedp Verification of the new password.
      * @return boolean True on updated, False on error
      */
-    public function changePassword($currentp, $newp, $confirmedp)
+    public function changePassword($user, $currentp, $newp, $confirmedp)
     {
-        if ($currentp === '' || $newp === '' || $confirmedp === '') {
+        if ($user === ''
+            || $currentp === ''
+            || $newp === ''
+            || $confirmedp === ''
+        ) {
             return false;
         }
 
@@ -211,25 +216,18 @@ class AdminAJAXRequestModel extends AJAXRequestModel
             return false;
         }
 
-        $data = $this->database->runQuery(
-            'SELECT username FROM site_users WHERE userID=:uid',
-            array(':uid' => 1)
-        );
-
-        $row = $this->database->getRow($data);
-
         // Current password is wrong.
-        if ($this->checkCredentials($row->username, $currentp) === false) {
+        if ($this->checkCredentials($user, $currentp) === false) {
             return false;
         }
 
         $hash = $this->hashPassword($newp);
 
         $this->database->runQuery(
-            'UPDATE site_users SET password = :hash WHERE userID = :uid',
+            'UPDATE site_users SET password = :hash WHERE username = :user',
             array(
              ':hash' => $hash,
-             ':uid'  => 1,
+             ':user'  => $user,
             )
         );
 

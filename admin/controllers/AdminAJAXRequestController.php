@@ -145,14 +145,16 @@ class AdminAJAXRequestController extends AJAXRequestController
 
     /**
      * Handle the password request
-     * @param string $current Current users password.
-     * @param string $new     New users password.
-     * @param string $confirm New users password again to confirm.
+     * @param object $sessionManager SessionManager instance to use.
+     * @param string $cup            Current users password.
+     * @param string $new            New users password.
+     * @param string $conf           New users password again to confirm.
      * @return void
      */
-    private function actionChangePassword($current, $new, $confirm)
+    private function actionChangePassword($sessionManager, $cup, $new, $conf)
     {
-        if ($this->model->changePassword($current, $new, $confirm) === false) {
+        $user = $sessionManager->getVar('user');
+        if ($this->model->changePassword($user, $cup, $new, $conf) === false) {
             $this->badRequest('Failed. Check passwords match.');
             return;
         }
@@ -262,7 +264,7 @@ class AdminAJAXRequestController extends AJAXRequestController
 
             // Change the admin password.
             case 'password':
-                $this->actionChangePassword($cup, $newp, $cnp);
+                $this->actionChangePassword($sessionManager, $cup, $newp, $cnp);
                 return;
                 break;
 

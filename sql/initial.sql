@@ -35,11 +35,10 @@ CREATE TABLE `site_pages` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 CREATE TABLE `site_users` (
-  `userID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(45) DEFAULT NULL,
-  `password` varchar(512) DEFAULT NULL,
-  PRIMARY KEY (`userID`),
-  UNIQUE KEY `userID_UNIQUE` (`userID`)
+  `username` varchar(45) NOT NULL,
+  `password` varchar(512) NOT NULL,
+  PRIMARY KEY (`username`),
+  UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 CREATE TABLE `site_tweets` (
