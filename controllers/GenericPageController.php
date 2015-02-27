@@ -66,6 +66,16 @@ class GenericPageController extends BasePageController
         $name        = mb_strtolower(array_pop($exptitle));
         $page        = $this->model->getPage($name);
 
+        if ($page === null) {
+            $tags = array(
+                     '{PAGETITLE}'   => 'Well, this is embarrasing.',
+                     '{PAGECONTENT}' => 'There was an error fetching the page.',
+                    );
+            $this->templateEngine->parseTags($tags, $output);
+
+            return;
+        }
+
         $tags = array(
                  '{PAGETITLE}'   => $page->pageTitle,
                  '{PAGECONTENT}' => stripslashes($page->pageContent),
