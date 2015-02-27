@@ -67,10 +67,10 @@ class PostsWidgetController extends BasePageController
         $postArray   = array();
 
         foreach ($posts as $post) {
-            $month = date('F Y', $post->post_timestamp);
+            $month = date('F Y', $post->postTimestamp);
             $postArray[$month][] = array(
-                                    'title' => $post->post_title,
-                                    'id'    => $post->post_id,
+                                    'title' => $post->postTitle,
+                                    'id'    => $post->postID,
                                    );
         }
 

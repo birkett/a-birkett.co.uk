@@ -64,7 +64,7 @@ class TwitterWidgetModel extends BasePageModel
         $params  = array(
                     'screen_name' => TWEETS_WIDGET_USER,
                     'count'       => TWEETS_WIDGET_MAX,
-                    'include_rts' => true
+                    'include_rts' => true,
                    );
         $twitter = new \ABirkett\classes\TwitterOAuth();
 
@@ -134,9 +134,9 @@ class TwitterWidgetModel extends BasePageModel
             }
 
             $this->database->runQuery(
-                'INSERT INTO site_tweets (tweet_id, tweet_timestamp,'.
-                ' tweet_text, tweet_avatar, tweet_name, tweet_screenname,'.
-                ' tweet_updatetime) VALUES ( :id, :timestamp, :text, :image,'.
+                'INSERT INTO site_tweets (tweetID, tweetTimestamp,'.
+                ' tweetText, tweetAvatar, tweetName, tweetScreenname,'.
+                ' tweetUpdatetime) VALUES ( :id, :timestamp, :text, :image,'.
                 ' :name, :screenname, :updatetime )',
                 array(
                  ':id'         => $tweet->id_str,
@@ -161,20 +161,20 @@ class TwitterWidgetModel extends BasePageModel
     {
         // Get the last twitter update time.
         $results = $this->database->runQuery(
-            'SELECT tweet_updatetime FROM site_tweets LIMIT 1',
+            'SELECT tweetUpdatetime FROM site_tweets LIMIT 1',
             array()
         );
 
         $lastfetchtime = $this->database->getRow($results);
 
         // Update the tweets if not done in the last 15 mins.
-        if ($lastfetchtime->tweet_updatetime < (time() - 900)) {
+        if ($lastfetchtime->tweetUpdatetime < (time() - 900)) {
             $this->updateTweetsDatabase();
         }
 
         // Get the tweets.
         return $this->database->runQuery(
-            'SELECT * FROM site_tweets ORDER BY tweet_timestamp ASC LIMIT '.
+            'SELECT * FROM site_tweets ORDER BY tweetTimestamp ASC LIMIT '.
             TWEETS_WIDGET_MAX,
             array()
         );

@@ -61,8 +61,8 @@ class PostsWidgetModel extends BasePageModel
     public function getAllPosts()
     {
         return $this->database->runQuery(
-            'SELECT post_id, post_timestamp, post_title FROM blog_posts '.
-            'WHERE post_draft = "0" ORDER BY post_timestamp DESC',
+            'SELECT postID, postTimestamp, postTitle FROM blog_posts '.
+            'WHERE postDraft = "0" ORDER BY postTimestamp DESC',
             array()
         );
 

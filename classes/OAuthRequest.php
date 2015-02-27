@@ -74,7 +74,7 @@ class OAuthRequest
 
         $defaults = array(
                      'oauth_version'      => '1.0',
-                     'oauth_nonce'        => md5(microtime() . mt_rand()),
+                     'oauth_nonce'        => md5(microtime().mt_rand()),
                      'oauth_timestamp'    => time(),
                      'oauth_consumer_key' => $cKey,
                      'oauth_token'        => $oToken,

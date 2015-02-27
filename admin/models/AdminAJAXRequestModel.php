@@ -66,7 +66,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
 
         $this->database->runQuery(
             'INSERT INTO blog_posts('.
-            'post_timestamp,post_title,post_content,post_draft,post_tweeted'.
+            'postTimestamp, postTitle, postContent, postDraft, postTweeted'.
             ') VALUES(:timestamp, :title, :content, :draft, 0)',
             array(
              ':timestamp' => time(),
@@ -99,8 +99,8 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         }
 
         $this->database->runQuery(
-            'UPDATE blog_posts SET post_title = :ti, post_content = :txt, '.
-            'post_draft = :draft WHERE post_id = :pid LIMIT 1',
+            'UPDATE blog_posts SET postTitle = :ti, postContent = :txt, '.
+            'postDraft = :draft WHERE postID = :pid LIMIT 1',
             array(
              ':ti'    => $title,
              ':txt'   => $cont,
@@ -130,7 +130,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         }
 
         $this->database->runQuery(
-            'UPDATE site_pages SET page_content = :cont WHERE page_id = :pid',
+            'UPDATE site_pages SET pageContent = :cont WHERE pageID = :pid',
             array(
              ':cont' => $content,
              ':pid'  => $pageid,
@@ -159,7 +159,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         }
 
         $this->database->runQuery(
-            'INSERT INTO blocked_addresses(address, blocked_timestamp)'.
+            'INSERT INTO blocked_addresses(address, timestamp)'.
             ' VALUES(:ip, :timestamp)',
             array(
              ':ip'        => $ipaddress,
@@ -212,7 +212,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         }
 
         $data = $this->database->runQuery(
-            'SELECT username FROM site_users WHERE user_id=:uid',
+            'SELECT username FROM site_users WHERE userID=:uid',
             array(':uid' => 1)
         );
 
@@ -226,7 +226,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         $hash = $this->hashPassword($newp);
 
         $this->database->runQuery(
-            'UPDATE site_users SET password = :hash WHERE user_id = :uid',
+            'UPDATE site_users SET password = :hash WHERE userID = :uid',
             array(
              ':hash' => $hash,
              ':uid'  => 1,
@@ -262,14 +262,6 @@ class AdminAJAXRequestModel extends AJAXRequestModel
             if (password_verify($password, $dbhash->password) === true) {
                 return true;
             }
-
-            // The fallback for PHP 5.4 and below. Not supporting this for now.
-            /*
-            if ($this->hashPassword($password) === $dbhash['password'])
-                return true;
-            }
-            */
-
         }//end if
 
         return false;
@@ -285,7 +277,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
     private function getSinglePost($postid)
     {
         $rows = $this->database->runQuery(
-            "SELECT * FROM blog_posts WHERE post_id = :id AND post_draft = '0'",
+            "SELECT * FROM blog_posts WHERE postID = :id AND postDraft = '0'",
             array(':id' => $postid)
         );
 
@@ -314,13 +306,13 @@ class AdminAJAXRequestModel extends AJAXRequestModel
 
         // Already tweeted out.
         $row = $this->database->getRow($post);
-        if ($row->post_tweeted === '1') {
+        if ($row->postTweeted === '1') {
             return;
         }
 
-        $url = parent::getBaseURL().'blog/'.$row['post_id'];
+        $url = parent::getBaseURL().'blog/'.$row->postID;
 
-        $tweet = 'New Blog Post: '.$row->post_title.' - '.$url;
+        $tweet = 'New Blog Post: '.$row->postTitle.' - '.$url;
 
         $twitter = new \ABirkett\classes\TwitterOAuth();
         $twitter->oAuthRequest(
@@ -330,7 +322,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         );
 
         $this->database->runQuery(
-            'UPDATE blog_posts SET post_tweeted=1 WHERE post_id = :postid',
+            'UPDATE blog_posts SET postTweeted=1 WHERE postID = :postid',
             array(':postid' => $postid)
         );
 
@@ -347,13 +339,6 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         $options = array('cost' => HASHING_COST);
         // Password_hash is PHP 5.5+.
         return password_hash($password, PASSWORD_BCRYPT, $options);
-
-        // The fallback for PHP 5.4 and below. Not supporting this for now.
-        /*
-        $salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
-        $salt = str_replace('+', '.', $salt);
-        return crypt($password, '$2y$'.$options['cost'].'$'.$salt.'$');
-        */
 
     }//end hashPassword()
 }//end class

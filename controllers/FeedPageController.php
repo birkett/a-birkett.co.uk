@@ -75,12 +75,12 @@ class FeedPageController extends BasePageController
 
         foreach ($posts as $post) {
             $temp = $itemloop;
-            $time = $post->post_timestamp;
+            $time = $post->postTimestamp;
             $tags = array(
-                     '{POSTTITLE}'     => $post->post_title,
-                     '{POSTID}'        => $post->post_id,
+                     '{POSTTITLE}'     => $post->postTitle,
+                     '{POSTID}'        => $post->postID,
                      '{POSTTIMESTAMP}' => date('D, d M Y H:i:s O', $time),
-                     '{POSTCONTENT}'   => $post->post_content,
+                     '{POSTCONTENT}'   => $post->postContent,
                     );
             $this->templateEngine->parseTags($tags, $temp);
             $temp .= "\n{LOOP}";

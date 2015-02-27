@@ -59,15 +59,14 @@ class AdminListCommentsPageModel extends AdminBasePageModel
      */
     public function getAllComments($ipaddress)
     {
-        $filter = ' WHERE client_ip="'.$ipaddress.'"';
+        $fil = ' WHERE clientIP="'.$ipaddress.'"';
 
         if ($ipaddress === null) {
-            $filter = ' ';
+            $fil = ' ';
         }
 
         return $this->database->runQuery(
-            'SELECT * FROM blog_comments'.$filter.
-            'ORDER BY comment_timestamp DESC',
+            'SELECT * FROM blog_comments'.$fil.'ORDER BY commentTimestamp DESC',
             array()
         );
 

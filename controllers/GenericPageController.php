@@ -67,8 +67,8 @@ class GenericPageController extends BasePageController
         $page        = $this->model->getPage($name);
 
         $tags = array(
-                 '{PAGETITLE}'   => $page->page_title,
-                 '{PAGECONTENT}' => stripslashes($page->page_content),
+                 '{PAGETITLE}'   => $page->pageTitle,
+                 '{PAGECONTENT}' => stripslashes($page->pageContent),
                 );
         $this->templateEngine->parseTags($tags, $output);
 

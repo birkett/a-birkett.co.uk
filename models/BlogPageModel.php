@@ -61,7 +61,7 @@ class BlogPageModel extends BasePageModel
     public function getSinglePost($postid)
     {
         return $this->database->runQuery(
-            'SELECT * FROM blog_posts WHERE post_id = :id AND post_draft = "0"',
+            'SELECT * FROM blog_posts WHERE postID = :id AND postDraft = "0"',
             array(':id' => $postid)
         );
 
@@ -76,8 +76,8 @@ class BlogPageModel extends BasePageModel
     public function getMultiplePosts($page)
     {
         return $this->database->runQuery(
-            'SELECT * FROM blog_posts WHERE post_draft = "0"'.
-            ' ORDER BY post_timestamp DESC LIMIT '.
+            'SELECT * FROM blog_posts WHERE postDraft = "0"'.
+            ' ORDER BY postTimestamp DESC LIMIT '.
             ($page * BLOG_POSTS_PER_PAGE).','.BLOG_POSTS_PER_PAGE,
             array()
         );
@@ -92,7 +92,7 @@ class BlogPageModel extends BasePageModel
     public function getNumberOfPosts()
     {
         $rows = $this->database->runQuery(
-            'SELECT post_id from blog_posts WHERE post_draft = "0"',
+            'SELECT postID from blog_posts WHERE postDraft = "0"',
             array()
         );
 
@@ -111,7 +111,7 @@ class BlogPageModel extends BasePageModel
     public function getNumberOfComments($postid)
     {
         $rows = $this->database->runQuery(
-            'SELECT comment_id FROM blog_comments WHERE post_id = :postid',
+            'SELECT commentID FROM blog_comments WHERE postID = :postid',
             array(':postid' => $postid)
         );
 
@@ -130,9 +130,9 @@ class BlogPageModel extends BasePageModel
     public function getCommentsOnPost($postid)
     {
         return $this->database->runQuery(
-            'SELECT comment_username, comment_text, comment_timestamp'.
-            ' FROM blog_comments WHERE post_id = :pid'.
-            ' ORDER BY comment_timestamp ASC',
+            'SELECT commentUsername, commentText, commentTimestamp'.
+            ' FROM blog_comments WHERE postID = :pid'.
+            ' ORDER BY commentTimestamp ASC',
             array(':pid' => $postid)
         );
 

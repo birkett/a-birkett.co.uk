@@ -54,6 +54,7 @@ namespace ABirkett\controllers;
 class AdminEditPageController extends AdminBasePageController
 {
 
+
     /**
      * Remove unused tags from the page
      * @param string $output Page to render to.
@@ -92,7 +93,7 @@ class AdminEditPageController extends AdminBasePageController
         // Page edit mode.
         if (isset($pageid) === true) {
             $page = $this->model->getPage($pageid);
-            $cont = $page->page_content;
+            $cont = $page->pageContent;
 
             $vars  = 'var pageid=document.getElementById("formpageid").value;';
             $vars .=
@@ -115,7 +116,7 @@ class AdminEditPageController extends AdminBasePageController
         if (isset($postid) === true && isset($pageid) === false) {
             $post = $this->model->getSinglePost($postid);
 
-            $cont = $post->post_content;
+            $cont = $post->postContent;
 
             $vars  = 'var postid=document.getElementById("formpostid").value;';
             $vars .= 'var title=document.getElementById("formtitle").value;';
@@ -125,11 +126,11 @@ class AdminEditPageController extends AdminBasePageController
                 '+title+"&draft="+draft+"&content="+content;';
 
             // Small conversion to set checkbox value.
-            $checked = ($post->post_draft === '1') ? 'checked' : '';
+            $checked = ($post->postDraft === '1') ? 'checked' : '';
 
             $tags = array(
-                     '{POSTID}'    => $post->post_id,
-                     '{POSTTITLE}' => $post->post_title,
+                     '{POSTID}'    => $post->postID,
+                     '{POSTTITLE}' => $post->postTitle,
                      '{DRAFT}'     => $checked,
                     );
             $this->templateEngine->parseTags($tags, $output);

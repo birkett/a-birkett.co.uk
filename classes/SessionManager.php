@@ -86,7 +86,7 @@ class SessionManager
         session_set_cookie_params(SESSION_EXPIRY_TIME, '/'.ADMIN_FOLDER);
         session_start();
 
-    }//end begin()
+    }//end __construct()
 
 
     /**
@@ -96,7 +96,7 @@ class SessionManager
      */
     public function getVar($var)
     {
-        if (isset($_SESSION[$var])) {
+        if (isset($_SESSION[$var]) === true) {
             return $_SESSION[$var];
         }
 

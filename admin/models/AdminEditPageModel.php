@@ -59,8 +59,8 @@ class AdminEditPageModel extends AdminBasePageModel
     public function getPage($pageid)
     {
         $page = $this->database->runQuery(
-            'SELECT page_title, page_content FROM site_pages '.
-            'WHERE page_id = :pid',
+            'SELECT pageTitle, pageContent FROM site_pages '.
+            'WHERE pageID = :pid',
             array(':pid' => $pageid)
         );
 
@@ -77,7 +77,7 @@ class AdminEditPageModel extends AdminBasePageModel
     public function getSinglePost($postid)
     {
         $post = $this->database->runQuery(
-            'SELECT * FROM blog_posts WHERE post_id = :id',
+            'SELECT * FROM blog_posts WHERE postID = :id',
             array(':id' => $postid)
         );
 

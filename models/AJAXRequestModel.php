@@ -69,8 +69,8 @@ class AJAXRequestModel extends BasePageModel
 
         $this->database->runQuery(
             'INSERT INTO blog_comments('.
-            'post_id, comment_username, comment_text, comment_timestamp, '.
-            'client_ip) VALUES(:pid, :uname, :cmnt, :time, :ip)',
+            'postID, commentUsername, commentText, commentTimestamp, '.
+            'clientIP) VALUES(:pid, :uname, :cmnt, :time, :ip)',
             array(
              ':pid'   => $postid,
              ':uname' => $username,
@@ -93,7 +93,7 @@ class AJAXRequestModel extends BasePageModel
     private function isValidPostID($postid)
     {
         $rows = $this->database->runQuery(
-            "SELECT * FROM blog_posts WHERE post_id = :id AND post_draft = '0'",
+            "SELECT * FROM blog_posts WHERE postID = :id AND postDraft = '0'",
             array(':id' => $postid)
         );
 
@@ -116,14 +116,14 @@ class AJAXRequestModel extends BasePageModel
     public function checkIP($ipaddress)
     {
         $rows = $this->database->runQuery(
-            'SELECT ip_id from blocked_addresses WHERE address = :ip',
+            'SELECT address from blocked_addresses WHERE address = :ip',
             array(':ip' => $ipaddress)
         );
 
         if ($this->database->getNumRows($rows) !== 0) {
             return true;
         }
-        
+
         return false;
 
     }//end checkIP()

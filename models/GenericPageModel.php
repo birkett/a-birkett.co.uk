@@ -65,8 +65,7 @@ class GenericPageModel extends BasePageModel
     public function getPage($pagename)
     {
         $page = $this->database->runQuery(
-            'SELECT page_title, page_content FROM site_pages'.
-            ' WHERE page_name = :pn',
+            'SELECT pageTitle, pageContent FROM site_pages WHERE pageName=:pn',
             array(':pn' => $pagename)
         );
 

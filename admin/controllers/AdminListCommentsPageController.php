@@ -68,13 +68,12 @@ class AdminListCommentsPageController extends AdminBasePageController
         $result = $this->model->getAllComments($ipaddress);
 
         foreach ($result as $row) {
-            $time = $row->comment_timestamp;
             $tags = array(
-                     '{COMMENT}'   => $row->comment_text,
-                     '{USERNAME}'  => $row->comment_username,
-                     '{TIMESTAMP}' => date(DATE_FORMAT, $time),
-                     '{IP}'        => $row->client_ip,
-                     '{POSTID}'    => $row->post_id,
+                     '{COMMENT}'   => $row->commentText,
+                     '{USERNAME}'  => $row->commentUsername,
+                     '{TIMESTAMP}' => date(DATE_FORMAT, $row->commentTimestamp),
+                     '{IP}'        => $row->clientIP,
+                     '{POSTID}'    => $row->postID,
                     );
             $temp = $this->templateEngine->logicTag(
                 '{LOOP}',

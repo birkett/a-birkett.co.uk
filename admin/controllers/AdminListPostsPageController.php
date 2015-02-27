@@ -65,11 +65,11 @@ class AdminListPostsPageController extends AdminBasePageController
 
         foreach ($result as $row) {
             // Small conversion to the correct strings.
-            $draft = ($row->post_draft === '1') ? ' (DRAFT)' : '';
+            $draft = ($row->postDraft === '1') ? ' (DRAFT)' : '';
 
             $tags = array(
-                     '{POSTID}'    => $row->post_id,
-                     '{POSTTITLE}' => $row->post_title.$draft,
+                     '{POSTID}'    => $row->postID,
+                     '{POSTTITLE}' => $row->postTitle.$draft,
                     );
             $temp = $this->templateEngine->logicTag(
                 '{LOOP}',

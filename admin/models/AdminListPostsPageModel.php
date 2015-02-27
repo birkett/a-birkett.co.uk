@@ -58,8 +58,8 @@ class AdminListPostsPageModel extends AdminBasePageModel
     public function getAllPosts()
     {
         return $this->database->runQuery(
-            'SELECT post_id, post_timestamp, post_title, post_draft'.
-            ' FROM blog_posts ORDER BY post_timestamp DESC',
+            'SELECT postID, postTimestamp, postTitle, postDraft'.
+            ' FROM blog_posts ORDER BY postTimestamp DESC',
             array()
         );
 

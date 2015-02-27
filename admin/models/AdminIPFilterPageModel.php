@@ -58,7 +58,7 @@ class AdminIPFilterPageModel extends AdminBasePageModel
     public function getBlockedAddresses()
     {
         return $this->database->runQuery(
-            'SELECT * FROM blocked_addresses ORDER BY blocked_timestamp DESC',
+            'SELECT * FROM blocked_addresses ORDER BY timestamp DESC',
             array()
         );
 

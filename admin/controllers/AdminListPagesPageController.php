@@ -65,8 +65,8 @@ class AdminListPagesPageController extends AdminBasePageController
 
         foreach ($result as $row) {
             $tags = array(
-                     '{PAGEID}'    => $row->page_id,
-                     '{PAGETITLE}' => $row->page_title,
+                     '{PAGEID}'    => $row->pageID,
+                     '{PAGETITLE}' => $row->pageTitle,
                     );
             $temp = $this->templateEngine->logicTag(
                 '{LOOP}',

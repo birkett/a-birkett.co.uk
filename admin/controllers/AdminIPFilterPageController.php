@@ -64,10 +64,9 @@ class AdminIPFilterPageController extends AdminBasePageController
         $result      = $this->model->getBlockedAddresses();
 
         foreach ($result as $row) {
-            $time = $row->blocked_timestamp;
             $tags = array(
                      '{IP}'        => $row->address,
-                     '{TIMESTAMP}' => date(DATE_FORMAT, $time),
+                     '{TIMESTAMP}' => date(DATE_FORMAT, $row->timestamp),
                     );
             $temp = $this->templateEngine->logicTag(
                 '{LOOP}',

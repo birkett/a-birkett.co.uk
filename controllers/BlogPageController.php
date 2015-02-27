@@ -66,11 +66,11 @@ class BlogPageController extends BasePageController
         $comments = $this->model->getCommentsOnPost($postid);
         if ($this->model->database->getNumRows($comments) !== 0) {
             foreach ($comments as $comment) {
-                $date = date(DATE_FORMAT, $comment->comment_timestamp);
+                $date = date(DATE_FORMAT, $comment->commentTimestamp);
                 $tags = array(
-                         '{COMMENTAUTHOR}' => $comment->comment_username,
+                         '{COMMENTAUTHOR}'    => $comment->commentUsername,
                          '{COMMENTTIMESTAMP}' => $date,
-                         '{COMMENTCONTENT}' => $comment->comment_text,
+                         '{COMMENTCONTENT}'   => $comment->commentText,
                         );
                 $temp = $this->templateEngine->logicTag(
                     '{COMMENT}',
@@ -100,13 +100,13 @@ class BlogPageController extends BasePageController
     private function renderPosts($posts, &$output)
     {
         foreach ($posts as $post) {
-            $date = date(DATE_FORMAT, $post->post_timestamp);
-            $numc = $this->model->getNumberOfComments($post->post_id);
+            $date = date(DATE_FORMAT, $post->postTimestamp);
+            $numc = $this->model->getNumberOfComments($post->postID);
             $tags = array(
                      '{POSTTIMESTAMP}' => $date,
-                     '{POSTID}'        => $post->post_id,
-                     '{POSTTITLE}'     => $post->post_title,
-                     '{POSTCONTENT}'   => stripslashes($post->post_content),
+                     '{POSTID}'        => $post->postID,
+                     '{POSTTITLE}'     => $post->postTitle,
+                     '{POSTCONTENT}'   => stripslashes($post->postContent),
                      '{COMMENTCOUNT}'  => $numc,
                     );
             $temp = $this->templateEngine->logicTag(

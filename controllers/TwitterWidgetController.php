@@ -75,13 +75,13 @@ class TwitterWidgetController extends BasePageController
 
         foreach ($tweets as $tweet) {
             $temp = $tweetloop;
-            $time = $tweet->tweet_timestamp;
+            $time = $tweet->tweetTimestamp;
             $tags = array(
-                     '{TWEETID}'         => $tweet->tweet_id,
-                     '{TWEETSCREENNAME}' => $tweet->tweet_screenname,
-                     '{TWEETNAME}'       => $tweet->tweet_name,
-                     '{TWEETAVATAR}'     => $tweet->tweet_avatar,
-                     '{TWEETTEXT}'       => $tweet->tweet_text,
+                     '{TWEETID}'         => $tweet->tweetID,
+                     '{TWEETSCREENNAME}' => $tweet->tweetScreenname,
+                     '{TWEETNAME}'       => $tweet->tweetName,
+                     '{TWEETAVATAR}'     => $tweet->tweetAvatar,
+                     '{TWEETTEXT}'       => $tweet->tweetText,
                      '{TWEETTIMESTAMP}'  => $this->model->timeElapsed($time),
                     );
 

@@ -124,7 +124,6 @@ if ($sessionManager->isLoggedIn() === true) {
                     'AdminBasePageController'
                 );
                 break;
-
         }//end switch
 
         return;
@@ -136,8 +135,8 @@ if ($sessionManager->isLoggedIn() === true) {
         'index',
         'AdminBasePageController'
     );
-    return;
 
+    return;
 }//end if
 
 $obj = new classes\Page(
