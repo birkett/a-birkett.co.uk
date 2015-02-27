@@ -56,14 +56,20 @@ class BlogPageModel extends BasePageModel
     /**
      * Get the post data and return it as an array
      * @param  integer $postid ID of the post to fetch.
-     * @return array   Array of post data
+     * @return array   Array of post data, null on not found
      */
     public function getSinglePost($postid)
     {
-        return $this->database->runQuery(
+        $post =  $this->database->runQuery(
             'SELECT * FROM blog_posts WHERE postID = :id AND postDraft = "0"',
             array(':id' => $postid)
         );
+
+        if ($this->database->getNumRows($post) === 0) {
+            return null;
+        }
+
+        return $post;
 
     }//end getSinglePost()
 
@@ -71,16 +77,22 @@ class BlogPageModel extends BasePageModel
     /**
      * Get posts data and return it as an array
      * @param  integer $page Page number to fetch.
-     * @return array   Array of posts data
+     * @return array   Array of posts data, null on not found
      */
     public function getMultiplePosts($page)
     {
-        return $this->database->runQuery(
+        $posts =  $this->database->runQuery(
             'SELECT * FROM blog_posts WHERE postDraft = "0"'.
             ' ORDER BY postTimestamp DESC LIMIT '.
             ($page * BLOG_POSTS_PER_PAGE).','.BLOG_POSTS_PER_PAGE,
             array()
         );
+
+        if ($this->database->getNumRows($posts) === 0) {
+            return null;
+        }
+
+        return $posts;
 
     }//end getMultiplePosts()
 

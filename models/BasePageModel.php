@@ -56,7 +56,7 @@ class BasePageModel
      * Store a database instance - used by child classes
      * @var object $databse
      */
-    public $database;
+    protected $database;
 
 
     /**

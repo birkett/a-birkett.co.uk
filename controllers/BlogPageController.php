@@ -64,29 +64,28 @@ class BlogPageController extends BasePageController
     private function renderComments($postid, &$output)
     {
         $comments = $this->model->getCommentsOnPost($postid);
-        if ($this->model->database->getNumRows($comments) !== 0) {
-            foreach ($comments as $comment) {
-                $date = date(DATE_FORMAT, $comment->commentTimestamp);
-                $tags = array(
-                         '{COMMENTAUTHOR}'    => $comment->commentUsername,
-                         '{COMMENTTIMESTAMP}' => $date,
-                         '{COMMENTCONTENT}'   => $comment->commentText,
-                        );
-                $temp = $this->templateEngine->logicTag(
-                    '{COMMENT}',
-                    '{/COMMENT}',
-                    $output
-                );
-                $this->templateEngine->parseTags($tags, $temp);
-                // Add this comment to the output.
-                $temp .= '{COMMENT}';
-                $this->templateEngine->replaceTag(
-                    '{COMMENT}',
-                    $temp,
-                    $output
-                );
-            }//end foreach
-        }//end if
+        // No needs to check if $comments is empty, foreach is smart enough.
+        foreach ($comments as $comment) {
+            $date = date(DATE_FORMAT, $comment->commentTimestamp);
+            $tags = array(
+                     '{COMMENTAUTHOR}'    => $comment->commentUsername,
+                     '{COMMENTTIMESTAMP}' => $date,
+                     '{COMMENTCONTENT}'   => $comment->commentText,
+                    );
+            $temp = $this->templateEngine->logicTag(
+                '{COMMENT}',
+                '{/COMMENT}',
+                $output
+            );
+            $this->templateEngine->parseTags($tags, $temp);
+            // Add this comment to the output.
+            $temp .= '{COMMENT}';
+            $this->templateEngine->replaceTag(
+                '{COMMENT}',
+                $temp,
+                $output
+            );
+        }//end foreach
 
     }//end renderComments()
 
@@ -263,7 +262,7 @@ class BlogPageController extends BasePageController
         if (isset($postid) === true) {
             $result = $this->model->getSinglePost($postid);
             // Back out if we didnt find any posts.
-            if ($this->model->database->getNumRows($result) === 0) {
+            if ($result === null) {
                 header('Location: /404');
 
                 return;
@@ -287,7 +286,7 @@ class BlogPageController extends BasePageController
 
             $result = $this->model->getMultiplePosts($offset - 1);
             // Back out if we didnt find any posts.
-            if ($this->model->database->getNumRows($result) === 0) {
+            if ($result === null) {
                 header('Location: /404');
 
                 return;
