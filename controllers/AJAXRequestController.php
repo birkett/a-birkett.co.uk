@@ -128,12 +128,13 @@ class AJAXRequestController
         $post = filter_input(INPUT_POST, 'postid', FILTER_SANITIZE_NUMBER_INT);
         $user = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
         $comm = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
-        $resp = filter_input(INPUT_POST, 'response', FILTER_UNSAFE_RAW);
-        $cip  = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_UNSAFE_RAW);
+        $resp = filter_input(INPUT_POST, 'response', FILTER_SANITIZE_STRING);
+        $cip  = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
 
         if ($mode === 'postcomment') {
             if (isset($user) === false
                 || isset($comm) === false
+                || $resp === ''
             ) {
                 $this->badRequest('Please fill out all details.');
                 return;

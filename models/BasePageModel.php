@@ -73,7 +73,7 @@ class BasePageModel
         $serverHost     = filter_input(
             INPUT_SERVER,
             'HTTP_HOST',
-            FILTER_UNSAFE_RAW
+            FILTER_SANITIZE_STRING
         );
 
         $proto = 'http://';

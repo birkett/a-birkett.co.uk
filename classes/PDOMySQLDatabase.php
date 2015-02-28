@@ -92,8 +92,8 @@ class PDOMySQLDatabase
     {
         try {
             $this->mLink = new PDO(
-                'mysql:host='.DATABASE_HOSTNAME.';dbname='.
-                DATABASE_NAME.';port='.DATABASE_PORT.';charset=utf8',
+                'mysql:host='.DATABASE_HOSTNAME.';dbname='.DATABASE_NAME.
+                ';port='.DATABASE_PORT.';charset=utf8',
                 DATABASE_USERNAME,
                 DATABASE_PASSWORD,
                 array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
@@ -146,7 +146,7 @@ class PDOMySQLDatabase
         $statement = $this->mLink->prepare($query);
         $statement->execute($params);
         if ($statement->columnCount() !== 0) {
-            return $statement->fetchAll(PDO::FETCH_CLASS);
+            return $statement->fetchAll(PDO::FETCH_OBJ);
         }
 
         return array();

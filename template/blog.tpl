@@ -62,7 +62,7 @@
 							<p>Comment (10 - 1000 characters):</p>
 							<textarea id="formcomment" rows="5" cols="40"></textarea>
 							<p>Human verification:</p>
-							<div class="g-recaptcha" data-sitekey="{RECAPTCHAKEY}"></div>
+							<div class="g-recaptcha" data-theme="dark" data-sitekey="{RECAPTCHAKEY}"></div>
 							<br /><br />
 							<input type="submit" class="submit" onClick="newcomment(); return false;"/>
 						</form>

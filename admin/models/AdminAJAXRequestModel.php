@@ -149,7 +149,8 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      */
     public function blockIP($ipaddress)
     {
-        if ($ipaddress === '') {
+        // Back out if filter_input failed.
+        if ($ipaddress === null || $ipaddress === false) {
             return false;
         }
 
@@ -179,7 +180,8 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      */
     public function unblockIP($ipaddress)
     {
-        if ($ipaddress === '') {
+        // Back out if filter_input failed.
+        if ($ipaddress === null || $ipaddress === false) {
             return false;
         }
 

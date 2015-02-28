@@ -117,7 +117,7 @@ class AdminAJAXRequestController extends AJAXRequestController
     private function actionBlockIP($ipaddress)
     {
         if ($this->model->blockIP($ipaddress) === false) {
-            $this->badRequest('No address specified');
+            $this->badRequest('Invalid address specified');
             return;
         }
 
@@ -134,7 +134,7 @@ class AdminAJAXRequestController extends AJAXRequestController
     private function actionUnblockIP($ipaddress)
     {
         if ($this->model->unblockIP($ipaddress) === false) {
-            $this->badRequest('No address specified');
+            $this->badRequest('Invalid address specified');
             return;
         }
 
@@ -217,7 +217,7 @@ class AdminAJAXRequestController extends AJAXRequestController
         $cont  = filter_input(INPUT_POST, 'content', FILTER_UNSAFE_RAW);
         $draft = filter_input(INPUT_POST, 'draft', FILTER_SANITIZE_STRING);
         // Used for the IP filter.
-        $ipaddress = filter_input(INPUT_POST, 'ip', FILTER_SANITIZE_STRING);
+        $ipaddress = filter_input(INPUT_POST, 'ip', FILTER_VALIDATE_IP);
         // Used for the password change.
         $cup  = filter_input(INPUT_POST, 'cp', FILTER_SANITIZE_STRING);
         $newp = filter_input(INPUT_POST, 'np', FILTER_SANITIZE_STRING);

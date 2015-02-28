@@ -62,7 +62,7 @@ class AdminListCommentsPageController extends AdminBasePageController
         parent::__construct($output);
         $this->model = new \ABirkett\models\AdminListCommentsPageModel();
 
-        $ipaddress = filter_input(INPUT_GET, 'ip', FILTER_UNSAFE_RAW);
+        $ipaddress = filter_input(INPUT_GET, 'ip', FILTER_VALIDATE_IP);
 
         // Dont worry if $ipaddress is null, getAllComments() handles it.
         $result = $this->model->getAllComments($ipaddress);

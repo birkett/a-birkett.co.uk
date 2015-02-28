@@ -137,8 +137,12 @@ class SessionManager
      */
     public function doLogin($user)
     {
-        $cip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_UNSAFE_RAW);
-        $cua = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_UNSAFE_RAW);
+        $cip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
+        $cua = filter_input(
+            INPUT_SERVER,
+            'HTTP_USER_AGENT',
+            FILTER_SANITIZE_STRING
+        );
 
         $this->setVar('user', $user);
         $this->setVar('ip', $cip);
@@ -156,8 +160,12 @@ class SessionManager
      */
     public function isLoggedIn()
     {
-        $cip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_UNSAFE_RAW);
-        $cua = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_UNSAFE_RAW);
+        $cip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
+        $cua = filter_input(
+            INPUT_SERVER,
+            'HTTP_USER_AGENT',
+            FILTER_SANITIZE_STRING
+        );
 
         $sessionUser    = $this->getVar('user');
         $sessionIP      = $this->getVar('ip');

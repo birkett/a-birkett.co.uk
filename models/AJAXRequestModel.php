@@ -115,6 +115,11 @@ class AJAXRequestModel extends BasePageModel
      */
     public function checkIP($ipaddress)
     {
+        // Back out if filter_input failed.
+        if ($ipaddress === null || $ipaddress === false) {
+            return false;
+        }
+
         $rows = $this->database->runQuery(
             'SELECT address from blocked_addresses WHERE address = :ip',
             array(':ip' => $ipaddress)
