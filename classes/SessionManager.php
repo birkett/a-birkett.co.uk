@@ -106,19 +106,6 @@ class SessionManager
 
 
     /**
-     * Wrapper around the $_SESSION superglobal used for setting.
-     * @param string $var   Variable to set.
-     * @param void   $value Variable value.
-     * @return void
-     */
-    private function setVar($var, $value)
-    {
-        $_SESSION[$var] = $value;
-
-    }//end setVar()
-
-
-    /**
      * Destroy the open session
      * @return void
      */
@@ -212,4 +199,16 @@ class SessionManager
         session_regenerate_id(true);
 
     }//end regenerateID()
+
+    /**
+     * Wrapper around the $_SESSION superglobal used for setting.
+     * @param string $var   Variable to set.
+     * @param void   $value Variable value.
+     * @return void
+     */
+    private function setVar($var, $value)
+    {
+        $_SESSION[$var] = $value;
+
+    }//end setVar()
 }//end class

@@ -86,31 +86,8 @@ class AJAXRequestModel extends BasePageModel
 
 
     /**
-     * Check if a given postid matches a public post.
-     * @param  integer $postid ID of the post to fetch.
-     * @return boolean True if post exists, false if not
-     */
-    private function isValidPostID($postid)
-    {
-        $rows = $this->database->runQuery(
-            "SELECT * FROM blog_posts WHERE postID = :id AND postDraft = '0'",
-            array(':id' => $postid)
-        );
-
-        $result = $this->database->getNumRows($rows);
-
-        if ($result !== 1) {
-            return false;
-        }
-
-        return true;
-
-    }//end isValidPostID()
-
-
-    /**
      * Check if an IP address is blacklisted
-     * @param  string  $ipaddress IP address to check for.
+     * @param  string $ipaddress IP address to check for.
      * @return boolean True if address is blacklisted, false otherwise
      */
     public function checkIP($ipaddress)
@@ -132,4 +109,27 @@ class AJAXRequestModel extends BasePageModel
         return false;
 
     }//end checkIP()
+
+
+    /**
+     * Check if a given postid matches a public post.
+     * @param  integer $postid ID of the post to fetch.
+     * @return boolean True if post exists, false if not
+     */
+    private function isValidPostID($postid)
+    {
+        $rows = $this->database->runQuery(
+            "SELECT * FROM blog_posts WHERE postID = :id AND postDraft = '0'",
+            array(':id' => $postid)
+        );
+
+        $result = $this->database->getNumRows($rows);
+
+        if ($result !== 1) {
+            return false;
+        }
+
+        return true;
+
+    }//end isValidPostID()
 }//end class

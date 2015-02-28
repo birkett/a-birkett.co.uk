@@ -53,30 +53,6 @@ class Page
 
 
     /**
-     * Open a page template, taking into account if the page is in admin
-     * @param string $file Input template filename.
-     * @return string Template
-     */
-    private function loadPageTemplate($file)
-    {
-        return file_get_contents(__DIR__.'/../'.TEMPLATE_FOLDER.$file);
-
-    }//end loadPageTemplate()
-
-
-    /**
-     * Open a sub template (widget, page content)
-     * @param string $file Input subtemplate filename.
-     * @return string SubTemplate
-     */
-    private function loadSubTemplate($file)
-    {
-        return file_get_contents(TEMPLATE_FOLDER.$file);
-
-    }//end loadSubTemplate()
-
-
-    /**
      * Generate a page
      * @param string $title      Page title.
      * @param string $widget     Request widget.
@@ -131,4 +107,28 @@ class Page
         echo $page;
 
     }//end __construct()
+
+
+    /**
+     * Open a page template, taking into account if the page is in admin
+     * @param string $file Input template filename.
+     * @return string Template
+     */
+    private function loadPageTemplate($file)
+    {
+        return file_get_contents(__DIR__.'/../'.TEMPLATE_FOLDER.$file);
+
+    }//end loadPageTemplate()
+
+
+    /**
+     * Open a sub template (widget, page content)
+     * @param string $file Input subtemplate filename.
+     * @return string SubTemplate
+     */
+    private function loadSubTemplate($file)
+    {
+        return file_get_contents(TEMPLATE_FOLDER.$file);
+
+    }//end loadSubTemplate()
 }//end class

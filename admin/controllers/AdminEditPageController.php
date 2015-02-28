@@ -56,27 +56,6 @@ class AdminEditPageController extends AdminBasePageController
 
 
     /**
-     * Remove unused tags from the page
-     * @param string $output Page to render to.
-     * @return none
-     */
-    private function cleanupTags(&$output)
-    {
-        // Clean up the tags if not already replaced.
-        $tags = array(
-                 '{NEWPOST}',
-                 '{/NEWPOST}',
-                 '{PAGEEDIT}',
-                 '{/PAGEEDIT}',
-                 '{POSTEDIT}',
-                 '{/POSTEDIT}',
-                );
-        $this->templateEngine->removeTags($tags, $output);
-
-    }//end cleanupTags()
-
-
-    /**
      * Build an editor page
      * @param string $output Unparsed template passed by reference.
      * @return none
@@ -175,4 +154,25 @@ class AdminEditPageController extends AdminBasePageController
         $this->cleanupTags($output);
 
     }//end __construct()
+
+
+    /**
+     * Remove unused tags from the page
+     * @param string $output Page to render to.
+     * @return none
+     */
+    private function cleanupTags(&$output)
+    {
+        // Clean up the tags if not already replaced.
+        $tags = array(
+                 '{NEWPOST}',
+                 '{/NEWPOST}',
+                 '{PAGEEDIT}',
+                 '{/PAGEEDIT}',
+                 '{POSTEDIT}',
+                 '{/POSTEDIT}',
+                );
+        $this->templateEngine->removeTags($tags, $output);
+
+    }//end cleanupTags()
 }//end class

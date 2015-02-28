@@ -56,6 +56,71 @@ class BlogPageController extends BasePageController
 
 
     /**
+     * Build the blog page
+     * @param string $output Unparsed template passed by reference.
+     * @return none
+     */
+    public function __construct(&$output)
+    {
+        parent::__construct($output);
+        $this->model = new \ABirkett\models\BlogPageModel();
+
+        $offset = filter_input(INPUT_GET, 'offset', FILTER_SANITIZE_NUMBER_INT);
+        $postid = filter_input(INPUT_GET, 'postid', FILTER_SANITIZE_NUMBER_INT);
+
+        // Default to multiple view when nothing specified.
+        if (isset($offset) === false && isset($postid) === false) {
+            $offset = 1;
+        }
+
+        // Single post mode.
+        if (isset($postid) === true) {
+            $result = $this->model->getSinglePost($postid);
+            // Back out if we didnt find any posts.
+            if ($result === null) {
+                header('Location: /404');
+
+                return;
+            }
+
+            // No pagination.
+            $this->removePagination($output);
+            // Show new comments box.
+            $this->renderNewCommentBox($postid, $output);
+            // Show comments.
+            $this->renderComments($postid, $output);
+        }//end if
+
+        // Page fetch mode. Only do this if postid not specified, just incase
+        // someone plays with the URL to request a post and page.
+        if (isset($offset) === true && isset($postid) === false) {
+            // Page 0 should be the same as page 1.
+            if ($offset === 0) {
+                $offset = 1;
+            }
+
+            $result = $this->model->getMultiplePosts($offset - 1);
+            // Back out if we didnt find any posts.
+            if ($result === null) {
+                header('Location: /404');
+
+                return;
+            }
+
+            // Hide new comment box.
+            $this->removeNewCommentBox($output);
+            // Pagination.
+            $this->renderPagination($offset, $output);
+        }//end if
+
+        // Rendering code.
+        $this->renderPosts($result, $output);
+        $this->cleanupTags($output);
+
+    }//end __construct()
+
+
+    /**
      * Render comments to the output
      * @param integer $postid Post ID for which to pull comments for.
      * @param string  $output Page to render to.
@@ -238,69 +303,4 @@ class BlogPageController extends BasePageController
         $this->templateEngine->removeTags($cleantags, $output);
 
     }//end cleanupTags()
-
-
-    /**
-     * Build the blog page
-     * @param string $output Unparsed template passed by reference.
-     * @return none
-     */
-    public function __construct(&$output)
-    {
-        parent::__construct($output);
-        $this->model = new \ABirkett\models\BlogPageModel();
-
-        $offset = filter_input(INPUT_GET, 'offset', FILTER_SANITIZE_NUMBER_INT);
-        $postid = filter_input(INPUT_GET, 'postid', FILTER_SANITIZE_NUMBER_INT);
-
-        // Default to multiple view when nothing specified.
-        if (isset($offset) === false && isset($postid) === false) {
-            $offset = 1;
-        }
-
-        // Single post mode.
-        if (isset($postid) === true) {
-            $result = $this->model->getSinglePost($postid);
-            // Back out if we didnt find any posts.
-            if ($result === null) {
-                header('Location: /404');
-
-                return;
-            }
-
-            // No pagination.
-            $this->removePagination($output);
-            // Show new comments box.
-            $this->renderNewCommentBox($postid, $output);
-            // Show comments.
-            $this->renderComments($postid, $output);
-        }//end if
-
-        // Page fetch mode. Only do this if postid not specified, just incase
-        // someone plays with the URL to request a post and page.
-        if (isset($offset) === true && isset($postid) === false) {
-            // Page 0 should be the same as page 1.
-            if ($offset === 0) {
-                $offset = 1;
-            }
-
-            $result = $this->model->getMultiplePosts($offset - 1);
-            // Back out if we didnt find any posts.
-            if ($result === null) {
-                header('Location: /404');
-
-                return;
-            }
-
-            // Hide new comment box.
-            $this->removeNewCommentBox($output);
-            // Pagination.
-            $this->renderPagination($offset, $output);
-        }//end if
-
-        // Rendering code.
-        $this->renderPosts($result, $output);
-        $this->cleanupTags($output);
-
-    }//end __construct()
 }//end class

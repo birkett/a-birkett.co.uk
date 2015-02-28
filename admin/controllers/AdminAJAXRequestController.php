@@ -53,6 +53,98 @@ class AdminAJAXRequestController extends AJAXRequestController
 
 
     /**
+     * Handle private POST requests from AJAX
+     * @return none
+     */
+    public function __construct()
+    {
+        $this->model    = new \ABirkett\models\AdminAJAXRequestModel();
+        $sessionManager = \ABirkett\classes\SessionManager::getInstance();
+
+        // Basics.
+        $mode = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
+        // Used for post and page edits.
+        $posid = filter_input(INPUT_POST, 'postid', FILTER_SANITIZE_NUMBER_INT);
+        $pagid = filter_input(INPUT_POST, 'pageid', FILTER_SANITIZE_NUMBER_INT);
+        $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
+        $cont  = filter_input(INPUT_POST, 'content', FILTER_UNSAFE_RAW);
+        $draft = filter_input(INPUT_POST, 'draft', FILTER_SANITIZE_STRING);
+        // Used for the IP filter.
+        $ipaddress = filter_input(INPUT_POST, 'ip', FILTER_VALIDATE_IP);
+        // Used for the password change.
+        $cup  = filter_input(INPUT_POST, 'cp', FILTER_SANITIZE_STRING);
+        $newp = filter_input(INPUT_POST, 'np', FILTER_SANITIZE_STRING);
+        $cnp  = filter_input(INPUT_POST, 'cnp', FILTER_SANITIZE_STRING);
+        // Used for the login.
+        $user = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+        $pass = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+
+        // Bail if not logged in, and not requesting a login.
+        if ($sessionManager->isLoggedIn() === false && $mode !== 'login') {
+            $this->badRequest('Not logged in.');
+            return;
+        }
+
+        switch($mode) {
+            // Edit post mode.
+            case 'editpost':
+                $this->actionEditPost($posid, $title, $cont, $draft);
+                return;
+                break;
+
+            // Edit page mode.
+            case 'editpage':
+                $this->actionEditPage($pagid, $cont);
+                return;
+                break;
+
+            // New post mode.
+            case 'newpost':
+                $this->actionNewPost($title, $cont, $draft);
+                return;
+                break;
+
+            // Add blocked IP mode.
+            case 'addip':
+                $this->actionBlockIP($ipaddress);
+                return;
+                break;
+
+            // Remove blocked IP mode.
+            case 'removeip':
+                $this->actionUnblockIP($ipaddress);
+                return;
+                break;
+
+            // Change the admin password.
+            case 'password':
+                $this->actionChangePassword($sessionManager, $cup, $newp, $cnp);
+                return;
+                break;
+
+            // Login.
+            case 'login':
+                $this->actionLogin($sessionManager, $user, $pass);
+                return;
+                break;
+
+            // Logout.
+            case 'logout':
+                $this->actionLogout($sessionManager);
+                return;
+                break;
+
+            // Default, send a bad request response.
+            default:
+                $this->badRequest();
+                return;
+                break;
+        }//end switch
+
+    }//end __construct()
+
+
+    /**
      * Handle the editpost request
      * @param integer $posid Post ID to edit.
      * @param string  $title Post title.
@@ -197,96 +289,4 @@ class AdminAJAXRequestController extends AJAXRequestController
         $this->resetRequest();
 
     }//end actionLogout()
-
-
-    /**
-     * Handle private POST requests from AJAX
-     * @return none
-     */
-    public function __construct()
-    {
-        $this->model    = new \ABirkett\models\AdminAJAXRequestModel();
-        $sessionManager = \ABirkett\classes\SessionManager::getInstance();
-
-        // Basics.
-        $mode = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
-        // Used for post and page edits.
-        $posid = filter_input(INPUT_POST, 'postid', FILTER_SANITIZE_NUMBER_INT);
-        $pagid = filter_input(INPUT_POST, 'pageid', FILTER_SANITIZE_NUMBER_INT);
-        $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
-        $cont  = filter_input(INPUT_POST, 'content', FILTER_UNSAFE_RAW);
-        $draft = filter_input(INPUT_POST, 'draft', FILTER_SANITIZE_STRING);
-        // Used for the IP filter.
-        $ipaddress = filter_input(INPUT_POST, 'ip', FILTER_VALIDATE_IP);
-        // Used for the password change.
-        $cup  = filter_input(INPUT_POST, 'cp', FILTER_SANITIZE_STRING);
-        $newp = filter_input(INPUT_POST, 'np', FILTER_SANITIZE_STRING);
-        $cnp  = filter_input(INPUT_POST, 'cnp', FILTER_SANITIZE_STRING);
-        // Used for the login.
-        $user = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-        $pass = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-
-        // Bail if not logged in, and not requesting a login.
-        if ($sessionManager->isLoggedIn() === false && $mode !== 'login') {
-            $this->badRequest('Not logged in.');
-            return;
-        }
-
-        switch($mode) {
-            // Edit post mode.
-            case 'editpost':
-                $this->actionEditPost($posid, $title, $cont, $draft);
-                return;
-                break;
-
-            // Edit page mode.
-            case 'editpage':
-                $this->actionEditPage($pagid, $cont);
-                return;
-                break;
-
-            // New post mode.
-            case 'newpost':
-                $this->actionNewPost($title, $cont, $draft);
-                return;
-                break;
-
-            // Add blocked IP mode.
-            case 'addip':
-                $this->actionBlockIP($ipaddress);
-                return;
-                break;
-
-            // Remove blocked IP mode.
-            case 'removeip':
-                $this->actionUnblockIP($ipaddress);
-                return;
-                break;
-
-            // Change the admin password.
-            case 'password':
-                $this->actionChangePassword($sessionManager, $cup, $newp, $cnp);
-                return;
-                break;
-
-            // Login.
-            case 'login':
-                $this->actionLogin($sessionManager, $user, $pass);
-                return;
-                break;
-
-            // Logout.
-            case 'logout':
-                $this->actionLogout($sessionManager);
-                return;
-                break;
-
-            // Default, send a bad request response.
-            default:
-                $this->badRequest();
-                return;
-                break;
-        }//end switch
-
-    }//end __construct()
 }//end class

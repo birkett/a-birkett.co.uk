@@ -270,6 +270,20 @@ class AdminAJAXRequestModel extends AJAXRequestModel
 
 
     /**
+     * Generate a new password hash using a random salt
+     * @param  string $password Plain text password.
+     * @return string Password hash
+     */
+    public function hashPassword($password)
+    {
+        $options = array('cost' => HASHING_COST);
+        // Password_hash is PHP 5.5+.
+        return password_hash($password, PASSWORD_BCRYPT, $options);
+
+    }//end hashPassword()
+
+
+    /**
      * Get the post data and return it as an array
      * @param  integer $postid ID of the post to fetch.
      * @return array Array of post data
@@ -327,18 +341,4 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         );
 
     }//end tweetPost()
-
-
-    /**
-     * Generate a new password hash using a random salt
-     * @param  string $password Plain text password.
-     * @return string Password hash
-     */
-    public function hashPassword($password)
-    {
-        $options = array('cost' => HASHING_COST);
-        // Password_hash is PHP 5.5+.
-        return password_hash($password, PASSWORD_BCRYPT, $options);
-
-    }//end hashPassword()
 }//end class

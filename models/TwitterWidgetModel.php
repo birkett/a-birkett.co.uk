@@ -56,6 +56,98 @@ class TwitterWidgetModel extends BasePageModel
 
 
     /**
+     * Get the latest tweets from the local database
+     * @return array Tweets data array
+     */
+    public function getTweetsFromDatabase()
+    {
+        // Get the last twitter update time.
+        $results = $this->database->runQuery(
+            'SELECT tweetFetchTime FROM site_tweets LIMIT 1',
+            array()
+        );
+
+        $lastfetchtime = $this->database->getRow($results);
+
+        // Populate the cache if its currently empty.
+        if (isset($lastfetchtime->tweetFetchTime) === false) {
+            $this->updateTweetsDatabase();
+        }
+
+        // Update the tweets if not done in the last 15 mins.
+        if (isset($lastfetchtime->tweetFetchTime) === true
+            && $lastfetchtime->tweetFetchTime < (time() - 900)
+        ) {
+            $this->updateTweetsDatabase();
+        }
+
+        // Get the tweets.
+        return $this->database->runQuery(
+            'SELECT * FROM site_tweets ORDER BY tweetTimestamp ASC LIMIT '.
+            TWEETS_WIDGET_MAX,
+            array()
+        );
+
+    }//end getTweetsFromDatabase()
+
+
+    /**
+     * Get the time elapsed since a unix timestamp i.e. "3 hours"
+     * @param integer $timestamp Unix timestamp.
+     * @return string Time elapsed
+     */
+    public function timeElapsed($timestamp)
+    {
+        $periods = array(
+                    'second',
+                    'minute',
+                    'hour',
+                    'day',
+                    'week',
+                    'month',
+                    'year',
+                    'decade',
+                   );
+
+        $lengths = array(
+                    '60',
+                    '60',
+                    '24',
+                    '7',
+                    '4.35',
+                    '12',
+                    '10',
+                   );
+
+        $now = time();
+
+        $diff  = ($now - $timestamp);
+        $tense = ' ago';
+
+        // Just incase the clock is wrong and timestamps are in the future.
+        if ($now < $timestamp) {
+            $diff  = ($timestamp - $now);
+            $tense = ' from now';
+        }
+
+        $lengthsCount = count($lengths);
+        for ($j = 0; $diff >= $lengths[$j] && $j < ($lengthsCount - 1); $j++) {
+            $diff /= $lengths[$j];
+        }
+
+        $diff = round($diff);
+
+        // Test the float value to 5 digit precision.
+        if (abs($diff - 1) > 0.0001) {
+            $periods[$j] .= 's';
+        }
+
+        return $diff.' '.$periods[$j].$tense;
+
+    }//end timeElapsed()
+
+
+    /**
      * Get latest tweets via Twitter API
      * @return array Array of tweets data
      */
@@ -151,96 +243,4 @@ class TwitterWidgetModel extends BasePageModel
         }//end foreach
 
     }//end updateTweetsDatabase()
-
-
-    /**
-     * Get the latest tweets from the local database
-     * @return array Tweets data array
-     */
-    public function getTweetsFromDatabase()
-    {
-        // Get the last twitter update time.
-        $results = $this->database->runQuery(
-            'SELECT tweetFetchTime FROM site_tweets LIMIT 1',
-            array()
-        );
-
-        $lastfetchtime = $this->database->getRow($results);
-
-        // Populate the cache if its currently empty.
-        if (isset($lastfetchtime->tweetFetchTime) === false) {
-            $this->updateTweetsDatabase();
-        }
-
-        // Update the tweets if not done in the last 15 mins.
-        if (isset($lastfetchtime->tweetFetchTime) === true
-            && $lastfetchtime->tweetFetchTime < (time() - 900)
-        ) {
-            $this->updateTweetsDatabase();
-        }
-
-        // Get the tweets.
-        return $this->database->runQuery(
-            'SELECT * FROM site_tweets ORDER BY tweetTimestamp ASC LIMIT '.
-            TWEETS_WIDGET_MAX,
-            array()
-        );
-
-    }//end getTweetsFromDatabase()
-
-
-    /**
-     * Get the time elapsed since a unix timestamp i.e. "3 hours"
-     * @param integer $timestamp Unix timestamp.
-     * @return string Time elapsed
-     */
-    public function timeElapsed($timestamp)
-    {
-        $periods = array(
-                    'second',
-                    'minute',
-                    'hour',
-                    'day',
-                    'week',
-                    'month',
-                    'year',
-                    'decade',
-                   );
-
-        $lengths = array(
-                    '60',
-                    '60',
-                    '24',
-                    '7',
-                    '4.35',
-                    '12',
-                    '10',
-                   );
-
-        $now = time();
-
-        $diff  = ($now - $timestamp);
-        $tense = ' ago';
-
-        // Just incase the clock is wrong and timestamps are in the future.
-        if ($now < $timestamp) {
-            $diff  = ($timestamp - $now);
-            $tense = ' from now';
-        }
-
-        $lengthsCount = count($lengths);
-        for ($j = 0; $diff >= $lengths[$j] && $j < ($lengthsCount - 1); $j++) {
-            $diff /= $lengths[$j];
-        }
-
-        $diff = round($diff);
-
-        // Test the float value to 5 digit precision.
-        if (abs($diff - 1) > 0.0001) {
-            $periods[$j] .= 's';
-        }
-
-        return $diff.' '.$periods[$j].$tense;
-
-    }//end timeElapsed()
 }//end class

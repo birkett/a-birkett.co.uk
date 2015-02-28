@@ -60,61 +60,6 @@ class AJAXRequestController
 
 
     /**
-     * Exit the script with a success HTTP code
-     * @param string $message Optional message.
-     * @return void
-     */
-    protected function goodRequest($message = '')
-    {
-        http_response_code(200);
-        echo $message;
-
-    }//end goodRequest()
-
-
-    /**
-     * Exit the script with a reset content code, used for redirecting
-     * @return void
-     */
-    protected function resetRequest()
-    {
-        http_response_code(205);
-
-    }//end resetRequest()
-
-
-    /**
-     * Exit the script with a failed HTTP code
-     * @param string $message Optional message.
-     * @return void
-     */
-    protected function badRequest($message = '')
-    {
-        http_response_code(400);
-        echo $message;
-
-    }//end badRequest()
-
-
-    /**
-     * Super simple helper function to validate a strings length
-     * @param string  $string Input string to check.
-     * @param integer $min    Minimum expected string length.
-     * @param integer $max    Maximum expected string length.
-     * @return boolean True on valid, false otherwise
-     */
-    private function strClamp($string, $min, $max)
-    {
-        if (mb_strlen($string) < $min || mb_strlen($string) > $max) {
-            return false;
-        }
-
-        return true;
-
-    }//end strClamp()
-
-
-    /**
      * Handle public POST requests from AJAX
      * @return none
      */
@@ -175,4 +120,59 @@ class AJAXRequestController
         }//end if
 
     }//end __construct()
+
+
+    /**
+     * Exit the script with a success HTTP code
+     * @param string $message Optional message.
+     * @return void
+     */
+    protected function goodRequest($message = '')
+    {
+        http_response_code(200);
+        echo $message;
+
+    }//end goodRequest()
+
+
+    /**
+     * Exit the script with a reset content code, used for redirecting
+     * @return void
+     */
+    protected function resetRequest()
+    {
+        http_response_code(205);
+
+    }//end resetRequest()
+
+
+    /**
+     * Exit the script with a failed HTTP code
+     * @param string $message Optional message.
+     * @return void
+     */
+    protected function badRequest($message = '')
+    {
+        http_response_code(400);
+        echo $message;
+
+    }//end badRequest()
+
+
+    /**
+     * Super simple helper function to validate a strings length
+     * @param string  $string Input string to check.
+     * @param integer $min    Minimum expected string length.
+     * @param integer $max    Maximum expected string length.
+     * @return boolean True on valid, false otherwise
+     */
+    private function strClamp($string, $min, $max)
+    {
+        if (mb_strlen($string) < $min || mb_strlen($string) > $max) {
+            return false;
+        }
+
+        return true;
+
+    }//end strClamp()
 }//end class
