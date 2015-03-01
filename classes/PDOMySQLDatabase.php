@@ -86,7 +86,7 @@ class PDOMySQLDatabase
 
     /**
      * Constructor
-     * @return void
+     * @return none
      */
     private function __construct()
     {
@@ -107,7 +107,7 @@ class PDOMySQLDatabase
 
     /**
      * Destructor
-     * @return void
+     * @return none
      */
     public function __destruct()
     {
@@ -123,10 +123,12 @@ class PDOMySQLDatabase
     public function serverInfo()
     {
         if ($this->mLink === null) {
-            return;
+            return '';
         }
 
-        return $this->mLink->getAttribute(PDO::ATTR_SERVER_VERSION);
+        $result = $this->mLink->getAttribute(PDO::ATTR_SERVER_VERSION);
+
+        return $result;
 
     }//end serverInfo()
 
@@ -137,16 +139,18 @@ class PDOMySQLDatabase
      * @param  array  $params Array of parameters to bind.
      * @return array  Array of results
      */
-    public function runQuery($query, $params)
+    public function runQuery($query, array $params)
     {
         if ($this->mLink === null) {
-            return;
+            return array();
         }
 
         $statement = $this->mLink->prepare($query);
         $statement->execute($params);
         if ($statement->columnCount() !== 0) {
-            return $statement->fetchAll(PDO::FETCH_OBJ);
+            $rows = $statement->fetchAll(PDO::FETCH_OBJ);
+
+            return $rows;
         }
 
         return array();
@@ -159,14 +163,16 @@ class PDOMySQLDatabase
      * @param  array $result Array of rows.
      * @return array One row array or null when none left
      */
-    public function getRow(&$result)
+    public function getRow(array &$result)
     {
         if ($result === null) {
             return null;
         }
 
         if ($this->getNumRows($result) !== 0) {
-            return array_shift($result);
+            $row = array_shift($result);
+
+            return $row;
         }
 
         return null;
@@ -179,13 +185,15 @@ class PDOMySQLDatabase
      * @param array $result Array of results.
      * @return int  Number of rows in result
      */
-    public function getNumRows($result)
+    public function getNumRows(array $result)
     {
         if ($result === null) {
-            return;
+            return 0;
         }
 
-        return count($result);
+        $count = count($result);
+
+        return $count;
 
     }//end getNumRows()
 
@@ -200,7 +208,9 @@ class PDOMySQLDatabase
             return null;
         }
 
-        return $this->mLink->lastInsertId();
+        $lastid = $this->mLink->lastInsertId();
+
+        return $lastid;
 
     }//end lastInsertedID()
 }//end class

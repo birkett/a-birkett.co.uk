@@ -65,10 +65,12 @@ class AdminListCommentsPageModel extends AdminBasePageModel
             $fil = ' ';
         }
 
-        return $this->database->runQuery(
+        $rows = $this->database->runQuery(
             'SELECT * FROM blog_comments'.$fil.'ORDER BY commentTimestamp DESC',
             array()
         );
+
+        return $rows;
 
     }//end getAllComments()
 }//end class

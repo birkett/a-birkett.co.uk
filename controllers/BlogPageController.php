@@ -124,7 +124,7 @@ class BlogPageController extends BasePageController
      * Render comments to the output
      * @param integer $postid Post ID for which to pull comments for.
      * @param string  $output Page to render to.
-     * @return none
+     * @return void
      */
     private function renderComments($postid, &$output)
     {
@@ -159,9 +159,9 @@ class BlogPageController extends BasePageController
      * Render posts to the output
      * @param array  $posts  Array of posts to render.
      * @param string $output Page to render to.
-     * @return none
+     * @return void
      */
-    private function renderPosts($posts, &$output)
+    private function renderPosts(array $posts, &$output)
     {
         foreach ($posts as $post) {
             $date = date(DATE_FORMAT, $post->postTimestamp);
@@ -190,7 +190,7 @@ class BlogPageController extends BasePageController
      * Render the new comment box to the output
      * @param integer $postid Post ID for which to post comments for.
      * @param string  $output Page to render to.
-     * @return none
+     * @return void
      */
     private function renderNewCommentBox($postid, &$output)
     {
@@ -206,7 +206,7 @@ class BlogPageController extends BasePageController
     /**
      * Remove the new comment box from the output
      * @param string $output Page to render to.
-     * @return none
+     * @return void
      */
     private function removeNewCommentBox(&$output)
     {
@@ -223,7 +223,7 @@ class BlogPageController extends BasePageController
      * Render the pagination to the output
      * @param integer $offset Page offset to calculate next and previous links.
      * @param string  $output Page to render to.
-     * @return none
+     * @return void
      */
     private function renderPagination($offset, &$output)
     {
@@ -258,7 +258,7 @@ class BlogPageController extends BasePageController
     /**
      * Remove the pagination from the output
      * @param string $output Page to render to.
-     * @return none
+     * @return void
      */
     private function removePagination(&$output)
     {
@@ -274,7 +274,7 @@ class BlogPageController extends BasePageController
     /**
      * Remove unused tags from the page
      * @param string $output Page to render to.
-     * @return none
+     * @return void
      */
     private function cleanupTags(&$output)
     {

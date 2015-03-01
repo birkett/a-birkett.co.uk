@@ -57,10 +57,12 @@ class AdminListPagesPageModel extends AdminBasePageModel
      */
     public function getAllPages()
     {
-        return $this->database->runQuery(
+        $rows = $this->database->runQuery(
             'SELECT pageID, pageTitle FROM site_pages',
             array()
         );
+
+        return $rows;
 
     }//end getAllPages()
 }//end class

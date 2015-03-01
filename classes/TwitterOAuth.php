@@ -73,7 +73,7 @@ class TwitterOAuth
      * @param  array  $parameters Extra parameters array.
      * @return array Response
      */
-    public function oAuthRequest($url, $method, $parameters)
+    public function oAuthRequest($url, $method, array $parameters)
     {
         $url = 'https://api.twitter.com/1.1/'.$url.'.json';
 
@@ -89,17 +89,18 @@ class TwitterOAuth
             $this->consumerSecret,
             $this->oauthTokenSecret
         );
-        switch ($method) {
-            case 'GET':
-                $response = $this->http($request->toUrl($url), 'GET', null);
-                break;
 
-            default:
-                $response = $this->http($url, $method, $request->toPostdata());
-                break;
+        if ($method === 'GET') {
+            $response = $this->http($request->toUrl($url), 'GET', array());
         }
 
-        return json_decode($response);
+        if ($method === 'POST') {
+            $response = $this->http($url, $method, $request->toPostdata());
+        }
+
+        $obj = json_decode($response);
+
+        return $obj;
 
     }//end oAuthRequest()
 
@@ -111,7 +112,7 @@ class TwitterOAuth
      * @param  array  $postfields Extra parameters array.
      * @return array API results
      */
-    private function http($url, $method, $postfields)
+    private function http($url, $method, array $postfields)
     {
         $curl = curl_init();
         // Curl settings.

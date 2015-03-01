@@ -82,11 +82,13 @@ class TwitterWidgetModel extends BasePageModel
         }
 
         // Get the tweets.
-        return $this->database->runQuery(
+        $rows = $this->database->runQuery(
             'SELECT * FROM site_tweets ORDER BY tweetTimestamp ASC LIMIT '.
             TWEETS_WIDGET_MAX,
             array()
         );
+
+        return $rows;
 
     }//end getTweetsFromDatabase()
 
@@ -160,7 +162,9 @@ class TwitterWidgetModel extends BasePageModel
                    );
         $twitter = new \ABirkett\classes\TwitterOAuth();
 
-        return $twitter->oAuthRequest('statuses/user_timeline', 'GET', $params);
+        $res = $twitter->oAuthRequest('statuses/user_timeline', 'GET', $params);
+
+        return $res;
 
     }//end getLatestTweets()
 

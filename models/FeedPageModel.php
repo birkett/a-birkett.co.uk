@@ -58,12 +58,14 @@ class FeedPageModel extends BasePageModel
      */
     public function getLatestPosts()
     {
-        return $this->database->runQuery(
+        $rows = $this->database->runQuery(
             'SELECT postID, postTimestamp, postTitle, postContent'.
             ' FROM blog_posts WHERE postDraft = "0"'.
             ' ORDER BY postTimestamp DESC LIMIT 0,'.BLOG_POSTS_PER_PAGE,
             array()
         );
+
+        return $rows;
 
     }//end getLatestPosts()
 }//end class

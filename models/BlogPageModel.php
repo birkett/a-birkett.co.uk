@@ -60,7 +60,7 @@ class BlogPageModel extends BasePageModel
      */
     public function getSinglePost($postid)
     {
-        $post =  $this->database->runQuery(
+        $post = $this->database->runQuery(
             'SELECT * FROM blog_posts WHERE postID = :id AND postDraft = "0"',
             array(':id' => $postid)
         );
@@ -81,7 +81,7 @@ class BlogPageModel extends BasePageModel
      */
     public function getMultiplePosts($page)
     {
-        $posts =  $this->database->runQuery(
+        $posts = $this->database->runQuery(
             'SELECT * FROM blog_posts WHERE postDraft = "0"'.
             ' ORDER BY postTimestamp DESC LIMIT '.
             ($page * BLOG_POSTS_PER_PAGE).','.BLOG_POSTS_PER_PAGE,
@@ -141,12 +141,14 @@ class BlogPageModel extends BasePageModel
      */
     public function getCommentsOnPost($postid)
     {
-        return $this->database->runQuery(
+        $rows = $this->database->runQuery(
             'SELECT commentUsername, commentText, commentTimestamp'.
             ' FROM blog_comments WHERE postID = :pid'.
             ' ORDER BY commentTimestamp ASC',
             array(':pid' => $postid)
         );
+
+        return $rows;
 
     }//end getCommentsOnPost()
 }//end class

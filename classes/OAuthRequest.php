@@ -66,7 +66,7 @@ class OAuthRequest
      * @param  array  $params  Additional parameters as array.
      * @return object OAuthRequest instance
      */
-    public function __construct($cKey, $oToken, $httpUrl, $params)
+    public function __construct($cKey, $oToken, $httpUrl, array $params)
     {
         if (isset($params) === false) {
             $params = array();
@@ -115,7 +115,9 @@ class OAuthRequest
      */
     public function toPostdata()
     {
-        return $this->buildHttpQuery($this->parameters);
+        $result = $this->buildHttpQuery($this->parameters);
+
+        return $result;
 
     }//end toPostdata()
 
@@ -126,7 +128,7 @@ class OAuthRequest
      * @param string $method HTTP method.
      * @param string $cSec   Consumer secret.
      * @param string $oSec   OAuth token secret.
-     * @return none
+     * @return void
      */
     public function signRequest($url, $method, $cSec, $oSec)
     {
@@ -161,8 +163,10 @@ class OAuthRequest
      */
     public static function urlencodeRFC3986($input)
     {
+        $result = '';
+
         if (is_array($input) === true) {
-            return array_map(
+            $result = array_map(
                 array(
                  'ABirkett\classes\OAuthRequest',
                  'urlencodeRFC3986',
@@ -172,14 +176,14 @@ class OAuthRequest
         }
 
         if (is_scalar($input) === true) {
-            return str_replace(
+            $result = str_replace(
                 '+',
                 ' ',
                 str_replace('%7E', '~', rawurlencode($input))
             );
         }
 
-        return '';
+        return $result;
 
     }//end urlencodeRFC3986()
 
@@ -232,7 +236,7 @@ class OAuthRequest
      * @param  array $params Array of parameters.
      * @return string HTTP query string
      */
-    public function buildHttpQuery($params)
+    public function buildHttpQuery(array $params)
     {
         if (empty($params) === true) {
             return '';
@@ -266,7 +270,9 @@ class OAuthRequest
         // For each parameter, the name is separated from the corresponding,
         // value by an '=' character (ASCII code 61).
         // Each name-value pair is separated by an '&' (ASCII code 38).
-        return implode('&', $pairs);
+        $result = implode('&', $pairs);
+
+        return $result;
 
     }//end buildHttpQuery()
 }//end class

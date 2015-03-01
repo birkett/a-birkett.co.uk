@@ -56,7 +56,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
      * @param string  $title   Title of the new post.
      * @param string  $content Body text of the post.
      * @param boolean $draft   Is the post public yet.
-     * @return void
+     * @return boolean True on success, false otherwise
      */
     public function newPost($title, $content, $draft)
     {
@@ -79,7 +79,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
         // Tweet this.
         $this->tweetPost($postid);
 
-        return $postid;
+        return true;
 
     }//end newPost()
 
@@ -229,7 +229,7 @@ class AdminAJAXRequestModel extends AJAXRequestModel
             'UPDATE site_users SET password = :hash WHERE username = :user',
             array(
              ':hash' => $hash,
-             ':user'  => $user,
+             ':user' => $user,
             )
         );
 
@@ -278,7 +278,9 @@ class AdminAJAXRequestModel extends AJAXRequestModel
     {
         $options = array('cost' => HASHING_COST);
         // Password_hash is PHP 5.5+.
-        return password_hash($password, PASSWORD_BCRYPT, $options);
+        $hash = password_hash($password, PASSWORD_BCRYPT, $options);
+
+        return $hash;
 
     }//end hashPassword()
 

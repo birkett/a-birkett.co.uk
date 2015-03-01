@@ -124,10 +124,10 @@ class AJAXRequestController
 
     /**
      * Exit the script with a success HTTP code
-     * @param string $message Optional message.
+     * @param string $message Message to echo.
      * @return void
      */
-    protected function goodRequest($message = '')
+    protected function goodRequest($message)
     {
         http_response_code(200);
         echo $message;
@@ -148,10 +148,10 @@ class AJAXRequestController
 
     /**
      * Exit the script with a failed HTTP code
-     * @param string $message Optional message.
+     * @param string $message Message to echo.
      * @return void
      */
-    protected function badRequest($message = '')
+    protected function badRequest($message)
     {
         http_response_code(400);
         echo $message;

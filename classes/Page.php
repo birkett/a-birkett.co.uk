@@ -62,11 +62,16 @@ class Page
      */
     public function __construct($title, $widget, $template, $controller)
     {
-        $pagetemplate = ($template === 'feed') ? 'feed.tpl' : 'page.tpl';
+        $pagetemplate = 'page.tpl';
+
+        if ($template === 'feed') {
+            $pagetemplate = 'feed.tpl';
+        }
 
         $page = $this->loadPageTemplate($pagetemplate);
 
-        $replacepage = $replacewidget = null;
+        $replacepage   = null;
+        $replacewidget = null;
 
         if ($template !== 'none') {
             $replacepage = $this->loadSubTemplate($template.'.tpl');
@@ -116,7 +121,9 @@ class Page
      */
     private function loadPageTemplate($file)
     {
-        return file_get_contents(__DIR__.'/../'.TEMPLATE_FOLDER.$file);
+        $template = file_get_contents(__DIR__.'/../'.TEMPLATE_FOLDER.$file);
+
+        return $template;
 
     }//end loadPageTemplate()
 
@@ -128,7 +135,9 @@ class Page
      */
     private function loadSubTemplate($file)
     {
-        return file_get_contents(TEMPLATE_FOLDER.$file);
+        $template = file_get_contents(TEMPLATE_FOLDER.$file);
+
+        return $template;
 
     }//end loadSubTemplate()
 }//end class

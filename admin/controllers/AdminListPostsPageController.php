@@ -65,7 +65,11 @@ class AdminListPostsPageController extends AdminBasePageController
 
         foreach ($result as $row) {
             // Small conversion to the correct strings.
-            $draft = ($row->postDraft === '1') ? ' (DRAFT)' : '';
+            $draft = '';
+
+            if ($row->postDraft === '1') {
+                $draft = ' (DRAFT)';
+            }
 
             $tags = array(
                      '{POSTID}'    => $row->postID,

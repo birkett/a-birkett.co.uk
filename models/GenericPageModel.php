@@ -73,7 +73,9 @@ class GenericPageModel extends BasePageModel
             return null;
         }
 
-        return $this->database->getRow($page);
+        $row = $this->database->getRow($page);
+
+        return $row;
 
     }//end getPage()
 }//end class

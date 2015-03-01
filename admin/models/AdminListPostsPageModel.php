@@ -57,11 +57,13 @@ class AdminListPostsPageModel extends AdminBasePageModel
      */
     public function getAllPosts()
     {
-        return $this->database->runQuery(
+        $rows = $this->database->runQuery(
             'SELECT postID, postTimestamp, postTitle, postDraft'.
             ' FROM blog_posts ORDER BY postTimestamp DESC',
             array()
         );
+
+        return $rows;
 
     }//end getAllPosts()
 }//end class

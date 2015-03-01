@@ -105,7 +105,11 @@ class AdminEditPageController extends AdminBasePageController
                 '+title+"&draft="+draft+"&content="+content;';
 
             // Small conversion to set checkbox value.
-            $checked = ($post->postDraft === '1') ? 'checked' : '';
+            $checked = '';
+
+            if ($post->postDraft === '1') {
+                $checked = 'checked';
+            }
 
             $tags = array(
                      '{POSTID}'    => $post->postID,
@@ -159,7 +163,7 @@ class AdminEditPageController extends AdminBasePageController
     /**
      * Remove unused tags from the page
      * @param string $output Page to render to.
-     * @return none
+     * @return void
      */
     private function cleanupTags(&$output)
     {

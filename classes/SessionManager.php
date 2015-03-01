@@ -90,22 +90,6 @@ class SessionManager
 
 
     /**
-     * Wrapper around the $_SESSION superglobal used for getting.
-     * @param string $var Variable to get.
-     * @return string Variable value
-     */
-    public function getVar($var)
-    {
-        if (isset($_SESSION[$var]) === true) {
-            return $_SESSION[$var];
-        }
-
-        return null;
-
-    }//end getVar()
-
-
-    /**
      * Destroy the open session
      * @return void
      */
@@ -200,10 +184,27 @@ class SessionManager
 
     }//end regenerateID()
 
+
+    /**
+     * Wrapper around the $_SESSION superglobal used for getting.
+     * @param string $var Variable to get.
+     * @return string Variable value
+     */
+    public function getVar($var)
+    {
+        if (isset($_SESSION[$var]) === true) {
+            return $_SESSION[$var];
+        }
+
+        return null;
+
+    }//end getVar()
+
+
     /**
      * Wrapper around the $_SESSION superglobal used for setting.
      * @param string $var   Variable to set.
-     * @param void   $value Variable value.
+     * @param string $value Variable value.
      * @return void
      */
     private function setVar($var, $value)

@@ -89,55 +89,46 @@ class AdminAJAXRequestController extends AJAXRequestController
             // Edit post mode.
             case 'editpost':
                 $this->actionEditPost($posid, $title, $cont, $draft);
-                return;
                 break;
 
             // Edit page mode.
             case 'editpage':
                 $this->actionEditPage($pagid, $cont);
-                return;
                 break;
 
             // New post mode.
             case 'newpost':
                 $this->actionNewPost($title, $cont, $draft);
-                return;
                 break;
 
             // Add blocked IP mode.
             case 'addip':
                 $this->actionBlockIP($ipaddress);
-                return;
                 break;
 
             // Remove blocked IP mode.
             case 'removeip':
                 $this->actionUnblockIP($ipaddress);
-                return;
                 break;
 
             // Change the admin password.
             case 'password':
                 $this->actionChangePassword($sessionManager, $cup, $newp, $cnp);
-                return;
                 break;
 
             // Login.
             case 'login':
                 $this->actionLogin($sessionManager, $user, $pass);
-                return;
                 break;
 
             // Logout.
             case 'logout':
                 $this->actionLogout($sessionManager);
-                return;
                 break;
 
             // Default, send a bad request response.
             default:
-                $this->badRequest();
-                return;
+                $this->badRequest('');
                 break;
         }//end switch
 
@@ -273,7 +264,7 @@ class AdminAJAXRequestController extends AJAXRequestController
 
         // Set up the session on successful login.
         $sessionManager->doLogin($user);
-        $this->goodRequest();
+        $this->goodRequest('');
 
     }//end actionLogin()
 

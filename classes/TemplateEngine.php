@@ -73,7 +73,7 @@ class TemplateEngine
      * @param string $output Unparsed template passed by reference.
      * @return void
      */
-    public function parseTags(&$tags, &$output)
+    public function parseTags(array &$tags, &$output)
     {
         $output = str_replace(array_keys($tags), $tags, $output);
 
@@ -86,7 +86,7 @@ class TemplateEngine
      * @param string $output Unparsed template passed by reference.
      * @return void
      */
-    public function removeTags(&$tags, &$output)
+    public function removeTags(array &$tags, &$output)
     {
         $output = str_replace($tags, '', $output);
 
