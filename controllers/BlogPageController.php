@@ -95,7 +95,7 @@ class BlogPageController extends BasePageController
         // someone plays with the URL to request a post and page.
         if (isset($offset) === true && isset($postid) === false) {
             // Page 0 should be the same as page 1.
-            if ($offset === 0) {
+            if (intval($offset) <= 0) {
                 $offset = 1;
             }
 
