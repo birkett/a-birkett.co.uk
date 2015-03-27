@@ -45,7 +45,8 @@ $mode           = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
 $page           = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING);
 
 if (isset($mode) === true) {
-    $obj = new controllers\AdminAJAXRequestController();
+    $nullpage = '';
+    $obj = new classes\ControllerFactory('AdminAJAXRequestController', $nullpage);
     return;
 }
 

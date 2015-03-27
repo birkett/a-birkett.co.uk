@@ -131,7 +131,8 @@ if (isset($page) === true) {
 }//end if
 
 if (isset($mode) === true && isset($page) === false) {
-    $obj = new controllers\AJAXRequestController();
+    $nullpage = '';
+    $obj = new classes\ControllerFactory('AJAXRequestController', $nullpage);
     return;
 }
 

@@ -94,15 +94,15 @@ class Page
         $pagecontroller = new $controller($page);
 
         if ($widget === 'postswidget') {
-            $wcont = new \ABirkett\controllers\PostsWidgetController($page);
+            $wcont = new ControllerFactory('PostsWidgetController', $page);
         }
 
         if ($widget === 'twitterwidget') {
-            $wcont = new \ABirkett\controllers\TwitterWidgetController($page);
+            $wcont = new ControllerFactory('TwitterWidgetController', $page);
         }
 
         if ($widget === 'userwidget') {
-            $wcont = new \ABirkett\controllers\AdminUserWidgetController($page);
+            $wcont = new ControllerFactory('AdminUserWidgetController', $page);
         }
 
         // Destroy controller objects.
