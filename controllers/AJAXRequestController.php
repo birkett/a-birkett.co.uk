@@ -68,18 +68,13 @@ class AJAXRequestController
         $this->model = new \ABirkett\models\AJAXRequestModel();
 
         // Basic.
-        $mode = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
+        $mode = $this->model->getPostVar('mode', FILTER_SANITIZE_STRING);
         // Used for comments.
-        $post = filter_input(INPUT_POST, 'postid', FILTER_SANITIZE_NUMBER_INT);
-        $user = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-        $comm = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
-        $resp = filter_input(INPUT_POST, 'response', FILTER_SANITIZE_STRING);
-        $cip  = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
-
-        // Annoying bug where INPUT_SERVER is stripped on some hosts.
-        if($cip === NULL) {
-            $cip = $_SERVER['REMOTE_ADDR'];
-        }
+        $post = $this->model->getPostVar('postid', FILTER_SANITIZE_NUMBER_INT);
+        $user = $this->model->getPostVar('username', FILTER_SANITIZE_STRING);
+        $comm = $this->model->getPostVar('comment', FILTER_SANITIZE_STRING);
+        $resp = $this->model->getPostVar('response', FILTER_SANITIZE_STRING);
+        $cip  = $this->model->getServerVar('REMOTE_ADDR', FILTER_VALIDATE_IP);
 
         if ($mode === 'postcomment') {
             if (isset($user) === false

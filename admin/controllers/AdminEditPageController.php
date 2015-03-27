@@ -66,8 +66,8 @@ class AdminEditPageController extends AdminBasePageController
 
         $this->model = new \ABirkett\models\AdminEditPageModel();
 
-        $pageid = filter_input(INPUT_GET, 'pageid', FILTER_SANITIZE_NUMBER_INT);
-        $postid = filter_input(INPUT_GET, 'postid', FILTER_SANITIZE_NUMBER_INT);
+        $pageid = $this->model->getGetVar('pageid', FILTER_SANITIZE_NUMBER_INT);
+        $postid = $this->model->getGetVar('postid', FILTER_SANITIZE_NUMBER_INT);
 
         // Page edit mode.
         if (isset($pageid) === true) {

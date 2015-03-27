@@ -61,7 +61,7 @@ class GenericPageController extends BasePageController
     {
         parent::__construct($output);
         $this->model = new \ABirkett\models\GenericPageModel();
-        $pagetitle   = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING);
+        $pagetitle   = $this->model->getGetVar('page', FILTER_SANITIZE_STRING);
         $exptitle    = explode(' ', $pagetitle);
         $name        = mb_strtolower(array_pop($exptitle));
         $page        = $this->model->getPage($name);

@@ -60,27 +60,68 @@ class BasePageModel
 
 
     /**
+     * Get an input variable from SERVER.
+     * @param string $varname Name of the variable to get.
+     * @param string $filters Any valid filter or sanitize value.
+     * @return mixed Value, NULL on var not found, false when filter failed.
+     */
+    public function getServerVar($varname, $filters)
+    {
+        $var = filter_input(INPUT_SERVER, $varname, $filters);
+
+        // Work around a bug, FastCGI nukes INPUT_SERVER on some hosts.
+        if($var === NULL)
+        {
+            $var = $_SERVER[$varname];
+        }
+
+        return $var;
+
+    }//end getServerVar()
+
+
+    /**
+     * Get an input variable from GET.
+     * @param string $varname Name of the variable to get.
+     * @param string $filters Any valid filter or sanitize value.
+     * @return mixed Value, NULL on var not found, false when filter failed.
+     */
+    public function getGetVar($varname, $filters)
+    {
+        $var = filter_input(INPUT_GET, $varname, $filters);
+        return $var;
+
+    }//end getGetVar()
+
+
+    /**
+     * Get an input variable from POST.
+     * @param string $varname Name of the variable to get.
+     * @param string $filters Any valid filter or sanitize value.
+     * @return mixed Value, NULL on var not found, false when filter failed.
+     */
+    public function getPostVar($varname, $filters)
+    {
+        $var = filter_input(INPUT_POST, $varname, $filters);
+        return $var;
+
+    }//end getPostVar()
+
+
+    /**
      * Get the base URL for the site (Protocol+Domain+TrailingSlash)
      * @return string URL
      */
     public function getBaseURL()
     {
-        $serverProtocol = filter_input(
-            INPUT_SERVER,
+        $serverProtocol = $this->getServerVar(
             'SERVER_PROTOCOL',
             FILTER_SANITIZE_STRING
         );
-        $serverHost     = filter_input(
-            INPUT_SERVER,
+        $serverHost     = $this->getServerVar(
             'HTTP_HOST',
             FILTER_SANITIZE_STRING
         );
-
-        // Annoying bug where INPUT_SERVER is stripped on some hosts.
-        if($serverProtocol === NULL || $serverHost === NULL) {
-            $serverProtocol = $_SERVER['SERVER_PROTOCOL'];
-            $serverHost     = $_SERVER['HTTP_HOST'];
-        }
 
         $proto = 'http://';
 

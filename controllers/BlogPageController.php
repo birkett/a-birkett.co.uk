@@ -65,8 +65,8 @@ class BlogPageController extends BasePageController
         parent::__construct($output);
         $this->model = new \ABirkett\models\BlogPageModel();
 
-        $offset = filter_input(INPUT_GET, 'offset', FILTER_SANITIZE_NUMBER_INT);
-        $postid = filter_input(INPUT_GET, 'postid', FILTER_SANITIZE_NUMBER_INT);
+        $offset = $this->model->getGetVar('offset', FILTER_SANITIZE_NUMBER_INT);
+        $postid = $this->model->getGetVar('postid', FILTER_SANITIZE_NUMBER_INT);
 
         // Default to multiple view when nothing specified.
         if (isset($offset) === false && isset($postid) === false) {

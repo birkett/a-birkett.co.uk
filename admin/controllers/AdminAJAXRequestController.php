@@ -62,22 +62,22 @@ class AdminAJAXRequestController extends AJAXRequestController
         $sessionManager = \ABirkett\classes\SessionManager::getInstance();
 
         // Basics.
-        $mode = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
+        $mode = $this->model->getPostVar('mode', FILTER_SANITIZE_STRING);
         // Used for post and page edits.
-        $posid = filter_input(INPUT_POST, 'postid', FILTER_SANITIZE_NUMBER_INT);
-        $pagid = filter_input(INPUT_POST, 'pageid', FILTER_SANITIZE_NUMBER_INT);
-        $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
-        $cont  = filter_input(INPUT_POST, 'content', FILTER_UNSAFE_RAW);
-        $draft = filter_input(INPUT_POST, 'draft', FILTER_SANITIZE_STRING);
+        $posid = $this->model->getPostVar('postid', FILTER_SANITIZE_NUMBER_INT);
+        $pagid = $this->model->getPostVar('pageid', FILTER_SANITIZE_NUMBER_INT);
+        $title = $this->model->getPostVar('title', FILTER_SANITIZE_STRING);
+        $cont  = $this->model->getPostVar('content', FILTER_UNSAFE_RAW);
+        $draft = $this->model->getPostVar('draft', FILTER_SANITIZE_STRING);
         // Used for the IP filter.
-        $ipaddress = filter_input(INPUT_POST, 'ip', FILTER_VALIDATE_IP);
+        $ipaddress = $this->model->getPostVar('ip', FILTER_VALIDATE_IP);
         // Used for the password change.
-        $cup  = filter_input(INPUT_POST, 'cp', FILTER_SANITIZE_STRING);
-        $newp = filter_input(INPUT_POST, 'np', FILTER_SANITIZE_STRING);
-        $cnp  = filter_input(INPUT_POST, 'cnp', FILTER_SANITIZE_STRING);
+        $cup  = $this->model->getPostVar('cp', FILTER_SANITIZE_STRING);
+        $newp = $this->model->getPostVar('np', FILTER_SANITIZE_STRING);
+        $cnp  = $this->model->getPostVar('cnp', FILTER_SANITIZE_STRING);
         // Used for the login.
-        $user = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-        $pass = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+        $user = $this->model->getPostVar('username', FILTER_SANITIZE_STRING);
+        $pass = $this->model->getPostVar('password', FILTER_SANITIZE_STRING);
 
         // Bail if not logged in, and not requesting a login.
         if ($sessionManager->isLoggedIn() === false && $mode !== 'login') {
