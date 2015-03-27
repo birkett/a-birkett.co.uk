@@ -60,7 +60,7 @@ class ControllerFactory
      */
     public function __construct($name, &$output)
     {
-        $namestring = '\ABirkett\Controllers\\'.$name;
+        $namestring = '\ABirkett\controllers\\'.$name;
         $controller = new $namestring($output);
 
         return $controller;

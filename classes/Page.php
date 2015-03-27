@@ -89,7 +89,7 @@ class Page
 
         $page = str_replace(array_keys($tags), $tags, $page);
 
-        $controller = '\ABirkett\Controllers\\'.$controller;
+        $controller = '\ABirkett\controllers\\'.$controller;
 
         $pagecontroller = new $controller($page);
 
