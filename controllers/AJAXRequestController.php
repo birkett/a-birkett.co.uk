@@ -76,6 +76,11 @@ class AJAXRequestController
         $resp = filter_input(INPUT_POST, 'response', FILTER_SANITIZE_STRING);
         $cip  = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
 
+        // Annoying bug where INPUT_SERVER is stripped on some hosts.
+        if($cip === NULL) {
+            $cip = $_SERVER['REMOTE_ADDR'];
+        }
+
         if ($mode === 'postcomment') {
             if (isset($user) === false
                 || isset($comm) === false

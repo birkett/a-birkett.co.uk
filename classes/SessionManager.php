@@ -115,6 +115,12 @@ class SessionManager
             FILTER_SANITIZE_STRING
         );
 
+        // Annoying bug where INPUT_SERVER is stripped on some hosts.
+        if($cip === NULL || $cua === NULL) {
+            $cip = $_SERVER['REMOTE_ADDR'];
+            $cua = $_SERVER['HTTP_USER_AGENT'];
+        }
+
         $this->setVar('user', $user);
         $this->setVar('ip', $cip);
         $this->setVar('ua', $cua);
@@ -137,6 +143,12 @@ class SessionManager
             'HTTP_USER_AGENT',
             FILTER_SANITIZE_STRING
         );
+
+        // Annoying bug where INPUT_SERVER is stripped on some hosts.
+        if($cip === NULL || $cua === NULL) {
+            $cip = $_SERVER['REMOTE_ADDR'];
+            $cua = $_SERVER['HTTP_USER_AGENT'];
+        }
 
         $sessionUser    = $this->getVar('user');
         $sessionIP      = $this->getVar('ip');

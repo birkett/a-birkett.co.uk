@@ -63,6 +63,12 @@ class AdminServerInfoPageModel extends AdminBasePageModel
             FILTER_SANITIZE_STRING
         );
 
+        // Annoying bug where INPUT_SERVER is stripped on some hosts.
+        if($serverSoftware === NULL)
+        {
+            $serverSoftware = $_SERVER['SERVER_SOFTWARE'];
+        }
+
         $data = array(
                  'version_php'         => phpversion(),
                  'version_apache'      => $serverSoftware,

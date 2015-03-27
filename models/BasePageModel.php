@@ -76,6 +76,12 @@ class BasePageModel
             FILTER_SANITIZE_STRING
         );
 
+        // Annoying bug where INPUT_SERVER is stripped on some hosts.
+        if($serverProtocol === NULL || $serverHost === NULL) {
+            $serverProtocol = $_SERVER['SERVER_PROTOCOL'];
+            $serverHost     = $_SERVER['HTTP_HOST'];
+        }
+
         $proto = 'http://';
 
         if (mb_stripos($serverProtocol, 'https') === true) {

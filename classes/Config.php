@@ -140,6 +140,12 @@ class Config
 
         // Define a symbol when requesting an admin page.
         $file = filter_input(INPUT_SERVER, 'PHP_SELF', FILTER_SANITIZE_STRING);
+
+        // Annoying bug where INPUT_SERVER is stripped on some hosts.
+        if($file === NULL) {
+            $file = $_SERVER['PHP_SELF'];
+        }
+
         if (mb_strpos($file, ADMIN_FOLDER) !== false) {
             define('ADMINPAGE', 1);
         }
