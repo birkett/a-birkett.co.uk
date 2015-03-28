@@ -2,3 +2,5 @@ classes/Config\.php
 sql/.*
 psd/.*
 tools/.*
+LICENSE
+README.ms
