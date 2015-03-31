@@ -36,11 +36,7 @@
 				{PAGE}
 			</div>
 			<div class="widgetcontainer">
-				<div class="fadein"></div>
-				<div class="post">
-					{WIDGET}
-				</div>
-				<div class="fadeout"></div>
+				{WIDGET}
 			</div>
 			<div class="fadein"></div>
 			<div class="footer">
