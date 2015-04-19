@@ -239,7 +239,7 @@ class BlogPageController extends BasePageController
         // Render the next page link.
         $numberofposts = $this->model->getNumberOfPosts();
 
-        if ((($offset + 1) * BLOG_POSTS_PER_PAGE) < $numberofposts) {
+        if (($offset * BLOG_POSTS_PER_PAGE) < $numberofposts) {
             $tags = array(
                      '{PAGENEXTLINK}' => '/blog/page/'.($offset + 1),
                      '{PAGENEXTTEXT}' => 'Next Page',
