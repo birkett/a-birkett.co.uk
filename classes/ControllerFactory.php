@@ -64,5 +64,5 @@ class ControllerFactory
         $controller = new $namestring($output);
 
         return $controller;
-    }
+    }//end __construct()
 }//end class

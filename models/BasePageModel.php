@@ -70,8 +70,7 @@ class BasePageModel
         $var = filter_input(INPUT_SERVER, $varname, $filters);
 
         // Work around a bug, FastCGI nukes INPUT_SERVER on some hosts.
-        if($var === NULL)
-        {
+        if ($var === null) {
             $var = $_SERVER[$varname];
         }
 

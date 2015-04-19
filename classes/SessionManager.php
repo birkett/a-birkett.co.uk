@@ -116,7 +116,7 @@ class SessionManager
         );
 
         // Annoying bug where INPUT_SERVER is stripped on some hosts.
-        if($cip === NULL || $cua === NULL) {
+        if ($cip === null || $cua === null) {
             $cip = $_SERVER['REMOTE_ADDR'];
             $cua = $_SERVER['HTTP_USER_AGENT'];
         }
@@ -145,7 +145,7 @@ class SessionManager
         );
 
         // Annoying bug where INPUT_SERVER is stripped on some hosts.
-        if($cip === NULL || $cua === NULL) {
+        if ($cip === null || $cua === null) {
             $cip = $_SERVER['REMOTE_ADDR'];
             $cua = $_SERVER['HTTP_USER_AGENT'];
         }
