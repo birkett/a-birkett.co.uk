@@ -138,7 +138,7 @@ class BasePageModel
      */
     public function __construct()
     {
-        $this->database = \ABirkett\classes\PDOMySQLDatabase::getInstance();
+        $this->database = \ABirkett\classes\PDODatabaseMySQL::getInstance();
 
     }//end __construct()
 }//end class

@@ -38,18 +38,10 @@ namespace ABirkett\classes;
 use PDO;
 
 /**
- * Basic wrapper for working with a MySQL database via PDO.
+ * Generic database class using PDO. This should be extended by a child class,
+ * providing database specific connection details.
  *
- * The functions here wrap up the PDO functions, an artifact from the days of
- * old, when the site used mysql_*() for database access.
- *
- * Becase this began life as mysql_*() based code, the return values should be
- * compatible with the old methods, while allowing the input to take advantage
- * of new PDO features, like bound paramters.
- *
- * The majority of this class should be database independant. Changing between
- * MySQL, Postgre, Oracle and SQLite should consist of nothing more than a basic
- * change to the connection string in __construc().
+ * This class should never be instantised.
  *
  * @category  Classes
  * @package   PersonalWebsite
@@ -58,7 +50,7 @@ use PDO;
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
-class PDOMySQLDatabase
+class PDODatabase
 {
 
     /**
@@ -69,44 +61,17 @@ class PDOMySQLDatabase
 
 
     /**
-     * Open a database handle
-     * @return object Database handle
-     */
-    public static function getInstance()
-    {
-        static $database = null;
-        if (isset($database) === false) {
-            $database = new PDOMySQLDatabase();
-        }
-
-        return $database;
-
-    }//end getInstance()
-
-
-    /**
-     * Constructor
+     * Constructor - private and empty to ensure this class cannot be
+     * instantised without a child class.
      * @return none
      */
     private function __construct()
     {
-        try {
-            $this->mLink = new PDO(
-                'mysql:host='.DATABASE_HOSTNAME.';dbname='.DATABASE_NAME.
-                ';port='.DATABASE_PORT.';charset=utf8',
-                DATABASE_USERNAME,
-                DATABASE_PASSWORD,
-                array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
-            );
-        } catch (\PDOException $exception) {
-            echo 'Database error: '.$exception->getMessage();
-        }
-
     }//end __construct()
 
 
     /**
-     * Destructor
+     * Destructor - close any open database connection
      * @return none
      */
     public function __destruct()
@@ -114,6 +79,29 @@ class PDOMySQLDatabase
         $this->mLink = null;
 
     }//end __destruct()
+
+
+    /**
+     * Connect to the database
+     * @param string $dsn  DSN string used to connect.
+     * @param string $user Username.
+     * @param string $pass Password.
+     * @return none
+     */
+    protected function connect($dsn, $user, $pass)
+    {
+        try {
+            $this->mLink = new PDO(
+                $dsn,
+                $user,
+                $pass,
+                array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
+            );
+        } catch (\PDOException $exception) {
+            echo 'Database error: '.$exception->getMessage();
+        }
+
+    }//end connect()
 
 
     /**
@@ -141,17 +129,21 @@ class PDOMySQLDatabase
      */
     public function runQuery($query, array $params)
     {
-        if ($this->mLink === null) {
-            return array();
-        }
+        try {
+            if ($this->mLink === null) {
+                return array();
+            }
 
-        $statement = $this->mLink->prepare($query);
-        $statement->execute($params);
-        if ($statement->columnCount() !== 0) {
-            $rows = $statement->fetchAll(PDO::FETCH_OBJ);
+            $statement = $this->mLink->prepare($query);
+            $statement->execute($params);
+            if ($statement->columnCount() !== 0) {
+                $rows = $statement->fetchAll(PDO::FETCH_OBJ);
 
-            return $rows;
-        }
+                return $rows;
+            }
+        } catch (\PDOException $exception) {
+            echo 'Query error: '.$exception->getMessage();
+        }//end try
 
         return array();
 
