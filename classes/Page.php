@@ -89,9 +89,7 @@ class Page
 
         $page = str_replace(array_keys($tags), $tags, $page);
 
-        $controller = '\ABirkett\controllers\\'.$controller;
-
-        $pagecontroller = new $controller($page);
+        $pagecontroller = new ControllerFactory($controller, $page);
 
         if ($widget === 'postswidget') {
             $wcont = new ControllerFactory('PostsWidgetController', $page);

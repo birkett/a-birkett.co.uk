@@ -112,7 +112,7 @@ class TwitterOAuth
      * @param  array  $postfields Extra parameters array.
      * @return array API results
      */
-    private function http($url, $method, array $postfields)
+    private function http($url, $method, $postfields)
     {
         $curl = curl_init();
         // Curl settings.
