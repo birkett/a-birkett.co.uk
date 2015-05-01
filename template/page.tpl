@@ -16,13 +16,17 @@
 		{/ADMINSTYLESHEET}
 		<style type="text/css">
 		.container { background-color: rgb({RAND2551},{RAND2552},{RAND2553}); }
-		.leftc { background-image:url("img/background_figure_{RAND12}.png"); }
 		</style>
 	</head>
 	<body>
 		<div class="container">
 			<div class="header">
-				<a href="/{ADMINFOLDER}"><h1>Anthony <strong>Birkett</strong></h1></a>
+				<a href="/{ADMINFOLDER}">
+					<div>
+						<img class="topavatar" src="img/avatar.png" alt="avatar" />
+					</div>
+					<h1>Anthony <strong>Birkett</strong></h1>
+				</a>
 				<a href="http://www.twitter.com/birkett26" title="Twitter" target="_blank"><img class="headernavicon" src="img/twitter.png" alt="twitter" /></a>
 				<a href="http://www.github.com/birkett" title="GitHub" target="_blank"><img class="headernavicon" src="img/github.png" alt="github" /></a>
 				<a href="http://www.steamcommunity.com/id/birkett" title="Steam" target="_blank"><img class="headernavicon" src="img/steam.png" alt="steam" /></a>

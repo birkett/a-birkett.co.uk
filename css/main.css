@@ -109,7 +109,11 @@ p.failed {
     width: 100%;
     margin: 0;
     overflow: visible;
-    background: url('../img/bg.png') 0% 0%/100%;
+    background:
+        url('../img/bg.png') 0% 0%/100%,
+        url('../img/bg_pcb.png') 100% 100%;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 .header {
@@ -130,9 +134,14 @@ p.failed {
 }
 
 .headernavicon:hover {
-    width: 39px;
-    height: 39px;
-    transition: 0.5s ease;
+    background-color: #87C2ED;
+    border-radius: 10%;
+}
+
+.topavatar {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
 }
 
 .footer {
@@ -236,7 +245,6 @@ p.failed {
 
 .tile:hover, .rectile:hover {
     background-color: #1372BD;
-    background-size: 100% 50%;
 }
 
 /*Tile overrides*/
