@@ -61,6 +61,7 @@ class Autoloader
 
     /**
      * Autoloader for classes, controllers and models
+     * @throws Exception if the class is not found.
      * @return void
      */
     public static function init()
@@ -95,8 +96,12 @@ class Autoloader
                     $file = $baseDir.ADMIN_FOLDER.$endpath;
                     if (file_exists($file) === true) {
                         include $file;
+
+                        return;
                     }
                 }
+
+                throw new \Exception('Class '.$class.' not found.');
             }
         );
 

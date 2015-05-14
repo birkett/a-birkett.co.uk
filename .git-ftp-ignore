@@ -1,6 +1,7 @@
 classes/Config\.php
 sql/.*
 psd/.*
+tests/.*
 tools/.*
 LICENSE
 README.md
