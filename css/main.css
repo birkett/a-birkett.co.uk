@@ -128,72 +128,47 @@ p.failed {
     background-image: url('../img/fade_out.png');
 }
 
-.headernavicon {
-    display: inline-block;
-    width: 64px;
-    height: 64px;
-}
-
-.headertwittericon {
-    background-image: url('../img/twitter.png');
-    background-position: 0px 0px;
-}
-
-.headertwittericon:hover {
-    background-position: 64px 0px;
-}
-
-.headergithubicon {
-    background-image: url('../img/github.png');
-    background-position: 0px 0px;
-}
-
-.headergithubicon:hover {
-    background-position: 64px 0px;
-}
-
-.headersteamicon {
-    background-image: url('../img/steam.png');
-    background-position: 0px 0px;
-}
-
-.headersteamicon:hover {
-    background-position: 64px 0px;
-}
-
-.headeryoutubeicon {
-    background-image: url('../img/youtube.png');
-    background-position: 0px 0px;
-}
-
-.headeryoutubeicon:hover {
-    background-position: 64px 0px;
-}
-
-.headerflickricon {
-    background-image: url('../img/flickr.png');
-    background-position: 0px 0px;
-}
-
-.headerflickricon:hover {
-    background-position: 64px 0px;
-}
-
-.headerfeedicon {
-    background-image: url('../img/rss.png');
-    background-position: 0px 0px;
-}
-
-.headerfeedicon:hover {
-    background-position: 64px 0px;
-}
-
 .topavatar {
     display: inline-block;
     width: 170px;
     height: 170px;
     border-radius: 50%;
     background-image: url('../img/avatar.png');
+}
+
+.headernavicon {
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+    background-position: 0px 0px;
+}
+
+.headernavicon:hover {
+    background-position: 64px 0px;
+}
+
+.headertwittericon {
+    background-image: url('../img/twitter.png');
+}
+
+.headergithubicon {
+    background-image: url('../img/github.png');
+}
+
+.headersteamicon {
+    background-image: url('../img/steam.png');
+}
+
+.headeryoutubeicon {
+    background-image: url('../img/youtube.png');
+}
+
+.headerflickricon {
+    background-image: url('../img/flickr.png');
+}
+
+.headerfeedicon {
+    background-image: url('../img/rss.png');
 }
 
 .footer {
