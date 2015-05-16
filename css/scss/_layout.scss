@@ -1,0 +1,99 @@
+/**
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 Anthony Birkett
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ *
+ * CSS Version 3.0 / SCSS for SASS
+ *
+ * @category  Stylesheets
+ * @package   PersonalWebsite
+ * @author    Anthony Birkett <anthony@a-birkett.co.uk>
+ * @copyright 2015 Anthony Birkett
+ * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
+ * @link      http://www.a-birkett.co.uk
+ */
+
+/*Define the basic layout*/
+.container {
+    width: 100%;
+    margin: 0;
+    overflow: visible;
+    background:
+        url('../img/bg.png') 0% 0%/100%,
+        url('../img/bg_pcb.png') 100% 100%;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.header {
+    width: 100%;
+    background-image: url('../img/trans_bg.png');
+    text-align: center;
+}
+
+.footer {
+    width: 100%;
+    padding-top: 1px;
+    background-image: url('../img/trans_bg.png');
+    text-align: center;
+}
+
+.fadein {
+    width: 100%;
+    height: 23px;
+    background-image: url('../img/fade_in.png');
+}
+
+.fadeout {
+    width: 100%;
+    height: 23px;
+    background-image: url('../img/fade_out.png');
+}
+
+.fadeblack {
+    width: 100%;
+    height: 23px;
+    background-image: url('../img/fade_in_black.png');
+}
+
+.widgetcontainer {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    width: 50%;
+    overflow: hidden;
+    text-align: center;
+}
+
+.content {
+    width: 50%;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.content img {
+    width: 80%;
+    height: 80%;
+}

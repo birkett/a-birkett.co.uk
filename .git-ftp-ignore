@@ -1,4 +1,5 @@
 classes/Config\.php
+css/scss/.*
 sql/.*
 psd/.*
 tests/.*
