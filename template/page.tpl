@@ -22,17 +22,27 @@
 		<div class="container">
 			<div class="header">
 				<a href="/{ADMINFOLDER}">
-					<div>
-						<img class="topavatar" src="img/avatar.png" alt="avatar" />
-					</div>
+					<div class="topavatar"></div>
 					<h1>Anthony <strong>Birkett</strong></h1>
 				</a>
-				<a href="http://www.twitter.com/birkett26" title="Twitter" target="_blank"><img class="headernavicon" src="img/twitter.png" alt="twitter" /></a>
-				<a href="http://www.github.com/birkett" title="GitHub" target="_blank"><img class="headernavicon" src="img/github.png" alt="github" /></a>
-				<a href="http://www.steamcommunity.com/id/birkett" title="Steam" target="_blank"><img class="headernavicon" src="img/steam.png" alt="steam" /></a>
-				<a href="http://www.youtube.com/birkett26" title="YouTube" target="_blank"><img class="headernavicon" src="img/youtube.png" alt="youtube" /></a>
-				<a href="http://www.flickr.com/photos/birkett26" title="Flickr" target="_blank"><img class="headernavicon" src="img/flickr.png" alt="flickr" /></a>
-				<a href="{BASEURL}feed" title="Blog Feed" target="_blank"><img class="headernavicon" src="img/rss.png" alt="feed" /></a>
+				<a href="http://www.twitter.com/birkett26" title="Twitter" target="_blank">
+					<div class="headernavicon headertwittericon"></div>
+				</a>
+				<a href="http://www.github.com/birkett" title="GitHub" target="_blank">
+					<div class="headernavicon headergithubicon"></div>
+				</a>
+				<a href="http://www.steamcommunity.com/id/birkett" title="Steam" target="_blank">
+					<div class="headernavicon headersteamicon"></div>
+				</a>
+				<a href="http://www.youtube.com/birkett26" title="YouTube" target="_blank">
+					<div class="headernavicon headeryoutubeicon"></div>
+				</a>
+				<a href="http://www.flickr.com/photos/birkett26" title="Flickr" target="_blank">
+					<div class="headernavicon headerflickricon"></div>
+				</a>
+				<a href="{BASEURL}feed" title="Blog Feed" target="_blank">
+					<div class="headernavicon headerfeedicon"></div>
+				</a>
 			</div>
 			<div class="fadeout"></div>
 			<div class="noticebox"></div>

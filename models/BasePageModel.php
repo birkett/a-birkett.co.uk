@@ -71,7 +71,7 @@ class BasePageModel
 
         // Work around a bug, FastCGI nukes INPUT_SERVER on some hosts.
         if ($var === null) {
-            if(isset($_SERVER[$varname]) === true) {
+            if (isset($_SERVER[$varname]) === true) {
                 $var = $_SERVER[$varname];
             }
         }
