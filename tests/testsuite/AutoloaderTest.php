@@ -51,6 +51,7 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test loading a root class.
+     * @covers ABirkett\classes\Autoloader::init
      * @return none
      */
     public function testRootClassLoad()
@@ -67,6 +68,7 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test loading a root controller.
+     * @covers ABirkett\classes\Autoloader::init
      * @return none
      */
     public function testRootControllerLoad()
@@ -83,6 +85,7 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test loading a root model.
+     * @covers ABirkett\classes\Autoloader::init
      * @return none
      */
     public function testRootModelLoad()
@@ -98,6 +101,7 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
      * Test to make sure admin classes cannot be loaded from non admin pages.
      * The autoloader should fail to find the file, when the admin page symbol
      * is not defined before the call.
+     * @covers ABirkett\classes\Autoloader::init
      * @return none
      */
     public function testAdminLoadFromRoot()
@@ -114,6 +118,7 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test loading an admin controller.
+     * @covers ABirkett\classes\Autoloader::init
      * @return none
      */
     public function testAdminControllerLoad()
@@ -131,6 +136,7 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test loading an admin model.
+     * @covers ABirkett\classes\Autoloader::init
      * @return none
      */
     public function testAdminModelLoad()

@@ -36,7 +36,7 @@
 namespace ABirkett\Tests;
 
 /**
- * Test the ControllerFactory correctly loads classes.
+ * Test the TemplateEngine correctly parses tags.
  *
  * @category  Tests
  * @package   PersonalWebsite
@@ -45,24 +45,25 @@ namespace ABirkett\Tests;
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
-class ControllerFactoryTest extends \PHPUnit_Framework_TestCase
+class TemplateEngineTest extends \PHPUnit_Framework_TestCase
 {
 
 
+    public function createTestData()
+    {
+
+    }//end createTestData()
+
+
     /**
-     * Load a controller using both the Autoloader and ControllerFactory.
-     * @covers ABirkett\classes\ControllerFactory::__construct
+     * Replace a tag in a string with a given value.
+     * @covers ABirkett\classes\TemplateEngine::replaceTag
      * @return none
      */
-    public function testRootClassLoad()
+    public function testReplaceTag()
     {
-        //Loads from /classes and /controllers.
-        $blankPage = '';
-        $controllerFactory = new \ABirkett\classes\ControllerFactory(
-            'BasePageController',
-            $blankPage
-        );
-        $this->assertNotNull($controllerFactory);
+        $templateEngine = new \ABirkett\classes\TemplateEngine();
 
-    }//end testRootClassLoad()
+
+    }//end testReplaceTag()
 }//end class
