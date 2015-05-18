@@ -1,3 +1,5 @@
+admin/css/admin.css:admin/css/scss/admin.scss
+
 css/main.css:css/scss/main.scss
 css/main.css:css/scss/_ajax.scss
 css/main.css:css/scss/_blog.scss
