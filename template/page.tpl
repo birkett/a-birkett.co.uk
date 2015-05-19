@@ -4,6 +4,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta charset="utf-8" />
 		<meta name="description" content="Personal website of Anthony Birkett, IT guy, Engineer and Entrepreneur.">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>{TITLE}</title>
 		<base href="{BASEURL}" />
 		<link rel="alternate" href="/feed/" title="RSS feed" type="application/rss+xml" />

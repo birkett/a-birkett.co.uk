@@ -32,64 +32,18 @@
  * @link      http://www.a-birkett.co.uk
  */
 
-/*Defines the main site style rules*/
-$font-stack: "Open Sans", "Helvetica Neue", "Helvetica", helvetica, arial, sans-serif;
-$text-color: #CCCCCC;
-$blue-color: #87C2ED;
+/*Define the basic layout for mobile and small screens*/
+@media (max-width: 800px) {
+    .widgetcontainer {
+        width: 75%;
+    }
 
-@import 'ajax';
-@import 'blog';
-@import 'buttons';
-@import 'headericons';
-@import 'layout';
-@import 'layoutmobile';
-@import 'postswidget';
-@import 'twitterwidget';
-@import 'tiles';
-@import 'thirdparty';
+    .content {
+        width: 100%;
+    }
 
-/*Basics*/
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #000;
-    color: $text-color;
-    font-family: $font-stack;
-}
-
-h1 {
-    font-size: 4em;
-    font-weight: 300;
-    margin: 0;
-    color: $text-color;
-    display: block;
-}
-
-h2 {
-    font-size: 1.75em;
-    margin: 0;
-    color: $text-color;
-}
-
-a, a.visited {
-    text-decoration: none;
-    border-style: none;
-    color: $blue-color;
-}
-
-a img {
-    border: none;
-}
-
-a.left {
-    float: left;
-}
-
-a.right {
-    float: right;
-}
-
-p {
-    font-size: 1em;
-    color: $text-color;
+    .content img {
+        width: 90%;
+        height: 90%;
+    }
 }

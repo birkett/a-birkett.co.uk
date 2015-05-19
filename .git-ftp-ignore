@@ -5,5 +5,8 @@ sql/.*
 psd/.*
 tests/.*
 tools/.*
+.gitignore
+.git-ftp-ignore
+.git-ftp-include
 LICENSE
 README.md
