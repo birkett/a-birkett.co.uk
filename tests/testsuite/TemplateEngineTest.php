@@ -49,8 +49,13 @@ class TemplateEngineTest extends \PHPUnit_Framework_TestCase
 {
 
 
+    /**
+     * Create a known test string to be used by all the following tests.
+     * @return string Test Data
+     */
     public function createTestData()
     {
+        return array(array('Hello {START}World{END}{/START} END'));
 
     }//end createTestData()
 
@@ -58,12 +63,100 @@ class TemplateEngineTest extends \PHPUnit_Framework_TestCase
     /**
      * Replace a tag in a string with a given value.
      * @covers ABirkett\classes\TemplateEngine::replaceTag
+     * @dataProvider createTestData
+     * @param string $testData Test data provided by createTestData().
      * @return none
      */
-    public function testReplaceTag()
+    public function testReplaceTag($testData)
     {
         $templateEngine = new \ABirkett\classes\TemplateEngine();
+        $out = $testData;
+        $templateEngine->replaceTag('{END}', 'START', $out);
 
+        $this->assertEquals($out, 'Hello {START}WorldSTART{/START} END');
 
     }//end testReplaceTag()
+
+
+    /**
+     * Parse a set of tags in a given array.
+     * @covers ABirkett\classes\TemplateEngine::parseTags
+     * @dataProvider createTestData
+     * @param string $testData Test data provided by createTestData().
+     * @return none
+     */
+    public function testParseTags($testData)
+    {
+        // Test replacing with empty and single space strings.
+        $testArray = array(
+                      '{START}' => '',
+                      '{END}'   => ' ',
+                     );
+
+        $templateEngine = new \ABirkett\classes\TemplateEngine();
+        $out = $testData;
+        $templateEngine->parseTags($testArray, $out);
+
+        $this->assertEquals($out, 'Hello World {/START} END');
+
+    }//end testParseTags()
+
+
+    /**
+     * Remove a set of tags in a given array.
+     * @covers ABirkett\classes\TemplateEngine::removeTags
+     * @dataProvider createTestData
+     * @param string $testData Test data provided by createTestData().
+     * @return none
+     */
+    public function testRemoveTags($testData)
+    {
+        $testArray = array(
+                      '{START}',
+                      '{END}',
+                     );
+
+        $templateEngine = new \ABirkett\classes\TemplateEngine();
+        $out = $testData;
+        $templateEngine->removeTags($testArray, $out);
+
+        $this->assertEquals($out, 'Hello World{/START} END');
+
+    }//end testRemoveTags()
+
+
+    /**
+     * Test logic tags.
+     * @covers ABirkett\classes\TemplateEngine::logicTag
+     * @dataProvider createTestData
+     * @param string $testData Test data provided by createTestData().
+     * @return none
+     */
+    public function testLogicTag($testData)
+    {
+        $templateEngine = new \ABirkett\classes\TemplateEngine();
+        $out = $testData;
+        $tag = $templateEngine->logicTag('{START}', '{/START}', $out);
+
+        $this->assertEquals($tag, 'World{END}');
+
+    }//end testLogicTag()
+
+
+    /**
+     * Test removing logic tags.
+     * @covers ABirkett\classes\TemplateEngine::removeLogicTag
+     * @dataProvider createTestData
+     * @param string $testData Test data provided by createTestData().
+     * @return none
+     */
+    public function testRemoveLogicTag($testData)
+    {
+        $templateEngine = new \ABirkett\classes\TemplateEngine();
+        $out = $testData;
+        $templateEngine->removeLogicTag('{START}', '{/START}', $out);
+
+        $this->assertEquals($out, 'Hello  END');
+
+    }//end testRemoveLogicTag()
 }//end class
