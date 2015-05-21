@@ -34,16 +34,24 @@
 
 /*Define the basic layout for mobile and small screens*/
 @media (max-width: 800px) {
+    /*Make the widget wider*/
     .widgetcontainer {
         width: 75%;
     }
 
+    /*Make content the full width on small screens*/
     .content {
         width: 100%;
     }
 
+    /*Images in content slightly larger than normal*/
     .content img {
         width: 90%;
         height: 90%;
+    }
+
+    /*Hack to prevent the adsnese banner streching the body*/
+    .footer {
+        overflow: hidden;
     }
 }

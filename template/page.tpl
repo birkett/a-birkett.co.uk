@@ -57,7 +57,7 @@
 			<div class="footer">
 				<p>&copy; 2007-{THISYEAR} Anthony Birkett</p>
 				<p>This site is Open Source. <a href="https://www.github.com/birkett/a-birkett.co.uk" target="_blank">Code available on GitHub.</a></p>
-				<ins class="adsbygoogle" data-ad-client="ca-pub-3491498523960183" data-ad-slot="5861200158"></ins>
+				<ins class="adsbygoogle" data-ad-client="ca-pub-3491498523960183" data-ad-slot="5902265353" data-ad-format="auto"></ins>
 				<div class="fadeblack"></div>
 			</div>
 		</div>
