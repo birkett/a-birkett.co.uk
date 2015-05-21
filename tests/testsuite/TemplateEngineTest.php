@@ -136,9 +136,14 @@ class TemplateEngineTest extends \PHPUnit_Framework_TestCase
     {
         $templateEngine = new \ABirkett\classes\TemplateEngine();
         $out = $testData;
-        $tag = $templateEngine->logicTag('{START}', '{/START}', $out);
 
+        // Test with a valid tag.
+        $tag = $templateEngine->logicTag('{START}', '{/START}', $out);
         $this->assertEquals($tag, 'World{END}');
+
+        // Test for a tag which will not be found. Should return a blank string.
+        $tag = $templateEngine->logicTag('{STARTX}', '{/STARTX}', $out);
+        $this->assertEmpty($tag);
 
     }//end testLogicTag()
 
@@ -153,10 +158,15 @@ class TemplateEngineTest extends \PHPUnit_Framework_TestCase
     public function testRemoveLogicTag($testData)
     {
         $templateEngine = new \ABirkett\classes\TemplateEngine();
+
+        // Test with a valid tag.
         $out = $testData;
         $templateEngine->removeLogicTag('{START}', '{/START}', $out);
-
         $this->assertEquals($out, 'Hello  END');
 
+        // Test with a missing tag. Should not modify the input string.
+        $out = $testData;
+        $templateEngine->removeLogicTag('{STARTX}', '{/STARTX}', $out);
+        $this->assertEquals($out, $testData);
     }//end testRemoveLogicTag()
 }//end class
