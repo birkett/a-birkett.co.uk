@@ -142,12 +142,18 @@ class Config
         $file = filter_input(INPUT_SERVER, 'PHP_SELF', FILTER_SANITIZE_STRING);
 
         // Annoying bug where INPUT_SERVER is stripped on some hosts.
-        if($file === NULL) {
+        if ($file === null) {
             $file = $_SERVER['PHP_SELF'];
         }
 
+        // Admin pages.
         if (mb_strpos($file, ADMIN_FOLDER) !== false) {
             define('ADMINPAGE', 1);
+        }
+
+        // Disable unsafe things when running from the CLI (for tests).
+        if (php_sapi_name() === 'cli') {
+            define('RUNNING_PHPUNIT_TESTS', true);
         }
 
     }//end __construct()

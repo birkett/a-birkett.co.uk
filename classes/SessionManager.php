@@ -85,7 +85,7 @@ class SessionManager
         session_name('ABirkettAdmin');
         session_set_cookie_params(SESSION_EXPIRY_TIME, '/'.ADMIN_FOLDER);
 
-        if(defined('RUNNING_PHPUNIT_TESTS') === false) {
+        if (defined('RUNNING_PHPUNIT_TESTS') === false) {
             session_start();
         }
 
@@ -195,7 +195,7 @@ class SessionManager
      */
     public function regenerateID()
     {
-        if(defined('RUNNING_PHPUNIT_TESTS') === false) {
+        if (defined('RUNNING_PHPUNIT_TESTS') === false) {
             session_regenerate_id(true);
         }
 
