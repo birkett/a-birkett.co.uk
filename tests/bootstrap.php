@@ -38,3 +38,6 @@ namespace ABirkett;
 require_once '../classes/Autoloader.php';
 
 classes\Autoloader::init();
+
+define('RUNNING_PHPUNIT_TESTS', true);
+session_start();
