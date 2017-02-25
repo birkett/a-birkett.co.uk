@@ -1,0 +1,10 @@
+{
+    "require": {
+        "phpdocumentor/phpdocumentor": "^2.9",
+        "squizlabs/php_codesniffer": "^2.7",
+        "phpmd/phpmd": "^2.6",
+        "leafo/scssphp": "^0.6.6",
+        "phploc/phploc": "^3.0",
+        "matthiasmullie/minify": "^1.3"
+    }
+}

@@ -1,3 +1,6 @@
-/admin/css/admin.css
-/css/christmas.css
-/css/main.css
+vendor
+/tools/composer.lock
+/public/a-birkett.co.uk/js
+/public/a-birkett.co.uk/css
+/public/a-birkett.co.uk/admin/css
+/build_output

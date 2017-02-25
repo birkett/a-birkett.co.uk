@@ -1,3 +1,3 @@
 #!/bin/sh
 
-phpdocumentor.phar -d ../ -t docs-output/
+phpdoc -d ../private/ -t docs-output/

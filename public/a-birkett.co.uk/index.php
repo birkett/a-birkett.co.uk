@@ -35,110 +35,108 @@
 
 namespace ABirkett;
 
-require_once 'classes/Autoloader.php';
+use ABFramework\classes\Autoloader as Autoloader;
+use ABFramework\classes\Page as Page;
+use ABirkett\classes\Config as Config;
 
-classes\Autoloader::init();
+require_once '../../private/ABFramework/classes/Autoloader.php';
+
+$autoloader = new Autoloader();
+
+$autoloader->registerNamespace('ABFramework', '../../private/ABFramework/');
+$autoloader->registerNamespace('ABirkett', '../../private/a-birkett.co.uk/');
+$autoloader->init();
+
+// Auto load the site and framework config.
+$config = new Config();
+unset($config);
 
 // Page router. Handles GET and POST requests.
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING);
 $mode = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
+$obj  = null;
 
 if (isset($page) === true) {
     switch($page) {
         case 'about':
-            $obj = new classes\Page(
-                SITE_TITLE.' :: About',
-                'twitterwidget',
-                'generic',
-                'GenericPageController'
-            );
+            $obj = new Page('About');
+            $obj->addMainTemplate('page');
+            $obj->addSubTemplate('generic');
+            $obj->addController('DatabasePageController', '\\ABirkett\controllers\\');
+            $obj->addWidget('twitterwidget', 'TwitterWidgetController', '\\ABirkett\\controllers\\');
             break;
 
         case 'blog':
-            $obj = new classes\Page(
-                SITE_TITLE.' :: Blog',
-                'postswidget',
-                'blog',
-                'BlogPageController'
-            );
+            $obj = new Page('Blog');
+            $obj->addMainTemplate('page');
+            $obj->addSubTemplate('blog');
+            $obj->addController('BlogPageController', '\\ABirkett\controllers\\');
+            $obj->addWidget('postswidget', 'PostsWidgetController', '\\ABirkett\\controllers\\');
             break;
 
         case 'contact':
-            $obj = new classes\Page(
-                SITE_TITLE.' :: Contact',
-                'twitterwidget',
-                'generic',
-                'GenericPageController'
-            );
+            $obj = new Page('Contact');
+            $obj->addMainTemplate('page');
+            $obj->addSubTemplate('generic');
+            $obj->addController('DatabasePageController', '\\ABirkett\controllers\\');
+            $obj->addWidget('twitterwidget', 'TwitterWidgetController', '\\ABirkett\\controllers\\');
             break;
 
         case 'photos':
-            $obj = new classes\Page(
-                SITE_TITLE.' :: Photos',
-                'twitterwidget',
-                'generic',
-                'GenericPageController'
-            );
+            $obj = new Page('Photos');
+            $obj->addMainTemplate('page');
+            $obj->addSubTemplate('generic');
+            $obj->addController('DatabasePageController', '\\ABirkett\controllers\\');
+            $obj->addWidget('twitterwidget', 'TwitterWidgetController', '\\ABirkett\\controllers\\');
             break;
 
         case 'videos':
-            $obj = new classes\Page(
-                SITE_TITLE.' :: Videos',
-                'twitterwidget',
-                'generic',
-                'GenericPageController'
-            );
+            $obj = new Page('Videos');
+            $obj->addMainTemplate('page');
+            $obj->addSubTemplate('generic');
+            $obj->addController('DatabasePageController', '\\ABirkett\controllers\\');
+            $obj->addWidget('twitterwidget', 'TwitterWidgetController', '\\ABirkett\\controllers\\');
             break;
 
         case 'projects':
-            $obj = new classes\Page(
-                SITE_TITLE.' :: Projects',
-                'twitterwidget',
-                'generic',
-                'GenericPageController'
-            );
+            $obj = new Page('Projects');
+            $obj->addMainTemplate('page');
+            $obj->addSubTemplate('generic');
+            $obj->addController('DatabasePageController', '\\ABirkett\controllers\\');
+            $obj->addWidget('twitterwidget', 'TwitterWidgetController', '\\ABirkett\\controllers\\');
             break;
 
         case '404':
-            $obj = new classes\Page(
-                SITE_TITLE.' :: Error',
-                'twitterwidget',
-                'generic',
-                'GenericPageController'
-            );
+            $obj = new Page('Error');
+            $obj->addMainTemplate('page');
+            $obj->addSubTemplate('generic');
+            $obj->addController('DatabasePageController', '\\ABirkett\controllers\\');
+            $obj->addWidget('twitterwidget', 'TwitterWidgetController', '\\ABirkett\\controllers\\');
             break;
 
         case 'feed':
-            $obj = new classes\Page(
-                SITE_TITLE.' :: Blog Feed',
-                'none',
-                'feed',
-                'FeedPageController'
-            );
+            $obj = new Page('Blog Feed');
+            $obj->addMainTemplate('feed');
+            $obj->addController('FeedPageController', '\\ABirkett\controllers\\');
             break;
 
         default:
-            $obj = new classes\Page(
-                SITE_TITLE.' :: Home',
-                'twitterwidget',
-                'index',
-                'BasePageController'
-            );
+            $obj = new Page('Home');
+		    $obj->addMainTemplate('page');
+            $obj->addSubTemplate('index');
+            $obj->addController('BasePageController');
+            $obj->addWidget('twitterwidget', 'TwitterWidgetController', '\\ABirkett\\controllers\\');
             break;
     }//end switch
 
+    $obj->sendOutput();
     return;
 }//end if
 
-if (isset($mode) === true && isset($page) === false) {
-    $nullpage = '';
-    $obj = new classes\ControllerFactory('AJAXRequestController', $nullpage);
-    return;
-}
+$obj = new Page('Home');
+$obj->addMainTemplate('page');
+$obj->addSubTemplate('index');
+$obj->addController('BasePageController');
+$obj->addWidget('twitterwidget', 'TwitterWidgetController', '\\ABirkett\\controllers\\');
 
-$obj = new classes\Page(
-    SITE_TITLE.' :: Home',
-    'twitterwidget',
-    'index',
-    'BasePageController'
-);
+$obj->sendOutput();

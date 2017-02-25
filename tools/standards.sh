@@ -2,7 +2,7 @@
 
 if [ -z $1 ]
 then
-    phpcs.phar -i
+    phpcs -i
     exit
 else
     standard=${1}
@@ -16,4 +16,5 @@ else
 fi
 
 echo "Testing for standard ${standard}"
-phpcs.phar --standard=${standard} ${phpversion} ../
+phpcs --standard=${standard} ${phpversion} ../public/
+phpcs --standard=${standard} ${phpversion} ../private/

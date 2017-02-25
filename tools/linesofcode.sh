@@ -1,3 +1,4 @@
 #!/bin/sh
 
-cloc ../ --skip-uniqueness --force-lang=HTML,tpl
+cloc ../public --skip-uniqueness --force-lang=HTML,tpl
+cloc ../private --skip-uniqueness --force-lang=HTML,tpl

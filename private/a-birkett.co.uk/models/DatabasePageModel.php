@@ -25,7 +25,7 @@
  *
  * PHP Version 5.3
  *
- * @category  Controllers
+ * @category  Models
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
  * @copyright 2015 Anthony Birkett
@@ -33,54 +33,51 @@
  * @link      http://www.a-birkett.co.uk
  */
 
-namespace ABirkett\controllers;
+namespace ABirkett\models;
+
+use ABFramework\models\BasePagemodel;
 
 /**
- * Handles generating generic pages, whos content is stored in the database.
+ * Handles the data for generic, database stored, pages.
  *
- * This is the most common page controller for the public pages, and allows the
- * pages to be stored in the database, and easilly edited from the admin panel.
+ * The query in getPage() can fail if the page isnt found, so it returns null
+ * when appropriate. This prevents a PHP warning when $page isnt defined.
  *
- * @category  Controllers
+ * This might need to be looked into further, because the problem isnt actually
+ * here, its in the database class. The query is wrapped in a try{}catch{}
+ * block, and the exception does get thrown when the query fails. This should
+ * really have an effect, rather than failing to return anything.
+ *
+ * @category  Models
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
  * @copyright 2015 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
-class GenericPageController extends BasePageController
+class DatabasePageModel extends BasePageModel
 {
 
 
     /**
-     * Build a generic page, with contents stored in the database
-     * @param string $output Unparsed template passed by reference.
-     * @return none
+     * Get the page data and return it as an array
+     * @param  string $pagename Name of the page to fetch.
+     * @return array  Array of page data
      */
-    public function __construct(&$output)
+    public function getPage($pagename)
     {
-        parent::__construct($output);
-        $this->model = new \ABirkett\models\GenericPageModel();
-        $pagetitle   = $this->model->getGetVar('page', FILTER_SANITIZE_STRING);
-        $exptitle    = explode(' ', $pagetitle);
-        $name        = mb_strtolower(array_pop($exptitle));
-        $page        = $this->model->getPage($name);
+        $page = $this->database->runQuery(
+            'SELECT pageTitle, pageContent FROM site_pages WHERE pageName=:pn',
+            array(':pn' => $pagename)
+        );
 
-        if ($page === null) {
-            $tags = array(
-                     '{PAGETITLE}'   => 'Well, this is embarrasing.',
-                     '{PAGECONTENT}' => 'There was an error fetching the page.',
-                    );
-            $this->templateEngine->parseTags($tags, $output);
-
-            return;
+        if (empty($page) === true) {
+            return null;
         }
 
-        $tags = array(
-                 '{PAGETITLE}'   => $page->pageTitle,
-                 '{PAGECONTENT}' => stripslashes($page->pageContent),
-                );
-        $this->templateEngine->parseTags($tags, $output);
+        $row = $this->database->getRow($page);
 
-    }//end __construct()
+        return $row;
+
+    }//end getPage()
 }//end class

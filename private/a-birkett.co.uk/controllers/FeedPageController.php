@@ -35,6 +35,9 @@
 
 namespace ABirkett\controllers;
 
+use ABFramework\controllers\BasePageController;
+use ABirkett\models\FeedPageModel;
+
 /**
  * Handles generating the blog feed page.
  *
@@ -54,14 +57,24 @@ class FeedPageController extends BasePageController
 
 
     /**
+     * Build the feed page.
+     * @return none
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->model = new FeedPageModel();
+    }//end __construct()
+
+
+    /**
      * Build the blog feed page
      * @param string $output Unparsed template passed by reference.
      * @return none
      */
-    public function __construct(&$output)
+    public function getHandler(&$output)
     {
-        parent::__construct($output);
-        $this->model = new \ABirkett\models\FeedPageModel();
+        parent::getHandler($output);
 
         header('Content-Type: application/xml; charset=utf-8');
 
@@ -89,5 +102,16 @@ class FeedPageController extends BasePageController
 
         $this->templateEngine->removeLogicTag('{LOOP}', '{/LOOP}', $output);
 
-    }//end __construct()
+    }//end getHandler()
+
+
+    /**
+     * Build the feed page, handle POST requests.
+     * @param string $output Unparsed template passed by reference.
+     * @return none
+     */
+    public function postHandler(&$output)
+    {
+        parent::postHandler();
+    }//end postHandler()
 }//end class

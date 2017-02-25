@@ -35,6 +35,8 @@
 
 namespace ABirkett\models;
 
+use ABFramework\models\BasePageModel;
+
 /**
  * Super simple class to handle data for the postwidget controller.
  *

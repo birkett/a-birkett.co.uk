@@ -35,6 +35,8 @@
 
 namespace ABirkett\models;
 
+use ABFramework\models\BasePageModel;
+
 /**
  * Handles data for the Blog feed. Glue between the database and controller.
  *

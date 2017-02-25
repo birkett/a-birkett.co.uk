@@ -36,13 +36,13 @@
 namespace ABirkett\controllers;
 
 use ABFramework\controllers\BasePageController;
-use ABirkett\models\TwitterWidgetModel;
+use ABirkett\models\DatabasePageModel;
 
 /**
- * Handles generating the Twitter widget.
+ * Handles generating generic pages, whos content is stored in the database.
  *
- * The call to model::getTweetsFromDatabase() will automatically call the
- * Twitter API if the locally cached data is old (by default, 15 minutes).
+ * This is the most common page controller for the public pages, and allows the
+ * pages to be stored in the database, and easilly edited from the admin panel.
  *
  * @category  Controllers
  * @package   PersonalWebsite
@@ -51,88 +51,64 @@ use ABirkett\models\TwitterWidgetModel;
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
-class TwitterWidgetController extends BasePageController
+class DatabasePageController extends BasePageController
 {
 
 
     /**
-     * Build the Twitter widget.
+     * Build a generic page, with contents stored in the database
      * @return none
      */
     public function __construct()
     {
         parent::__construct();
-        $this->model = new TwitterWidgetModel();
+        $this->model = new DatabasePageModel();
     }//end __construct()
 
 
     /**
-     * Build the Twitter widget
+     * Handle GET requests - display the application form.
+     *
      * @param string $output Unparsed template passed by reference.
-     * @return none
+     *
+     * @return void
      */
     public function getHandler(&$output)
     {
-        parent::getHandler($output);
-        $tweets    = $this->model->getTweetsFromDatabase();
-        $tweetloop = $this->templateEngine->LogicTag(
-            '{TWEETLOOP}',
-            '{/TWEETLOOP}',
-            $output
-        );
+        $pagetitle   = $this->model->getGetVar('page', FILTER_SANITIZE_STRING);
+        $exptitle    = explode(' ', $pagetitle);
+        $name        = mb_strtolower(array_pop($exptitle));
+        $page        = $this->model->getPage($name);
 
-        // Bail if the database is down.
-        if (empty($tweets) === true) {
-            $tweets = array();
+        if ($page === null) {
+            $tags = array(
+                     '{PAGETITLE}'   => 'Well, this is embarrasing.',
+                     '{PAGECONTENT}' => 'There was an error fetching the page.',
+                    );
+            $this->templateEngine->parseTags($tags, $output);
+
+            return;
         }
 
-        foreach ($tweets as $tweet) {
-            $temp = $tweetloop;
-            $time = $tweet->tweetTimestamp;
-            $tags = array(
-                     '{TWEETID}'         => $tweet->tweetID,
-                     '{TWEETSCREENNAME}' => $tweet->tweetScreenname,
-                     '{TWEETNAME}'       => $tweet->tweetName,
-                     '{TWEETAVATAR}'     => $tweet->tweetAvatar,
-                     '{TWEETTEXT}'       => $tweet->tweetText,
-                     '{TWEETTIMESTAMP}'  => $this->model->timeElapsed($time),
-                    );
+        $tags = array(
+                 '{PAGETITLE}'   => $page->pageTitle,
+                 '{PAGECONTENT}' => stripslashes($page->pageContent),
+                );
+        $this->templateEngine->parseTags($tags, $output);
 
-            $this->templateEngine->parseTags($tags, $temp);
-
-            $tags = array(
-                     '{TWEETLOOP}',
-                     '{/TWEETLOOP}',
-                    );
-            $this->templateEngine->removeTags($tags, $temp);
-
-            $temp = '{/TWEETLOOP}'.$temp;
-
-            $this->templateEngine->replaceTag('{/TWEETLOOP}', $temp, $output);
-        }//end foreach
-
-        $this->templateEngine->replaceTag(
-            '{TWITTERUSER}',
-            TWEETS_WIDGET_USER,
-            $output
-        );
-
-        $this->templateEngine->removeLogicTag(
-            '{TWEETLOOP}',
-            '{/TWEETLOOP}',
-            $output
-        );
-
+        parent::getHandler($output);
     }//end getHandler()
 
 
     /**
-     * Build the Twitter widget, handle POST requests.
+     * Handle POST requests - Parse the application form input.
+     *
      * @param string $output Unparsed template passed by reference.
-     * @return none
+     *
+     * @return void
      */
     public function postHandler(&$output)
     {
-        parent::postHandler();
+        parent::postHandler($output);
     }//end postHandler()
 }//end class

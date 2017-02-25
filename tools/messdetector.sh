@@ -1,4 +1,5 @@
 #!/bin/sh
 
 echo "Generating report..."
-phpmd.phar ../ html cleancode,codesize,controversial,design,naming,unusedcode --reportfile phpmd.html
+phpmd ../public/ html cleancode,codesize,controversial,design,naming,unusedcode --reportfile phpmd-public.html
+phpmd ../private/ html cleancode,codesize,controversial,design,naming,unusedcode --reportfile phpmd-private.html

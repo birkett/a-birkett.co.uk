@@ -35,6 +35,10 @@
 
 namespace ABirkett\controllers;
 
+use ABFramework\controllers\BasePageController;
+use ABirkett\models\BlogPageModel;
+use ABirkett\classes\Recaptcha;
+
 /**
  * Handles generating the Blog pages.
  *
@@ -56,13 +60,24 @@ class BlogPageController extends BasePageController
 
 
     /**
-     * Build the blog page
+     * Build the blog page.
+     * @return none
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->model = new BlogPageModel();
+    }//end __construct()
+
+
+    /**
+     * Build the blog page, handle GET requests.
      * @param string $output Unparsed template passed by reference.
      * @return none
      */
-    public function __construct(&$output)
+    public function getHandler(&$output)
     {
-        parent::__construct($output);
+        parent::getHandler($output);
         $this->model = new \ABirkett\models\BlogPageModel();
 
         $offset = $this->model->getGetVar('offset', FILTER_SANITIZE_NUMBER_INT);
@@ -117,7 +132,68 @@ class BlogPageController extends BasePageController
         $this->renderPosts($result, $output);
         $this->cleanupTags($output);
 
-    }//end __construct()
+    }//end getHandler()
+
+
+    /**
+     * Build the blog page, handle POST requests.
+     * @param string $output Unparsed template passed by reference.
+     * @return none
+     */
+    public function postHandler(&$output)
+    {
+        // Basic.
+        $mode = $this->model->getPostVar('mode', FILTER_SANITIZE_STRING);
+        // Used for comments.
+        $post = $this->model->getPostVar('postid', FILTER_SANITIZE_NUMBER_INT);
+        $user = $this->model->getPostVar('username', FILTER_SANITIZE_STRING);
+        $comm = $this->model->getPostVar('comment', FILTER_SANITIZE_STRING);
+        $resp = $this->model->getPostVar('response', FILTER_SANITIZE_STRING);
+        $cip  = $this->model->getServerVar('REMOTE_ADDR', FILTER_VALIDATE_IP);
+
+        if ($mode === 'postcomment') {
+            if (isset($user) === false
+                || isset($comm) === false
+                || $resp === ''
+            ) {
+                $this->badRequest('Please fill out all details.');
+                return;
+            }
+
+            if ($this->strClamp($user, 3, 25) !== true) {
+                $this->badRequest('Username should be 3 - 25 characters');
+                return;
+            }
+
+            if ($this->strClamp($comm, 10, 1000) !== true) {
+                $this->badRequest('Comment should be 10 - 1000 characters');
+                return;
+            }
+
+            if ($this->model->checkIP($cip) !== false) {
+                $this->badRequest('Your address is blocked.');
+                return;
+            }
+
+            $recaptcha = new Recaptcha(
+                RECAPTHCA_PRIVATE_KEY,
+                $cip,
+                $resp
+            );
+
+            if ($recaptcha->response->success !== true) {
+                $this->badRequest('Captcha verification failed');
+                return;
+            }
+
+            if ($this->model->postComment($post, $user, $comm, $cip) !== true) {
+                $this->badRequest('Something was rejected.');
+                return;
+            }
+
+            $this->goodRequest('Comment Posted!');
+        }//end if
+    }//end postHandler()
 
 
     /**

@@ -35,6 +35,9 @@
 
 namespace ABirkett\controllers;
 
+use ABFramework\controllers\BasePageController;
+use ABirkett\models\PostsWidgetModel;
+
 /**
  * Handles generating the posts widget on the blog.
  *
@@ -55,16 +58,26 @@ class PostsWidgetController extends BasePageController
 
 
     /**
+     * Build the Posts widget.
+     * @return none
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->model = new PostsWidgetModel();
+    }//end __construct()
+
+
+    /**
      * Build the posts widget
      * @param string $output Unparsed template passed by reference.
      * @return none
      */
-    public function __construct(&$output)
+    public function getHandler(&$output)
     {
-        parent::__construct($output);
-        $this->model = new \ABirkett\models\PostsWidgetModel();
-        $posts       = $this->model->getAllPosts();
-        $postArray   = array();
+        parent::getHandler($output);
+        $posts     = $this->model->getAllPosts();
+        $postArray = array();
 
         foreach ($posts as $post) {
             $month = date('F Y', $post->postTimestamp);
@@ -122,5 +135,16 @@ class PostsWidgetController extends BasePageController
                 );
         $this->templateEngine->removeTags($tags, $output);
 
-    }//end __construct()
+    }//end getHandler()
+
+
+    /**
+     * Build the posts widget, handle POST requests.
+     * @param string $output Unparsed template passed by reference.
+     * @return none
+     */
+    public function postHandler(&$output)
+    {
+        parent::postHandler();
+    }//end postHandler()
 }//end class
