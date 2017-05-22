@@ -35,7 +35,7 @@
 
 namespace ABirkett\controllers;
 
-use ABFramework\controllers\BasePageController;
+use ABirkett\controllers\BasePageController;
 use ABirkett\models\BlogPageModel;
 use ABirkett\classes\Recaptcha;
 
@@ -67,19 +67,18 @@ class BlogPageController extends BasePageController
     {
         parent::__construct();
         $this->model = new BlogPageModel();
+
+        $this->defineAction('GET', 'default', 'blogGetRequest', array());
     }//end __construct()
 
 
     /**
      * Build the blog page, handle GET requests.
-     * @param string $output Unparsed template passed by reference.
+     *
      * @return none
      */
-    public function getHandler(&$output)
+    public function blogGetRequest()
     {
-        parent::getHandler($output);
-        $this->model = new \ABirkett\models\BlogPageModel();
-
         $offset = $this->model->getGetVar('offset', FILTER_SANITIZE_NUMBER_INT);
         $postid = $this->model->getGetVar('postid', FILTER_SANITIZE_NUMBER_INT);
 
@@ -99,11 +98,11 @@ class BlogPageController extends BasePageController
             }
 
             // No pagination.
-            $this->removePagination($output);
+            $this->removePagination($this->unparsedTemplate);
             // Show new comments box.
-            $this->renderNewCommentBox($postid, $output);
+            $this->renderNewCommentBox($postid, $this->unparsedTemplate);
             // Show comments.
-            $this->renderComments($postid, $output);
+            $this->renderComments($postid, $this->unparsedTemplate);
         }//end if
 
         // Page fetch mode. Only do this if postid not specified, just incase
@@ -123,16 +122,16 @@ class BlogPageController extends BasePageController
             }
 
             // Hide new comment box.
-            $this->removeNewCommentBox($output);
+            $this->removeNewCommentBox($this->unparsedTemplate);
             // Pagination.
-            $this->renderPagination($offset, $output);
+            $this->renderPagination($offset, $this->unparsedTemplate);
         }//end if
 
         // Rendering code.
-        $this->renderPosts($result, $output);
-        $this->cleanupTags($output);
+        $this->renderPosts($result, $this->unparsedTemplate);
+        $this->cleanupTags($this->unparsedTemplate);
 
-    }//end getHandler()
+    }//end blogGetRequest()
 
 
     /**

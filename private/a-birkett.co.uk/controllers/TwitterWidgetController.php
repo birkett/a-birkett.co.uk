@@ -35,7 +35,7 @@
 
 namespace ABirkett\controllers;
 
-use ABFramework\controllers\BasePageController;
+use ABirkett\controllers\BasePageController;
 use ABirkett\models\TwitterWidgetModel;
 
 /**
@@ -63,22 +63,23 @@ class TwitterWidgetController extends BasePageController
     {
         parent::__construct();
         $this->model = new TwitterWidgetModel();
+
+        $this->defineAction('GET', 'default', 'twGetHandler', array());
     }//end __construct()
 
 
     /**
      * Build the Twitter widget
-     * @param string $output Unparsed template passed by reference.
+     *
      * @return none
      */
-    public function getHandler(&$output)
+    public function twGetHandler()
     {
-        parent::getHandler($output);
         $tweets    = $this->model->getTweetsFromDatabase();
         $tweetloop = $this->templateEngine->LogicTag(
             '{TWEETLOOP}',
             '{/TWEETLOOP}',
-            $output
+            $this->unparsedTemplate
         );
 
         // Bail if the database is down.
@@ -108,31 +109,20 @@ class TwitterWidgetController extends BasePageController
 
             $temp = '{/TWEETLOOP}'.$temp;
 
-            $this->templateEngine->replaceTag('{/TWEETLOOP}', $temp, $output);
+            $this->templateEngine->replaceTag('{/TWEETLOOP}', $temp, $this->unparsedTemplate);
         }//end foreach
 
         $this->templateEngine->replaceTag(
             '{TWITTERUSER}',
             TWEETS_WIDGET_USER,
-            $output
+            $this->unparsedTemplate
         );
 
         $this->templateEngine->removeLogicTag(
             '{TWEETLOOP}',
             '{/TWEETLOOP}',
-            $output
+            $this->unparsedTemplate
         );
 
     }//end getHandler()
-
-
-    /**
-     * Build the Twitter widget, handle POST requests.
-     * @param string $output Unparsed template passed by reference.
-     * @return none
-     */
-    public function postHandler(&$output)
-    {
-        parent::postHandler();
-    }//end postHandler()
 }//end class

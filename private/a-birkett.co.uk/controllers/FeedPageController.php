@@ -35,7 +35,7 @@
 
 namespace ABirkett\controllers;
 
-use ABFramework\controllers\BasePageController;
+use ABirkett\controllers\BasePageController;
 use ABirkett\models\FeedPageModel;
 
 /**
@@ -64,18 +64,18 @@ class FeedPageController extends BasePageController
     {
         parent::__construct();
         $this->model = new FeedPageModel();
+
+        $this->defineAction('GET', 'default', 'feedGetRequest', array());
     }//end __construct()
 
 
     /**
-     * Build the blog feed page
-     * @param string $output Unparsed template passed by reference.
+     * Build the blog feed page.
+     *
      * @return none
      */
-    public function getHandler(&$output)
+    public function feedGetRequest()
     {
-        parent::getHandler($output);
-
         header('Content-Type: application/xml; charset=utf-8');
 
         $posts = $this->model->getLatestPosts();
@@ -83,7 +83,7 @@ class FeedPageController extends BasePageController
         $itemloop = $this->templateEngine->logicTag(
             '{LOOP}',
             '{/LOOP}',
-            $output
+            $this->unparsedTemplate
         );
 
         foreach ($posts as $post) {
@@ -97,21 +97,10 @@ class FeedPageController extends BasePageController
                     );
             $this->templateEngine->parseTags($tags, $temp);
             $temp .= "\n{LOOP}";
-            $this->templateEngine->replaceTag('{LOOP}', $temp, $output);
+            $this->templateEngine->replaceTag('{LOOP}', $temp, $this->unparsedTemplate);
         }//end foreach
 
-        $this->templateEngine->removeLogicTag('{LOOP}', '{/LOOP}', $output);
+        $this->templateEngine->removeLogicTag('{LOOP}', '{/LOOP}', $this->unparsedTemplate);
 
     }//end getHandler()
-
-
-    /**
-     * Build the feed page, handle POST requests.
-     * @param string $output Unparsed template passed by reference.
-     * @return none
-     */
-    public function postHandler(&$output)
-    {
-        parent::postHandler();
-    }//end postHandler()
 }//end class

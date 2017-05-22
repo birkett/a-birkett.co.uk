@@ -35,14 +35,10 @@
 
 namespace ABirkett\controllers;
 
-use ABirkett\controllers\BasePageController;
-use ABirkett\models\DatabasePageModel;
+use ABFramework\controllers\BasePageController as FrameworkBasePageController;
 
 /**
- * Handles generating generic pages, whos content is stored in the database.
- *
- * This is the most common page controller for the public pages, and allows the
- * pages to be stored in the database, and easilly edited from the admin panel.
+ * Add some additional common tags to the framework BasePageController.
  *
  * @category  Controllers
  * @package   PersonalWebsite
@@ -51,49 +47,46 @@ use ABirkett\models\DatabasePageModel;
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
-class DatabasePageController extends BasePageController
+class BasePageController extends FrameworkBasePageController
 {
 
 
     /**
-     * Build a generic page, with contents stored in the database
+     * Extend the framework default controller.
+     *
      * @return none
      */
     public function __construct()
     {
         parent::__construct();
-        $this->model = new DatabasePageModel();
 
-        $this->defineAction('GET', 'default', 'dbPageGetHandler', array());
+        $this->defineAction('GET', 'default', 'newDefaultGetHandler', array());
     }//end __construct()
 
 
     /**
-     * Handle GET requests - display the application form.
+     * Extend the framework default get handler, with some additional tags.
      *
-     * @return void
+     * @return none
      */
-    public function dbPageGetHandler()
+    public function newDefaultGetHandler()
     {
-        $pagetitle   = $this->model->getGetVar('page', FILTER_SANITIZE_STRING);
-        $exptitle    = explode(' ', $pagetitle);
-        $name        = mb_strtolower(array_pop($exptitle));
-        $page        = $this->model->getPage($name);
-
-        if ($page === null) {
-            $tags = array(
-                     '{PAGETITLE}'   => 'Well, this is embarrasing.',
-                     '{PAGECONTENT}' => 'There was an error fetching the page.',
-                    );
-            $this->templateEngine->parseTags($tags, $this->unparsedTemplate);
-
-            return;
-        }
+        parent::defaultGetRequest();
 
         $tags = array(
-                 '{PAGETITLE}'   => $page->pageTitle,
-                 '{PAGECONTENT}' => stripslashes($page->pageContent),
+                 '{RAND2551}' => rand(0, 255),
+                 '{RAND2552}' => rand(0, 255),
+                 '{RAND2553}' => rand(0, 255),
+                 '{RAND12}'   => rand(1, 2),
                 );
-        $this->templateEngine->parseTags($tags, $this->unparsedTemplate);
-    }//end dbPageGetHandler()
+        $this->templateEngine->parseTags($tags, $output);
+
+        if (CHRISTMAS === 1) {
+            $tags = array(
+                     '{EXTRASTYLESHEETS}',
+                     '{/EXTRASTYLESHEETS}',
+                    );
+            $this->templateEngine->removeTags($tags, $output);
+        }
+    }//end newDefaultGetHandler()
 }//end class

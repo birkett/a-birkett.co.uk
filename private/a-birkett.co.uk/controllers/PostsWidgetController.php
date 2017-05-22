@@ -35,7 +35,7 @@
 
 namespace ABirkett\controllers;
 
-use ABFramework\controllers\BasePageController;
+use ABirkett\controllers\BasePageController;
 use ABirkett\models\PostsWidgetModel;
 
 /**
@@ -65,17 +65,18 @@ class PostsWidgetController extends BasePageController
     {
         parent::__construct();
         $this->model = new PostsWidgetModel();
+
+        $this->defineAction('GET', 'default', 'pwGetHandler', array());
     }//end __construct()
 
 
     /**
      * Build the posts widget
-     * @param string $output Unparsed template passed by reference.
+     *
      * @return none
      */
-    public function getHandler(&$output)
+    public function pwGetHandler()
     {
-        parent::getHandler($output);
         $posts     = $this->model->getAllPosts();
         $postArray = array();
 
@@ -90,12 +91,12 @@ class PostsWidgetController extends BasePageController
         $monthloop = $this->templateEngine->logicTag(
             '{MONTHLOOP}',
             '{/MONTHLOOP}',
-            $output
+            $this->unparsedTemplate
         );
         $itemloop  = $this->templateEngine->logicTag(
             '{ITEMLOOP}',
             '{/ITEMLOOP}',
-            $output
+            $this->unparsedTemplate
         );
         foreach ($postArray as $month => $data) {
             $temp = $monthloop;
@@ -116,35 +117,24 @@ class PostsWidgetController extends BasePageController
             }//end foreach
 
             $temp .= "\n{MONTHLOOP}";
-            $this->templateEngine->replaceTag('{MONTHLOOP}', $temp, $output);
+            $this->templateEngine->replaceTag('{MONTHLOOP}', $temp, $this->unparsedTemplate);
             $this->templateEngine->removeLogicTag(
                 '{ITEMLOOP}',
                 '{/ITEMLOOP}',
-                $output
+                $this->unparsedTemplate
             );
         }//end foreach
 
         $this->templateEngine->removeLogicTag(
             '{MONTHLOOP}',
             '{/MONTHLOOP}',
-            $output
+            $this->unparsedTemplate
         );
         $tags = array(
                  '{ITEMS}',
                  '{MONTHS}',
                 );
-        $this->templateEngine->removeTags($tags, $output);
+        $this->templateEngine->removeTags($tags, $this->unparsedTemplate);
 
     }//end getHandler()
-
-
-    /**
-     * Build the posts widget, handle POST requests.
-     * @param string $output Unparsed template passed by reference.
-     * @return none
-     */
-    public function postHandler(&$output)
-    {
-        parent::postHandler();
-    }//end postHandler()
 }//end class

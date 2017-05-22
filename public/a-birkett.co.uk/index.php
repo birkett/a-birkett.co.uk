@@ -124,7 +124,7 @@ if (isset($page) === true) {
             $obj = new Page('Home');
 		    $obj->addMainTemplate('page');
             $obj->addSubTemplate('index');
-            $obj->addController('BasePageController');
+            $obj->addController('BasePageController', '\\ABirkett\controllers\\');
             $obj->addWidget('twitterwidget', 'TwitterWidgetController', '\\ABirkett\\controllers\\');
             break;
     }//end switch
@@ -136,7 +136,7 @@ if (isset($page) === true) {
 $obj = new Page('Home');
 $obj->addMainTemplate('page');
 $obj->addSubTemplate('index');
-$obj->addController('BasePageController');
+$obj->addController('BasePageController', '\\ABirkett\controllers\\');
 $obj->addWidget('twitterwidget', 'TwitterWidgetController', '\\ABirkett\\controllers\\');
 
 $obj->sendOutput();
