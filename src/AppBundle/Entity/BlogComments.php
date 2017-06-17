@@ -24,7 +24,8 @@ class BlogComments
     /**
      * @var integer
      *
-     * @ORM\Column(name="postID", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="BlogPosts", inversedBy="comments")
+     * @ORM\JoinColumn(name="postid", referencedColumnName="postID")
      */
     private $postid;
 

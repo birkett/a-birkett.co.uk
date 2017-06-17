@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * BlogPosts
  *
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BlogPostsRepository")
  * @ORM\Table(name="blog_posts", uniqueConstraints={@ORM\UniqueConstraint(name="post_id_UNIQUE", columns={"postID"})})
- * @ORM\Entity
  */
 class BlogPosts
 {
@@ -56,7 +56,12 @@ class BlogPosts
      */
     private $posttweeted;
 
-
+    /**
+     * @var BlogComments[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="BlogComments", mappedBy="postid")
+     */
+    private $comments;
 
     /**
      * Get postid
@@ -186,5 +191,51 @@ class BlogPosts
     public function getPosttweeted()
     {
         return $this->posttweeted;
+    }
+
+    /**
+     * Get comments
+     *
+     * @return BlogComments[]|ArrayCollection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function getCommentsCount()
+    {
+        return count($this->comments);
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \AppBundle\Entity\BlogComments $comment
+     *
+     * @return BlogPosts
+     */
+    public function addComment(\AppBundle\Entity\BlogComments $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \AppBundle\Entity\BlogComments $comment
+     */
+    public function removeComment(\AppBundle\Entity\BlogComments $comment)
+    {
+        $this->comments->removeElement($comment);
     }
 }
