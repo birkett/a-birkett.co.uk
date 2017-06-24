@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace WebsiteBundle\Controller;
 
 use Doctrine\ORM\EntityNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Entity\BlogPosts;
+use WebsiteBundle\Entity\BlogPosts;
 
 class BlogController extends Controller
 {
@@ -33,7 +33,7 @@ class BlogController extends Controller
 
         $numberOfPosts = $repository->getNumberOfPosts();
 
-        return $this->render('AppBundle:default:blog.html.twig', [
+        return $this->render('WebsiteBundle:default:blog.html.twig', [
             'posts' => $blogPosts,
             'totalposts' => $numberOfPosts,
             'page' => $pageNumber,

@@ -73,14 +73,14 @@ assetic:
 easy_admin:
     entities:
         BlockedAddresses:
-            class: AppBundle\Entity\BlockedAddresses
+            class: WebsiteBundle\Entity\BlockedAddresses
         Comments:
-            class: AppBundle\Entity\BlogComments
+            class: WebsiteBundle\Entity\BlogComments
         Posts:
-            class: AppBundle\Entity\BlogPosts
+            class: WebsiteBundle\Entity\BlogPosts
         Pages:
-            class: AppBundle\Entity\SitePages
+            class: WebsiteBundle\Entity\SitePages
         Tweets:
-            class: AppBundle\Entity\SiteTweets
+            class: WebsiteBundle\Entity\SiteTweets
         Users:
-            class: AppBundle\Entity\SiteUsers
+            class: WebsiteBundle\Entity\SiteUsers

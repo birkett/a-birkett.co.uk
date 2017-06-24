@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace WebsiteBundle\Repository;
 
-use AppBundle\Entity\BlogPosts;
+use WebsiteBundle\Entity\BlogPosts;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 

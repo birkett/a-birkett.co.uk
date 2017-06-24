@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace WebsiteBundle\Controller;
 
 use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Entity\SitePages;
+use WebsiteBundle\Entity\SitePages;
 
 class GenericController extends Controller
 {
@@ -29,7 +29,7 @@ class GenericController extends Controller
         }
 
         // replace this example code with whatever you need
-        return $this->render('AppBundle:default:generic.html.twig', [
+        return $this->render('WebsiteBundle:default:generic.html.twig', [
             'page' => $page,
         ]);
     }

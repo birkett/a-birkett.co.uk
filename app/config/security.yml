@@ -9,7 +9,7 @@ security:
 
         db_provider:
             entity:
-                class: AppBundle:SiteUsers
+                class: WebsiteBundle:SiteUsers
                 property: username
 
     firewalls:
@@ -42,6 +42,6 @@ security:
             #form_login: ~
 
     encoders:
-        AppBundle\Entity\SiteUsers:
+        WebsiteBundle\Entity\SiteUsers:
             algorithm: bcrypt
             cost: 10

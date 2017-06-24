@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace WebsiteBundle\Controller;
 
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +28,7 @@ class LoginController extends Controller
 
         $lastUsername = $authUtils->getLastUsername();
 
-        return $this->render('AppBundle:default:login.html.twig', [
+        return $this->render('WebsiteBundle:default:login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);

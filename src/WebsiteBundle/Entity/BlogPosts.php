@@ -1,13 +1,13 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace WebsiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * BlogPosts
  *
- * @ORM\Entity(repositoryClass="AppBundle\Repository\BlogPostsRepository")
+ * @ORM\Entity(repositoryClass="WebsiteBundle\Repository\BlogPostsRepository")
  * @ORM\Table(name="blog_posts", uniqueConstraints={@ORM\UniqueConstraint(name="post_id_UNIQUE", columns={"postID"})})
  */
 class BlogPosts
@@ -218,11 +218,11 @@ class BlogPosts
     /**
      * Add comment
      *
-     * @param \AppBundle\Entity\BlogComments $comment
+     * @param \WebsiteBundle\Entity\BlogComments $comment
      *
      * @return BlogPosts
      */
-    public function addComment(\AppBundle\Entity\BlogComments $comment)
+    public function addComment(\WebsiteBundle\Entity\BlogComments $comment)
     {
         $this->comments[] = $comment;
 
@@ -232,9 +232,9 @@ class BlogPosts
     /**
      * Remove comment
      *
-     * @param \AppBundle\Entity\BlogComments $comment
+     * @param \WebsiteBundle\Entity\BlogComments $comment
      */
-    public function removeComment(\AppBundle\Entity\BlogComments $comment)
+    public function removeComment(\WebsiteBundle\Entity\BlogComments $comment)
     {
         $this->comments->removeElement($comment);
     }
