@@ -8,7 +8,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class BlogPostsRepository extends EntityRepository
 {
-    public function getPostsOnPage($page)
+    public function getPostsOnPage($page, $postsPerPage)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -16,11 +16,22 @@ class BlogPostsRepository extends EntityRepository
             ->from(BlogPosts::class, 'p')
             ->where('p.postdraft = 0')
             ->orderBy('p.posttimestamp', 'DESC')
-            ->setFirstResult($page * 5)
-            ->setMaxResults(5);
+            ->setFirstResult(($page - 1) * $postsPerPage)
+            ->setMaxResults($postsPerPage);
 
-        $paginator = new Paginator($query, $fetchJoinCollection = true);
+        $paginator = new Paginator($query);
 
         return $paginator;
+    }
+
+    public function getNumberOfPosts()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $query = $qb->select('count(p.postid)')->from(BlogPosts::class, 'p');
+
+        $count = $query->getQuery()->getSingleScalarResult();
+
+        return $count;
     }
 }

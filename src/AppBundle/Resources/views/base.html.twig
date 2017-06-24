@@ -6,7 +6,7 @@
         <meta name="description" content="Personal website of Anthony Birkett, IT guy, Engineer and Entrepreneur.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% stylesheets filter="scssphp" output="css/main.css" "assets/scss/main.scss" %}
+        {% stylesheets filter="scssphp" output="css/main.css" "@AppBundle/Resources/assets/scss/main.scss" %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         <style>
             #container{background-color: rgb({{RAND1}}, {{RAND2}}, {{RAND3}});}

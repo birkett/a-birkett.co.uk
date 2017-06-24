@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <atom:link href="{{ path('feed') }}" rel="self" type="application/rss+xml" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link>{{ url('homepage') }}</link>
+        <description>RSS feed for the personal blog of Anthony Birkett.</description>
+        <language>en-GB</language>
+        <copyright>Copyright (C) 2007-{{ THISYEAR }} Anthony Birkett - {{ url('homepage') }}</copyright>
+
+        {% for post in posts %}
+        <item>
+            <title>{{ post.posttitle }}</title>
+            <description><![CDATA[{{ post.postcontent }}]]></description>
+            <link>{{ url('homepage') }}blog/{{ post.postid }}</link>
+            <pubDate>{{ post.posttimestamp }}</pubDate>
+            <guid isPermaLink="false">{{ post.posttimestamp }}</guid>
+        </item>
+        {% endfor %}
+    </channel>
+</rss>

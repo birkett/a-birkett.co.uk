@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'AppBundle::base.html.twig' %}
 
 {% block body %}
     {% for post in posts %}
@@ -65,14 +65,18 @@
         <div class="fadeout"></div>
     {% endif %}
 
-    {PAGINATION}
-    <div class="fadein"></div>
-    <div class="post commentbox">
-        <a class="left" href="{PAGEPREVLINK}">{PAGEPREVTEXT}</a>
-        <a class="right" href="{PAGENEXTLINK}">{PAGENEXTTEXT}</a>
-    </div>
-    <div class="fadeout"></div>
-    {/PAGINATION}
+    {% if posts|length > 1 %}
+        <div class="fadein"></div>
+        <div class="post commentbox">
+            {% if page > 1 %}
+                <a class="left" href="{{ path('blog_page') }}/{{ page - 1 }}">Previous Page</a>
+            {% endif %}
+            {% if page * postsperpage < totalposts %}
+                <a class="right" href="{{ path('blog_page') }}/{{ page + 1 }}">Next Page</a>
+            {% endif %}
+        </div>
+        <div class="fadeout"></div>
+    {% endif %}
 {% endblock %}
 
 {% block stylesheets %}

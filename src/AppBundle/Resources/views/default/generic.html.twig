@@ -1,10 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'AppBundle::base.html.twig' %}
 
 {% block body %}
 <div class="fadein"></div>
 <div class="post">
-    <h2>{{ PAGETITLE }}</h2>
-    {{ PAGECONTENT }}
+    <h2>{{ page.getPagename() }}</h2>
+    {{ page.getPagecontent() }}
 </div>
 <div class="fadeout"></div>
 {% endblock %}

@@ -29,14 +29,12 @@ class GenericController extends Controller
         }
 
         // replace this example code with whatever you need
-        return $this->render('default/generic.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+        return $this->render('AppBundle:default:generic.html.twig', [
             'RAND1' => rand(0, 255),
             'RAND2' => rand(0, 255),
             'RAND3' => rand(0, 255),
             'THISYEAR' => date('Y'),
-            'PAGETITLE' => $page->getPagetitle(),
-            'PAGECONTENT' => $page->getPagecontent(),
+            'page' => $page,
         ]);
     }
 }
