@@ -1,0 +1,12 @@
+{% block pagination %}
+    <div class="fadein"></div>
+    <div class="post commentbox">
+        {% if page > 1 %}
+            <a class="left" href="{{ path('blog_page') }}/{{ page - 1 }}">Previous Page</a>
+        {% endif %}
+        {% if page * postsperpage < totalposts %}
+            <a class="right" href="{{ path('blog_page') }}/{{ page + 1 }}">Next Page</a>
+        {% endif %}
+    </div>
+    <div class="fadeout"></div>
+{% endblock %}

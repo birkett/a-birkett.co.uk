@@ -1,0 +1,39 @@
+{% block newcomment %}
+    <script type="text/javascript" src="js/ajax.js"></script>
+    <script type="text/javascript">
+        function newcomment()
+        {
+            SuccessCallBack = function()
+            {
+                document.getElementById("formusername").value="";
+                document.getElementById("formcomment").value="";
+            }
+
+            var p = document.getElementById("formpostid").value;
+            var u = document.getElementById("formusername").value;
+            var c = document.getElementById("formcomment").value;
+            var data = "mode=postcomment&postid="+p+"&username="+u+"&comment="+c+"&response="+grecaptcha.getResponse();
+
+            AJAXOpen("/", data, SuccessCallBack);
+            grecaptcha.reset();
+        }
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <div class="fadein"></div>
+    <div class="post commentbox">
+        <h2>New comment</h2>
+        <div id="response"></div>
+        <form accept-charset="utf-8">
+            <input id="formpostid" type="hidden" value="{COMMENTPOSTID}"/>
+            <label for="formusername">Your name (3 - 25 characters):</label>
+            <input id="formusername" type="text" size="50"/>
+            <label for="formcomment">Comment (10 - 1000 characters):</label>
+            <textarea id="formcomment" rows="5" cols="40"></textarea>
+            <p>Human verification:</p>
+            <div class="g-recaptcha" data-theme="dark" data-sitekey="{RECAPTCHAKEY}"></div>
+            <br /><br />
+            <input type="submit" class="submit" onClick="newcomment(); return false;"/>
+        </form>
+    </div>
+    <div class="fadeout"></div>
+{% endblock %}
