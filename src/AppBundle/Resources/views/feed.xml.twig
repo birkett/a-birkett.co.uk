@@ -6,7 +6,7 @@
         <link>{{ url('homepage') }}</link>
         <description>RSS feed for the personal blog of Anthony Birkett.</description>
         <language>en-GB</language>
-        <copyright>Copyright (C) 2007-{{ THISYEAR }} Anthony Birkett - {{ url('homepage') }}</copyright>
+        <copyright>Copyright (C) 2007-{{ "now"|date('Y') }} Anthony Birkett - {{ url('homepage') }}</copyright>
 
         {% for post in posts %}
         <item>

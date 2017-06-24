@@ -25,7 +25,6 @@ class FeedController extends Controller
         }
 $request->setFormat('xml', 'text/xml');
         return $this->render('AppBundle::feed.xml.twig', [
-            'THISYEAR' => date('Y'),
             'posts' => $blogPosts,
         ]);
     }

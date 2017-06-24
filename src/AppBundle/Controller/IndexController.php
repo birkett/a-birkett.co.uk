@@ -14,11 +14,6 @@ class IndexController extends Controller
     public function indexAction(Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('AppBundle:default:index.html.twig', [
-            'RAND1' => rand(0, 255),
-            'RAND2' => rand(0, 255),
-            'RAND3' => rand(0, 255),
-            'THISYEAR' => date('Y'),
-        ]);
+        return $this->render('AppBundle:default:index.html.twig');
     }
 }

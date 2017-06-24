@@ -29,10 +29,6 @@ class LoginController extends Controller
         $lastUsername = $authUtils->getLastUsername();
 
         return $this->render('AppBundle:default:login.html.twig', [
-            'RAND1' => rand(0, 255),
-            'RAND2' => rand(0, 255),
-            'RAND3' => rand(0, 255),
-            'THISYEAR' => date('Y'),
             'last_username' => $lastUsername,
             'error' => $error,
         ]);

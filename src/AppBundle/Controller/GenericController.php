@@ -30,10 +30,6 @@ class GenericController extends Controller
 
         // replace this example code with whatever you need
         return $this->render('AppBundle:default:generic.html.twig', [
-            'RAND1' => rand(0, 255),
-            'RAND2' => rand(0, 255),
-            'RAND3' => rand(0, 255),
-            'THISYEAR' => date('Y'),
             'page' => $page,
         ]);
     }

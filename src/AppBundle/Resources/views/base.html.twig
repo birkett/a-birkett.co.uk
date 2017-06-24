@@ -9,7 +9,7 @@
         {% stylesheets filter="scssphp" output="css/main.css" "@AppBundle/Resources/assets/scss/main.scss" %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         <style>
-            #container{background-color: rgb({{RAND1}}, {{RAND2}}, {{RAND3}});}
+            #container{background-color: rgb({{ random(255)}}, {{ random(255)}}, {{ random(255)}});}
         </style>
         {% endstylesheets %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -52,7 +52,7 @@
                 </div>
                 <div class="fadein"></div>
                 <div class="footer">
-                    <p>&copy; 2007-{{ THISYEAR }} Anthony Birkett</p>
+                    <p>&copy; 2007-{{ "now"|date('Y') }} Anthony Birkett</p>
                     <p>This site is Open Source. <a href="https://www.github.com/birkett/a-birkett.co.uk" target="_blank">Code available on GitHub.</a></p>
                     <p>Email communications filtered by <a href="http://mxguarddog.com/">MXGuardDog</a></p>
                     <ins class="adsbygoogle" data-ad-client="ca-pub-3491498523960183" data-ad-slot="5902265353" data-ad-format="auto"></ins>

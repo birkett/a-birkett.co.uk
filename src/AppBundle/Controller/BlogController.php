@@ -34,10 +34,6 @@ class BlogController extends Controller
         $numberOfPosts = $repository->getNumberOfPosts();
 
         return $this->render('AppBundle:default:blog.html.twig', [
-            'RAND1' => rand(0, 255),
-            'RAND2' => rand(0, 255),
-            'RAND3' => rand(0, 255),
-            'THISYEAR' => date('Y'),
             'posts' => $blogPosts,
             'totalposts' => $numberOfPosts,
             'page' => $pageNumber,
