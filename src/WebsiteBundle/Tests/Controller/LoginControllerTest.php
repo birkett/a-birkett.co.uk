@@ -4,15 +4,15 @@ namespace Tests\WebsiteBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class IndexControllerTest extends WebTestCase
+class LoginControllerTest extends WebTestCase
 {
-    public function testIndex()
+    public function testLogin()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/');
+        $crawler = $client->request('GET', '/login');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Anthony Birkett', $crawler->filter('#container h1')->text());
+        $this->assertContains('Please log in', $crawler->filter('.post h2')->text());
     }
 }
