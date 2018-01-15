@@ -35,114 +35,125 @@
 
 namespace ABirkett;
 
-require_once '../classes/Autoloader.php';
+use ABFramework\classes\Autoloader as Autoloader;
+use ABFramework\classes\Page as Page;
+use ABFramework\classes\SessionManager as SessionManager;
+use ABirkett\classes\Config as Config;
 
-classes\Autoloader::init();
+require_once '../../../private/ABFramework/classes/Autoloader.php';
+
+$autoloader = new Autoloader();
+
+$autoloader->registerNamespace('ABFramework', '../../../private/ABFramework/');
+$autoloader->registerNamespace('ABirkett', '../../../private/a-birkett.co.uk/');
+$autoloader->init();
+
+// Auto load the site and framework config.
+$config = new Config();
+unset($config);
 
 // Page router. Handles GET and POST requests.
-$sessionManager = classes\SessionManager::getInstance();
+$sessionManager = SessionManager::getInstance();
 $mode           = filter_input(INPUT_POST, 'mode', FILTER_SANITIZE_STRING);
 $page           = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING);
-
-if (isset($mode) === true) {
-    $nullpage = '';
-    $obj = new classes\ControllerFactory('AdminAJAXRequestController', $nullpage);
-    return;
-}
 
 if ($sessionManager->isLoggedIn() === true) {
     // Logged in and requesting a page.
     if (isset($page) === true) {
         switch($page) {
+            case 'login':
+				$obj = new Page('Admin :: Login');
+				$obj->addMainTemplate('page');
+				$obj->addSubTemplate('login');
+				$obj->addController('AdminLoginPageController', '\\ABFramework\controllers\\');
+				$obj->addWidget('userwidget', 'AdminUserWidgetController', '\\ABirkett\\controllers\\');
+				break;
+
             case 'password':
-                $obj = new classes\Page(
-                    'Admin :: Password',
-                    'userwidget',
-                    'password',
-                    'AdminBasePageController'
-                );
+                $obj = new Page('Admin :: Password');
+                $obj->addMainTemplate('page');
+                $obj->addSubTemplate('password');
+                $obj->addController('AdminBasePageController', '\\ABFramework\controllers\\');
+                $obj->addWidget('userwidget', 'AdminUserWidgetController', '\\ABirkett\\controllers\\');
                 break;
 
             case 'serverinfo':
-                $obj = new classes\Page(
-                    'Admin :: Server Info',
-                    'userwidget',
-                    'serverinfo',
-                    'AdminServerInfoPageController'
-                );
+                $obj = new Page('Admin :: Server Info');
+                $obj->addMainTemplate('page');
+                $obj->addSubTemplate('serverinfo');
+                $obj->addController('AdminServerInfoPageController', '\\ABFramework\controllers\\');
+                $obj->addWidget('userwidget', 'AdminUserWidgetController', '\\ABirkett\\controllers\\');
                 break;
 
             case 'ipfilter':
-                $obj = new classes\Page(
-                    'Admin :: IP Filter',
-                    'userwidget',
-                    'ipfilter',
-                    'AdminIPFilterPageController'
-                );
+                $obj = new Page('Admin :: IP Filter');
+                $obj->addMainTemplate('page');
+                $obj->addSubTemplate('ipfilter');
+                $obj->addController('AdminIPFilterPageController', '\\ABirkett\controllers\\');
+                $obj->addWidget('userwidget', 'AdminUserWidgetController', '\\ABirkett\\controllers\\');
                 break;
 
             case 'listpages':
-                $obj = new classes\Page(
-                    'Admin :: Pages',
-                    'userwidget',
-                    'listpages',
-                    'AdminListPagesPageController'
-                );
+                $obj = new Page('Admin :: Pages');
+                $obj->addMainTemplate('page');
+                $obj->addSubTemplate('listpages');
+                $obj->addController('AdminListPagesPageController', '\\ABirkett\controllers\\');
+                $obj->addWidget('userwidget', 'AdminUserWidgetController', '\\ABirkett\\controllers\\');
                 break;
 
             case 'listcomments':
-                $obj = new classes\Page(
-                    'Admin :: Comments',
-                    'userwidget',
-                    'listcomments',
-                    'AdminListCommentsPageController'
-                );
+                $obj = new Page('Admin :: Comments');
+                $obj->addMainTemplate('page');
+                $obj->addSubTemplate('listcomments');
+                $obj->addController('AdminListCommentsPageController', '\\ABirkett\controllers\\');
+                $obj->addWidget('userwidget', 'AdminUserWidgetController', '\\ABirkett\\controllers\\');
                 break;
 
             case 'listposts':
-                $obj = new classes\Page(
-                    'Admin :: Posts',
-                    'userwidget',
-                    'listposts',
-                    'AdminListPostsPageController'
-                );
+                $obj = new Page('Admin :: Posts');
+                $obj->addMainTemplate('page');
+                $obj->addSubTemplate('listposts');
+                $obj->addController('AdminListPostsPageController', '\\ABirkett\controllers\\');
+                $obj->addWidget('userwidget', 'AdminUserWidgetController', '\\ABirkett\\controllers\\');
                 break;
 
             case 'edit':
-                $obj = new classes\Page(
-                    'Admin :: Editor',
-                    'userwidget',
-                    'edit',
-                    'AdminEditPageController'
-                );
+                $obj = new Page('Admin :: Editor');
+                $obj->addMainTemplate('page');
+                $obj->addSubTemplate('edit');
+                $obj->addController('AdminEditorPageController', '\\ABirkett\controllers\\');
+                $obj->addWidget('userwidget', 'AdminUserWidgetController', '\\ABirkett\\controllers\\');
                 break;
 
             default:
-                $obj = new classes\Page(
-                    'Admin :: Main',
-                    'userwidget',
-                    'index',
-                    'AdminBasePageController'
-                );
+                $obj = new Page('Admin :: Main');
+                $obj->addMainTemplate('page');
+                $obj->addSubTemplate('index');
+                $obj->addController('AdminBasePageController', '\\ABFramework\controllers\\');
+                $obj->addWidget('userwidget', 'AdminUserWidgetController', '\\ABirkett\\controllers\\');
                 break;
         }//end switch
+
+         $obj->sendOutput();
 
         return;
     }//end if
 
-    $obj = new classes\Page(
-        'Admin :: Main',
-        'userwidget',
-        'index',
-        'AdminBasePageController'
-    );
+    $obj = new Page('Admin :: Main');
+    $obj->addMainTemplate('page');
+    $obj->addSubTemplate('index');
+    $obj->addController('AdminBasePageController', '\\ABFramework\controllers\\');
+    $obj->addWidget('userwidget', 'AdminUserWidgetController', '\\ABirkett\\controllers\\');
+
+    $obj->sendOutput();
 
     return;
 }//end if
 
-$obj = new classes\Page(
-    'Admin :: Login',
-    'userwidget',
-    'login',
-    'AdminBasePageController'
-);
+$obj = new Page('Admin :: Login');
+$obj->addMainTemplate('page');
+$obj->addSubTemplate('login');
+$obj->addController('AdminLoginPageController', '\\ABFramework\controllers\\');
+$obj->addWidget('userwidget', 'AdminUserWidgetController', '\\ABirkett\\controllers\\');
+
+$obj->sendOutput();
