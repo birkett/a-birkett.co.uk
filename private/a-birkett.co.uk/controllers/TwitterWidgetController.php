@@ -57,6 +57,7 @@ class TwitterWidgetController extends BasePageController
 
     /**
      * Build the Twitter widget.
+     *
      * @return none
      */
     public function __construct()

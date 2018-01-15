@@ -246,38 +246,4 @@ class AdminAJAXRequestController extends AJAXRequestController
         $this->goodRequest('Password changed.');
 
     }//end actionChangePassword()
-
-
-    /**
-     * Handle the login request
-     * @param object $sessionManager SessionManager instance to use.
-     * @param string $user           Username to log in as.
-     * @param string $pass           Users password.
-     * @return void
-     */
-    private function actionLogin(&$sessionManager, $user, $pass)
-    {
-        if ($this->model->checkCredentials($user, $pass) === false) {
-            $this->badRequest('Incorrect username or password.');
-            return;
-        }
-
-        // Set up the session on successful login.
-        $sessionManager->doLogin($user);
-        $this->goodRequest('');
-
-    }//end actionLogin()
-
-
-    /**
-     * Handle the logout request
-     * @param object $sessionManager SessionManager instance to use.
-     * @return void
-     */
-    private function actionLogout(&$sessionManager)
-    {
-        $sessionManager->doLogout();
-        $this->resetRequest();
-
-    }//end actionLogout()
 }//end class

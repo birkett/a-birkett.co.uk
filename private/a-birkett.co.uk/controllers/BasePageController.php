@@ -79,14 +79,14 @@ class BasePageController extends FrameworkBasePageController
                  '{RAND2553}' => rand(0, 255),
                  '{RAND12}'   => rand(1, 2),
                 );
-        $this->templateEngine->parseTags($tags, $output);
+        $this->templateEngine->parseTags($tags, $this->unparsedTempalate);
 
         if (CHRISTMAS === 1) {
             $tags = array(
                      '{EXTRASTYLESHEETS}',
                      '{/EXTRASTYLESHEETS}',
                     );
-            $this->templateEngine->removeTags($tags, $output);
+            $this->templateEngine->removeTags($tags, $this->unparsedTempalate);
         }
     }//end newDefaultGetHandler()
 }//end class

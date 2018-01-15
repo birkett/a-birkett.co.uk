@@ -239,37 +239,6 @@ class AdminAJAXRequestModel extends AJAXRequestModel
 
 
     /**
-     * Check if supplied credentials match the database (login function)
-     * @param  string $username Input username.
-     * @param  string $password Input password.
-     * @return boolean True when verified, False otherwise
-     */
-    public function checkCredentials($username, $password)
-    {
-        if ($username === '' || $password === '') {
-            return false;
-        }
-
-        $result = $this->database->runQuery(
-            'SELECT password FROM site_users WHERE username = :username',
-            array(':username' => $username)
-        );
-
-        if ($this->database->getNumRows($result) === 1) {
-            $dbhash = $this->database->getRow($result);
-
-            // Password_verify is PHP 5.5+.
-            if (password_verify($password, $dbhash->password) === true) {
-                return true;
-            }
-        }//end if
-
-        return false;
-
-    }//end checkCredentials()
-
-
-    /**
      * Generate a new password hash using a random salt
      * @param  string $password Plain text password.
      * @return string Password hash

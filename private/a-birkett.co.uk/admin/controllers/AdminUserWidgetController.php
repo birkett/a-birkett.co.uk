@@ -35,6 +35,9 @@
 
 namespace ABirkett\controllers;
 
+use ABFramework\classes\SessionManager;
+use ABFramework\controllers\AdminBasePageController;
+
 /**
  * Handles generating the user widget.
  *
@@ -53,49 +56,35 @@ class AdminUserWidgetController extends AdminBasePageController
 
 
     /**
-     * Build the user account widget
-     * @param string $output Unparsed template passed by reference.
+     * Build the User widget.
+     *
      * @return none
      */
-    public function __construct(&$output)
+    public function __construct()
     {
-        parent::__construct($output);
-        $this->model    = new \ABirkett\models\AdminUserWidgetModel();
-        $sessionManager = \ABirkett\classes\SessionManager::getInstance();
-        $username       = $sessionManager->getVar('user');
+        parent::__construct();
 
-        if ($sessionManager->isLoggedIn() === true) {
-            $this->templateEngine->removeLogicTag(
-                '{LOGIN}',
-                '{/LOGIN}',
-                $output
-            );
+        $this->defineAction('GET', 'default', 'userWidgetGetHandler', array());
+    }//end __construct()
+
+
+    /**
+     * Build the user account widget
+     *
+     * @return none
+     */
+    public function userWidgetGetHandler()
+    {
+        if ($this->sessionManager->isLoggedIn() === true) {
             $this->templateEngine->replaceTag(
                 '{USERNAME}',
-                $username,
-                $output
+                $this->sessionManager->getVar('user'),
+                $this->unparsedTemplate
             );
-            $tags = array(
-                     '{LOGGEDIN}',
-                     '{/LOGGEDIN}',
-                    );
-            $this->templateEngine->removeTags($tags, $output);
+
+            return;
         }
 
-        // Removed the loggedin tag if not handled above.
-        $this->templateEngine->removeLogicTag(
-            '{LOGGEDIN}',
-            '{/LOGGEDIN}',
-            $output
-        );
-
-        $cleantags = array(
-                      '{LOGIN}',
-                      '{/LOGIN}',
-                      '{LOGGEDIN}',
-                      '{/LOGGEDIN}',
-                     );
-        $this->templateEngine->removeTags($cleantags, $output);
-
-    }//end __construct()
+        $this->unparsedTemplate = '';
+	}//end userWidgetGetHandler()
 }//end class
