@@ -38,7 +38,7 @@
     margin: 0;
     overflow: visible;
     background:
-        url('../img/bg.png') 0% 0%/100%,
+        url('../img/bg.png') 0 0%/100%,
         url('../img/bg_pcb.png') 100% 100%;
     background-attachment: fixed;
     background-position: center;
@@ -87,7 +87,7 @@
 .content {
     width: 50%;
     overflow: hidden;
-    margin: 0px auto 0px auto;
+    margin: 0 auto 0 auto;
 }
 
 .content img {

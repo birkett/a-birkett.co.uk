@@ -40,7 +40,6 @@
 }
 
 .container {
-    background: none;
     background-image: url('../img/christmas/snow1.png'), url('../img/christmas/snow2.png'), url('../img/christmas/snow3.png');
     -webkit-animation: container 10s linear infinite;
     -moz-animation: container 10s linear infinite;
@@ -71,7 +70,7 @@
 @include keyframes(container) {
 
     0% {
-        background-position: 0px 0px, 0px 0px, 0px 0px;
+        background-position: 0 0, 0 0, 0 0;
     }
 
     50% {

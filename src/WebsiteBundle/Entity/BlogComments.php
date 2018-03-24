@@ -1,5 +1,39 @@
 <?php
+/**
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 Anthony Birkett
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ *
+ * PHP Version 5.6
+ *
+ * @category  Entities
+ * @package   PersonalWebsite
+ * @author    Anthony Birkett <anthony@a-birkett.co.uk>
+ * @copyright 2015 Anthony Birkett
+ * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
+ * @link      http://www.a-birkett.co.uk
+ */
 
+/* Entity for a blog comment. */
 namespace WebsiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -7,12 +41,17 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * BlogComments
  *
- * @ORM\Table(name="blog_comments", uniqueConstraints={@ORM\UniqueConstraint(name="comment_id_UNIQUE", columns={"commentID"})})
+ * @ORM\Table(
+ *     name="blog_comments",
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="comment_id_UNIQUE", columns={"commentID"})}
+ *     )
  * @ORM\Entity
  */
 class BlogComments
 {
     /**
+     * Unique comment ID.
+     *
      * @var integer
      *
      * @ORM\Column(name="commentID", type="integer", nullable=false)
@@ -22,6 +61,8 @@ class BlogComments
     private $commentid;
 
     /**
+     * ID of the post this comment is on.
+     *
      * @var integer
      *
      * @ORM\ManyToOne(targetEntity="BlogPosts", inversedBy="comments")
@@ -30,6 +71,8 @@ class BlogComments
     private $postid;
 
     /**
+     * Comment posted by name.
+     *
      * @var string
      *
      * @ORM\Column(name="commentUsername", type="string", length=100, nullable=false)
@@ -37,6 +80,8 @@ class BlogComments
     private $commentusername;
 
     /**
+     * Comment content.
+     *
      * @var string
      *
      * @ORM\Column(name="commentText", type="string", length=4000, nullable=false)
@@ -44,6 +89,8 @@ class BlogComments
     private $commenttext;
 
     /**
+     * Comment timestamp.
+     *
      * @var integer
      *
      * @ORM\Column(name="commentTimestamp", type="integer", nullable=false)
@@ -51,6 +98,8 @@ class BlogComments
     private $commenttimestamp;
 
     /**
+     * Posters IP address.
+     *
      * @var string
      *
      * @ORM\Column(name="clientIP", type="string", length=180, nullable=false)
@@ -58,13 +107,12 @@ class BlogComments
     private $clientip;
 
 
-
     /**
      * Get commentid
      *
      * @return integer
      */
-    public function getCommentid()
+    public function getCommentId()
     {
         return $this->commentid;
     }
@@ -72,13 +120,13 @@ class BlogComments
     /**
      * Set postid
      *
-     * @param integer $postid
+     * @param integer $postId Post ID.
      *
      * @return BlogComments
      */
-    public function setPostid($postid)
+    public function setPostId($postId)
     {
-        $this->postid = $postid;
+        $this->postid = $postId;
 
         return $this;
     }
@@ -88,79 +136,79 @@ class BlogComments
      *
      * @return integer
      */
-    public function getPostid()
+    public function getPostId()
     {
         return $this->postid;
     }
 
     /**
-     * Set commentusername
+     * Set comment username
      *
-     * @param string $commentusername
+     * @param string $commentUsername Username.
      *
      * @return BlogComments
      */
-    public function setCommentusername($commentusername)
+    public function setCommentUsername($commentUsername)
     {
-        $this->commentusername = $commentusername;
+        $this->commentusername = $commentUsername;
 
         return $this;
     }
 
     /**
-     * Get commentusername
+     * Get comment username.
      *
      * @return string
      */
-    public function getCommentusername()
+    public function getCommentUsername()
     {
         return $this->commentusername;
     }
 
     /**
-     * Set commenttext
+     * Set comment text
      *
-     * @param string $commenttext
+     * @param string $commentText Comment content.
      *
      * @return BlogComments
      */
-    public function setCommenttext($commenttext)
+    public function setCommentText($commentText)
     {
-        $this->commenttext = $commenttext;
+        $this->commenttext = $commentText;
 
         return $this;
     }
 
     /**
-     * Get commenttext
+     * Get comment text.
      *
      * @return string
      */
-    public function getCommenttext()
+    public function getCommentText()
     {
         return $this->commenttext;
     }
 
     /**
-     * Set commenttimestamp
+     * Set comment timestamp
      *
-     * @param integer $commenttimestamp
+     * @param integer $commentTimestamp Timestamp.
      *
      * @return BlogComments
      */
-    public function setCommenttimestamp($commenttimestamp)
+    public function setCommentTimestamp($commentTimestamp)
     {
-        $this->commenttimestamp = $commenttimestamp;
+        $this->commenttimestamp = $commentTimestamp;
 
         return $this;
     }
 
     /**
-     * Get commenttimestamp
+     * Get comment timestamp
      *
      * @return integer
      */
-    public function getCommenttimestamp()
+    public function getCommentTimestamp()
     {
         return $this->commenttimestamp;
     }
@@ -168,23 +216,23 @@ class BlogComments
     /**
      * Set clientip
      *
-     * @param string $clientip
+     * @param string $clientIp IP address.
      *
      * @return BlogComments
      */
-    public function setClientip($clientip)
+    public function setClientIp($clientIp)
     {
-        $this->clientip = $clientip;
+        $this->clientip = $clientIp;
 
         return $this;
     }
 
     /**
-     * Get clientip
+     * Get client ip
      *
      * @return string
      */
-    public function getClientip()
+    public function getClientIp()
     {
         return $this->clientip;
     }

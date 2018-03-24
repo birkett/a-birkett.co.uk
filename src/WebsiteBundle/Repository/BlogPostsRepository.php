@@ -10,9 +10,9 @@ class BlogPostsRepository extends EntityRepository
 {
     public function getPostsOnPage($page, $postsPerPage)
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
 
-        $query = $qb->select('p')
+        $query = $queryBuilder->select('p')
             ->from(BlogPosts::class, 'p')
             ->where('p.postdraft = 0')
             ->orderBy('p.posttimestamp', 'DESC')
@@ -26,9 +26,9 @@ class BlogPostsRepository extends EntityRepository
 
     public function getNumberOfPosts()
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
 
-        $query = $qb->select('count(p.postid)')->from(BlogPosts::class, 'p');
+        $query = $queryBuilder->select('count(p.postid)')->from(BlogPosts::class, 'p');
 
         $count = $query->getQuery()->getSingleScalarResult();
 

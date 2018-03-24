@@ -4,6 +4,7 @@ namespace WebsiteBundle\Controller;
 
 use Doctrine\ORM\EntityNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use WebsiteBundle\Entity\BlogPosts;
@@ -14,6 +15,14 @@ class BlogController extends Controller
      * @Route("/blog/", name="blog")
      * @Route("/blog/{postId}", name="blog_single")
      * @Route("/blog/page/{pageNumber}", name="blog_page")
+     *
+     * @param Request $request
+     * @param int     $postId
+     * @param int     $pageNumber
+     *
+     * @throws EntityNotFoundException
+     *
+     * @return Response
      */
     public function indexAction(Request $request, $postId = null, $pageNumber = 1)
     {
@@ -33,11 +42,14 @@ class BlogController extends Controller
 
         $numberOfPosts = $repository->getNumberOfPosts();
 
-        return $this->render('WebsiteBundle:default:blog.html.twig', [
-            'posts' => $blogPosts,
-            'totalposts' => $numberOfPosts,
-            'page' => $pageNumber,
-            'postsperpage' => $postsPerPage,
-        ]);
+        return $this->render(
+            '@Website/default/blog.html.twig',
+            [
+                'posts' => $blogPosts,
+                'totalposts' => $numberOfPosts,
+                'page' => $pageNumber,
+                'postsperpage' => $postsPerPage,
+            ]
+        );
     }
 }

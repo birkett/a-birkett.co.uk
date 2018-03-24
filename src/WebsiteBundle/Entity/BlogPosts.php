@@ -3,6 +3,7 @@
 namespace WebsiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use WebsiteBundle\Entity\BlogComments;
 
 /**
  * BlogPosts
@@ -57,7 +58,7 @@ class BlogPosts
     private $posttweeted;
 
     /**
-     * @var BlogComments[]|ArrayCollection
+     * @var BlogComments[]
      *
      * @ORM\OneToMany(targetEntity="BlogComments", mappedBy="postid")
      */
@@ -164,7 +165,7 @@ class BlogPosts
      *
      * @return boolean
      */
-    public function getPostdraft()
+    public function isDraft()
     {
         return $this->postdraft;
     }
@@ -188,7 +189,7 @@ class BlogPosts
      *
      * @return boolean
      */
-    public function getPosttweeted()
+    public function isTweeted()
     {
         return $this->posttweeted;
     }
@@ -196,46 +197,34 @@ class BlogPosts
     /**
      * Get comments
      *
-     * @return BlogComments[]|ArrayCollection
+     * @return BlogComments[]
      */
     public function getComments()
     {
         return $this->comments;
     }
 
+    /**
+     * Get the number of comments on a post
+     *
+     * @return int
+     */
     public function getCommentsCount()
     {
         return count($this->comments);
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
      * Add comment
      *
-     * @param \WebsiteBundle\Entity\BlogComments $comment
+     * @param BlogComments $comment
      *
      * @return BlogPosts
      */
-    public function addComment(\WebsiteBundle\Entity\BlogComments $comment)
+    public function addComment(BlogComments $comment)
     {
         $this->comments[] = $comment;
 
         return $this;
-    }
-
-    /**
-     * Remove comment
-     *
-     * @param \WebsiteBundle\Entity\BlogComments $comment
-     */
-    public function removeComment(\WebsiteBundle\Entity\BlogComments $comment)
-    {
-        $this->comments->removeElement($comment);
     }
 }

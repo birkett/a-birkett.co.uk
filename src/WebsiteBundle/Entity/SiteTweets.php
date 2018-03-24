@@ -7,7 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * SiteTweets
  *
- * @ORM\Table(name="site_tweets", uniqueConstraints={@ORM\UniqueConstraint(name="tweet_id_UNIQUE", columns={"tweetID"})})
+ * @ORM\Table(
+ *     name="site_tweets",
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="tweet_id_UNIQUE", columns={"tweetID"})}
+ *     )
  * @ORM\Entity
  */
 class SiteTweets
