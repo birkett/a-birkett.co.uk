@@ -36,6 +36,7 @@
 namespace WebsiteBundle\Controller;
 
 use Doctrine\ORM\EntityNotFoundException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -46,8 +47,13 @@ class BlogController extends Controller
 {
     /**
      * @Route("/blog/", name="blog")
+     * @Method({"GET"})
+     *
      * @Route("/blog/{postId}", name="blog_single")
+     * @Method({"GET"})
+     *
      * @Route("/blog/page/{pageNumber}", name="blog_page")
+     * @Method({"GET"})
      *
      * @param Request $request
      * @param int     $postId

@@ -35,6 +35,7 @@
 
 namespace WebsiteBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -44,6 +45,7 @@ class LoginController extends Controller
 {
     /**
      * @Route("/login", name="login")
+     * @Method({"GET", "POST"})
      *
      * @param AuthenticationUtils $authUtils
      * @return Response

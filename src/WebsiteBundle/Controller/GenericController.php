@@ -37,6 +37,7 @@ namespace WebsiteBundle\Controller;
 
 use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use WebsiteBundle\Entity\SitePages;
@@ -45,10 +46,19 @@ class GenericController extends Controller
 {
     /**
      * @Route("/about/", name="about", defaults={"pageName" = "about"})
+     * @Method({"GET"})
+     *
      * @Route("/contact/", name="contact", defaults={"pageName" = "contact"})
+     * @Method({"GET"})
+     *
      * @Route("/photos/", name="photos", defaults={"pageName" = "photos"})
+     * @Method({"GET"})
+     *
      * @Route("/projects/", name="projects", defaults={"pageName" = "projects"})
+     * @Method({"GET"})
+     *
      * @Route("/videos/", name="videos", defaults={"pageName" = "videos"})
+     * @Method({"GET"})
      *
      * @param string $pageName
      *

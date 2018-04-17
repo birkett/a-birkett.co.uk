@@ -38,6 +38,7 @@ namespace WebsiteBundle\Controller;
 use Doctrine\ORM\EntityNotFoundException;
 use WebsiteBundle\Entity\BlogPosts;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,6 +47,7 @@ class FeedController extends Controller
 {
     /**
      * @Route("/feed/", defaults={"_format"="xml"}, name="feed")
+     * @Method({"GET"})
      *
      * @param Request $request
      *
