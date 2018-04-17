@@ -1,9 +1,43 @@
 <?php
+/**
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 Anthony Birkett
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ *
+ * PHP Version 7.1
+ *
+ * @category  Entities
+ * @package   PersonalWebsite
+ * @author    Anthony Birkett <anthony@a-birkett.co.uk>
+ * @copyright 2015-2018 Anthony Birkett
+ * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
+ * @link      http://www.a-birkett.co.uk
+ */
+
+declare(strict_types=1);
 
 namespace WebsiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use WebsiteBundle\Entity\BlogComments;
 
 /**
  * BlogPosts
@@ -14,192 +48,192 @@ use WebsiteBundle\Entity\BlogComments;
 class BlogPosts
 {
     /**
-     * @var integer
+     * @var int
      *
-     * @ORM\Column(name="postID", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="postID", type="integer", nullable=false)
      */
-    private $postid;
+    private $postId;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="postTimestamp", type="integer", nullable=false)
      */
-    private $posttimestamp;
+    private $postTimestamp;
 
     /**
      * @var string
      *
      * @ORM\Column(name="postTitle", type="string", length=280, nullable=false)
      */
-    private $posttitle;
+    private $postTitle;
 
     /**
      * @var string
      *
      * @ORM\Column(name="postContent", type="text", length=65535, nullable=false)
      */
-    private $postcontent;
+    private $postContent;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="postDraft", type="boolean", nullable=false)
      */
-    private $postdraft;
+    private $postDraft;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="postTweeted", type="boolean", nullable=false)
      */
-    private $posttweeted;
+    private $postTweeted;
 
     /**
      * @var BlogComments[]
      *
-     * @ORM\OneToMany(targetEntity="BlogComments", mappedBy="postid")
+     * @ORM\OneToMany(targetEntity="BlogComments", mappedBy="postId")
      */
     private $comments;
 
     /**
-     * Get postid
+     * Get postId
      *
-     * @return integer
+     * @return int
      */
-    public function getPostid()
+    public function getPostId(): int
     {
-        return $this->postid;
+        return $this->postId;
     }
 
     /**
-     * Set posttimestamp
+     * Set postTimestamp
      *
-     * @param integer $posttimestamp
+     * @param integer $postTimestamp
      *
      * @return BlogPosts
      */
-    public function setPosttimestamp($posttimestamp)
+    public function setPostTimestamp($postTimestamp): BlogPosts
     {
-        $this->posttimestamp = $posttimestamp;
+        $this->postTimestamp = $postTimestamp;
 
         return $this;
     }
 
     /**
-     * Get posttimestamp
+     * Get postTimestamp
      *
-     * @return integer
+     * @return int
      */
-    public function getPosttimestamp()
+    public function getPostTimestamp(): int
     {
-        return $this->posttimestamp;
+        return $this->postTimestamp;
     }
 
     /**
-     * Set posttitle
+     * Set postTitle
      *
-     * @param string $posttitle
+     * @param string $postTitle
      *
      * @return BlogPosts
      */
-    public function setPosttitle($posttitle)
+    public function setPostTitle($postTitle): BlogPosts
     {
-        $this->posttitle = $posttitle;
+        $this->postTitle = $postTitle;
 
         return $this;
     }
 
     /**
-     * Get posttitle
+     * Get postTitle
      *
      * @return string
      */
-    public function getPosttitle()
+    public function getPostTitle(): string
     {
-        return $this->posttitle;
+        return $this->postTitle;
     }
 
     /**
-     * Set postcontent
+     * Set postContent
      *
-     * @param string $postcontent
+     * @param string $postContent
      *
      * @return BlogPosts
      */
-    public function setPostcontent($postcontent)
+    public function setPostContent($postContent): BlogPosts
     {
-        $this->postcontent = $postcontent;
+        $this->postContent = $postContent;
 
         return $this;
     }
 
     /**
-     * Get postcontent
+     * Get postContent
      *
      * @return string
      */
-    public function getPostcontent()
+    public function getPostContent(): string
     {
-        return $this->postcontent;
+        return $this->postContent;
     }
 
     /**
-     * Set postdraft
+     * Set postDraft
      *
-     * @param boolean $postdraft
+     * @param boolean $postDraft
      *
      * @return BlogPosts
      */
-    public function setPostdraft($postdraft)
+    public function setPostDraft($postDraft): BlogPosts
     {
-        $this->postdraft = $postdraft;
+        $this->postDraft = $postDraft;
 
         return $this;
     }
 
     /**
-     * Get postdraft
+     * Get postDraft
      *
-     * @return boolean
+     * @return bool
      */
-    public function isDraft()
+    public function isDraft(): bool
     {
-        return $this->postdraft;
+        return $this->postDraft;
     }
 
     /**
-     * Set posttweeted
+     * Set postTweeted
      *
-     * @param boolean $posttweeted
+     * @param boolean $postTweeted
      *
      * @return BlogPosts
      */
-    public function setPosttweeted($posttweeted)
+    public function setPostTweeted($postTweeted): BlogPosts
     {
-        $this->posttweeted = $posttweeted;
+        $this->postTweeted = $postTweeted;
 
         return $this;
     }
 
     /**
-     * Get posttweeted
+     * Get postTweeted
      *
-     * @return boolean
+     * @return bool
      */
-    public function isTweeted()
+    public function isTweeted(): bool
     {
-        return $this->posttweeted;
+        return $this->postTweeted;
     }
 
     /**
      * Get comments
      *
-     * @return BlogComments[]
+     * @return BlogComments[]|array
      */
-    public function getComments()
+    public function getComments(): array
     {
         return $this->comments;
     }
@@ -209,7 +243,7 @@ class BlogPosts
      *
      * @return int
      */
-    public function getCommentsCount()
+    public function getCommentsCount(): int
     {
         return count($this->comments);
     }
@@ -221,7 +255,7 @@ class BlogPosts
      *
      * @return BlogPosts
      */
-    public function addComment(BlogComments $comment)
+    public function addComment(BlogComments $comment): BlogPosts
     {
         $this->comments[] = $comment;
 

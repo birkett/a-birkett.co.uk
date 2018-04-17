@@ -1,4 +1,40 @@
 <?php
+/**
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 Anthony Birkett
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ *
+ * PHP Version 7.1
+ *
+ * @category  Entities
+ * @package   PersonalWebsite
+ * @author    Anthony Birkett <anthony@a-birkett.co.uk>
+ * @copyright 2015-2018 Anthony Birkett
+ * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
+ * @link      http://www.a-birkett.co.uk
+ */
+
+
+declare(strict_types=1);
 
 namespace WebsiteBundle\Entity;
 
@@ -13,116 +49,114 @@ use Doctrine\ORM\Mapping as ORM;
 class SitePages
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="pageID", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $pageid;
+    private $pageId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="pageName", type="string", length=40, nullable=false)
      */
-    private $pagename;
+    private $pageName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="pageContent", type="text", length=65535, nullable=false)
      */
-    private $pagecontent;
+    private $pageContent;
 
     /**
      * @var string
      *
      * @ORM\Column(name="pageTitle", type="string", length=280, nullable=false)
      */
-    private $pagetitle;
-
-
+    private $pageTitle;
 
     /**
-     * Get pageid
+     * Get pageId
      *
-     * @return integer
+     * @return int
      */
-    public function getPageid()
+    public function getPageId(): int
     {
-        return $this->pageid;
+        return $this->pageId;
     }
 
     /**
-     * Set pagename
+     * Set pageName
      *
-     * @param string $pagename
+     * @param string $pageName
      *
      * @return SitePages
      */
-    public function setPagename($pagename)
+    public function setPageName($pageName): SitePages
     {
-        $this->pagename = $pagename;
+        $this->pageName = $pageName;
 
         return $this;
     }
 
     /**
-     * Get pagename
+     * Get pageName
      *
      * @return string
      */
-    public function getPagename()
+    public function getPageName(): string
     {
-        return $this->pagename;
+        return $this->pageName;
     }
 
     /**
-     * Set pagecontent
+     * Set pageContent
      *
-     * @param string $pagecontent
+     * @param string $pageContent
      *
      * @return SitePages
      */
-    public function setPagecontent($pagecontent)
+    public function setPageContent($pageContent): SitePages
     {
-        $this->pagecontent = $pagecontent;
+        $this->pageContent = $pageContent;
 
         return $this;
     }
 
     /**
-     * Get pagecontent
+     * Get pageContent
      *
      * @return string
      */
-    public function getPagecontent()
+    public function getPageContent(): string
     {
-        return $this->pagecontent;
+        return $this->pageContent;
     }
 
     /**
-     * Set pagetitle
+     * Set pageTitle
      *
-     * @param string $pagetitle
+     * @param string $pageTitle
      *
      * @return SitePages
      */
-    public function setPagetitle($pagetitle)
+    public function setPageTitle($pageTitle): SitePages
     {
-        $this->pagetitle = $pagetitle;
+        $this->pageTitle = $pageTitle;
 
         return $this;
     }
 
     /**
-     * Get pagetitle
+     * Get pageTitle
      *
      * @return string
      */
-    public function getPagetitle()
+    public function getPageTitle(): string
     {
-        return $this->pagetitle;
+        return $this->pageTitle;
     }
 }

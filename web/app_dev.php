@@ -23,17 +23,18 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 5.6
+ * PHP Version 7.1
  *
  * @category  EntryPoint
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015 Anthony Birkett
+ * @copyright 2015-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
 
-/* Entry point to the application, when in dev. */
+declare(strict_types=1);
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
 

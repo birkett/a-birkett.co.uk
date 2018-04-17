@@ -23,17 +23,18 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 5.6
+ * PHP Version 7.1
  *
  * @category  AppKernel
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015 Anthony Birkett
+ * @copyright 2015-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
 
-/* Setup the Symfony application. */
+declare(strict_types=1);
+
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -44,7 +45,7 @@ class AppKernel extends Kernel
      *
      * @return array
      */
-    public function registerBundles()
+    public function registerBundles(): array
     {
         $bundles = [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
@@ -77,7 +78,7 @@ class AppKernel extends Kernel
      *
      * @return string
      */
-    public function getRootDir()
+    public function getRootDir(): string
     {
         return __DIR__;
     }
@@ -87,7 +88,7 @@ class AppKernel extends Kernel
      *
      * @return string
      */
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
     }
@@ -97,7 +98,7 @@ class AppKernel extends Kernel
      *
      * @return string
      */
-    public function getLogDir()
+    public function getLogDir(): string
     {
         return dirname(__DIR__).'/var/logs';
     }
@@ -106,15 +107,11 @@ class AppKernel extends Kernel
      * Register the container config.
      *
      * @param LoaderInterface $loader Loader object.
-     *
-     * @return null
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(
             $this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml'
         );
-
-        return;
     }
 }

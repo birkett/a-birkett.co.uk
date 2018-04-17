@@ -23,17 +23,18 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 5.6
+ * PHP Version 7.1
  *
  * @category  Entities
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015 Anthony Birkett
+ * @copyright 2015-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
 
-/* Entity for blocked IP addresses. */
+declare(strict_types=1);
+
 namespace WebsiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -63,7 +64,7 @@ class BlockedAddresses
     /**
      * Blocked time.
      *
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="timestamp", type="integer", nullable=false)
      */
@@ -75,7 +76,7 @@ class BlockedAddresses
      *
      * @return string
      */
-    public function getAddress()
+    public function getAddress(): string
     {
         return $this->address;
     }
@@ -87,7 +88,7 @@ class BlockedAddresses
      *
      * @return BlockedAddresses
      */
-    public function setTimestamp($timestamp)
+    public function setTimestamp($timestamp): BlockedAddresses
     {
         $this->timestamp = $timestamp;
 
@@ -97,9 +98,9 @@ class BlockedAddresses
     /**
      * Get timestamp
      *
-     * @return integer
+     * @return int
      */
-    public function getTimestamp()
+    public function getTimestamp(): int
     {
         return $this->timestamp;
     }

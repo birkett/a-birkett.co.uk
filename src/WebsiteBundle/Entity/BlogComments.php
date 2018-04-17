@@ -23,17 +23,18 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 5.6
+ * PHP Version 7.1
  *
  * @category  Entities
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015 Anthony Birkett
+ * @copyright 2015-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
 
-/* Entity for a blog comment. */
+declare(strict_types=1);
+
 namespace WebsiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -52,23 +53,23 @@ class BlogComments
     /**
      * Unique comment ID.
      *
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="commentID", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $commentid;
+    private $commentId;
 
     /**
      * ID of the post this comment is on.
      *
-     * @var integer
+     * @var int
      *
      * @ORM\ManyToOne(targetEntity="BlogPosts", inversedBy="comments")
-     * @ORM\JoinColumn(name="postid", referencedColumnName="postID")
+     * @ORM\JoinColumn(name="postId", referencedColumnName="postID")
      */
-    private $postid;
+    private $postId;
 
     /**
      * Comment posted by name.
@@ -77,7 +78,7 @@ class BlogComments
      *
      * @ORM\Column(name="commentUsername", type="string", length=100, nullable=false)
      */
-    private $commentusername;
+    private $commentUsername;
 
     /**
      * Comment content.
@@ -86,16 +87,16 @@ class BlogComments
      *
      * @ORM\Column(name="commentText", type="string", length=4000, nullable=false)
      */
-    private $commenttext;
+    private $commentText;
 
     /**
      * Comment timestamp.
      *
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="commentTimestamp", type="integer", nullable=false)
      */
-    private $commenttimestamp;
+    private $commentTimestamp;
 
     /**
      * Posters IP address.
@@ -104,17 +105,17 @@ class BlogComments
      *
      * @ORM\Column(name="clientIP", type="string", length=180, nullable=false)
      */
-    private $clientip;
+    private $clientIp;
 
 
     /**
      * Get commentid
      *
-     * @return integer
+     * @return int
      */
-    public function getCommentId()
+    public function getCommentId(): int
     {
-        return $this->commentid;
+        return $this->commentId;
     }
 
     /**
@@ -124,9 +125,9 @@ class BlogComments
      *
      * @return BlogComments
      */
-    public function setPostId($postId)
+    public function setPostId($postId): BlogComments
     {
-        $this->postid = $postId;
+        $this->postId = $postId;
 
         return $this;
     }
@@ -134,11 +135,11 @@ class BlogComments
     /**
      * Get postid
      *
-     * @return integer
+     * @return int
      */
-    public function getPostId()
+    public function getPostId(): int
     {
-        return $this->postid;
+        return $this->postId;
     }
 
     /**
@@ -148,9 +149,9 @@ class BlogComments
      *
      * @return BlogComments
      */
-    public function setCommentUsername($commentUsername)
+    public function setCommentUsername($commentUsername): BlogComments
     {
-        $this->commentusername = $commentUsername;
+        $this->commentUsername = $commentUsername;
 
         return $this;
     }
@@ -160,9 +161,9 @@ class BlogComments
      *
      * @return string
      */
-    public function getCommentUsername()
+    public function getCommentUsername(): string
     {
-        return $this->commentusername;
+        return $this->commentUsername;
     }
 
     /**
@@ -172,9 +173,9 @@ class BlogComments
      *
      * @return BlogComments
      */
-    public function setCommentText($commentText)
+    public function setCommentText($commentText): BlogComments
     {
-        $this->commenttext = $commentText;
+        $this->commentText = $commentText;
 
         return $this;
     }
@@ -184,9 +185,9 @@ class BlogComments
      *
      * @return string
      */
-    public function getCommentText()
+    public function getCommentText(): string
     {
-        return $this->commenttext;
+        return $this->commentText;
     }
 
     /**
@@ -196,9 +197,9 @@ class BlogComments
      *
      * @return BlogComments
      */
-    public function setCommentTimestamp($commentTimestamp)
+    public function setCommentTimestamp($commentTimestamp): BlogComments
     {
-        $this->commenttimestamp = $commentTimestamp;
+        $this->commentTimestamp = $commentTimestamp;
 
         return $this;
     }
@@ -206,11 +207,11 @@ class BlogComments
     /**
      * Get comment timestamp
      *
-     * @return integer
+     * @return int
      */
-    public function getCommentTimestamp()
+    public function getCommentTimestamp(): int
     {
-        return $this->commenttimestamp;
+        return $this->commentTimestamp;
     }
 
     /**
@@ -220,9 +221,9 @@ class BlogComments
      *
      * @return BlogComments
      */
-    public function setClientIp($clientIp)
+    public function setClientIp($clientIp): BlogComments
     {
-        $this->clientip = $clientIp;
+        $this->clientIp = $clientIp;
 
         return $this;
     }
@@ -232,8 +233,8 @@ class BlogComments
      *
      * @return string
      */
-    public function getClientIp()
+    public function getClientIp(): string
     {
-        return $this->clientip;
+        return $this->clientIp;
     }
 }

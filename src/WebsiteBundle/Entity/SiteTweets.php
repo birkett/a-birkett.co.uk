@@ -1,4 +1,39 @@
 <?php
+/**
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 Anthony Birkett
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ *
+ * PHP Version 7.1
+ *
+ * @category  Entities
+ * @package   PersonalWebsite
+ * @author    Anthony Birkett <anthony@a-birkett.co.uk>
+ * @copyright 2015-2018 Anthony Birkett
+ * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
+ * @link      http://www.a-birkett.co.uk
+ */
+
+declare(strict_types=1);
 
 namespace WebsiteBundle\Entity;
 
@@ -22,203 +57,201 @@ class SiteTweets
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $tweetid;
+    private $tweetId;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="tweetTimestamp", type="integer", nullable=false)
      */
-    private $tweettimestamp;
+    private $tweetTimestamp;
 
     /**
      * @var string
      *
      * @ORM\Column(name="tweetText", type="string", length=560, nullable=false)
      */
-    private $tweettext;
+    private $tweetText;
 
     /**
      * @var string
      *
      * @ORM\Column(name="tweetAvatar", type="string", length=1000, nullable=false)
      */
-    private $tweetavatar;
+    private $tweetAvatar;
 
     /**
      * @var string
      *
      * @ORM\Column(name="tweetName", type="string", length=100, nullable=false)
      */
-    private $tweetname;
+    private $tweetName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="tweetScreenname", type="string", length=60, nullable=false)
      */
-    private $tweetscreenname;
+    private $tweetScreenName;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="tweetFetchTime", type="integer", nullable=false)
      */
-    private $tweetfetchtime;
-
-
+    private $tweetFetchTime;
 
     /**
-     * Get tweetid
+     * Get tweetId
      *
      * @return string
      */
-    public function getTweetid()
+    public function getTweetId(): string
     {
-        return $this->tweetid;
+        return $this->tweetId;
     }
 
     /**
-     * Set tweettimestamp
+     * Set tweetTimestamp
      *
-     * @param integer $tweettimestamp
+     * @param integer $tweetTimestamp
      *
      * @return SiteTweets
      */
-    public function setTweettimestamp($tweettimestamp)
+    public function setTweetTimestamp($tweetTimestamp): SiteTweets
     {
-        $this->tweettimestamp = $tweettimestamp;
+        $this->tweetTimestamp = $tweetTimestamp;
 
         return $this;
     }
 
     /**
-     * Get tweettimestamp
+     * Get tweetTimestamp
      *
-     * @return integer
+     * @return int
      */
-    public function getTweettimestamp()
+    public function getTweetTimestamp(): int
     {
-        return $this->tweettimestamp;
+        return $this->tweetTimestamp;
     }
 
     /**
-     * Set tweettext
+     * Set tweetText
      *
-     * @param string $tweettext
+     * @param string $tweetText
      *
      * @return SiteTweets
      */
-    public function setTweettext($tweettext)
+    public function setTweetText($tweetText): SiteTweets
     {
-        $this->tweettext = $tweettext;
+        $this->tweetText = $tweetText;
 
         return $this;
     }
 
     /**
-     * Get tweettext
+     * Get tweetText
      *
      * @return string
      */
-    public function getTweettext()
+    public function getTweetText(): string
     {
-        return $this->tweettext;
+        return $this->tweetText;
     }
 
     /**
-     * Set tweetavatar
+     * Set tweetAvatar
      *
-     * @param string $tweetavatar
+     * @param string $tweetAvatar
      *
      * @return SiteTweets
      */
-    public function setTweetavatar($tweetavatar)
+    public function setTweetAvatar($tweetAvatar): SiteTweets
     {
-        $this->tweetavatar = $tweetavatar;
+        $this->tweetAvatar = $tweetAvatar;
 
         return $this;
     }
 
     /**
-     * Get tweetavatar
+     * Get tweetAvatar
      *
      * @return string
      */
-    public function getTweetavatar()
+    public function getTweetAvatar(): string
     {
-        return $this->tweetavatar;
+        return $this->tweetAvatar;
     }
 
     /**
-     * Set tweetname
+     * Set tweetName
      *
-     * @param string $tweetname
+     * @param string $tweetName
      *
      * @return SiteTweets
      */
-    public function setTweetname($tweetname)
+    public function setTweetName($tweetName): SiteTweets
     {
-        $this->tweetname = $tweetname;
+        $this->tweetName = $tweetName;
 
         return $this;
     }
 
     /**
-     * Get tweetname
+     * Get tweetName
      *
      * @return string
      */
-    public function getTweetname()
+    public function getTweetName(): string
     {
-        return $this->tweetname;
+        return $this->tweetName;
     }
 
     /**
-     * Set tweetscreenname
+     * Set tweetScreenName
      *
-     * @param string $tweetscreenname
+     * @param string $tweetScreenName
      *
      * @return SiteTweets
      */
-    public function setTweetscreenname($tweetscreenname)
+    public function setTweetScreenName($tweetScreenName): SiteTweets
     {
-        $this->tweetscreenname = $tweetscreenname;
+        $this->tweetScreenName = $tweetScreenName;
 
         return $this;
     }
 
     /**
-     * Get tweetscreenname
+     * Get tweetScreenName
      *
      * @return string
      */
-    public function getTweetscreenname()
+    public function getTweetScreenName(): string
     {
-        return $this->tweetscreenname;
+        return $this->tweetScreenName;
     }
 
     /**
-     * Set tweetfetchtime
+     * Set tweetFetchTime
      *
-     * @param integer $tweetfetchtime
+     * @param integer $tweetFetchTime
      *
      * @return SiteTweets
      */
-    public function setTweetfetchtime($tweetfetchtime)
+    public function setTweetFetchTime($tweetFetchTime): SiteTweets
     {
-        $this->tweetfetchtime = $tweetfetchtime;
+        $this->tweetFetchTime = $tweetFetchTime;
 
         return $this;
     }
 
     /**
-     * Get tweetfetchtime
+     * Get tweetFetchTime
      *
-     * @return integer
+     * @return int
      */
-    public function getTweetfetchtime()
+    public function getTweetFetchTime(): int
     {
-        return $this->tweetfetchtime;
+        return $this->tweetFetchTime;
     }
 }

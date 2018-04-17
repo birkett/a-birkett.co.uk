@@ -25,7 +25,7 @@
  *
  * PHP Version 7.1
  *
- * @category  Entities
+ * @category  AppKernel
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
  * @copyright 2015-2018 Anthony Birkett
@@ -33,10 +33,10 @@
  * @link      http://www.a-birkett.co.uk
  */
 
-namespace WebsiteBundle;
+declare(strict_types=1);
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
 
-class WebsiteBundle extends Bundle
+class AppCache extends HttpCache
 {
 }
