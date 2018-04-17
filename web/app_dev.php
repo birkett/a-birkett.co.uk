@@ -54,7 +54,7 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
 $loader = include __DIR__.'/../vendor/autoload.php';
 Debug::enable();
 
-$kernel = new AppKernel('dev', false);
+$kernel = new AppKernel('dev', true);
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();
