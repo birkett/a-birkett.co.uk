@@ -17,6 +17,5 @@
 /web/bundles/
 /web/css/
 /.env
-.idea
 node_modules
 /public/assets
