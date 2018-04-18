@@ -1,0 +1,25 @@
+{
+  "name": "a-birkett.co.uk-symfony",
+  "version": "0.0.1",
+  "description": "Simple PHP website, with integrated Blog.<br /> If you see any glaring bugs, vulns or room for improvement, please report on the GitHub issue tracker.",
+  "main": "webpack.config.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.20.0",
+    "node-sass": "^4.8.3",
+    "sass-loader": "^7.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/birkett/a-birkett.co.uk-symfony.git"
+  },
+  "author": "Anthony Birkett",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/birkett/a-birkett.co.uk-symfony/issues"
+  },
+  "homepage": "https://github.com/birkett/a-birkett.co.uk-symfony#readme"
+}

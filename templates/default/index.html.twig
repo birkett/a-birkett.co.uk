@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="fadein"></div>
+    <div class="post">
+        <div class="tilecontainer">
+            <a href="{{ path('about') }}"><div class="tile abouttile"><p class="tiletitle">About<p></div></a>
+            <a href="{{ path('blog') }}"><div class="tile blogtile"><p class="tiletitle">Blog<p></div></a>
+            <a href="{{ path('photos') }}"><div class="tile photostile"><p class="tiletitle">Photos<p></div></a>
+            <a href="{{ path('contact') }}"><div class="tile contacttile"><p class="tiletitle">Contact<p></div></a>
+            <a href="{{ path('projects') }}"><div class="tile projectstile"><p class="tiletitle">Projects<p></div></a>
+            <a href="{{ path('videos') }}"><div class="tile videostile"><p class="tiletitle">Videos<p></div></a>
+        </div>
+    </div>
+    <div class="fadeout"></div>
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}

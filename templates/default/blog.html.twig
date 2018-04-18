@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for post in posts %}
+        <div class="fadein"></div>
+        <div class="post">
+            <div class="postavatar">
+                <img src="/img/avatar.png" alt="avatar"/>
+            </div>
+            <a href="/blog/{{ post.postId }}"><h2>{{ post.postTitle }}</h2></a>
+            <p class="timestamp">{{ post.postTimestamp }}</p>
+            {{ post.postcontent }}
+            <a class="right" href="/blog/{{ post.postId }}">Comments({{ post.getCommentsCount() }})</a>
+        </div>
+        <div class="fadeout"></div>
+        {% if posts|length <= 1 %}
+            {% for comment in post.comments %}
+                <div class="fadein"></div>
+                <div class="post">
+                    <p class="timestamp">Posted by {{ comment.commentUsername }} on {{ comment.commentTimestamp }}</p>
+                    <p>{{ comment.commentText }}</p>
+                </div>
+                <div class="fadeout"></div>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+
+    {% if posts|length <= 1 %}
+        {% embed 'blog/newcomment.html.twig' %}{% endembed %}
+    {% endif %}
+
+    {% if posts|length > 1 %}
+        {% embed 'blog/pagination.html.twig' %}{% endembed %}
+    {% endif %}
+{% endblock %}

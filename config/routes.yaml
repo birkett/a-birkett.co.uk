@@ -1,0 +1,82 @@
+# These lines define a route using YAML configuration. The controller used by
+# the route (FrameworkBundle:Template:template) is a convenient shortcut when
+# the template can be rendered without executing any logic in your own controller.
+# See https://symfony.com/doc/current/cookbook/templating/render_without_controller.html
+homepage:
+    path: /
+    controller: App\Controller\IndexController::indexAction
+    methods: [GET]
+
+login:
+    path: /login
+    controller: App\Controller\LoginController::loginAction
+    methods: [GET, POST]
+
+about:
+    path: /about
+    controller: App\Controller\GenericController::indexAction
+    defaults:
+        pageName: about
+    methods: [GET]
+
+contact:
+    path: /contact
+    controller: App\Controller\GenericController::indexAction
+    defaults:
+        pageName: contact
+    methods: [GET]
+
+photos:
+    path: /photos
+    controller: App\Controller\GenericController::indexAction
+    defaults:
+        pageName: photos
+    methods: [GET]
+
+projects:
+    path: /projects
+    controller: App\Controller\GenericController::indexAction
+    defaults:
+        pageName: projects
+    methods: [GET]
+
+videos:
+    path: /videos
+    controller: App\Controller\GenericController::indexAction
+    defaults:
+        pageName: videos
+    methods: [GET]
+
+blog:
+    path: /blog
+    controller: App\Controller\BlogController::indexAction
+    methods: [GET]
+
+blog_single:
+    path: /blog/{postId}
+    controller: App\Controller\BlogController::indexAction
+    defaults:
+        postId: +d
+    methods: [GET]
+
+blog_page:
+    path: /blog/page/{pageNumber}
+    controller: App\Controller\BlogController::indexAction
+    defaults:
+        pageNumber: +d
+    methods: [GET]
+
+feed:
+    path: /feed
+    controller: App\Controller\FeedController::indexAction
+    defaults:
+        _format: xml
+    methods: [GET]
+
+#easy_admin_bundle:
+#    resource: "@EasyAdminBundle/Controller/AdminController.php"
+#    type:     annotation
+#    prefix:   /admin
+
+logout:
+    path: /logout
