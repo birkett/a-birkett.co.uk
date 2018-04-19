@@ -33,6 +33,8 @@
  * @link      http://www.a-birkett.co.uk
  */
 
+declare(strict_types=1);
+
 namespace WebsiteBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -43,7 +45,7 @@ class GenericControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/about/');
+        $crawler = $client->request('GET', '/about');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('About Anthony', $crawler->filter('.post h2')->text());

@@ -1,14 +1,14 @@
-#easy_admin:
-#    entities:
-#        BlockedAddresses:
-#            class: App\Entity\BlockedAddresses
-#        Comments:
-#            class: App\Entity\BlogComments
-#        Posts:
-#            class: App\Entity\BlogPosts
-#        Pages:
-#            class: App\Entity\SitePages
-#        Tweets:
-#            class: App\Entity\SiteTweets
-#        Users:
-#            class: App\Entity\SiteUsers
+easy_admin:
+    entities:
+        BlockedAddresses:
+            class: App\Entity\BlockedAddresses
+        Comments:
+            class: App\Entity\BlogComments
+        Posts:
+            class: App\Entity\BlogPosts
+        Pages:
+            class: App\Entity\SitePages
+        Tweets:
+            class: App\Entity\SiteTweets
+        Users:
+            class: App\Entity\SiteUsers

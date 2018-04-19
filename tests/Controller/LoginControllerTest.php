@@ -33,6 +33,8 @@
  * @link      http://www.a-birkett.co.uk
  */
 
+declare(strict_types=1);
+
 namespace Tests\WebsiteBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

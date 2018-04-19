@@ -62,14 +62,14 @@ class BlogComments
     private $commentId;
 
     /**
-     * ID of the post this comment is on.
+     * Post this comment is on.
      *
-     * @var int
+     * @var BlogPosts
      *
      * @ORM\ManyToOne(targetEntity="BlogPosts", inversedBy="comments")
      * @ORM\JoinColumn(name="postId", referencedColumnName="postID")
      */
-    private $postId;
+    private $post;
 
     /**
      * Comment posted by name.
@@ -121,25 +121,25 @@ class BlogComments
     /**
      * Set postid
      *
-     * @param integer $postId Post ID.
+     * @param BlogPosts $post Post.
      *
      * @return BlogComments
      */
-    public function setPostId($postId): BlogComments
+    public function setPost(BlogPosts $post): BlogComments
     {
-        $this->postId = $postId;
+        $this->post = $post;
 
         return $this;
     }
 
     /**
-     * Get postid
+     * Get post
      *
-     * @return int
+     * @return BlogPosts
      */
-    public function getPostId(): int
+    public function getPost(): BlogPosts
     {
-        return $this->postId;
+        return $this->post;
     }
 
     /**
@@ -236,5 +236,18 @@ class BlogComments
     public function getClientIp(): string
     {
         return $this->clientIp;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return sprintf(
+            '%d-%s-%d',
+            $this->commentId,
+            $this->commentUsername,
+            $this->commentTimestamp
+        );
     }
 }

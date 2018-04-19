@@ -73,10 +73,10 @@ feed:
         _format: xml
     methods: [GET]
 
-#easy_admin_bundle:
-#    resource: "@EasyAdminBundle/Controller/AdminController.php"
-#    type:     annotation
-#    prefix:   /admin
+easy_admin_bundle:
+    resource: "@EasyAdminBundle/Controller/AdminController.php"
+    type:     annotation
+    prefix:   /admin
 
 logout:
     path: /logout

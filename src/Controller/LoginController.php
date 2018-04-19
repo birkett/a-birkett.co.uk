@@ -50,7 +50,7 @@ class LoginController extends Controller
         $securityContext = $this->container->get('security.authorization_checker');
 
         if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('easyadmin');
         }
 
         $error = $authUtils->getLastAuthenticationError();

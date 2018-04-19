@@ -95,7 +95,7 @@ class BlogPosts
     /**
      * @var BlogComments[]
      *
-     * @ORM\OneToMany(targetEntity="BlogComments", mappedBy="postId")
+     * @ORM\OneToMany(targetEntity="BlogComments", mappedBy="post")
      */
     private $comments;
 
@@ -200,7 +200,7 @@ class BlogPosts
      *
      * @return bool
      */
-    public function isDraft(): bool
+    public function getPostDraft(): bool
     {
         return $this->postDraft;
     }
@@ -224,7 +224,7 @@ class BlogPosts
      *
      * @return bool
      */
-    public function isTweeted(): bool
+    public function getPostTweeted(): bool
     {
         return $this->postTweeted;
     }
@@ -261,5 +261,15 @@ class BlogPosts
         $this->comments[] = $comment;
 
         return $this;
+    }
+
+    /**
+     * Return the post title when treated as a string
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->postTitle;
     }
 }
