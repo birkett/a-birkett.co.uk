@@ -10,11 +10,11 @@
 
         {% for post in posts %}
         <item>
-            <title>{{ post.posttitle }}</title>
-            <description><![CDATA[{{ post.postcontent }}]]></description>
-            <link>{{ url('homepage') }}blog/{{ post.postid }}</link>
-            <pubDate>{{ post.posttimestamp }}</pubDate>
-            <guid isPermaLink="false">{{ post.posttimestamp }}</guid>
+            <title>{{ post.getPostTitle() }}</title>
+            <description><![CDATA[{{ post.getPostContent() }}]]></description>
+            <link>{{ url('homepage') }}blog/{{ post.getPostId() }}</link>
+            <pubDate>{{ post.getPostTimestamp()|date }}</pubDate>
+            <guid isPermaLink="false">{{ post.getPostTimestamp()|date }}</guid>
         </item>
         {% endfor %}
     </channel>

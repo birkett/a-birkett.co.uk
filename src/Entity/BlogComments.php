@@ -207,11 +207,11 @@ class BlogComments
     /**
      * Get comment timestamp
      *
-     * @return int
+     * @return \DateTime
      */
-    public function getCommentTimestamp(): int
+    public function getCommentTimestamp(): \DateTime
     {
-        return $this->commentTimestamp;
+        return (new \DateTime)->setTimestamp($this->commentTimestamp);
     }
 
     /**

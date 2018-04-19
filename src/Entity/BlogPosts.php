@@ -126,11 +126,11 @@ class BlogPosts
     /**
      * Get postTimestamp
      *
-     * @return int
+     * @return \DateTime
      */
-    public function getPostTimestamp(): int
+    public function getPostTimestamp(): \DateTime
     {
-        return $this->postTimestamp;
+        return (new \DateTime())->setTimestamp($this->postTimestamp);
     }
 
     /**

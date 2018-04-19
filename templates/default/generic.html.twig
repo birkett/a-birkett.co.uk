@@ -3,8 +3,8 @@
 {% block body %}
 <div class="fadein"></div>
 <div class="post">
-    <h2>{{ page.getPagetitle() }}</h2>
-    {{ page.getPagecontent() }}
+    <h2>{{ page.getPageTitle() }}</h2>
+    {{ page.getPageContent()|raw }}
 </div>
 <div class="fadeout"></div>
 {% endblock %}

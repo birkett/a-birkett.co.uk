@@ -5,20 +5,20 @@
         <div class="fadein"></div>
         <div class="post">
             <div class="postavatar">
-                <img src="/img/avatar.png" alt="avatar"/>
+                <img src="{{ asset('assets/images/avatar.png') }}" alt="avatar"/>
             </div>
-            <a href="/blog/{{ post.postId }}"><h2>{{ post.postTitle }}</h2></a>
-            <p class="timestamp">{{ post.postTimestamp }}</p>
-            {{ post.postcontent }}
-            <a class="right" href="/blog/{{ post.postId }}">Comments({{ post.getCommentsCount() }})</a>
+            <a href="/blog/{{ post.getPostId() }}"><h2>{{ post.getPostTitle() }}</h2></a>
+            <p class="timestamp">{{ post.getPostTimestamp()|date }}</p>
+            {{ post.getPostContent()|raw }}
+            <a class="right" href="/blog/{{ post.getPostId() }}">Comments({{ post.getCommentsCount() }})</a>
         </div>
         <div class="fadeout"></div>
         {% if posts|length <= 1 %}
             {% for comment in post.comments %}
                 <div class="fadein"></div>
                 <div class="post">
-                    <p class="timestamp">Posted by {{ comment.commentUsername }} on {{ comment.commentTimestamp }}</p>
-                    <p>{{ comment.commentText }}</p>
+                    <p class="timestamp">Posted by {{ comment.getCommentUsername() }} on {{ comment.getCommentTimestamp()|date }}</p>
+                    <p>{{ comment.getCommentText()|raw }}</p>
                 </div>
                 <div class="fadeout"></div>
             {% endfor %}
