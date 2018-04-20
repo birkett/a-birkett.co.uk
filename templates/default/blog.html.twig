@@ -4,14 +4,14 @@
     {% for post in posts %}
         {% embed 'blog/post.html.twig' %}{% endembed %}
 
-        {% if posts|length <= 1 %}
+        {% if posts|length == 1 %}
             {% for comment in post.comments %}
                 {% embed 'blog/comment.html.twig' %}{% endembed %}
             {% endfor %}
         {% endif %}
     {% endfor %}
 
-    {% if posts|length <= 1 %}
+    {% if posts|length == 1 %}
         {% embed 'blog/newcomment.html.twig' %}{% endembed %}
     {% endif %}
 

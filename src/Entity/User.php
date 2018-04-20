@@ -86,6 +86,18 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @param string $username
+     *
+     * @return User
+     */
+    public function setUsername(string $username): User
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
      * Get username
      *
      * @return string|null

@@ -107,6 +107,13 @@ class Comment
      */
     private $clientIp;
 
+    /**
+     * Comment constructor.
+     */
+    public function __construct()
+    {
+        $this->setCommentTimestamp(new \DateTime());
+    }
 
     /**
      * Get commentid

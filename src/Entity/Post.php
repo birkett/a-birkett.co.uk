@@ -104,6 +104,7 @@ class Post
      */
     public function __construct()
     {
+        $this->setPostTimestamp(new \DateTime());
         $this->setPostDraft(false);
         $this->setPostTweeted(false);
     }
