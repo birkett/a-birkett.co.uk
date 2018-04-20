@@ -59,9 +59,9 @@ class GenericController extends Controller
             ->findOneBy(['pageName' => $pageName]);
 
         if ($page === null) {
-            throw new EntityNotFoundException('Page (' . $pageName . ') not found.');
+            throw new EntityNotFoundException('Page ('.$pageName.') not found.');
         }
 
         return $this->render('default/generic.html.twig', ['page' => $page]);
-    }
-}
+    }//end indexAction()
+}//end class

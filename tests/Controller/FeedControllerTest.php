@@ -41,6 +41,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class FeedControllerTest extends WebTestCase
 {
+    /**
+     * Test the feed page.
+     */
     public function testFeed(): void
     {
         $client = static::createClient();
@@ -49,5 +52,5 @@ class FeedControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals('text/xml; charset=UTF-8', $client->getResponse()->headers->get('Content-Type'));
-    }
-}
+    }//end testFeed()
+}//end class

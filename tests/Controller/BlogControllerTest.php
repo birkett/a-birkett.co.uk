@@ -41,6 +41,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class BlogControllerTest extends WebTestCase
 {
+    /**
+     * Test the blog page.
+     */
     public function testBlog(): void
     {
         $client = static::createClient();
@@ -49,5 +52,5 @@ class BlogControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Anthony Birkett', $crawler->filter('#container h1')->text());
-    }
-}
+    }//end testBlog()
+}//end class

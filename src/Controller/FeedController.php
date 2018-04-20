@@ -66,5 +66,5 @@ class FeedController extends Controller
         $request->setFormat('xml', 'text/xml');
 
         return $this->render('feed.xml.twig', ['posts' => $blogPosts]);
-    }
-}
+    }//end indexAction()
+}//end class

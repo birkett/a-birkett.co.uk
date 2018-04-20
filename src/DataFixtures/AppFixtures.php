@@ -63,6 +63,7 @@ class AppFixtures extends Fixture
      */
     private $manager;
 
+
     /**
      * @param ObjectManager $manager
      */
@@ -75,7 +76,8 @@ class AppFixtures extends Fixture
         $this->createUsers();
 
         $manager->flush();
-    }
+    }//end load()
+
 
     /**
      * Create pages.
@@ -90,7 +92,8 @@ class AppFixtures extends Fixture
 
             $this->manager->persist($page);
         }
-    }
+    }//end createPages()
+
 
     /**
      * Create posts.
@@ -104,7 +107,8 @@ class AppFixtures extends Fixture
         $this->manager->persist($post);
 
         $this->createComments($post);
-    }
+    }//end createPosts()
+
 
     /**
      * @param Post $post
@@ -118,19 +122,20 @@ class AppFixtures extends Fixture
         $comment->setCommentText('Test comment');
 
         $this->manager->persist($comment);
-    }
+    }//end createComments()
+
 
     /**
      * Create users.
      */
     private function createUsers(): void
     {
-        $user = new User();
+        $user            = new User();
         $passwordEncoder = new BCryptPasswordEncoder(10);
 
         $user->setUsername('test');
         $user->setPassword($passwordEncoder->encodePassword('test', 'test'));
 
         $this->manager->persist($user);
-    }
-}
+    }//end createUsers()
+}//end class

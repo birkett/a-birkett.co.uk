@@ -49,7 +49,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Page
 {
     /**
-     * @var int
+     * @var integer
      *
      * @ORM\Column(name="intPageId", type="integer", nullable=false)
      * @ORM\Id
@@ -78,6 +78,7 @@ class Page
      */
     private $pageTitle;
 
+
     /**
      * Get pageId
      *
@@ -86,7 +87,8 @@ class Page
     public function getPageId(): ?int
     {
         return $this->pageId;
-    }
+    }//end getPageId()
+
 
     /**
      * Set pageName
@@ -100,7 +102,8 @@ class Page
         $this->pageName = $pageName;
 
         return $this;
-    }
+    }//end setPageName()
+
 
     /**
      * Get pageName
@@ -110,7 +113,8 @@ class Page
     public function getPageName(): ?string
     {
         return $this->pageName;
-    }
+    }//end getPageName()
+
 
     /**
      * Set pageContent
@@ -124,7 +128,8 @@ class Page
         $this->pageContent = $pageContent;
 
         return $this;
-    }
+    }//end setPageContent()
+
 
     /**
      * Get pageContent
@@ -134,7 +139,8 @@ class Page
     public function getPageContent(): ?string
     {
         return $this->pageContent;
-    }
+    }//end getPageContent()
+
 
     /**
      * Set pageTitle
@@ -148,7 +154,8 @@ class Page
         $this->pageTitle = $pageTitle;
 
         return $this;
-    }
+    }//end setPageTitle()
+
 
     /**
      * Get pageTitle
@@ -158,5 +165,5 @@ class Page
     public function getPageTitle(): ?string
     {
         return $this->pageTitle;
-    }
-}
+    }//end getPageTitle()
+}//end class

@@ -42,10 +42,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Comment
  *
- * @ORM\Table(
- *     name="tblComment",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="UK_intCommentId", columns={"intCommentId"})}
- *     )
+ * @ORM\Table(name="tblComment", uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="UK_intCommentId", columns={"intCommentId"})
+ * })
  * @ORM\Entity
  */
 class Comment
@@ -53,9 +52,9 @@ class Comment
     /**
      * Unique comment ID.
      *
-     * @var int
+     * @var integer
      *
-     * @ORM\Column(name="intCommentId", type="integer", nullable=false)
+     * @ORM\Column(name="intCommentId",         type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -67,7 +66,7 @@ class Comment
      * @var Post
      *
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
-     * @ORM\JoinColumn(name="intPostId", referencedColumnName="intPostId")
+     * @ORM\JoinColumn(name="intPostId",   referencedColumnName="intPostId")
      */
     private $post;
 
@@ -107,13 +106,15 @@ class Comment
      */
     private $clientIp;
 
+
     /**
      * Comment constructor.
      */
     public function __construct()
     {
         $this->setCommentTimestamp(new \DateTime());
-    }
+    }//end __construct()
+
 
     /**
      * Get commentid
@@ -123,7 +124,8 @@ class Comment
     public function getCommentId(): ?int
     {
         return $this->commentId;
-    }
+    }//end getCommentId()
+
 
     /**
      * Set postid
@@ -137,7 +139,8 @@ class Comment
         $this->post = $post;
 
         return $this;
-    }
+    }//end setPost()
+
 
     /**
      * Get post
@@ -147,7 +150,8 @@ class Comment
     public function getPost(): ?Post
     {
         return $this->post;
-    }
+    }//end getPost()
+
 
     /**
      * Set comment username
@@ -161,7 +165,8 @@ class Comment
         $this->commentUsername = $commentUsername;
 
         return $this;
-    }
+    }//end setCommentUsername()
+
 
     /**
      * Get comment username.
@@ -171,7 +176,8 @@ class Comment
     public function getCommentUsername(): ?string
     {
         return $this->commentUsername;
-    }
+    }//end getCommentUsername()
+
 
     /**
      * Set comment text
@@ -185,7 +191,8 @@ class Comment
         $this->commentText = $commentText;
 
         return $this;
-    }
+    }//end setCommentText()
+
 
     /**
      * Get comment text.
@@ -195,7 +202,8 @@ class Comment
     public function getCommentText(): ?string
     {
         return $this->commentText;
-    }
+    }//end getCommentText()
+
 
     /**
      * Set comment timestamp
@@ -209,7 +217,8 @@ class Comment
         $this->commentTimestamp = $commentTimestamp;
 
         return $this;
-    }
+    }//end setCommentTimestamp()
+
 
     /**
      * Get comment timestamp
@@ -219,7 +228,8 @@ class Comment
     public function getCommentTimestamp(): ?\DateTime
     {
         return $this->commentTimestamp;
-    }
+    }//end getCommentTimestamp()
+
 
     /**
      * Set clientip
@@ -233,7 +243,8 @@ class Comment
         $this->clientIp = $clientIp;
 
         return $this;
-    }
+    }//end setClientIp()
+
 
     /**
      * Get client ip
@@ -243,7 +254,8 @@ class Comment
     public function getClientIp(): ?string
     {
         return $this->clientIp;
-    }
+    }//end getClientIp()
+
 
     /**
      * @return string
@@ -256,5 +268,5 @@ class Comment
             $this->commentUsername,
             $this->commentTimestamp->format('Y-m-d H:i:s')
         );
-    }
-}
+    }//end __toString()
+}//end class

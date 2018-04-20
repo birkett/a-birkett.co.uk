@@ -61,7 +61,8 @@ class PostRepository extends EntityRepository
             ->setMaxResults($postsPerPage)
             ->getQuery()
             ->getResult();
-    }
+    }//end getPostsOnPage()
+
 
     /**
      * @return int
@@ -75,5 +76,5 @@ class PostRepository extends EntityRepository
         $query = $queryBuilder->select('COUNT(p.postId)')->from(Post::class, 'p');
 
         return (int) $query->getQuery()->getSingleScalarResult();
-    }
-}
+    }//end getNumberOfPosts()
+}//end class

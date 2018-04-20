@@ -79,5 +79,5 @@ class BlogController extends Controller
                 'postsperpage' => $postsPerPage,
             ]
         );
-    }
-}
+    }//end indexAction()
+}//end class

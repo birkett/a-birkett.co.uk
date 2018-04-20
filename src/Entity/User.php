@@ -43,19 +43,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * User
  *
- * @ORM\Table(
- *     name="tblUser",
- *     uniqueConstraints={
- *      @ORM\UniqueConstraint(name="UK_intUserId", columns={"intUserId"}),
- *      @ORM\UniqueConstraint(name="UK_strUsername", columns={"strUsername"})
- *     }
- *     )
+ * @ORM\Table(name="tblUser", uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="UK_intUserId", columns={"intUserId"}),
+ *     @ORM\UniqueConstraint(name="UK_strUsername", columns={"strUsername"})
+ * })
  * @ORM\Entity
  */
 class User implements UserInterface, \Serializable
 {
     /**
-     * @var int
+     * @var integer
      *
      * @ORM\Column(name="intUserId", type="integer", nullable=false)
      * @ORM\Id
@@ -77,13 +74,15 @@ class User implements UserInterface, \Serializable
      */
     private $password;
 
+
     /**
      * @return int|null
      */
     public function getId(): ?int
     {
         return $this->id;
-    }
+    }//end getId()
+
 
     /**
      * @param string $username
@@ -95,7 +94,8 @@ class User implements UserInterface, \Serializable
         $this->username = $username;
 
         return $this;
-    }
+    }//end setUsername()
+
 
     /**
      * Get username
@@ -105,7 +105,8 @@ class User implements UserInterface, \Serializable
     public function getUsername(): ?string
     {
         return $this->username;
-    }
+    }//end getUsername()
+
 
     /**
      * Set password
@@ -119,7 +120,8 @@ class User implements UserInterface, \Serializable
         $this->password = $password;
 
         return $this;
-    }
+    }//end setPassword()
+
 
     /**
      * Get password
@@ -129,7 +131,8 @@ class User implements UserInterface, \Serializable
     public function getPassword(): ?string
     {
         return $this->password;
-    }
+    }//end getPassword()
+
 
     /**
      * Gets the password salt. Null when using bcrypt
@@ -138,7 +141,8 @@ class User implements UserInterface, \Serializable
      */
     public function getSalt(): void
     {
-    }
+    }//end getSalt()
+
 
     /**
      * Get the users associated roles
@@ -147,21 +151,26 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles(): array
     {
-        return array('ROLE_ADMIN');
-    }
+        return ['ROLE_ADMIN'];
+    }//end getRoles()
+
 
     /**
      * Remove old credentials
      */
     public function eraseCredentials(): void
     {
-    }
+    }//end eraseCredentials()
 
-    /** @see \Serializable::serialize() */
+
+    /**
+     * @see \Serializable::serialize()
+     */
     public function serialize()
     {
         return serialize([$this->id, $this->username, $this->password]);
-    }
+    }//end serialize()
+
 
     /**
      * @param string $serialized
@@ -169,9 +178,13 @@ class User implements UserInterface, \Serializable
      */
     public function unserialize($serialized): void
     {
-        [$this->id, $this->username, $this->password] = unserialize(
+        [
+            $this->id,
+            $this->username,
+            $this->password,
+        ] = unserialize(
             $serialized,
             ['allowed_classes' => [\Serializable::class]]
         );
-    }
-}
+    }//end unserialize()
+}//end class

@@ -48,5 +48,5 @@ class IndexController extends Controller
     public function indexAction(): Response
     {
         return $this->render('default/index.html.twig');
-    }
-}
+    }//end indexAction()
+}//end class

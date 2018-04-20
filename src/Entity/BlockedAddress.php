@@ -42,19 +42,16 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * BlockedAddress
  *
- * @ORM\Table(
- *     name="tblBlockedAddress",
- *     uniqueConstraints={
- *      @ORM\UniqueConstraint(name="UK_intBlockedAddressId", columns={"intBlockedAddressId"}),
- *      @ORM\UniqueConstraint(name="UK_strAddress", columns={"strAddress"}),
- *     }
- *     )
+ * @ORM\Table(name="tblBlockedAddress", uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="UK_intBlockedAddressId", columns={"intBlockedAddressId"}),
+ *     @ORM\UniqueConstraint(name="UK_strAddress",          columns={"strAddress"}),
+ * })
  * @ORM\Entity
  */
 class BlockedAddress
 {
     /**
-     * @var int
+     * @var integer
      *
      * @ORM\Column(name="intBlockedAddressId", type="integer", nullable=false)
      * @ORM\Id
@@ -80,13 +77,15 @@ class BlockedAddress
      */
     private $timestamp;
 
+
     /**
      * BlockedAddress constructor.
      */
     public function __construct()
     {
         $this->setTimestamp(new \DateTime());
-    }
+    }//end __construct()
+
 
     /**
      * @return int|null
@@ -94,7 +93,8 @@ class BlockedAddress
     public function getId(): ?int
     {
         return $this->id;
-    }
+    }//end getId()
+
 
     /**
      * @param string $address
@@ -106,7 +106,8 @@ class BlockedAddress
         $this->address = $address;
 
         return $this;
-    }
+    }//end setAddress()
+
 
     /**
      * Get address
@@ -116,7 +117,8 @@ class BlockedAddress
     public function getAddress(): ?string
     {
         return $this->address;
-    }
+    }//end getAddress()
+
 
     /**
      * Set timestamp
@@ -130,7 +132,8 @@ class BlockedAddress
         $this->timestamp = $timestamp;
 
         return $this;
-    }
+    }//end setTimestamp()
+
 
     /**
      * Get timestamp
@@ -140,5 +143,5 @@ class BlockedAddress
     public function getTimestamp(): \DateTime
     {
         return $this->timestamp;
-    }
-}
+    }//end getTimestamp()
+}//end class

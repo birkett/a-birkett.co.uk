@@ -41,6 +41,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class GenericControllerTest extends WebTestCase
 {
+    /**
+     * Test the genetic pages.
+     */
     public function testGenericPages(): void
     {
         $client = static::createClient();
@@ -49,5 +52,5 @@ class GenericControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('About Anthony', $crawler->filter('.post h2')->text());
-    }
-}
+    }//end testGenericPages()
+}//end class

@@ -42,10 +42,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Tweet
  *
- * @ORM\Table(
- *     name="tblTweet",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="UK_intTweetId", columns={"intTweetId"})}
- *     )
+ * @ORM\Table(name="tblTweet", uniqueConstraints={@ORM\UniqueConstraint(name="UK_intTweetId", columns={"intTweetId"})})
  * @ORM\Entity
  */
 class Tweet
@@ -101,6 +98,7 @@ class Tweet
      */
     private $tweetFetchTime;
 
+
     /**
      * Get tweetId
      *
@@ -109,7 +107,8 @@ class Tweet
     public function getTweetId(): ?string
     {
         return $this->tweetId;
-    }
+    }//end getTweetId()
+
 
     /**
      * Set tweetTimestamp
@@ -123,7 +122,8 @@ class Tweet
         $this->tweetTimestamp = $tweetTimestamp;
 
         return $this;
-    }
+    }//end setTweetTimestamp()
+
 
     /**
      * Get tweetTimestamp
@@ -133,7 +133,8 @@ class Tweet
     public function getTweetTimestamp(): ?\DateTime
     {
         return $this->tweetTimestamp;
-    }
+    }//end getTweetTimestamp()
+
 
     /**
      * Set tweetText
@@ -147,7 +148,8 @@ class Tweet
         $this->tweetText = $tweetText;
 
         return $this;
-    }
+    }//end setTweetText()
+
 
     /**
      * Get tweetText
@@ -157,7 +159,8 @@ class Tweet
     public function getTweetText(): ?string
     {
         return $this->tweetText;
-    }
+    }//end getTweetText()
+
 
     /**
      * Set tweetAvatar
@@ -171,7 +174,8 @@ class Tweet
         $this->tweetAvatar = $tweetAvatar;
 
         return $this;
-    }
+    }//end setTweetAvatar()
+
 
     /**
      * Get tweetAvatar
@@ -181,7 +185,8 @@ class Tweet
     public function getTweetAvatar(): ?string
     {
         return $this->tweetAvatar;
-    }
+    }//end getTweetAvatar()
+
 
     /**
      * Set tweetName
@@ -195,7 +200,8 @@ class Tweet
         $this->tweetName = $tweetName;
 
         return $this;
-    }
+    }//end setTweetName()
+
 
     /**
      * Get tweetName
@@ -205,7 +211,8 @@ class Tweet
     public function getTweetName(): ?string
     {
         return $this->tweetName;
-    }
+    }//end getTweetName()
+
 
     /**
      * Set tweetScreenName
@@ -219,7 +226,8 @@ class Tweet
         $this->tweetScreenName = $tweetScreenName;
 
         return $this;
-    }
+    }//end setTweetScreenName()
+
 
     /**
      * Get tweetScreenName
@@ -229,7 +237,8 @@ class Tweet
     public function getTweetScreenName(): ?string
     {
         return $this->tweetScreenName;
-    }
+    }//end getTweetScreenName()
+
 
     /**
      * Set tweetFetchTime
@@ -243,7 +252,8 @@ class Tweet
         $this->tweetFetchTime = $tweetFetchTime;
 
         return $this;
-    }
+    }//end setTweetFetchTime()
+
 
     /**
      * Get tweetFetchTime
@@ -253,5 +263,5 @@ class Tweet
     public function getTweetFetchTime(): ?\DateTime
     {
         return $this->tweetFetchTime;
-    }
-}
+    }//end getTweetFetchTime()
+}//end class

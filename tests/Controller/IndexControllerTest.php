@@ -41,6 +41,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class IndexControllerTest extends WebTestCase
 {
+    /**
+     * Test the index page.
+     */
     public function testIndex(): void
     {
         $client = static::createClient();
@@ -49,5 +52,5 @@ class IndexControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Anthony Birkett', $crawler->filter('#container h1')->text());
-    }
-}
+    }//end testIndex()
+}//end class

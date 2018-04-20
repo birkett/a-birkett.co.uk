@@ -60,9 +60,12 @@ class LoginController extends Controller
 
         $lastUsername = $authUtils->getLastUsername();
 
-        return $this->render('default/login.html.twig', [
-            'last_username' => $lastUsername,
-            'error' => $error,
-        ]);
-    }
-}
+        return $this->render(
+            'default/login.html.twig',
+            [
+                'last_username' => $lastUsername,
+                'error' => $error,
+            ]
+        );
+    }//end loginAction()
+}//end class

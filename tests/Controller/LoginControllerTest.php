@@ -41,6 +41,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class LoginControllerTest extends WebTestCase
 {
+    /**
+     * Test the login page.
+     */
     public function testLogin(): void
     {
         $client = static::createClient();
@@ -49,5 +52,5 @@ class LoginControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Please log in', $crawler->filter('.post h2')->text());
-    }
-}
+    }//end testLogin()
+}//end class

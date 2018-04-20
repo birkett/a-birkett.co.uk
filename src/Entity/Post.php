@@ -49,7 +49,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Post
 {
     /**
-     * @var int
+     * @var integer
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -79,14 +79,14 @@ class Post
     private $postContent;
 
     /**
-     * @var bool
+     * @var boolean
      *
      * @ORM\Column(name="bolDraft", type="boolean", nullable=false)
      */
     private $postDraft;
 
     /**
-     * @var bool
+     * @var boolean
      *
      * @ORM\Column(name="bolTweeted", type="boolean", nullable=false)
      */
@@ -99,6 +99,7 @@ class Post
      */
     private $comments;
 
+
     /**
      * Post constructor.
      */
@@ -107,7 +108,8 @@ class Post
         $this->setPostTimestamp(new \DateTime());
         $this->setPostDraft(false);
         $this->setPostTweeted(false);
-    }
+    }//end __construct()
+
 
     /**
      * Get postId
@@ -117,7 +119,8 @@ class Post
     public function getPostId(): ?int
     {
         return $this->postId;
-    }
+    }//end getPostId()
+
 
     /**
      * Set postTimestamp
@@ -131,7 +134,8 @@ class Post
         $this->postTimestamp = $postTimestamp;
 
         return $this;
-    }
+    }//end setPostTimestamp()
+
 
     /**
      * Get postTimestamp
@@ -141,7 +145,8 @@ class Post
     public function getPostTimestamp(): ?\DateTime
     {
         return $this->postTimestamp;
-    }
+    }//end getPostTimestamp()
+
 
     /**
      * Set postTitle
@@ -155,7 +160,8 @@ class Post
         $this->postTitle = $postTitle;
 
         return $this;
-    }
+    }//end setPostTitle()
+
 
     /**
      * Get postTitle
@@ -165,7 +171,8 @@ class Post
     public function getPostTitle(): ?string
     {
         return $this->postTitle;
-    }
+    }//end getPostTitle()
+
 
     /**
      * Set postContent
@@ -179,7 +186,8 @@ class Post
         $this->postContent = $postContent;
 
         return $this;
-    }
+    }//end setPostContent()
+
 
     /**
      * Get postContent
@@ -189,7 +197,8 @@ class Post
     public function getPostContent(): ?string
     {
         return $this->postContent;
-    }
+    }//end getPostContent()
+
 
     /**
      * Set postDraft
@@ -203,7 +212,8 @@ class Post
         $this->postDraft = $postDraft;
 
         return $this;
-    }
+    }//end setPostDraft()
+
 
     /**
      * Get postDraft
@@ -213,7 +223,8 @@ class Post
     public function getPostDraft(): bool
     {
         return $this->postDraft;
-    }
+    }//end getPostDraft()
+
 
     /**
      * Set postTweeted
@@ -227,7 +238,8 @@ class Post
         $this->postTweeted = $postTweeted;
 
         return $this;
-    }
+    }//end setPostTweeted()
+
 
     /**
      * Get postTweeted
@@ -237,7 +249,8 @@ class Post
     public function getPostTweeted(): bool
     {
         return $this->postTweeted;
-    }
+    }//end getPostTweeted()
+
 
     /**
      * Get comments
@@ -247,7 +260,8 @@ class Post
     public function getComments()
     {
         return $this->comments;
-    }
+    }//end getComments()
+
 
     /**
      * Get the number of comments on a post
@@ -257,7 +271,8 @@ class Post
     public function getCommentsCount(): int
     {
         return count($this->comments);
-    }
+    }//end getCommentsCount()
+
 
     /**
      * Add comment
@@ -271,7 +286,8 @@ class Post
         $this->comments[] = $comment;
 
         return $this;
-    }
+    }//end addComment()
+
 
     /**
      * Return the post title when treated as a string
@@ -281,5 +297,5 @@ class Post
     public function __toString(): string
     {
         return $this->postTitle;
-    }
-}
+    }//end __toString()
+}//end class
