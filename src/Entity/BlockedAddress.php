@@ -33,7 +33,6 @@
  * @link      http://www.a-birkett.co.uk
  */
 
-
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -41,122 +40,105 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * SitePages
+ * BlockedAddress
  *
- * @ORM\Table(name="site_pages", uniqueConstraints={@ORM\UniqueConstraint(name="page_id_UNIQUE", columns={"pageID"})})
+ * @ORM\Table(
+ *     name="tblBlockedAddress",
+ *     uniqueConstraints={
+ *      @ORM\UniqueConstraint(name="UK_intBlockedAddressId", columns={"intBlockedAddressId"}),
+ *      @ORM\UniqueConstraint(name="UK_strAddress", columns={"strAddress"}),
+ *     }
+ *     )
  * @ORM\Entity
  */
-class SitePages
+class BlockedAddress
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="pageID", type="integer", nullable=false)
+     * @ORM\Column(name="intBlockedAddressId", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $pageId;
+    private $id;
 
     /**
+     * IP Address.
+     *
      * @var string
      *
-     * @ORM\Column(name="pageName", type="string", length=40, nullable=false)
+     * @ORM\Column(name="strAddress", type="string", length=180, nullable=false)
      */
-    private $pageName;
+    private $address;
 
     /**
-     * @var string
+     * Blocked time.
      *
-     * @ORM\Column(name="pageContent", type="text", length=65535, nullable=false)
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dtmTimestamp", type="datetime", nullable=false)
      */
-    private $pageContent;
+    private $timestamp;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="pageTitle", type="string", length=280, nullable=false)
+     * BlockedAddress constructor.
      */
-    private $pageTitle;
-
-    /**
-     * Get pageId
-     *
-     * @return int
-     */
-    public function getPageId(): int
+    public function __construct()
     {
-        return $this->pageId;
+        $this->setTimestamp(new \DateTime());
     }
 
     /**
-     * Set pageName
-     *
-     * @param string $pageName
-     *
-     * @return SitePages
+     * @return int|null
      */
-    public function setPageName($pageName): SitePages
+    public function getId(): ?int
     {
-        $this->pageName = $pageName;
+        return $this->id;
+    }
+
+    /**
+     * @param string $address
+     *
+     * @return BlockedAddress
+     */
+    public function setAddress(string $address): BlockedAddress
+    {
+        $this->address = $address;
 
         return $this;
     }
 
     /**
-     * Get pageName
+     * Get address
      *
-     * @return string
+     * @return string|null
      */
-    public function getPageName(): string
+    public function getAddress(): ?string
     {
-        return $this->pageName;
+        return $this->address;
     }
 
     /**
-     * Set pageContent
+     * Set timestamp
      *
-     * @param string $pageContent
+     * @param \DateTime $timestamp Timestamp.
      *
-     * @return SitePages
+     * @return BlockedAddress
      */
-    public function setPageContent($pageContent): SitePages
+    public function setTimestamp(\DateTime $timestamp): BlockedAddress
     {
-        $this->pageContent = $pageContent;
+        $this->timestamp = $timestamp;
 
         return $this;
     }
 
     /**
-     * Get pageContent
+     * Get timestamp
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getPageContent(): string
+    public function getTimestamp(): \DateTime
     {
-        return $this->pageContent;
-    }
-
-    /**
-     * Set pageTitle
-     *
-     * @param string $pageTitle
-     *
-     * @return SitePages
-     */
-    public function setPageTitle($pageTitle): SitePages
-    {
-        $this->pageTitle = $pageTitle;
-
-        return $this;
-    }
-
-    /**
-     * Get pageTitle
-     *
-     * @return string
-     */
-    public function getPageTitle(): string
-    {
-        return $this->pageTitle;
+        return $this->timestamp;
     }
 }

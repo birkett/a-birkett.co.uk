@@ -12,7 +12,7 @@
         <item>
             <title>{{ post.getPostTitle() }}</title>
             <description><![CDATA[{{ post.getPostContent() }}]]></description>
-            <link>{{ url('homepage') }}blog/{{ post.getPostId() }}</link>
+            <link>{{ url('blog') }}/{{ post.getPostId() }}</link>
             <pubDate>{{ post.getPostTimestamp()|date }}</pubDate>
             <guid isPermaLink="false">{{ post.getPostTimestamp()|date }}</guid>
         </item>

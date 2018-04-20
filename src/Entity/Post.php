@@ -41,70 +41,79 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * BlogPosts
+ * Post
  *
- * @ORM\Entity(repositoryClass="App\Repository\BlogPostsRepository")
- * @ORM\Table(name="blog_posts", uniqueConstraints={@ORM\UniqueConstraint(name="post_id_UNIQUE", columns={"postID"})})
+ * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
+ * @ORM\Table(name="tblPost", uniqueConstraints={@ORM\UniqueConstraint(name="UK_intPostId", columns={"intPostId"})})
  */
-class BlogPosts
+class Post
 {
     /**
      * @var int
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(name="postID", type="integer", nullable=false)
+     * @ORM\Column(name="intPostId", type="integer", nullable=false)
      */
     private $postId;
 
     /**
-     * @var int
+     * @var \DateTime
      *
-     * @ORM\Column(name="postTimestamp", type="integer", nullable=false)
+     * @ORM\Column(name="dtmTimestamp", type="datetime", nullable=false)
      */
     private $postTimestamp;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="postTitle", type="string", length=280, nullable=false)
+     * @ORM\Column(name="strTitle", type="string", length=280, nullable=false)
      */
     private $postTitle;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="postContent", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="strContent", type="text", length=65535, nullable=false)
      */
     private $postContent;
 
     /**
-     * @var boolean
+     * @var bool
      *
-     * @ORM\Column(name="postDraft", type="boolean", nullable=false)
+     * @ORM\Column(name="bolDraft", type="boolean", nullable=false)
      */
     private $postDraft;
 
     /**
-     * @var boolean
+     * @var bool
      *
-     * @ORM\Column(name="postTweeted", type="boolean", nullable=false)
+     * @ORM\Column(name="bolTweeted", type="boolean", nullable=false)
      */
     private $postTweeted;
 
     /**
-     * @var BlogComments[]
+     * @var Comment[]
      *
-     * @ORM\OneToMany(targetEntity="BlogComments", mappedBy="post")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
      */
     private $comments;
 
     /**
+     * Post constructor.
+     */
+    public function __construct()
+    {
+        $this->setPostDraft(false);
+        $this->setPostTweeted(false);
+    }
+
+    /**
      * Get postId
      *
-     * @return int
+     * @return int|null
      */
-    public function getPostId(): int
+    public function getPostId(): ?int
     {
         return $this->postId;
     }
@@ -112,11 +121,11 @@ class BlogPosts
     /**
      * Set postTimestamp
      *
-     * @param integer $postTimestamp
+     * @param \DateTime $postTimestamp
      *
-     * @return BlogPosts
+     * @return Post
      */
-    public function setPostTimestamp($postTimestamp): BlogPosts
+    public function setPostTimestamp(\DateTime $postTimestamp): Post
     {
         $this->postTimestamp = $postTimestamp;
 
@@ -126,11 +135,11 @@ class BlogPosts
     /**
      * Get postTimestamp
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getPostTimestamp(): \DateTime
+    public function getPostTimestamp(): ?\DateTime
     {
-        return (new \DateTime())->setTimestamp($this->postTimestamp);
+        return $this->postTimestamp;
     }
 
     /**
@@ -138,9 +147,9 @@ class BlogPosts
      *
      * @param string $postTitle
      *
-     * @return BlogPosts
+     * @return Post
      */
-    public function setPostTitle($postTitle): BlogPosts
+    public function setPostTitle(string $postTitle): Post
     {
         $this->postTitle = $postTitle;
 
@@ -150,9 +159,9 @@ class BlogPosts
     /**
      * Get postTitle
      *
-     * @return string
+     * @return string|null
      */
-    public function getPostTitle(): string
+    public function getPostTitle(): ?string
     {
         return $this->postTitle;
     }
@@ -162,9 +171,9 @@ class BlogPosts
      *
      * @param string $postContent
      *
-     * @return BlogPosts
+     * @return Post
      */
-    public function setPostContent($postContent): BlogPosts
+    public function setPostContent(string $postContent): Post
     {
         $this->postContent = $postContent;
 
@@ -174,9 +183,9 @@ class BlogPosts
     /**
      * Get postContent
      *
-     * @return string
+     * @return string|null
      */
-    public function getPostContent(): string
+    public function getPostContent(): ?string
     {
         return $this->postContent;
     }
@@ -184,11 +193,11 @@ class BlogPosts
     /**
      * Set postDraft
      *
-     * @param boolean $postDraft
+     * @param bool $postDraft
      *
-     * @return BlogPosts
+     * @return Post
      */
-    public function setPostDraft($postDraft): BlogPosts
+    public function setPostDraft(bool $postDraft): Post
     {
         $this->postDraft = $postDraft;
 
@@ -208,11 +217,11 @@ class BlogPosts
     /**
      * Set postTweeted
      *
-     * @param boolean $postTweeted
+     * @param bool $postTweeted
      *
-     * @return BlogPosts
+     * @return Post
      */
-    public function setPostTweeted($postTweeted): BlogPosts
+    public function setPostTweeted(bool $postTweeted): Post
     {
         $this->postTweeted = $postTweeted;
 
@@ -232,7 +241,7 @@ class BlogPosts
     /**
      * Get comments
      *
-     * @return BlogComments[]|array|ArrayCollection
+     * @return Comment[]|array|ArrayCollection
      */
     public function getComments()
     {
@@ -252,11 +261,11 @@ class BlogPosts
     /**
      * Add comment
      *
-     * @param BlogComments $comment
+     * @param Comment $comment
      *
-     * @return BlogPosts
+     * @return Post
      */
-    public function addComment(BlogComments $comment): BlogPosts
+    public function addComment(Comment $comment): Post
     {
         $this->comments[] = $comment;
 

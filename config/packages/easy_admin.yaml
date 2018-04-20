@@ -1,14 +1,22 @@
 easy_admin:
+    site_name: 'a-birkett.co.uk Admin'
+
     entities:
         BlockedAddresses:
-            class: App\Entity\BlockedAddresses
+            label: 'Blocked Addresses'
+            class: App\Entity\BlockedAddress
+
         Comments:
-            class: App\Entity\BlogComments
+            class: App\Entity\Comment
+
         Posts:
-            class: App\Entity\BlogPosts
+            class: App\Entity\Post
+
         Pages:
-            class: App\Entity\SitePages
+            class: App\Entity\Page
+
         Tweets:
-            class: App\Entity\SiteTweets
+            class: App\Entity\Tweet
+
         Users:
-            class: App\Entity\SiteUsers
+            class: App\Entity\User

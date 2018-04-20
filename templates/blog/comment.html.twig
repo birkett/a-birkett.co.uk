@@ -1,0 +1,8 @@
+{% block comment %}
+    <div class="fadein"></div>
+    <div class="post">
+        <p class="timestamp">Posted by {{ comment.getCommentUsername() }} on {{ comment.getCommentTimestamp()|date }}</p>
+        <p>{{ comment.getCommentText()|raw }}</p>
+    </div>
+    <div class="fadeout"></div>
+{% endblock %}

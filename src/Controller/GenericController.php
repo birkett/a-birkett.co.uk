@@ -33,12 +33,14 @@
  * @link      http://www.a-birkett.co.uk
  */
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use App\Entity\SitePages;
+use App\Entity\Page;
 
 class GenericController extends Controller
 {
@@ -53,7 +55,7 @@ class GenericController extends Controller
     {
         $page = $this->getDoctrine()
             ->getManager()
-            ->getRepository(SitePages::class)
+            ->getRepository(Page::class)
             ->findOneBy(['pageName' => $pageName]);
 
         if ($page === null) {

@@ -40,22 +40,22 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * BlogComments
+ * Comment
  *
  * @ORM\Table(
- *     name="blog_comments",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="comment_id_UNIQUE", columns={"commentID"})}
+ *     name="tblComment",
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="UK_intCommentId", columns={"intCommentId"})}
  *     )
  * @ORM\Entity
  */
-class BlogComments
+class Comment
 {
     /**
      * Unique comment ID.
      *
      * @var int
      *
-     * @ORM\Column(name="commentID", type="integer", nullable=false)
+     * @ORM\Column(name="intCommentId", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -64,10 +64,10 @@ class BlogComments
     /**
      * Post this comment is on.
      *
-     * @var BlogPosts
+     * @var Post
      *
-     * @ORM\ManyToOne(targetEntity="BlogPosts", inversedBy="comments")
-     * @ORM\JoinColumn(name="postId", referencedColumnName="postID")
+     * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
+     * @ORM\JoinColumn(name="intPostId", referencedColumnName="intPostId")
      */
     private $post;
 
@@ -76,7 +76,7 @@ class BlogComments
      *
      * @var string
      *
-     * @ORM\Column(name="commentUsername", type="string", length=100, nullable=false)
+     * @ORM\Column(name="strUsername", type="string", length=100, nullable=false)
      */
     private $commentUsername;
 
@@ -85,16 +85,16 @@ class BlogComments
      *
      * @var string
      *
-     * @ORM\Column(name="commentText", type="string", length=4000, nullable=false)
+     * @ORM\Column(name="strContent", type="string", length=4000, nullable=false)
      */
     private $commentText;
 
     /**
      * Comment timestamp.
      *
-     * @var int
+     * @var \DateTime
      *
-     * @ORM\Column(name="commentTimestamp", type="integer", nullable=false)
+     * @ORM\Column(name="dtmTimestamp", type="datetime", nullable=false)
      */
     private $commentTimestamp;
 
@@ -103,7 +103,7 @@ class BlogComments
      *
      * @var string
      *
-     * @ORM\Column(name="clientIP", type="string", length=180, nullable=false)
+     * @ORM\Column(name="strClientIp", type="string", length=180, nullable=false)
      */
     private $clientIp;
 
@@ -111,9 +111,9 @@ class BlogComments
     /**
      * Get commentid
      *
-     * @return int
+     * @return int|null
      */
-    public function getCommentId(): int
+    public function getCommentId(): ?int
     {
         return $this->commentId;
     }
@@ -121,11 +121,11 @@ class BlogComments
     /**
      * Set postid
      *
-     * @param BlogPosts $post Post.
+     * @param Post $post Post.
      *
-     * @return BlogComments
+     * @return Comment
      */
-    public function setPost(BlogPosts $post): BlogComments
+    public function setPost(Post $post): Comment
     {
         $this->post = $post;
 
@@ -135,9 +135,9 @@ class BlogComments
     /**
      * Get post
      *
-     * @return BlogPosts
+     * @return Post|null
      */
-    public function getPost(): BlogPosts
+    public function getPost(): ?Post
     {
         return $this->post;
     }
@@ -147,9 +147,9 @@ class BlogComments
      *
      * @param string $commentUsername Username.
      *
-     * @return BlogComments
+     * @return Comment
      */
-    public function setCommentUsername($commentUsername): BlogComments
+    public function setCommentUsername(string $commentUsername): Comment
     {
         $this->commentUsername = $commentUsername;
 
@@ -159,9 +159,9 @@ class BlogComments
     /**
      * Get comment username.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCommentUsername(): string
+    public function getCommentUsername(): ?string
     {
         return $this->commentUsername;
     }
@@ -171,9 +171,9 @@ class BlogComments
      *
      * @param string $commentText Comment content.
      *
-     * @return BlogComments
+     * @return Comment
      */
-    public function setCommentText($commentText): BlogComments
+    public function setCommentText(string $commentText): Comment
     {
         $this->commentText = $commentText;
 
@@ -183,9 +183,9 @@ class BlogComments
     /**
      * Get comment text.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCommentText(): string
+    public function getCommentText(): ?string
     {
         return $this->commentText;
     }
@@ -193,11 +193,11 @@ class BlogComments
     /**
      * Set comment timestamp
      *
-     * @param integer $commentTimestamp Timestamp.
+     * @param \DateTime $commentTimestamp Timestamp.
      *
-     * @return BlogComments
+     * @return Comment
      */
-    public function setCommentTimestamp($commentTimestamp): BlogComments
+    public function setCommentTimestamp(\DateTime $commentTimestamp): Comment
     {
         $this->commentTimestamp = $commentTimestamp;
 
@@ -207,11 +207,11 @@ class BlogComments
     /**
      * Get comment timestamp
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getCommentTimestamp(): \DateTime
+    public function getCommentTimestamp(): ?\DateTime
     {
-        return (new \DateTime)->setTimestamp($this->commentTimestamp);
+        return $this->commentTimestamp;
     }
 
     /**
@@ -219,9 +219,9 @@ class BlogComments
      *
      * @param string $clientIp IP address.
      *
-     * @return BlogComments
+     * @return Comment
      */
-    public function setClientIp($clientIp): BlogComments
+    public function setClientIp(string $clientIp): Comment
     {
         $this->clientIp = $clientIp;
 
@@ -231,9 +231,9 @@ class BlogComments
     /**
      * Get client ip
      *
-     * @return string
+     * @return string|null
      */
-    public function getClientIp(): string
+    public function getClientIp(): ?string
     {
         return $this->clientIp;
     }
@@ -247,7 +247,7 @@ class BlogComments
             '%d-%s-%d',
             $this->commentId,
             $this->commentUsername,
-            $this->commentTimestamp
+            $this->commentTimestamp->format('Y-m-d H:i:s')
         );
     }
 }

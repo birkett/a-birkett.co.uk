@@ -33,20 +33,20 @@
  * @link      http://www.a-birkett.co.uk
  */
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use App\Entity\BlogPosts;
+use App\Entity\Post;
 
 class BlogController extends Controller
 {
     /**
-     * @param Request $request
-     * @param int     $postId
-     * @param int     $pageNumber
+     * @param int $postId
+     * @param int $pageNumber
      *
      * @throws EntityNotFoundException
      *
@@ -54,7 +54,7 @@ class BlogController extends Controller
      */
     public function indexAction(int $postId = null, int $pageNumber = 1): Response
     {
-        $repository = $this->getDoctrine()->getManager()->getRepository(BlogPosts::class);
+        $repository = $this->getDoctrine()->getManager()->getRepository(Post::class);
 
         $postsPerPage = 5;
 

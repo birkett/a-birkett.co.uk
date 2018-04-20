@@ -40,73 +40,73 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * SiteTweets
+ * Tweet
  *
  * @ORM\Table(
- *     name="site_tweets",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="tweet_id_UNIQUE", columns={"tweetID"})}
+ *     name="tblTweet",
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="UK_intTweetId", columns={"intTweetId"})}
  *     )
  * @ORM\Entity
  */
-class SiteTweets
+class Tweet
 {
     /**
      * @var string
      *
-     * @ORM\Column(name="tweetID", type="string", length=100, nullable=false)
+     * @ORM\Column(name="intTweetId", type="string", length=100, nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $tweetId;
 
     /**
-     * @var int
+     * @var \DateTime
      *
-     * @ORM\Column(name="tweetTimestamp", type="integer", nullable=false)
+     * @ORM\Column(name="dtmTimestamp", type="datetime", nullable=false)
      */
     private $tweetTimestamp;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="tweetText", type="string", length=560, nullable=false)
+     * @ORM\Column(name="strContent", type="string", length=560, nullable=false)
      */
     private $tweetText;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="tweetAvatar", type="string", length=1000, nullable=false)
+     * @ORM\Column(name="strAvatar", type="string", length=1000, nullable=false)
      */
     private $tweetAvatar;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="tweetName", type="string", length=100, nullable=false)
+     * @ORM\Column(name="strName", type="string", length=100, nullable=false)
      */
     private $tweetName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="tweetScreenname", type="string", length=60, nullable=false)
+     * @ORM\Column(name="strScreenName", type="string", length=60, nullable=false)
      */
     private $tweetScreenName;
 
     /**
-     * @var int
+     * @var \DateTime
      *
-     * @ORM\Column(name="tweetFetchTime", type="integer", nullable=false)
+     * @ORM\Column(name="dtmFetchTimestamp", type="datetime", nullable=false)
      */
     private $tweetFetchTime;
 
     /**
      * Get tweetId
      *
-     * @return string
+     * @return string|null
      */
-    public function getTweetId(): string
+    public function getTweetId(): ?string
     {
         return $this->tweetId;
     }
@@ -114,11 +114,11 @@ class SiteTweets
     /**
      * Set tweetTimestamp
      *
-     * @param integer $tweetTimestamp
+     * @param \DateTime $tweetTimestamp
      *
-     * @return SiteTweets
+     * @return Tweet
      */
-    public function setTweetTimestamp($tweetTimestamp): SiteTweets
+    public function setTweetTimestamp(\DateTime $tweetTimestamp): Tweet
     {
         $this->tweetTimestamp = $tweetTimestamp;
 
@@ -128,9 +128,9 @@ class SiteTweets
     /**
      * Get tweetTimestamp
      *
-     * @return int
+     * @return \DateTime|null
      */
-    public function getTweetTimestamp(): int
+    public function getTweetTimestamp(): ?\DateTime
     {
         return $this->tweetTimestamp;
     }
@@ -140,9 +140,9 @@ class SiteTweets
      *
      * @param string $tweetText
      *
-     * @return SiteTweets
+     * @return Tweet
      */
-    public function setTweetText($tweetText): SiteTweets
+    public function setTweetText(string $tweetText): Tweet
     {
         $this->tweetText = $tweetText;
 
@@ -152,9 +152,9 @@ class SiteTweets
     /**
      * Get tweetText
      *
-     * @return string
+     * @return string|null
      */
-    public function getTweetText(): string
+    public function getTweetText(): ?string
     {
         return $this->tweetText;
     }
@@ -164,9 +164,9 @@ class SiteTweets
      *
      * @param string $tweetAvatar
      *
-     * @return SiteTweets
+     * @return Tweet
      */
-    public function setTweetAvatar($tweetAvatar): SiteTweets
+    public function setTweetAvatar(string $tweetAvatar): Tweet
     {
         $this->tweetAvatar = $tweetAvatar;
 
@@ -176,9 +176,9 @@ class SiteTweets
     /**
      * Get tweetAvatar
      *
-     * @return string
+     * @return string|null
      */
-    public function getTweetAvatar(): string
+    public function getTweetAvatar(): ?string
     {
         return $this->tweetAvatar;
     }
@@ -188,9 +188,9 @@ class SiteTweets
      *
      * @param string $tweetName
      *
-     * @return SiteTweets
+     * @return Tweet
      */
-    public function setTweetName($tweetName): SiteTweets
+    public function setTweetName(string $tweetName): Tweet
     {
         $this->tweetName = $tweetName;
 
@@ -200,9 +200,9 @@ class SiteTweets
     /**
      * Get tweetName
      *
-     * @return string
+     * @return string|null
      */
-    public function getTweetName(): string
+    public function getTweetName(): ?string
     {
         return $this->tweetName;
     }
@@ -212,9 +212,9 @@ class SiteTweets
      *
      * @param string $tweetScreenName
      *
-     * @return SiteTweets
+     * @return Tweet
      */
-    public function setTweetScreenName($tweetScreenName): SiteTweets
+    public function setTweetScreenName(string $tweetScreenName): Tweet
     {
         $this->tweetScreenName = $tweetScreenName;
 
@@ -224,9 +224,9 @@ class SiteTweets
     /**
      * Get tweetScreenName
      *
-     * @return string
+     * @return string|null
      */
-    public function getTweetScreenName(): string
+    public function getTweetScreenName(): ?string
     {
         return $this->tweetScreenName;
     }
@@ -234,11 +234,11 @@ class SiteTweets
     /**
      * Set tweetFetchTime
      *
-     * @param integer $tweetFetchTime
+     * @param \DateTime $tweetFetchTime
      *
-     * @return SiteTweets
+     * @return Tweet
      */
-    public function setTweetFetchTime($tweetFetchTime): SiteTweets
+    public function setTweetFetchTime(\DateTime $tweetFetchTime): Tweet
     {
         $this->tweetFetchTime = $tweetFetchTime;
 
@@ -248,9 +248,9 @@ class SiteTweets
     /**
      * Get tweetFetchTime
      *
-     * @return int
+     * @return \DateTime|null
      */
-    public function getTweetFetchTime(): int
+    public function getTweetFetchTime(): ?\DateTime
     {
         return $this->tweetFetchTime;
     }

@@ -33,117 +33,130 @@
  * @link      http://www.a-birkett.co.uk
  */
 
+
 declare(strict_types=1);
 
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * SiteUsers
+ * Page
  *
- * @ORM\Table(
- *     name="site_users",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="username_UNIQUE", columns={"username"})}
- *     )
+ * @ORM\Table(name="tblPage", uniqueConstraints={@ORM\UniqueConstraint(name="UK_intPageId", columns={"intPageId"})})
  * @ORM\Entity
  */
-class SiteUsers implements UserInterface, \Serializable
+class Page
 {
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="username", type="string", length=45, nullable=false)
+     * @ORM\Column(name="intPageId", type="integer", nullable=false)
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $username;
+    private $pageId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=512, nullable=false)
+     * @ORM\Column(name="strName", type="string", length=40, nullable=false)
      */
-    private $password;
+    private $pageName;
 
     /**
-     * Get username
+     * @var string
      *
-     * @return string
+     * @ORM\Column(name="strContent", type="text", length=65535, nullable=false)
      */
-    public function getUsername(): string
+    private $pageContent;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="strTitle", type="string", length=280, nullable=false)
+     */
+    private $pageTitle;
+
+    /**
+     * Get pageId
+     *
+     * @return int|null
+     */
+    public function getPageId(): ?int
     {
-        return $this->username;
+        return $this->pageId;
     }
 
     /**
-     * Set password
+     * Set pageName
      *
-     * @param string $password
+     * @param string $pageName
      *
-     * @return SiteUsers
+     * @return Page
      */
-    public function setPassword($password): SiteUsers
+    public function setPageName(string $pageName): Page
     {
-        $this->password = $password;
+        $this->pageName = $pageName;
 
         return $this;
     }
 
     /**
-     * Get password
+     * Get pageName
      *
-     * @return string
+     * @return string|null
      */
-    public function getPassword(): string
+    public function getPageName(): ?string
     {
-        return $this->password;
+        return $this->pageName;
     }
 
     /**
-     * Gets the password salt. Null when using bcrypt
+     * Set pageContent
      *
-     * @return void
-     */
-    public function getSalt(): void
-    {
-    }
-
-    /**
-     * Get the users associated roles
+     * @param string $pageContent
      *
-     * @return array
+     * @return Page
      */
-    public function getRoles(): array
+    public function setPageContent(string $pageContent): Page
     {
-        return array('ROLE_ADMIN');
+        $this->pageContent = $pageContent;
+
+        return $this;
     }
 
     /**
-     * Remove old credentials
+     * Get pageContent
+     *
+     * @return string|null
      */
-    public function eraseCredentials(): void
+    public function getPageContent(): ?string
     {
-    }
-
-    /** @see \Serializable::serialize() */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->username,
-            $this->password,
-        ));
+        return $this->pageContent;
     }
 
     /**
-     * @param string $serialized
-     * @see \Serializable::unserialize()
+     * Set pageTitle
+     *
+     * @param string $pageTitle
+     *
+     * @return Page
      */
-    public function unserialize($serialized): void
+    public function setPageTitle(string $pageTitle): Page
     {
-        list (
-            $this->username,
-            $this->password,
-            ) = unserialize($serialized);
+        $this->pageTitle = $pageTitle;
+
+        return $this;
+    }
+
+    /**
+     * Get pageTitle
+     *
+     * @return string|null
+     */
+    public function getPageTitle(): ?string
+    {
+        return $this->pageTitle;
     }
 }

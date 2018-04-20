@@ -33,6 +33,8 @@
  * @link      http://www.a-birkett.co.uk
  */
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -43,6 +45,7 @@ class LoginController extends Controller
 {
     /**
      * @param AuthenticationUtils $authUtils
+     *
      * @return Response
      */
     public function loginAction(AuthenticationUtils $authUtils): Response

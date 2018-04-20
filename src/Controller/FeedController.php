@@ -33,10 +33,12 @@
  * @link      http://www.a-birkett.co.uk
  */
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use Doctrine\ORM\EntityNotFoundException;
-use App\Entity\BlogPosts;
+use App\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +56,7 @@ class FeedController extends Controller
     {
         $blogPosts = $this->getDoctrine()
             ->getManager()
-            ->getRepository(BlogPosts::class)
+            ->getRepository(Post::class)
             ->getPostsOnPage(1, 5);
 
         if ($blogPosts === null) {

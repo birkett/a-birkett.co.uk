@@ -1,0 +1,13 @@
+{% block post %}
+    <div class="fadein"></div>
+    <div class="post">
+        <div class="postavatar">
+            <img src="{{ asset('assets/images/avatar.png') }}" alt="avatar"/>
+        </div>
+        <a href="{{ path('blog') }}/{{ post.getPostId() }}"><h2>{{ post.getPostTitle() }}</h2></a>
+        <p class="timestamp">{{ post.getPostTimestamp()|date }}</p>
+        {{ post.getPostContent()|raw }}
+        <a class="right" href="{{ path('blog') }}/{{ post.getPostId() }}">Comments({{ post.getCommentsCount() }})</a>
+    </div>
+    <div class="fadeout"></div>
+{% endblock %}

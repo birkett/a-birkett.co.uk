@@ -35,73 +35,45 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Repository;
 
-use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Post;
+use Doctrine\ORM\EntityRepository;
 
-/**
- * BlockedAddresses
- *
- * @ORM\Table(
- *     name="blocked_addresses",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="address_UNIQUE", columns={"address"})}
- *     )
- * @ORM\Entity
- */
-class BlockedAddresses
+class PostRepository extends EntityRepository
 {
     /**
-     * IP Address.
+     * @param $page
+     * @param $postsPerPage
      *
-     * @var string
-     *
-     * @ORM\Column(name="address", type="string", length=180, nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @return Post[]|array
      */
-    private $address;
-
-    /**
-     * Blocked time.
-     *
-     * @var int
-     *
-     * @ORM\Column(name="timestamp", type="integer", nullable=false)
-     */
-    private $timestamp;
-
-
-    /**
-     * Get address
-     *
-     * @return string
-     */
-    public function getAddress(): string
+    public function getPostsOnPage($page, $postsPerPage): array
     {
-        return $this->address;
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+
+        return $queryBuilder->select('p')
+            ->from(Post::class, 'p')
+            ->where($queryBuilder->expr()->eq('p.postDraft', ':draft'))
+            ->orderBy('p.postTimestamp', 'DESC')
+            ->setParameter('draft', false)
+            ->setFirstResult(($page - 1) * $postsPerPage)
+            ->setMaxResults($postsPerPage)
+            ->getQuery()
+            ->getResult();
     }
 
     /**
-     * Set timestamp
-     *
-     * @param integer $timestamp Timestamp.
-     *
-     * @return BlockedAddresses
-     */
-    public function setTimestamp($timestamp): BlockedAddresses
-    {
-        $this->timestamp = $timestamp;
-
-        return $this;
-    }
-
-    /**
-     * Get timestamp
-     *
      * @return int
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getTimestamp(): int
+    public function getNumberOfPosts(): int
     {
-        return $this->timestamp;
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+
+        $query = $queryBuilder->select('COUNT(p.postId)')->from(Post::class, 'p');
+
+        return (int) $query->getQuery()->getSingleScalarResult();
     }
 }
