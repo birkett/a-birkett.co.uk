@@ -20,13 +20,11 @@ CREATE TABLE tblPage (
 
 CREATE TABLE tblTweet (
   intTweetId        VARCHAR(100)  NOT NULL,
-  intTimestamp      INT           NOT NULL,
   dtmTimestamp      DATETIME      NOT NULL,
   strContent        VARCHAR(560)  NOT NULL,
   strAvatar         VARCHAR(1000) NOT NULL,
   strName           VARCHAR(100)  NOT NULL,
   strScreenName     VARCHAR(60)   NOT NULL,
-  intFetchTimestamp INT           NOT NULL,
   dtmFetchTimestamp DATETIME      NOT NULL,
 
   UNIQUE KEY UK_intTweetId (intTweetId),
@@ -35,7 +33,6 @@ CREATE TABLE tblTweet (
 
 CREATE TABLE tblPost (
   intPostId    INT           AUTO_INCREMENT NOT NULL,
-  intTimestamp INT                          NOT NULL,
   dtmTimestamp DATETIME                     NOT NULL,
   strTitle     VARCHAR(280)                 NOT NULL,
   strContent   TEXT                         NOT NULL,
@@ -50,7 +47,6 @@ CREATE TABLE tblComment (
   intCommentId INT           AUTO_INCREMENT NOT NULL,
   strUsername  VARCHAR(100)                 NOT NULL,
   strContent   VARCHAR(4000)                NOT NULL,
-  intTimestamp INT                          NOT NULL,
   dtmTimestamp DATETIME                     NOT NULL,
   strClientIp  VARCHAR(180)                 NOT NULL,
   intPostId    INT                          DEFAULT NULL,
