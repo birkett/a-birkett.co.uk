@@ -2,7 +2,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Anthony Birkett
+ * Copyright (c) 2014-2018 Anthony Birkett
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,12 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 7.1
+ * PHP Version 7.2
  *
- * @category  Entities
+ * @category  Controllers
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015-2018 Anthony Birkett
+ * @copyright 2014-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
@@ -45,10 +45,12 @@ use App\Entity\Post;
 class BlogController extends Controller
 {
     /**
-     * @param int $postId
-     * @param int $pageNumber
+     * Load and handle the blog.
      *
-     * @throws EntityNotFoundException
+     * @param int $postId     Unique post ID.
+     * @param int $pageNumber Page number to load.
+     *
+     * @throws EntityNotFoundException If the requested post is not found.
      *
      * @return Response
      */
@@ -71,7 +73,7 @@ class BlogController extends Controller
         $numberOfPosts = $repository->getNumberOfPosts();
 
         return $this->render(
-            'default/blog.html.twig',
+            'pages/blog.html.twig',
             [
                 'posts' => $blogPosts,
                 'totalposts' => $numberOfPosts,

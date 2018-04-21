@@ -2,7 +2,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Anthony Birkett
+ * Copyright (c) 2014-2018 Anthony Birkett
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,12 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 7.1
+ * PHP Version 7.2
  *
- * @category  Entities
+ * @category  Controllers
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015-2018 Anthony Birkett
+ * @copyright 2014-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
@@ -45,9 +45,11 @@ use App\Entity\Page;
 class GenericController extends Controller
 {
     /**
-     * @param string $pageName
+     * Load a generic, database backed, page.
      *
-     * @throws EntityNotFoundException
+     * @param string $pageName Name of the page.
+     *
+     * @throws EntityNotFoundException If the page is not found.
      *
      * @return Response
      */
@@ -62,6 +64,6 @@ class GenericController extends Controller
             throw new EntityNotFoundException('Page ('.$pageName.') not found.');
         }
 
-        return $this->render('default/generic.html.twig', ['page' => $page]);
+        return $this->render('pages/generic.html.twig', ['page' => $page]);
     }//end indexAction()
 }//end class

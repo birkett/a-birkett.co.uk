@@ -2,7 +2,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Anthony Birkett
+ * Copyright (c) 2014-2018 Anthony Birkett
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,12 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 7.1
+ * PHP Version 7.2
  *
  * @category  Entities
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015-2018 Anthony Birkett
+ * @copyright 2014-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
@@ -48,6 +48,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Tweet
 {
     /**
+     * Tweet ID.
+     *
      * @var string
      *
      * @ORM\Column(name="intTweetId", type="string", length=100, nullable=false)
@@ -57,6 +59,8 @@ class Tweet
     private $tweetId;
 
     /**
+     * Tweet timestamp.
+     *
      * @var \DateTime
      *
      * @ORM\Column(name="dtmTimestamp", type="datetime", nullable=false)
@@ -64,6 +68,8 @@ class Tweet
     private $tweetTimestamp;
 
     /**
+     * Tweet text.
+     *
      * @var string
      *
      * @ORM\Column(name="strContent", type="string", length=560, nullable=false)
@@ -71,6 +77,8 @@ class Tweet
     private $tweetText;
 
     /**
+     * Tweet avatar.
+     *
      * @var string
      *
      * @ORM\Column(name="strAvatar", type="string", length=1000, nullable=false)
@@ -78,6 +86,8 @@ class Tweet
     private $tweetAvatar;
 
     /**
+     * Tweet name.
+     *
      * @var string
      *
      * @ORM\Column(name="strName", type="string", length=100, nullable=false)
@@ -85,6 +95,8 @@ class Tweet
     private $tweetName;
 
     /**
+     * Tweet screen name.
+     *
      * @var string
      *
      * @ORM\Column(name="strScreenName", type="string", length=60, nullable=false)
@@ -92,6 +104,8 @@ class Tweet
     private $tweetScreenName;
 
     /**
+     * Tweet fetch timestamp.
+     *
      * @var \DateTime
      *
      * @ORM\Column(name="dtmFetchTimestamp", type="datetime", nullable=false)
@@ -100,7 +114,7 @@ class Tweet
 
 
     /**
-     * Get tweetId
+     * Get tweetId.
      *
      * @return string|null
      */
@@ -111,9 +125,9 @@ class Tweet
 
 
     /**
-     * Set tweetTimestamp
+     * Set tweetTimestamp.
      *
-     * @param \DateTime $tweetTimestamp
+     * @param \DateTime $tweetTimestamp Tweet timestamp.
      *
      * @return Tweet
      */
@@ -126,7 +140,7 @@ class Tweet
 
 
     /**
-     * Get tweetTimestamp
+     * Get tweetTimestamp.
      *
      * @return \DateTime|null
      */
@@ -137,9 +151,9 @@ class Tweet
 
 
     /**
-     * Set tweetText
+     * Set tweetText.
      *
-     * @param string $tweetText
+     * @param string $tweetText Tweet text.
      *
      * @return Tweet
      */
@@ -152,7 +166,7 @@ class Tweet
 
 
     /**
-     * Get tweetText
+     * Get tweetText.
      *
      * @return string|null
      */
@@ -163,9 +177,9 @@ class Tweet
 
 
     /**
-     * Set tweetAvatar
+     * Set tweetAvatar.
      *
-     * @param string $tweetAvatar
+     * @param string $tweetAvatar Tweet avatar.
      *
      * @return Tweet
      */
@@ -178,7 +192,7 @@ class Tweet
 
 
     /**
-     * Get tweetAvatar
+     * Get tweetAvatar.
      *
      * @return string|null
      */
@@ -189,9 +203,9 @@ class Tweet
 
 
     /**
-     * Set tweetName
+     * Set tweetName.
      *
-     * @param string $tweetName
+     * @param string $tweetName Tweet name.
      *
      * @return Tweet
      */
@@ -204,7 +218,7 @@ class Tweet
 
 
     /**
-     * Get tweetName
+     * Get tweetName.
      *
      * @return string|null
      */
@@ -215,9 +229,9 @@ class Tweet
 
 
     /**
-     * Set tweetScreenName
+     * Set tweetScreenName.
      *
-     * @param string $tweetScreenName
+     * @param string $tweetScreenName Tweet screen name.
      *
      * @return Tweet
      */
@@ -230,7 +244,7 @@ class Tweet
 
 
     /**
-     * Get tweetScreenName
+     * Get tweetScreenName.
      *
      * @return string|null
      */
@@ -241,9 +255,9 @@ class Tweet
 
 
     /**
-     * Set tweetFetchTime
+     * Set tweetFetchTime.
      *
-     * @param \DateTime $tweetFetchTime
+     * @param \DateTime $tweetFetchTime Tweet fetch timestamp.
      *
      * @return Tweet
      */
@@ -256,7 +270,7 @@ class Tweet
 
 
     /**
-     * Get tweetFetchTime
+     * Get tweetFetchTime.
      *
      * @return \DateTime|null
      */

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if posts|length == 1 %}
+        {{ posts[0].getPostTitle() }}
+    {% else %}
+        Blog
+    {% endif %}
+{% endblock title %}
+
+{% block body %}
+    {% for post in posts %}
+        {% embed 'pages/blog/post.html.twig' %}{% endembed %}
+
+        {% if posts|length == 1 %}
+            {% for comment in post.comments %}
+                {% embed 'pages/blog/comment.html.twig' %}{% endembed %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+
+    {% if posts|length == 1 %}
+        {% embed 'pages/blog/newcomment.html.twig' %}{% endembed %}
+    {% endif %}
+
+    {% if posts|length > 1 %}
+        {% embed 'pages/blog/pagination.html.twig' %}{% endembed %}
+    {% endif %}
+{% endblock %}

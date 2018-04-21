@@ -2,7 +2,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Anthony Birkett
+ * Copyright (c) 2014-2018 Anthony Birkett
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,12 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 7.1
+ * PHP Version 7.2
  *
  * @category  Fixtures
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015-2018 Anthony Birkett
+ * @copyright 2014-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
@@ -59,13 +59,19 @@ class AppFixtures extends Fixture
     ];
 
     /**
+     * Doctrine manager.
+     *
      * @var ObjectManager
      */
     private $manager;
 
 
     /**
-     * @param ObjectManager $manager
+     * Load the fixtures.
+     *
+     * @param ObjectManager $manager Doctrine manager.
+     *
+     * @return void
      */
     public function load(ObjectManager $manager): void
     {
@@ -81,6 +87,8 @@ class AppFixtures extends Fixture
 
     /**
      * Create pages.
+     *
+     * @return void
      */
     private function createPages(): void
     {
@@ -97,6 +105,8 @@ class AppFixtures extends Fixture
 
     /**
      * Create posts.
+     *
+     * @return void
      */
     private function createPosts(): void
     {
@@ -111,7 +121,9 @@ class AppFixtures extends Fixture
 
 
     /**
-     * @param Post $post
+     * @param Post $post Post to link this comment to.
+     *
+     * @return void
      */
     private function createComments(Post $post): void
     {
@@ -127,6 +139,8 @@ class AppFixtures extends Fixture
 
     /**
      * Create users.
+     *
+     * @return void
      */
     private function createUsers(): void
     {

@@ -13,22 +13,7 @@
         <env name="APP_ENV" value="test"/>
         <env name="APP_DEBUG" value="1"/>
         <env name="APP_SECRET" value="5a79a1c866efef9ca1800f971d689f3e"/>
-        <!-- define your env variables for the test env here -->
-
-        <!-- ###+ doctrine/doctrine-bundle ### -->
         <env name="DB_URL" value="mysql://root:r00t@127.0.0.1:3306/abirkett"/>
-        <!-- ###- doctrine/doctrine-bundle ### -->
-
-        <!-- ###+ symfony/swiftmailer-bundle ### -->
-        <env name="MAILER_URL" value="null://localhost"/>
-        <!-- ###- symfony/swiftmailer-bundle ### -->
-
-        <!-- ###+ symfony/framework-bundle ### -->
-        <env name="APP_ENV" value="dev"/>
-        <env name="APP_SECRET" value="d406520cae3de07f1951f25c7cd57f82"/>
-        <!-- env name="TRUSTED_PROXIES" value="127.0.0.1,127.0.0.2" -->
-        <!-- env name="TRUSTED_HOSTS" value="localhost,example.com" -->
-        <!-- ###- symfony/framework-bundle ### -->
     </php>
 
     <testsuites>

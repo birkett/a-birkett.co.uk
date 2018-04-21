@@ -2,7 +2,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Anthony Birkett
+ * Copyright (c) 2014-2018 Anthony Birkett
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,16 +23,15 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 7.1
+ * PHP Version 7.2
  *
  * @category  Entities
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015-2018 Anthony Birkett
+ * @copyright 2014-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
-
 
 declare(strict_types=1);
 
@@ -49,6 +48,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Page
 {
     /**
+     * Page ID.
+     *
      * @var integer
      *
      * @ORM\Column(name="intPageId", type="integer", nullable=false)
@@ -58,6 +59,8 @@ class Page
     private $pageId;
 
     /**
+     * Page name.
+     *
      * @var string
      *
      * @ORM\Column(name="strName", type="string", length=40, nullable=false)
@@ -65,6 +68,8 @@ class Page
     private $pageName;
 
     /**
+     * Page content.
+     *
      * @var string
      *
      * @ORM\Column(name="strContent", type="text", length=65535, nullable=false)
@@ -72,6 +77,8 @@ class Page
     private $pageContent;
 
     /**
+     * Page title.
+     *
      * @var string
      *
      * @ORM\Column(name="strTitle", type="string", length=280, nullable=false)
@@ -80,7 +87,7 @@ class Page
 
 
     /**
-     * Get pageId
+     * Get pageId.
      *
      * @return int|null
      */
@@ -91,9 +98,9 @@ class Page
 
 
     /**
-     * Set pageName
+     * Set pageName.
      *
-     * @param string $pageName
+     * @param string $pageName Page name.
      *
      * @return Page
      */
@@ -106,7 +113,7 @@ class Page
 
 
     /**
-     * Get pageName
+     * Get pageName.
      *
      * @return string|null
      */
@@ -117,9 +124,9 @@ class Page
 
 
     /**
-     * Set pageContent
+     * Set pageContent.
      *
-     * @param string $pageContent
+     * @param string $pageContent Page content.
      *
      * @return Page
      */
@@ -132,7 +139,7 @@ class Page
 
 
     /**
-     * Get pageContent
+     * Get pageContent.
      *
      * @return string|null
      */
@@ -143,9 +150,9 @@ class Page
 
 
     /**
-     * Set pageTitle
+     * Set pageTitle.
      *
-     * @param string $pageTitle
+     * @param string $pageTitle Page title.
      *
      * @return Page
      */
@@ -158,7 +165,7 @@ class Page
 
 
     /**
-     * Get pageTitle
+     * Get pageTitle.
      *
      * @return string|null
      */

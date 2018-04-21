@@ -2,7 +2,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Anthony Birkett
+ * Copyright (c) 2014-2018 Anthony Birkett
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,12 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 7.1
+ * PHP Version 7.2
  *
- * @category  AppKernel
+ * @category  Kernel
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015-2018 Anthony Birkett
+ * @copyright 2014-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
@@ -47,67 +47,89 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
-    const CONFIG_EXTS = '.{php,xml,yaml,yml}';
+    private const CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
 
     /**
+     * Get the cache directory.
+     *
      * @return string
      */
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         return $this->getProjectDir().'/var/cache/'.$this->environment;
     }//end getCacheDir()
 
 
     /**
+     * Get the log directory.
+     *
      * @return string
      */
-    public function getLogDir()
+    public function getLogDir(): string
     {
         return $this->getProjectDir().'/var/log';
     }//end getLogDir()
 
 
     /**
+     * Register all bundles.
+     *
      * @return \Generator|iterable|\Symfony\Component\HttpKernel\Bundle\BundleInterface[]
      */
     public function registerBundles()
     {
         $contents = include $this->getProjectDir().'/config/bundles.php';
-        foreach ($contents as $class => $envs) {
-            if (isset($envs['all']) || isset($envs[$this->environment])) {
-                yield new $class();
+        foreach ((array) $contents as $class => $env) {
+            if (isset($env['all']) || isset($env[$this->environment])) {
+                $retVal = new $class();
+                yield $retVal;
             }
         }
     }//end registerBundles()
 
 
     /**
-     * @param ContainerBuilder $container
-     * @param LoaderInterface $loader
+     * Configure the container.
      *
-     * @throws \Exception
+     * @param ContainerBuilder $container Container.
+     * @param LoaderInterface  $loader    Loader.
+     *
+     * @throws \Exception On error.
+     *
+     * @return void
      */
-    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
+    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         $container->setParameter('container.dumper.inline_class_loader', true);
         $confDir = $this->getProjectDir().'/config';
         $loader->load($confDir.'/packages/*'.self::CONFIG_EXTS, 'glob');
+
         if (is_dir($confDir.'/packages/'.$this->environment)) {
-            $loader->load($confDir.'/packages/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
+            $loader->load(
+                $confDir.'/packages/'.$this->environment.'/**/*'.self::CONFIG_EXTS,
+                'glob'
+            );
         }
 
         $loader->load($confDir.'/services'.self::CONFIG_EXTS, 'glob');
-        $loader->load($confDir.'/services_'.$this->environment.self::CONFIG_EXTS, 'glob');
+        $loader->load(
+            $confDir.'/services_'.$this->environment.self::CONFIG_EXTS,
+            'glob'
+        );
     }//end configureContainer()
 
 
     /**
-     * @param RouteCollectionBuilder $routes
+     * Configure routing.
      *
-     * @throws \Symfony\Component\Config\Exception\FileLoaderLoadException
+     * @param RouteCollectionBuilder $routes Routes.
+     *
+     * @throws \Symfony\Component\Config\Exception\FileLoaderLoadException On error.
+     *
+     * @return void
      */
-    protected function configureRoutes(RouteCollectionBuilder $routes)
+    protected function configureRoutes(RouteCollectionBuilder $routes): void
     {
         $confDir = $this->getProjectDir().'/config';
         if (is_dir($confDir.'/routes/')) {
@@ -115,7 +137,11 @@ class Kernel extends BaseKernel
         }
 
         if (is_dir($confDir.'/routes/'.$this->environment)) {
-            $routes->import($confDir.'/routes/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
+            $routes->import(
+                $confDir.'/routes/'.$this->environment.'/**/*'.self::CONFIG_EXTS,
+                '/',
+                'glob'
+            );
         }
 
         $routes->import($confDir.'/routes'.self::CONFIG_EXTS, '/', 'glob');

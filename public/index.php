@@ -2,7 +2,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Anthony Birkett
+ * Copyright (c) 2014-2018 Anthony Birkett
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,12 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 7.1
+ * PHP Version 7.2
  *
  * @category  Index
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015-2018 Anthony Birkett
+ * @copyright 2014-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
@@ -45,24 +45,31 @@ require __DIR__.'/../vendor/autoload.php';
 // The check is to ensure we don't use .env in production.
 if (!isset($_SERVER['APP_ENV'])) {
     if (!class_exists(Dotenv::class)) {
-        throw new \RuntimeException('APP_ENV environment variable is not defined. You need to define environment variables for configuration or add "symfony/dotenv" as a Composer dependency to load variables from a .env file.');
+        throw new \RuntimeException('APP_ENV environment variable is not defined.');
     }
 
-    (new Dotenv())->load(__DIR__.'/../.env');
+    $dotEnv = new DotEnv();
+
+    $dotEnv->load(__DIR__.'/../.env');
 }
 
-$env   = ($_SERVER['APP_ENV'] ?? 'dev');
-$debug = (bool) ($_SERVER['APP_DEBUG'] ?? ('prod' !== $env));
+$env            = ($_SERVER['APP_ENV'] ?? 'dev');
+$debug          = (bool) ($_SERVER['APP_DEBUG'] ?? ('prod' !== $env));
+$trustedProxies = ($_SERVER['TRUSTED_PROXIES'] ?? false);
+$trustedHosts   = ($_SERVER['TRUSTED_HOSTS'] ?? false);
 
 if ($debug) {
     Debug::enable();
 }
 
-if ($trustedProxies = ($_SERVER['TRUSTED_PROXIES'] ?? false)) {
-    Request::setTrustedProxies(explode(',', $trustedProxies), (Request::HEADER_X_FORWARDED_ALL ^ Request::HEADER_X_FORWARDED_HOST));
+if ($trustedProxies) {
+    Request::setTrustedProxies(
+        explode(',', $trustedProxies),
+        Request::HEADER_X_FORWARDED_ALL ^ Request::HEADER_X_FORWARDED_HOST
+    );
 }
 
-if ($trustedHosts = ($_SERVER['TRUSTED_HOSTS'] ?? false)) {
+if ($trustedHosts) {
     Request::setTrustedHosts(explode(',', $trustedHosts));
 }
 

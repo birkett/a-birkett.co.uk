@@ -2,7 +2,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Anthony Birkett
+ * Copyright (c) 2014-2018 Anthony Birkett
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,12 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 7.1
+ * PHP Version 7.2
  *
- * @category  Entities
+ * @category  Repositories
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015-2018 Anthony Birkett
+ * @copyright 2014-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
@@ -43,12 +43,14 @@ use Doctrine\ORM\EntityRepository;
 class PostRepository extends EntityRepository
 {
     /**
-     * @param $page
-     * @param $postsPerPage
+     * Get the posts on a given page number.
+     *
+     * @param int $page         Page number.
+     * @param int $postsPerPage Maximum posts per page.
      *
      * @return Post[]|array
      */
-    public function getPostsOnPage($page, $postsPerPage): array
+    public function getPostsOnPage(int $page, int $postsPerPage): array
     {
         $queryBuilder = $this->getEntityManager()->createQueryBuilder();
 
@@ -65,9 +67,9 @@ class PostRepository extends EntityRepository
 
 
     /**
-     * @return int
+     * Get the total number of posts available.
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return int
      */
     public function getNumberOfPosts(): int
     {
@@ -75,6 +77,6 @@ class PostRepository extends EntityRepository
 
         $query = $queryBuilder->select('COUNT(p.postId)')->from(Post::class, 'p');
 
-        return (int) $query->getQuery()->getSingleScalarResult();
+        return (int) $query->getQuery()->getFirstResult();
     }//end getNumberOfPosts()
 }//end class

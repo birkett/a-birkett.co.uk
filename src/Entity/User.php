@@ -2,7 +2,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Anthony Birkett
+ * Copyright (c) 2014-2018 Anthony Birkett
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,12 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 7.1
+ * PHP Version 7.2
  *
  * @category  Entities
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015-2018 Anthony Birkett
+ * @copyright 2014-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
@@ -52,6 +52,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface, \Serializable
 {
     /**
+     * User ID.
+     *
      * @var integer
      *
      * @ORM\Column(name="intUserId", type="integer", nullable=false)
@@ -61,6 +63,8 @@ class User implements UserInterface, \Serializable
     private $id;
 
     /**
+     * Username.
+     *
      * @var string
      *
      * @ORM\Column(name="strUsername", type="string", length=45, nullable=false)
@@ -68,6 +72,8 @@ class User implements UserInterface, \Serializable
     private $username;
 
     /**
+     * Hashed password.
+     *
      * @var string
      *
      * @ORM\Column(name="strPassword", type="string", length=512, nullable=false)
@@ -76,6 +82,8 @@ class User implements UserInterface, \Serializable
 
 
     /**
+     * Get the user ID.
+     *
      * @return int|null
      */
     public function getId(): ?int
@@ -85,7 +93,9 @@ class User implements UserInterface, \Serializable
 
 
     /**
-     * @param string $username
+     * Set the username.
+     *
+     * @param string $username Username.
      *
      * @return User
      */
@@ -98,7 +108,7 @@ class User implements UserInterface, \Serializable
 
 
     /**
-     * Get username
+     * Get username.
      *
      * @return string|null
      */
@@ -109,9 +119,9 @@ class User implements UserInterface, \Serializable
 
 
     /**
-     * Set password
+     * Set password.
      *
-     * @param string $password
+     * @param string $password Password.
      *
      * @return User
      */
@@ -124,7 +134,7 @@ class User implements UserInterface, \Serializable
 
 
     /**
-     * Get password
+     * Get password.
      *
      * @return string|null
      */
@@ -135,7 +145,7 @@ class User implements UserInterface, \Serializable
 
 
     /**
-     * Gets the password salt. Null when using bcrypt
+     * Gets the password salt. Null when using bcrypt.
      *
      * @return void
      */
@@ -145,7 +155,7 @@ class User implements UserInterface, \Serializable
 
 
     /**
-     * Get the users associated roles
+     * Get the users associated roles.
      *
      * @return array
      */
@@ -156,7 +166,9 @@ class User implements UserInterface, \Serializable
 
 
     /**
-     * Remove old credentials
+     * Remove old credentials.
+     *
+     * @return void
      */
     public function eraseCredentials(): void
     {
@@ -164,17 +176,22 @@ class User implements UserInterface, \Serializable
 
 
     /**
-     * @see \Serializable::serialize()
+     * Serialize the entity.
+     *
+     * @return string
      */
-    public function serialize()
+    public function serialize(): string
     {
         return serialize([$this->id, $this->username, $this->password]);
     }//end serialize()
 
 
     /**
-     * @param string $serialized
-     * @see \Serializable::unserialize()
+     * Deserialize the entity.
+     *
+     * @param string $serialized Serialized entity.
+     *
+     * @return void
      */
     public function unserialize($serialized): void
     {
@@ -184,7 +201,7 @@ class User implements UserInterface, \Serializable
             $this->password,
         ] = unserialize(
             $serialized,
-            ['allowed_classes' => [\Serializable::class]]
+            ['allowed_classes' => [self::class]]
         );
     }//end unserialize()
 }//end class

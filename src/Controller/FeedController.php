@@ -2,7 +2,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Anthony Birkett
+ * Copyright (c) 2014-2018 Anthony Birkett
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,12 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 7.1
+ * PHP Version 7.2
  *
- * @category  Entities
+ * @category  Controllers
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015-2018 Anthony Birkett
+ * @copyright 2014-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
@@ -37,7 +37,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Doctrine\ORM\EntityNotFoundException;
 use App\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,9 +45,9 @@ use Symfony\Component\HttpFoundation\Request;
 class FeedController extends Controller
 {
     /**
-     * @param Request $request
+     * Load the RSS feed page.
      *
-     * @throws EntityNotFoundException
+     * @param Request $request Current request.
      *
      * @return Response
      */
@@ -58,10 +57,6 @@ class FeedController extends Controller
             ->getManager()
             ->getRepository(Post::class)
             ->getPostsOnPage(1, 5);
-
-        if ($blogPosts === null) {
-            throw new EntityNotFoundException('Failed to retrieve latest posts.');
-        }
 
         $request->setFormat('xml', 'text/xml');
 

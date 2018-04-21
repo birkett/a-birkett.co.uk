@@ -2,7 +2,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Anthony Birkett
+ * Copyright (c) 2014-2018 Anthony Birkett
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,12 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 7.1
+ * PHP Version 7.2
  *
  * @category  Entities
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015-2018 Anthony Birkett
+ * @copyright 2014-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
@@ -43,6 +43,8 @@ class FeedControllerTest extends WebTestCase
 {
     /**
      * Test the feed page.
+     *
+     * @return void
      */
     public function testFeed(): void
     {
@@ -51,6 +53,9 @@ class FeedControllerTest extends WebTestCase
         $client->request('GET', '/feed');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals('text/xml; charset=UTF-8', $client->getResponse()->headers->get('Content-Type'));
+        $this->assertEquals(
+            'text/xml; charset=UTF-8',
+            $client->getResponse()->headers->get('Content-Type')
+        );
     }//end testFeed()
 }//end class

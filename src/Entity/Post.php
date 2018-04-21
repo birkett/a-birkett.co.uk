@@ -2,7 +2,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Anthony Birkett
+ * Copyright (c) 2014-2018 Anthony Birkett
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,12 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 7.1
+ * PHP Version 7.2
  *
  * @category  Entities
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015-2018 Anthony Birkett
+ * @copyright 2014-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
@@ -49,6 +49,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Post
 {
     /**
+     * Post ID.
+     *
      * @var integer
      *
      * @ORM\Id
@@ -58,6 +60,8 @@ class Post
     private $postId;
 
     /**
+     * Post time stamp.
+     *
      * @var \DateTime
      *
      * @ORM\Column(name="dtmTimestamp", type="datetime", nullable=false)
@@ -65,6 +69,8 @@ class Post
     private $postTimestamp;
 
     /**
+     * Post title.
+     *
      * @var string
      *
      * @ORM\Column(name="strTitle", type="string", length=280, nullable=false)
@@ -72,6 +78,8 @@ class Post
     private $postTitle;
 
     /**
+     * Post content.
+     *
      * @var string
      *
      * @ORM\Column(name="strContent", type="text", length=65535, nullable=false)
@@ -79,6 +87,8 @@ class Post
     private $postContent;
 
     /**
+     * Post draft status.
+     *
      * @var boolean
      *
      * @ORM\Column(name="bolDraft", type="boolean", nullable=false)
@@ -86,6 +96,8 @@ class Post
     private $postDraft;
 
     /**
+     * Post tweeted status.
+     *
      * @var boolean
      *
      * @ORM\Column(name="bolTweeted", type="boolean", nullable=false)
@@ -93,7 +105,9 @@ class Post
     private $postTweeted;
 
     /**
-     * @var Comment[]
+     * ArrayCollection of comments attached to this post.
+     *
+     * @var Comment[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
      */
@@ -105,14 +119,14 @@ class Post
      */
     public function __construct()
     {
-        $this->setPostTimestamp(new \DateTime());
-        $this->setPostDraft(false);
-        $this->setPostTweeted(false);
+        $this->postTimestamp = new \DateTime();
+        $this->postDraft     = true;
+        $this->postTweeted   = true;
     }//end __construct()
 
 
     /**
-     * Get postId
+     * Get postId.
      *
      * @return int|null
      */
@@ -123,9 +137,9 @@ class Post
 
 
     /**
-     * Set postTimestamp
+     * Set postTimestamp.
      *
-     * @param \DateTime $postTimestamp
+     * @param \DateTime $postTimestamp Timestamp.
      *
      * @return Post
      */
@@ -138,7 +152,7 @@ class Post
 
 
     /**
-     * Get postTimestamp
+     * Get postTimestamp.
      *
      * @return \DateTime|null
      */
@@ -149,9 +163,9 @@ class Post
 
 
     /**
-     * Set postTitle
+     * Set postTitle.
      *
-     * @param string $postTitle
+     * @param string $postTitle Title.
      *
      * @return Post
      */
@@ -175,9 +189,9 @@ class Post
 
 
     /**
-     * Set postContent
+     * Set postContent.
      *
-     * @param string $postContent
+     * @param string $postContent Content.
      *
      * @return Post
      */
@@ -190,7 +204,7 @@ class Post
 
 
     /**
-     * Get postContent
+     * Get postContent.
      *
      * @return string|null
      */
@@ -201,9 +215,9 @@ class Post
 
 
     /**
-     * Set postDraft
+     * Set postDraft.
      *
-     * @param bool $postDraft
+     * @param bool $postDraft Draft status.
      *
      * @return Post
      */
@@ -216,7 +230,7 @@ class Post
 
 
     /**
-     * Get postDraft
+     * Get postDraft.
      *
      * @return bool
      */
@@ -227,9 +241,9 @@ class Post
 
 
     /**
-     * Set postTweeted
+     * Set postTweeted.
      *
-     * @param bool $postTweeted
+     * @param bool $postTweeted Tweeted status.
      *
      * @return Post
      */
@@ -242,7 +256,7 @@ class Post
 
 
     /**
-     * Get postTweeted
+     * Get postTweeted.
      *
      * @return bool
      */
@@ -253,9 +267,9 @@ class Post
 
 
     /**
-     * Get comments
+     * Get comments.
      *
-     * @return Comment[]|array|ArrayCollection
+     * @return Comment[]|ArrayCollection
      */
     public function getComments()
     {
@@ -264,7 +278,7 @@ class Post
 
 
     /**
-     * Get the number of comments on a post
+     * Get the number of comments on a post.
      *
      * @return int
      */
@@ -275,9 +289,9 @@ class Post
 
 
     /**
-     * Add comment
+     * Add comment.
      *
-     * @param Comment $comment
+     * @param Comment $comment Comment.
      *
      * @return Post
      */
@@ -290,7 +304,7 @@ class Post
 
 
     /**
-     * Return the post title when treated as a string
+     * Return the post title when treated as a string.
      *
      * @return string
      */

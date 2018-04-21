@@ -2,7 +2,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Anthony Birkett
+ * Copyright (c) 2014-2018 Anthony Birkett
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,12 @@
  * THE SOFTWARE.
  *
  *
- * PHP Version 7.1
+ * PHP Version 7.2
  *
  * @category  Entities
  * @package   PersonalWebsite
  * @author    Anthony Birkett <anthony@a-birkett.co.uk>
- * @copyright 2015-2018 Anthony Birkett
+ * @copyright 2014-2018 Anthony Birkett
  * @license   http://opensource.org/licenses/MIT  The MIT License (MIT)
  * @link      http://www.a-birkett.co.uk
  */
@@ -51,6 +51,8 @@ use Doctrine\ORM\Mapping as ORM;
 class BlockedAddress
 {
     /**
+     * Blocked address ID.
+     *
      * @var integer
      *
      * @ORM\Column(name="intBlockedAddressId", type="integer", nullable=false)
@@ -83,11 +85,13 @@ class BlockedAddress
      */
     public function __construct()
     {
-        $this->setTimestamp(new \DateTime());
+        $this->timestamp = new \DateTime();
     }//end __construct()
 
 
     /**
+     * Get the blocked address ID.
+     *
      * @return int|null
      */
     public function getId(): ?int
@@ -97,7 +101,9 @@ class BlockedAddress
 
 
     /**
-     * @param string $address
+     * Set the IP Address.
+     *
+     * @param string $address IP Address.
      *
      * @return BlockedAddress
      */
@@ -110,7 +116,7 @@ class BlockedAddress
 
 
     /**
-     * Get address
+     * Get address.
      *
      * @return string|null
      */
@@ -121,7 +127,7 @@ class BlockedAddress
 
 
     /**
-     * Set timestamp
+     * Set timestamp.
      *
      * @param \DateTime $timestamp Timestamp.
      *
@@ -136,7 +142,7 @@ class BlockedAddress
 
 
     /**
-     * Get timestamp
+     * Get timestamp.
      *
      * @return \DateTime
      */
