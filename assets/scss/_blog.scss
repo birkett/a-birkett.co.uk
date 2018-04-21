@@ -34,23 +34,23 @@
 
  /*Definitions for the Blog layout*/
 p.timestamp {
-    color: $text-color;
-    font-size: 0.75em;
+    color:      $text-color;
+    font-size:  0.75em;
     margin-top: 0;
 }
 
 .post {
-    padding: 16px;
+    padding:          16px;
     background-image: url('../images/trans_bg.png');
 }
 
 .postavatar {
-    float: left;
-    width: 48px;
+    float:  left;
+    width:  48px;
     height: 48px;
 }
 
 .commentbox {
     padding-top: 0;
-    text-align: center;
+    text-align:  center;
 }

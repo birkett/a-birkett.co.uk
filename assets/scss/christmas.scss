@@ -34,17 +34,17 @@
 
 /*Defines the Christmas style rules*/
 .noticebox {
-    width: 100%;
-    height: 29px;
+    width:            100%;
+    height:           29px;
     background-image: url('../images/christmas/xlites.gif');
 }
 
 .container {
-    background-image: url('../images/christmas/snow1.png'), url('../images/christmas/snow2.png'), url('../images/christmas/snow3.png');
+    background-image:  url('../images/christmas/snow1.png'), url('../images/christmas/snow2.png'), url('../images/christmas/snow3.png');
     -webkit-animation: container 10s linear infinite;
-    -moz-animation: container 10s linear infinite;
-    -ms-animation: container 10s linear infinite;
-    animation: container 10s linear infinite;
+    -moz-animation:    container 10s linear infinite;
+    -ms-animation:     container 10s linear infinite;
+    animation:         container 10s linear infinite;
 }
 
 @mixin keyframes($name) {

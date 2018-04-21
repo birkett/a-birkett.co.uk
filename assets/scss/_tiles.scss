@@ -38,29 +38,29 @@
 }
 
 p.tiletitle {
-    font-size: 2.5em;
+    font-size:  2.5em;
     margin-top: 0;
     text-align: left;
 }
 
 .tile {
-    background-color: #87C2ED;
+    background-color:  #87C2ED;
     background-repeat: no-repeat;
-    padding: 0;
-    margin: 10px;
-    width: 200px;
-    height: 200px;
-    border: none;
-    display: inline-block;
-    box-shadow: 0 0 20px 6px #000;
-    box-sizing: border-box;
-    transition: 0.5s ease;
-    border-radius: 50%;
+    padding:           0;
+    margin:            10px;
+    width:             200px;
+    height:            200px;
+    border:            none;
+    display:           inline-block;
+    box-shadow:        0 0 20px 6px #000;
+    box-sizing:        border-box;
+    transition:        0.5s ease;
+    border-radius:     50%;
 }
 
 .tile:hover {
     background-color: $blue-color;
-    border-radius: 10%;
+    border-radius:    10%;
 }
 
 /*Tile overrides*/

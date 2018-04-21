@@ -50,31 +50,31 @@ $blue-color: #87C2ED;
 
 /*Basics*/
 body {
-    margin: 0;
-    padding: 0;
+    margin:           0;
+    padding:          0;
     background-color: #000;
-    color: $text-color;
-    font-family: $font-stack;
+    color:            $text-color;
+    font-family:      $font-stack;
 }
 
 h1 {
-    font-size: 4em;
+    font-size:   4em;
     font-weight: 300;
-    margin: 0;
-    color: $text-color;
-    display: block;
+    margin:      0;
+    color:       $text-color;
+    display:     block;
 }
 
 h2 {
     font-size: 1.75em;
-    margin: 0;
-    color: $text-color;
+    margin:    0;
+    color:     $text-color;
 }
 
 a, a.visited {
     text-decoration: none;
-    border-style: none;
-    color: $blue-color;
+    border-style:    none;
+    color:           $blue-color;
 }
 
 a img {
@@ -91,5 +91,5 @@ a.right {
 
 p {
     font-size: 1em;
-    color: $text-color;
+    color:     $text-color;
 }

@@ -34,19 +34,19 @@
 
 /*Submit buttons*/
 .submit {
-    background: #222 url('../images/fade_out.png') repeat-x;
-    display: inline-block;
-    color: #FFF;
+    background:      #222 url('../images/fade_out.png') repeat-x;
+    display:         inline-block;
+    color:           #FFF;
     text-decoration: none;
-    font-weight: bold;
-    line-height: 1;
-    border-radius: 5px;
-    text-shadow: 0 -1px 1px #222;
-    border: 0;
-    position: relative;
-    cursor: pointer;
-    width: 200px;
-    height: 50px;
+    font-weight:     bold;
+    line-height:     1;
+    border-radius:   5px;
+    text-shadow:     0 -1px 1px #222;
+    border:          0;
+    position:        relative;
+    cursor:          pointer;
+    width:           200px;
+    height:          50px;
 }
 
 .submit:hover {
