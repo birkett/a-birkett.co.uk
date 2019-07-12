@@ -37,6 +37,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -91,7 +92,7 @@ class Comment
     /**
      * Comment timestamp.
      *
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="dtmTimestamp", type="datetime", nullable=false)
      */
@@ -112,7 +113,7 @@ class Comment
      */
     public function __construct()
     {
-        $this->commentTimestamp = new \DateTime();
+        $this->commentTimestamp = new DateTime();
     }//end __construct()
 
 
@@ -208,11 +209,11 @@ class Comment
     /**
      * Set comment timestamp
      *
-     * @param \DateTime $commentTimestamp Timestamp.
+     * @param DateTime $commentTimestamp Timestamp.
      *
      * @return Comment
      */
-    public function setCommentTimestamp(\DateTime $commentTimestamp): Comment
+    public function setCommentTimestamp(DateTime $commentTimestamp): Comment
     {
         $this->commentTimestamp = $commentTimestamp;
 
@@ -223,9 +224,9 @@ class Comment
     /**
      * Get comment timestamp
      *
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getCommentTimestamp(): ?\DateTime
+    public function getCommentTimestamp(): ?DateTime
     {
         return $this->commentTimestamp;
     }//end getCommentTimestamp()

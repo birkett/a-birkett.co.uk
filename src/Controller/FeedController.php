@@ -38,11 +38,12 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Post;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Repository\PostRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-class FeedController extends Controller
+class FeedController extends AbstractController
 {
     /**
      * Load the RSS feed page.
@@ -53,10 +54,10 @@ class FeedController extends Controller
      */
     public function indexAction(Request $request): Response
     {
-        $blogPosts = $this->getDoctrine()
-            ->getManager()
-            ->getRepository(Post::class)
-            ->getPostsOnPage(1, 5);
+        /** @var PostRepository $repository */
+        $repository = $this->getDoctrine()->getManager()->getRepository(Post::class);
+
+        $blogPosts = $repository->getPostsOnPage(1, 5);
 
         $request->setFormat('xml', 'text/xml');
 

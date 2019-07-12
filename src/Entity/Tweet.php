@@ -37,6 +37,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -61,7 +62,7 @@ class Tweet
     /**
      * Tweet timestamp.
      *
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="dtmTimestamp", type="datetime", nullable=false)
      */
@@ -106,7 +107,7 @@ class Tweet
     /**
      * Tweet fetch timestamp.
      *
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="dtmFetchTimestamp", type="datetime", nullable=false)
      */
@@ -127,11 +128,11 @@ class Tweet
     /**
      * Set tweetTimestamp.
      *
-     * @param \DateTime $tweetTimestamp Tweet timestamp.
+     * @param DateTime $tweetTimestamp Tweet timestamp.
      *
      * @return Tweet
      */
-    public function setTweetTimestamp(\DateTime $tweetTimestamp): Tweet
+    public function setTweetTimestamp(DateTime $tweetTimestamp): Tweet
     {
         $this->tweetTimestamp = $tweetTimestamp;
 
@@ -142,9 +143,9 @@ class Tweet
     /**
      * Get tweetTimestamp.
      *
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getTweetTimestamp(): ?\DateTime
+    public function getTweetTimestamp(): ?DateTime
     {
         return $this->tweetTimestamp;
     }//end getTweetTimestamp()
@@ -257,11 +258,11 @@ class Tweet
     /**
      * Set tweetFetchTime.
      *
-     * @param \DateTime $tweetFetchTime Tweet fetch timestamp.
+     * @param DateTime $tweetFetchTime Tweet fetch timestamp.
      *
      * @return Tweet
      */
-    public function setTweetFetchTime(\DateTime $tweetFetchTime): Tweet
+    public function setTweetFetchTime(DateTime $tweetFetchTime): Tweet
     {
         $this->tweetFetchTime = $tweetFetchTime;
 
@@ -272,9 +273,9 @@ class Tweet
     /**
      * Get tweetFetchTime.
      *
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getTweetFetchTime(): ?\DateTime
+    public function getTweetFetchTime(): ?DateTime
     {
         return $this->tweetFetchTime;
     }//end getTweetFetchTime()

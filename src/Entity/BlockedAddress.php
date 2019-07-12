@@ -37,6 +37,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -73,7 +74,7 @@ class BlockedAddress
     /**
      * Blocked time.
      *
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="dtmTimestamp", type="datetime", nullable=false)
      */
@@ -85,7 +86,7 @@ class BlockedAddress
      */
     public function __construct()
     {
-        $this->timestamp = new \DateTime();
+        $this->timestamp = new DateTime();
     }//end __construct()
 
 
@@ -129,11 +130,11 @@ class BlockedAddress
     /**
      * Set timestamp.
      *
-     * @param \DateTime $timestamp Timestamp.
+     * @param DateTime $timestamp Timestamp.
      *
      * @return BlockedAddress
      */
-    public function setTimestamp(\DateTime $timestamp): BlockedAddress
+    public function setTimestamp(DateTime $timestamp): BlockedAddress
     {
         $this->timestamp = $timestamp;
 
@@ -144,9 +145,9 @@ class BlockedAddress
     /**
      * Get timestamp.
      *
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getTimestamp(): \DateTime
+    public function getTimestamp(): DateTime
     {
         return $this->timestamp;
     }//end getTimestamp()

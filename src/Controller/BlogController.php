@@ -37,12 +37,13 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Repository\PostRepository;
 use Doctrine\ORM\EntityNotFoundException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Post;
 
-class BlogController extends Controller
+class BlogController extends AbstractController
 {
     /**
      * Load and handle the blog.
@@ -56,15 +57,14 @@ class BlogController extends Controller
      */
     public function indexAction(int $postId = null, int $pageNumber = 1): Response
     {
+        /** @var PostRepository $repository */
         $repository = $this->getDoctrine()->getManager()->getRepository(Post::class);
 
         $postsPerPage = 5;
 
-        if ($postId === null) {
-            $blogPosts = $repository->getPostsOnPage($pageNumber, $postsPerPage);
-        } else {
-            $blogPosts[] = $repository->findOneBy(['postId' => $postId]);
-        }
+        $postId === null
+            ? $blogPosts = $repository->getPostsOnPage($pageNumber, $postsPerPage)
+            : $blogPosts[] = $repository->findOneBy(['postId' => $postId]);
 
         if ($blogPosts === null) {
             throw new EntityNotFoundException('Requested blog post not found.');
@@ -75,9 +75,9 @@ class BlogController extends Controller
         return $this->render(
             'pages/blog.html.twig',
             [
-                'posts' => $blogPosts,
-                'totalposts' => $numberOfPosts,
-                'page' => $pageNumber,
+                'posts'        => $blogPosts,
+                'totalposts'   => $numberOfPosts,
+                'page'         => $pageNumber,
                 'postsperpage' => $postsPerPage,
             ]
         );

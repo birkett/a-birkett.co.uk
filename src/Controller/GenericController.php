@@ -38,11 +38,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Doctrine\ORM\EntityNotFoundException;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Page;
 
-class GenericController extends Controller
+class GenericController extends AbstractController
 {
     /**
      * Load a generic, database backed, page.

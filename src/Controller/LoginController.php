@@ -37,11 +37,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class LoginController extends Controller
+class LoginController extends AbstractController
 {
     /**
      * Load and handle the login form.
@@ -66,7 +66,7 @@ class LoginController extends Controller
             'default/login.html.twig',
             [
                 'last_username' => $lastUsername,
-                'error' => $error,
+                'error'         => $error,
             ]
         );
     }//end loginAction()

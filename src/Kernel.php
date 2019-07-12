@@ -37,9 +37,13 @@ declare(strict_types=1);
 
 namespace App;
 
+use Exception;
+use Generator;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Component\Config\Exception\LoaderLoadException;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
@@ -47,35 +51,12 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
-    private const CONFIG_EXTS = '.{php,xml,yaml,yml}';
-
-
-    /**
-     * Get the cache directory.
-     *
-     * @return string
-     */
-    public function getCacheDir(): string
-    {
-        return $this->getProjectDir().'/var/cache/'.$this->environment;
-    }//end getCacheDir()
-
-
-    /**
-     * Get the log directory.
-     *
-     * @return string
-     */
-    public function getLogDir(): string
-    {
-        return $this->getProjectDir().'/var/log';
-    }//end getLogDir()
-
+    private const CONFIG_EXTENSIONS = '.{php,xml,yaml,yml}';
 
     /**
      * Register all bundles.
      *
-     * @return \Generator|iterable|\Symfony\Component\HttpKernel\Bundle\BundleInterface[]
+     * @return Generator|iterable|BundleInterface[]
      */
     public function registerBundles()
     {
@@ -95,7 +76,7 @@ class Kernel extends BaseKernel
      * @param ContainerBuilder $container Container.
      * @param LoaderInterface  $loader    Loader.
      *
-     * @throws \Exception On error.
+     * @throws Exception On error.
      *
      * @return void
      */
@@ -103,18 +84,18 @@ class Kernel extends BaseKernel
     {
         $container->setParameter('container.dumper.inline_class_loader', true);
         $confDir = $this->getProjectDir().'/config';
-        $loader->load($confDir.'/packages/*'.self::CONFIG_EXTS, 'glob');
+        $loader->load($confDir.'/packages/*'.self::CONFIG_EXTENSIONS, 'glob');
 
         if (is_dir($confDir.'/packages/'.$this->environment)) {
             $loader->load(
-                $confDir.'/packages/'.$this->environment.'/**/*'.self::CONFIG_EXTS,
+                $confDir.'/packages/'.$this->environment.'/**/*'.self::CONFIG_EXTENSIONS,
                 'glob'
             );
         }
 
-        $loader->load($confDir.'/services'.self::CONFIG_EXTS, 'glob');
+        $loader->load($confDir.'/services'.self::CONFIG_EXTENSIONS, 'glob');
         $loader->load(
-            $confDir.'/services_'.$this->environment.self::CONFIG_EXTS,
+            $confDir.'/services_'.$this->environment.self::CONFIG_EXTENSIONS,
             'glob'
         );
     }//end configureContainer()
@@ -125,7 +106,7 @@ class Kernel extends BaseKernel
      *
      * @param RouteCollectionBuilder $routes Routes.
      *
-     * @throws \Symfony\Component\Config\Exception\FileLoaderLoadException On error.
+     * @throws LoaderLoadException On error.
      *
      * @return void
      */
@@ -133,17 +114,17 @@ class Kernel extends BaseKernel
     {
         $confDir = $this->getProjectDir().'/config';
         if (is_dir($confDir.'/routes/')) {
-            $routes->import($confDir.'/routes/*'.self::CONFIG_EXTS, '/', 'glob');
+            $routes->import($confDir.'/routes/*'.self::CONFIG_EXTENSIONS, '/', 'glob');
         }
 
         if (is_dir($confDir.'/routes/'.$this->environment)) {
             $routes->import(
-                $confDir.'/routes/'.$this->environment.'/**/*'.self::CONFIG_EXTS,
+                $confDir.'/routes/'.$this->environment.'/**/*'.self::CONFIG_EXTENSIONS,
                 '/',
                 'glob'
             );
         }
 
-        $routes->import($confDir.'/routes'.self::CONFIG_EXTS, '/', 'glob');
+        $routes->import($confDir.'/routes'.self::CONFIG_EXTENSIONS, '/', 'glob');
     }//end configureRoutes()
 }//end class

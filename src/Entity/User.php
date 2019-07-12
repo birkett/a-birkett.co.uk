@@ -39,6 +39,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Serializable;
 
 /**
  * User
@@ -49,7 +50,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * })
  * @ORM\Entity
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, Serializable
 {
     /**
      * User ID.

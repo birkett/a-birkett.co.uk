@@ -37,6 +37,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -62,7 +63,7 @@ class Post
     /**
      * Post time stamp.
      *
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="dtmTimestamp", type="datetime", nullable=false)
      */
@@ -119,7 +120,7 @@ class Post
      */
     public function __construct()
     {
-        $this->postTimestamp = new \DateTime();
+        $this->postTimestamp = new DateTime();
         $this->postDraft     = true;
         $this->postTweeted   = true;
     }//end __construct()
@@ -139,11 +140,11 @@ class Post
     /**
      * Set postTimestamp.
      *
-     * @param \DateTime $postTimestamp Timestamp.
+     * @param DateTime $postTimestamp Timestamp.
      *
      * @return Post
      */
-    public function setPostTimestamp(\DateTime $postTimestamp): Post
+    public function setPostTimestamp(DateTime $postTimestamp): Post
     {
         $this->postTimestamp = $postTimestamp;
 
@@ -154,9 +155,9 @@ class Post
     /**
      * Get postTimestamp.
      *
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getPostTimestamp(): ?\DateTime
+    public function getPostTimestamp(): ?DateTime
     {
         return $this->postTimestamp;
     }//end getPostTimestamp()

@@ -43,7 +43,7 @@ use App\Entity\Post;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 
 class AppFixtures extends Fixture
 {
@@ -145,7 +145,7 @@ class AppFixtures extends Fixture
     private function createUsers(): void
     {
         $user            = new User();
-        $passwordEncoder = new BCryptPasswordEncoder(10);
+        $passwordEncoder = new NativePasswordEncoder(10);
 
         $user->setUsername('test');
         $user->setPassword($passwordEncoder->encodePassword('test', 'test'));
