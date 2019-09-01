@@ -1,0 +1,32 @@
+/**
+ * Style for the tag cloud.
+ */
+@import "constants";
+
+.tag-cloud {
+    ul {
+        margin:     0;
+        padding:    0;
+        list-style: none;
+
+        li {
+            display: inline-block;
+            padding: 2px;
+
+            a {
+                &:hover {
+                    @extend %default-transition;
+                }
+
+                position:         relative;
+                display:          inline-block;
+                line-height:      30px;
+                padding:          0 1em 0 .75em;
+                border-radius:    5px;
+                color:            #FFFFFF;
+                text-decoration:  none;
+                text-shadow:      0 0 5px #000000;
+            }
+        }
+    }
+}

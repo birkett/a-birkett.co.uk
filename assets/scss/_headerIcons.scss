@@ -1,0 +1,42 @@
+/**
+ * Header navigation icons and avatar.
+ */
+@import "constants";
+
+.nav-icon {
+    &.twitter {
+        filter:           grayscale(100%) brightness(20%);
+        background-image: url('../../img/twitter.svg');
+    }
+
+    &.github {
+        filter:           grayscale(100%) brightness(75%);
+        background-image: url('../../img/github.svg');
+    }
+
+    &.steam {
+        filter:           grayscale(100%) brightness(50%);
+        background-image: url('../../img/steam.svg');
+    }
+
+    &.linkedin {
+        filter:           grayscale(100%) brightness(50%) contrast(120%);
+        background-image: url('../../img/linkedin.svg');
+    }
+
+    &.email {
+        filter:           contrast(75%);
+        background-image: url('../../img/email.svg');
+    }
+
+    &:hover {
+        @extend %default-transition;
+        filter: none;
+    }
+
+    display:             inline-block;
+    width:               $header-icon-size;
+    height:              $header-icon-size;
+    margin:              10px;
+    background-position: 0 0;
+}

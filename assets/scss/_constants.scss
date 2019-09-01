@@ -1,0 +1,26 @@
+/**
+ * Constants used throughout the style sheet.
+ */
+$headings-font:         'Francois One', sans-serif;
+$paragraph-font:        Righteous, cursive;
+
+$text-color:            #CCCCCC;
+$link-color:            #87C2ED;
+$background-color:      #ABAAAD;
+$body-background-color: #000000;
+
+$transition-type:       ease;
+$transition-time:       1s;
+$transition-scale:      1.1;
+
+$opacity:               0.5;
+
+$avatar-size:           170px;
+$header-icon-size:      64px;
+
+$transparent-black:     rgba(0, 0, 0, $opacity);
+
+%default-transition {
+    transform:  scale($transition-scale);
+    transition: $transition-type $transition-time;
+}

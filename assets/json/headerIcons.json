@@ -1,0 +1,24 @@
+{
+    "icons": [
+        {
+            "title": "Twitter",
+            "url": "{{twitterHeaderLink}}"
+        },
+        {
+            "title": "LinkedIn",
+            "url": "{{linkedInHeaderLink}}"
+        },
+        {
+            "title": "GitHub",
+            "url": "{{githubHeaderLink}}"
+        },
+        {
+            "title": "Steam",
+            "url": "{{steamHeaderLink}}"
+        },
+        {
+            "title": "Email",
+            "url": "{{emailHeaderLink}}"
+        }
+    ]
+}

@@ -1,0 +1,58 @@
+/**
+ * Defines the basic layout.
+ */
+@import "constants";
+
+.container {
+    %transparent {
+        background-color: $transparent-black;;
+        box-shadow:       0 0 15px 15px $transparent-black;
+        text-align:       center;
+    }
+
+    .header, .footer {
+        @extend %transparent;
+        width: 100%;
+    }
+
+    .top-avatar {
+        &:hover {
+            @extend %default-transition;
+        }
+
+        display:          inline-block;
+        width:            $avatar-size;
+        height:           $avatar-size;
+        border-radius:    50%;
+        background-image: url('../../img/avatar.svg');
+        background-size:  $avatar-size $avatar-size;
+    }
+
+    .content {
+        img {
+            width:  80%;
+            height: 80%;
+        }
+
+        .post {
+            @extend %transparent;
+            margin:  50px;
+            padding: 16px;
+        }
+
+        width:    50%;
+        overflow: hidden;
+        margin:   0 auto 0 auto;
+    }
+
+    .fade-black {
+        height:           23px;
+        background-image: url('../../img/fade_in_black.svg');
+    }
+
+    width:      100%;
+    margin:     0;
+    background: url('../../img/bg_gradient.svg')  0 0%/100%,
+                url('../../img/bg_triangles.svg') 0 0%/5%,
+                $background-color;
+}
