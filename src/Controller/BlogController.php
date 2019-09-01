@@ -61,12 +61,13 @@ class BlogController extends AbstractController
         $repository = $this->getDoctrine()->getManager()->getRepository(Post::class);
 
         $postsPerPage = 5;
+        $blogPosts = [];
 
         $postId === null
             ? $blogPosts = $repository->getPostsOnPage($pageNumber, $postsPerPage)
             : $blogPosts[] = $repository->findOneBy(['postId' => $postId]);
 
-        if ($blogPosts === null) {
+        if (empty($blogPosts)) {
             throw new EntityNotFoundException('Requested blog post not found.');
         }
 

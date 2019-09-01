@@ -148,10 +148,11 @@ class User implements UserInterface, Serializable
     /**
      * Gets the password salt. Null when using bcrypt.
      *
-     * @return void
+     * @return string|null
      */
-    public function getSalt(): void
+    public function getSalt(): ?string
     {
+        return null;
     }//end getSalt()
 
 
