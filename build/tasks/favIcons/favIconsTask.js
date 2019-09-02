@@ -6,11 +6,15 @@ const SIZES_MAP = {
     16: buildConstants.faviconPrefix + '-16x16',
     32: buildConstants.faviconPrefix + '-32x32',
     60: buildConstants.appleIconPrefix + '-60x60',
+    70: buildConstants.msTileIconPrefix + '-70x70',
     76: buildConstants.appleIconPrefix + '-76x76',
     120: buildConstants.appleIconPrefix + '-120x120',
+    144: buildConstants.msTileIconPrefix + '-144x144',
+    150: buildConstants.msTileIconPrefix + '-150x150',
     152: buildConstants.appleIconPrefix + '-152x152',
     180: buildConstants.appleIconPrefix + '-180x180',
     192: buildConstants.androidIconPrefix + '-192x192',
+    310: buildConstants.msTileIconPrefix + '-310x310',
     512: buildConstants.androidIconPrefix + '-512x512',
 };
 
@@ -24,8 +28,11 @@ const OPTIONS = {
     favicon: {
         name: buildConstants.faviconPrefix,
         sizes: Object.keys(SIZES_MAP),
-        ico: ICO_SIZES
-    }
+    },
+    ico: {
+        name: buildConstants.faviconPrefix,
+        sizes: ICO_SIZES
+    },
 };
 
 function buildFilePath(path) {
