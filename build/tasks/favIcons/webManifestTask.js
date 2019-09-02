@@ -5,6 +5,7 @@ const twig = require('twig');
 
 module.exports = function webManifestTask(callback) {
     const data = {
+        buildConstants: buildConstants,
         constants: jsonLoader.loadTemplateConstants(),
     };
 

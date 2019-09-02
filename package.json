@@ -2,7 +2,7 @@
   "name": "a-birkett.co.uk",
   "version": "1.0.0",
   "description": "Personal website of Anthony Birkett",
-  "main": "template.js",
+  "private": true,
   "devDependencies": {
     "del": "^5.1.0",
     "gulp": "^4.0.2",

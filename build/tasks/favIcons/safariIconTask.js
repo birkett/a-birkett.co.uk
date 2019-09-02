@@ -6,7 +6,7 @@ module.exports = function safariIconTask(callback) {
     const replaceRegex = new RegExp('fill="#(.*?)"', 'g');
 
     fs.writeFile(
-        buildConstants.safariIconFileName,
+        buildConstants.safariIconOutputFileName,
         inputFile.toString().replace(replaceRegex, 'fill="#000000"'),
         callback
     );

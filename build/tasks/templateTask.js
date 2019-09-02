@@ -5,6 +5,7 @@ const twig = require('twig');
 
 module.exports = function templateTask(callback) {
     const data = {
+        buildConstants: buildConstants,
         constants: jsonLoader.loadTemplateConstants(),
         icons: jsonLoader.loadIcons(),
         tagGroups: jsonLoader.loadTags(),

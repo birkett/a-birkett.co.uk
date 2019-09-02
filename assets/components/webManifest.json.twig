@@ -3,16 +3,16 @@
     "short_name": "{{ constants.firstName }} {{ constants.lastName }}",
     "icons": [
         {
-            "src": "android-chrome-192x192{{ constants.pngExtension}}?v={{ constants.siteVersion}}",
+            "src": "{{ buildConstants.androidIconPrefix }}-192x192{{ buildConstants.pngExtension}}?v={{ constants.siteVersion}}",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "android-chrome-512x512{{ constants.pngExtension }}?v={{ constants.siteVersion }}",
+            "src": "{{ buildConstants.androidIconPrefix }}-512x512{{ buildConstants.pngExtension }}?v={{ constants.siteVersion }}",
             "sizes": "512x512",
             "type": "image/png"
         }
     ],
-    "theme_color": "#FFFFFF",
-    "background_color": "#FFFFFF"
+    "theme_color": "{{ buildConstants.themeColor }}",
+    "background_color": "{{ buildConstants.themeColor }}"
 }

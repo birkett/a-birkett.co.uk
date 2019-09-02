@@ -24,17 +24,17 @@
         width:            $avatar-size;
         height:           $avatar-size;
         border-radius:    50%;
-        background-image: url('../../img/avatar.svg');
+        background-image: url('../img/avatar.svg');
         background-size:  $avatar-size $avatar-size;
     }
 
-    .content {
+    .content-wrapper {
         img {
             width:  80%;
             height: 80%;
         }
 
-        .post {
+        .content-block {
             @extend %transparent;
             margin:  50px;
             padding: 16px;
@@ -47,12 +47,12 @@
 
     .fade-black {
         height:           23px;
-        background-image: url('../../img/fade_in_black.svg');
+        background-image: url('../img/fade_in_black.svg');
     }
 
     width:      100%;
     margin:     0;
-    background: url('../../img/bg_gradient.svg')  0 0%/100%,
-                url('../../img/bg_triangles.svg') 0 0%/5%,
+    background: url('../img/bg_gradient.svg')  0 0%/100%,
+                url('../img/bg_triangles.svg') 0 0%/5%,
                 $background-color;
 }
