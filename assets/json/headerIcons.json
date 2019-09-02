@@ -1,24 +1,22 @@
-{
-    "icons": [
-        {
-            "title": "Twitter",
-            "url": "{{twitterHeaderLink}}"
-        },
-        {
-            "title": "LinkedIn",
-            "url": "{{linkedInHeaderLink}}"
-        },
-        {
-            "title": "GitHub",
-            "url": "{{githubHeaderLink}}"
-        },
-        {
-            "title": "Steam",
-            "url": "{{steamHeaderLink}}"
-        },
-        {
-            "title": "Email",
-            "url": "{{emailHeaderLink}}"
-        }
-    ]
-}
+[
+    {
+        "title": "Twitter",
+        "url": "https://twitter.com/birkett26"
+    },
+    {
+        "title": "LinkedIn",
+        "url": "https://linkedin.com/in/anthony-birkett"
+    },
+    {
+        "title": "GitHub",
+        "url": "https://github.com/birkett"
+    },
+    {
+        "title": "Steam",
+        "url": "https://steamcommunity.com/id/birkett"
+    },
+    {
+        "title": "Email",
+        "url": "mailto:anthonyATa-birkett.coDOTuk"
+    }
+]

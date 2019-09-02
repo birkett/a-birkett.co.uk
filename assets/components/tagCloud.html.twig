@@ -1,0 +1,22 @@
+{% extends 'contentBlock.html.twig' %}
+
+{% block title %}
+    <h2>{{ constants.firstName }} in words</h2>
+{% endblock %}
+
+{% block content %}
+    {% for groupTitle, groupTags in tagGroups %}
+        <div class="tag-cloud">
+            <p>{{ groupTitle }}</p>
+            <ul>
+                {% for tag in groupTags %}
+                    <li>
+                        <a {% if tag.url is defined %} href="{{ tag.url }}" target="_blank" {% endif %} style="background-color: {{ tag.color }}">
+                            <span>{{ tag.title }}</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+{% endblock %}

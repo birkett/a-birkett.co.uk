@@ -1,4 +1,4 @@
-const constants = require('../constants');
+const buildConstants = require('../../buildConstants');
 const fs = require('fs');
 const iconGen = require('icon-gen');
 
@@ -30,26 +30,26 @@ const OPTIONS = {
     }
 };
 
-function favIconsTask(callback) {
-    if (!fs.existsSync(constants.outputDirectory)) {
-        fs.mkdirSync(constants.outputDirectory);
+module.exports = function favIconsTask(callback) {
+    if (!fs.existsSync(buildConstants.outputDirectory)) {
+        fs.mkdirSync(buildConstants.outputDirectory);
     }
 
     process.env.OPENSSL_CONF = '';
 
-    iconGen(constants.faviconInputFile, constants.outputDirectory, OPTIONS)
+    iconGen(buildConstants.faviconInputFile, buildConstants.outputDirectory, OPTIONS)
         .then(() => {
             Object.keys(SIZES_MAP).forEach((key) => {
                 fs.renameSync(
-                    `${constants.outputDirectory}${INTERMEDIATE_FILENAME}${key}${constants.pngExtension}`,
-                    `${constants.outputDirectory}${SIZES_MAP[key]}${constants.pngExtension}`
+                    `${buildConstants.outputDirectory}${INTERMEDIATE_FILENAME}${key}${buildConstants.pngExtension}`,
+                    `${buildConstants.outputDirectory}${SIZES_MAP[key]}${buildConstants.pngExtension}`
                 );
             });
 
             Object.keys(FILES_TO_COPY).forEach((key) => {
                 fs.copyFileSync(
-                    `${constants.outputDirectory}${key}${constants.pngExtension}`,
-                    `${constants.outputDirectory}${FILES_TO_COPY[key]}${constants.pngExtension}`
+                    `${buildConstants.outputDirectory}${key}${buildConstants.pngExtension}`,
+                    `${buildConstants.outputDirectory}${FILES_TO_COPY[key]}${buildConstants.pngExtension}`
                 );
             });
         })
@@ -58,6 +58,4 @@ function favIconsTask(callback) {
         });
 
     callback();
-}
-
-module.exports = favIconsTask;
+};

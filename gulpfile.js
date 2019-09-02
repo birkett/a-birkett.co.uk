@@ -1,10 +1,10 @@
-const cleanTask = require('./build/cleanTask');
-const stylesTask = require('./build/stylesTask');
-const imagesTask = require('./build/imagesTask');
-const templateTask = require('./build/templateTask');
-const favIconsTask = require('./build/favIcons/favIconsTask');
-const safariIconTask = require('./build/favIcons/safariIconTask');
-const webManifestTask = require('./build/favIcons/webManifestTask');
+const cleanTask = require('./build/tasks/cleanTask');
+const stylesTask = require('./build/tasks/stylesTask');
+const imagesTask = require('./build/tasks/imagesTask');
+const templateTask = require('./build/tasks/templateTask');
+const favIconsTask = require('./build/tasks/favIcons/favIconsTask');
+const safariIconTask = require('./build/tasks/favIcons/safariIconTask');
+const webManifestTask = require('./build/tasks/favIcons/webManifestTask');
 
 const { series } = require('gulp');
 
