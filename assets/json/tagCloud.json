@@ -257,6 +257,43 @@
             "color": "#4EABC0"
         }
     ],
+    "Video Games": [
+        {
+            "title": "Half-Life",
+            "url": "https://en.wikipedia.org/wiki/Half-Life_(series)",
+            "color": "#FB7E14"
+        },
+        {
+            "title": "Counter-Strike",
+            "url": "https://en.wikipedia.org/wiki/Counter-Strike",
+            "color": "#000000"
+        },
+        {
+            "title": "Team Fortress 2",
+            "url": "https://en.wikipedia.org/wiki/Team_Fortress_2",
+            "color": "#F3A957"
+        },
+        {
+            "title": "Garry's Mod",
+            "url": "https://en.wikipedia.org/wiki/Garry%27s_Mod",
+            "color": "#1194F0"
+        },
+        {
+            "title": "Doom",
+            "url": "https://en.wikipedia.org/wiki/Doom_(franchise)",
+            "color": "#E12828"
+        },
+        {
+            "title": "Age of Empires",
+            "url": "https://en.wikipedia.org/wiki/Age_of_Empires",
+            "color": "#CC3300"
+        },
+        {
+            "title": "Uplink",
+            "url": "https://en.wikipedia.org/wiki/Uplink_(video_game)",
+            "color": "#183152"
+        }
+    ],
     "Hobbies": [
         {
             "title": "Formula 1",
