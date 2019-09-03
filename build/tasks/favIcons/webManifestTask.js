@@ -3,18 +3,14 @@ const jsonLoader = require('../../jsonLoader');
 const fs = require('fs');
 const twig = require('twig');
 
-module.exports = function webManifestTask(callback) {
+module.exports = function webManifestTask (callback) {
     const data = {
         buildConstants: buildConstants,
         constants: jsonLoader.loadTemplateConstants(),
     };
 
     twig.renderFile(buildConstants.webManifestInputFileName, data, (err, json) => {
-        if (err) {
-            console.log(err);
-
-            return;
-        }
+        if (err) { throw err; }
 
         fs.writeFile(buildConstants.webManifestOutputFileName, json, callback);
     });

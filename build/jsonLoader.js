@@ -6,15 +6,15 @@ module.exports = class JsonLoader {
         return JSON.parse(fs.readFileSync(path).toString());
     }
 
-    static loadTemplateConstants() {
+    static loadTemplateConstants () {
         return JsonLoader.loadJson(buildConstants.templateConstantsJsonPath);
     }
 
-    static loadIcons() {
+    static loadIcons () {
         return JsonLoader.loadJson(buildConstants.headerIconsJsonPath);
     }
 
-    static loadTags() {
+    static loadTags () {
         return JsonLoader.loadJson(buildConstants.tagsJsonPath);
     }
 };

@@ -35,11 +35,11 @@ const OPTIONS = {
     },
 };
 
-function buildFilePath(path) {
+function buildFilePath (path) {
     return buildConstants.outputDirectory + path + buildConstants.pngExtension;
 }
 
-module.exports = function favIconsTask(callback) {
+module.exports = function favIconsTask (callback) {
     process.env.OPENSSL_CONF = '';
 
     iconGen(buildConstants.faviconInputFile, buildConstants.outputDirectory, OPTIONS)
@@ -52,13 +52,12 @@ module.exports = function favIconsTask(callback) {
             });
 
             Object.keys(FILES_TO_COPY).forEach((key) => {
-                fs.copyFileSync(
+                fs.copyFile(
                     buildFilePath(key),
-                    buildFilePath(FILES_TO_COPY[key])
+                    buildFilePath(FILES_TO_COPY[key]),
+                    callback
                 );
             });
-
-            callback();
         })
         .catch((err) => {
             console.error(err);

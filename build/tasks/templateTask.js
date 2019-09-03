@@ -3,7 +3,7 @@ const jsonLoader = require('../jsonLoader');
 const fs = require('fs');
 const twig = require('twig');
 
-module.exports = function templateTask(callback) {
+module.exports = function templateTask (callback) {
     const data = {
         buildConstants: buildConstants,
         constants: jsonLoader.loadTemplateConstants(),
@@ -12,11 +12,7 @@ module.exports = function templateTask(callback) {
     };
 
     twig.renderFile(buildConstants.templateInputFileName, data, (err, html) => {
-        if (err) {
-            console.log(err);
-
-            return;
-        }
+        if (err) { throw err; }
 
         fs.writeFile(buildConstants.templateOutputFileName, html, callback);
     });

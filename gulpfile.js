@@ -1,4 +1,5 @@
 const cleanTask = require('./build/tasks/cleanTask');
+const siteVersionTask = require('./build/tasks/siteVersionTask');
 const stylesTask = require('./build/tasks/stylesTask');
 const imagesTask = require('./build/tasks/imagesTask');
 const templateTask = require('./build/tasks/templateTask');
@@ -12,6 +13,7 @@ const { series } = require('gulp');
 const iconsGroupTask = series(favIconsTask, safariIconTask, webManifestTask, browserConfigTask);
 
 exports.clean = cleanTask;
+exports.siteVersion = siteVersionTask;
 exports.styles = stylesTask;
 exports.images = imagesTask;
 exports.template = templateTask;
@@ -22,4 +24,4 @@ exports.browserConfig = browserConfigTask;
 
 exports.icons = iconsGroupTask;
 
-exports.default = series(cleanTask, stylesTask, imagesTask, templateTask, iconsGroupTask);
+exports.default = series(cleanTask, siteVersionTask, stylesTask, imagesTask, templateTask, iconsGroupTask);

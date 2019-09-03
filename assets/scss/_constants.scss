@@ -1,26 +1,45 @@
 /**
  * Constants used throughout the style sheet.
  */
-$headings-font:         'Francois One', sans-serif;
-$paragraph-font:        Righteous, cursive;
+$headings-font:  'Francois One', sans-serif;
+$paragraph-font: Righteous, cursive;
 
 $text-color:            #CCCCCC;
 $link-color:            #87C2ED;
 $background-color:      #ABAAAD;
 $body-background-color: #000000;
 
-$transition-type:       ease;
-$transition-time:       1s;
-$transition-scale:      1.1;
+$avatar-size:      170px;
+$header-icon-size: 64px;
 
-$opacity:               0.5;
+/**
+ * Transparent elements.
+ */
+$opacity: 0.5;
+$transparent-black: rgba(0, 0, 0, $opacity);
 
-$avatar-size:           170px;
-$header-icon-size:      64px;
-
-$transparent-black:     rgba(0, 0, 0, $opacity);
+/**
+ * Transitions.
+ */
+$transition-type:  ease;
+$transition-time:  1s;
+$transition-scale: 1.1;
 
 %default-transition {
     transform:  scale($transition-scale);
     transition: $transition-type $transition-time;
 }
+
+/**
+ * SVG paths.
+ */
+$twitter-icon:   '../img/twitter.svg';
+$github-icon:    '../img/github.svg';
+$steam-icon:     '../img/steam.svg';
+$linked-in-icon: '../img/linkedin.svg';
+$email-icon:     '../img/email.svg';
+
+$avatar-svg:        '../img/avatar.svg';
+$fade-in-black-svg: '../img/fade_in_black.svg';
+$bg-gradient-svg:   '../img/bg_gradient.svg';
+$bg-triangles-svg:  '../img/bg_triangles.svg';
