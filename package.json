@@ -8,8 +8,8 @@
     "gulp": "^4.0.2",
     "gulp-sass": "^4.0.2",
     "icon-gen": "^2.0.0",
-    "node-sass": "^4.12.0",
-    "twig": "^1.13.3"
+    "node-sass": "^4.13.0",
+    "twig": "^1.14.0"
   },
   "scripts": {
     "build": "gulp"
