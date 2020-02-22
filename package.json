@@ -7,9 +7,10 @@
     "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-sass": "^4.0.2",
+    "gulp-sass-variables": "^1.2.0",
     "icon-gen": "^2.0.0",
-    "node-sass": "^4.13.0",
-    "twig": "^1.14.0"
+    "node-sass": "^4.13.1",
+    "twig": "^1.15.0"
   },
   "scripts": {
     "build": "gulp"

@@ -1,4 +1,9 @@
 /**
+ * Overridden by the gulp task.
+ */
+$siteVersion: 'x' !default;
+
+/**
  * Constants used throughout the style sheet.
  */
 $headings-font:  'Francois One', sans-serif;
@@ -33,13 +38,13 @@ $transition-scale: 1.1;
 /**
  * SVG paths.
  */
-$twitter-icon:   '../img/twitter.svg';
-$github-icon:    '../img/github.svg';
-$steam-icon:     '../img/steam.svg';
-$linked-in-icon: '../img/linkedin.svg';
-$email-icon:     '../img/email.svg';
+$twitter-icon:   '../img/twitter.svg?v=#{$siteVersion}';
+$github-icon:    '../img/github.svg?v=#{$siteVersion}';
+$steam-icon:     '../img/steam.svg?v=#{$siteVersion}';
+$linked-in-icon: '../img/linkedin.svg?v=#{$siteVersion}';
+$email-icon:     '../img/email.svg?v=#{$siteVersion}';
 
-$avatar-svg:        '../img/avatar.svg';
-$fade-in-black-svg: '../img/fade_in_black.svg';
-$bg-gradient-svg:   '../img/bg_gradient.svg';
-$bg-triangles-svg:  '../img/bg_triangles.svg';
+$avatar-svg:        '../img/avatar.svg?v=#{$siteVersion}';
+$fade-in-black-svg: '../img/fade_in_black.svg?v=#{$siteVersion}';
+$bg-gradient-svg:   '../img/bg_gradient.svg?v=#{$siteVersion}';
+$bg-triangles-svg:  '../img/bg_triangles.svg?v=#{$siteVersion}';
