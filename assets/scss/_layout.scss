@@ -6,13 +6,19 @@
 .container {
     %transparent {
         background-color: $transparent-black;;
-        box-shadow:       0 0 15px 15px $transparent-black;
         text-align:       center;
     }
 
     .header, .footer {
         @extend %transparent;
         width: 100%;
+    }
+
+    .footer {
+        p {
+            margin:  0;
+            padding: 0;
+        }
     }
 
     .top-avatar {
@@ -36,18 +42,13 @@
 
         .content-block {
             @extend %transparent;
-            margin:  50px;
-            padding: 16px;
+            margin:  0;
+            padding: 30px;
         }
 
         width:    50%;
         overflow: hidden;
-        margin:   0 auto 0 auto;
-    }
-
-    .fade-black {
-        height:           23px;
-        background-image: url($fade-in-black-svg);
+        margin:   0 auto;
     }
 
     width:      100%;

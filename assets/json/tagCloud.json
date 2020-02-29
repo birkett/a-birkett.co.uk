@@ -190,7 +190,7 @@
             "title": "Unreal Engine",
             "url": "https://unrealengine.com",
             "textColor": "#FFFFFF",
-            "bgColor": "#000000"
+            "bgColor": "#222222"
         }
     ],
     "Systems Administration": [
@@ -307,6 +307,38 @@
             "bgColor": "#4EABC0"
         }
     ],
+    "Content Creation": [
+        {
+            "title": "Photoshop",
+            "url": "https://adobe.com/uk/products/photoshop.html",
+            "textColor": "#FFFFFF",
+            "bgColor": "#061E26"
+        },
+        {
+            "title": "Premiere",
+            "url": "https://adobe.com/uk/products/premiere.html",
+            "textColor": "#FFFFFF",
+            "bgColor": "#2A0034"
+        },
+        {
+            "title": "After Effects",
+            "url": "https://adobe.com/uk/products/aftereffects.html",
+            "textColor": "#FFFFFF",
+            "bgColor": "#1F0040"
+        },
+        {
+            "title": "Audition",
+            "url": "https://adobe.com/uk/products/audition.html",
+            "textColor": "#FFFFFF",
+            "bgColor": "#002922"
+        },
+        {
+            "title": "Native Instruments",
+            "url": "https://native-instruments.com/en/",
+            "textColor": "#000000",
+            "bgColor": "#5D86A0"
+        }
+    ],
     "Video Games": [
         {
             "title": "Half-Life",
@@ -318,7 +350,7 @@
             "title": "Counter-Strike",
             "url": "https://en.wikipedia.org/wiki/Counter-Strike",
             "textColor": "#FFFFFF",
-            "bgColor": "#000000"
+            "bgColor": "#222222"
         },
         {
             "title": "Team Fortress 2",
@@ -377,7 +409,7 @@
         {
             "title": "Metal Music",
             "textColor": "#FFFFFF",
-            "bgColor": "#000000"
+            "bgColor": "#222222"
         },
         {
             "title": "Maker Movement",
@@ -401,6 +433,12 @@
             "url": "https://en.wikipedia.org/wiki/Mechanical_engineering",
             "textColor": "#FFFFFF",
             "bgColor": "#635F75"
+        },
+        {
+            "title": "Photography",
+            "url": "https://en.wikipedia.org/wiki/Photography",
+            "textColor": "#000000",
+            "bgColor": "#309FFF"
         }
     ]
 }

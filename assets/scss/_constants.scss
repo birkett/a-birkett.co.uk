@@ -6,12 +6,12 @@ $siteVersion: 'x' !default;
 /**
  * Constants used throughout the style sheet.
  */
-$headings-font:  'Francois One', sans-serif;
-$paragraph-font: Righteous, cursive;
+$headings-font:  'Francois One', monospace;
+$paragraph-font: monospace;
 
 $text-color:            #CCCCCC;
 $link-color:            #87C2ED;
-$background-color:      #ABAAAD;
+$background-color:      #111111;
 $body-background-color: #000000;
 
 $avatar-size: 170px;
@@ -19,7 +19,7 @@ $avatar-size: 170px;
 /**
  * Transparent elements.
  */
-$opacity: 0.5;
+$opacity: 0.9;
 $transparent-black: rgba(0, 0, 0, $opacity);
 
 /**
@@ -38,6 +38,5 @@ $transition-scale: 1.1;
  * SVG paths.
  */
 $avatar-svg:        '../img/avatar.svg?v=#{$siteVersion}';
-$fade-in-black-svg: '../img/fade_in_black.svg?v=#{$siteVersion}';
 $bg-gradient-svg:   '../img/bg_gradient.svg?v=#{$siteVersion}';
 $bg-triangles-svg:  '../img/bg_triangles.svg?v=#{$siteVersion}';
