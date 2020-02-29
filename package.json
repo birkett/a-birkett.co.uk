@@ -13,7 +13,8 @@
     "twig": "^1.15.0"
   },
   "scripts": {
-    "build": "gulp"
+    "build": "gulp",
+    "deploy": "cd deploy; ./deploy.sh"
   },
   "author": "Anthony Birkett",
   "license": "MIT",
