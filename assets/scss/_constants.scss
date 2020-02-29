@@ -14,8 +14,7 @@ $link-color:            #87C2ED;
 $background-color:      #ABAAAD;
 $body-background-color: #000000;
 
-$avatar-size:      170px;
-$header-icon-size: 64px;
+$avatar-size: 170px;
 
 /**
  * Transparent elements.
@@ -38,12 +37,6 @@ $transition-scale: 1.1;
 /**
  * SVG paths.
  */
-$twitter-icon:   '../img/twitter.svg?v=#{$siteVersion}';
-$github-icon:    '../img/github.svg?v=#{$siteVersion}';
-$steam-icon:     '../img/steam.svg?v=#{$siteVersion}';
-$linked-in-icon: '../img/linkedin.svg?v=#{$siteVersion}';
-$email-icon:     '../img/email.svg?v=#{$siteVersion}';
-
 $avatar-svg:        '../img/avatar.svg?v=#{$siteVersion}';
 $fade-in-black-svg: '../img/fade_in_black.svg?v=#{$siteVersion}';
 $bg-gradient-svg:   '../img/bg_gradient.svg?v=#{$siteVersion}';

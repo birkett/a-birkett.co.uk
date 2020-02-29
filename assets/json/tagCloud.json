@@ -3,338 +3,404 @@
         {
             "title": "C++",
             "url": "https://isocpp.org",
-            "color": "#679CD0"
+            "textColor": "#000000",
+            "bgColor": "#679CD0"
         },
         {
             "title": "C",
             "url": "https://en.wikipedia.org/wiki/ANSI_C",
-            "color": "#83B9F5"
+            "textColor": "#000000",
+            "bgColor": "#83B9F5"
         },
         {
             "title": "C#",
             "url": "http://csharp.net",
-            "color": "#05930C"
+            "textColor": "#000000",
+            "bgColor": "#05930C"
         },
         {
             "title": "Assembly (x86)",
             "url": "https://en.wikipedia.org/wiki/X86_assembly_language",
-            "color": "#FF6400"
+            "textColor": "#000000",
+            "bgColor": "#FF6400"
         },
         {
             "title": "PHP",
             "url": "https://php.net",
-            "color": "#8892BF"
+            "textColor": "#000000",
+            "bgColor": "#8892BF"
         },
         {
             "title": "SQL",
             "url": "https://en.wikipedia.org/wiki/SQL",
-            "color": "#E89D8B"
+            "textColor": "#000000",
+            "bgColor": "#E89D8B"
         },
         {
             "title": "JavaScript",
             "url": "https://en.wikipedia.org/wiki/ECMAScript",
-            "color": "#F7E018"
+            "textColor": "#000000",
+            "bgColor": "#F7E018"
         },
         {
             "title": "TypeScript",
             "url": "https://typescriptlang.org/",
-            "color": "#294E80"
+            "textColor": "#FFFFFF",
+            "bgColor": "#294E80"
         },
         {
             "title": "HTML",
             "url": "https://developer.mozilla.org/en-US/docs/Web/HTML",
-            "color": "#E44D26"
+            "textColor": "#000000",
+            "bgColor": "#E44D26"
         },
         {
             "title": "CSS",
             "url": "https://developer.mozilla.org/en-US/docs/Web/CSS",
-            "color": "#264DE4"
+            "textColor": "#FFFFFF",
+            "bgColor": "#264DE4"
         },
         {
             "title": "Lua",
             "url": "https://lua.org",
-            "color": "#000080"
+            "textColor": "#FFFFFF",
+            "bgColor": "#000080"
         },
         {
             "title": "Python",
             "url": "https://python.org",
-            "color": "#2D618C"
+            "textColor": "#FFFFFF",
+            "bgColor": "#2D618C"
         },
         {
             "title": "Bash",
             "url": "https://gnu.org/software/bash",
-            "color": "#A42E2B"
+            "textColor": "#FFFFFF",
+            "bgColor": "#A42E2B"
         },
         {
             "title": "PowerShell",
             "url": "https://docs.microsoft.com/en-us/powershell/scripting/overview",
-            "color": "#123456"
+            "textColor": "#FFFFFF",
+            "bgColor": "#123456"
         },
         {
             "title": "Visual Basic",
             "url": "https://en.wikipedia.org/wiki/Visual_Basic",
-            "color": "#AA00FF"
+            "textColor": "#FFFFFF",
+            "bgColor": "#AA00FF"
         }
     ],
     "Frameworks and Libraries": [
         {
             "title": "Node.js",
             "url": "https://nodejs.org",
-            "color": "#43853D"
+            "textColor": "#FFFFFF",
+            "bgColor": "#43853D"
         },
         {
             "title": "SDL",
             "url": "https://libsdl.org",
-            "color": "#132B48"
+            "textColor": "#FFFFFF",
+            "bgColor": "#132B48"
         },
         {
             "title": "Symfony",
             "url": "https://symfony.com",
-            "color": "#82E83E"
+            "textColor": "#000000",
+            "bgColor": "#82E83E"
         },
         {
             "title": "OpenGL",
             "url": "https://opengl.org",
-            "color": "#005FA9"
+            "textColor": "#FFFFFF",
+            "bgColor": "#005FA9"
         },
         {
             "title": "DirectX",
             "url": "https://en.wikipedia.org/wiki/DirectX",
-            "color": "#68B30C"
+            "textColor": "#000000",
+            "bgColor": "#68B30C"
         }
     ],
     "Development Platforms": [
         {
             "title": "Linux",
             "url": "https://kernel.org",
-            "color": "#FFD133"
+            "textColor": "#000000",
+            "bgColor": "#FFD133"
         },
         {
             "title": "Windows",
             "url": "https://windows.com",
-            "color": "#0067B8"
+            "textColor": "#FFFFFF",
+            "bgColor": "#0067B8"
         },
         {
             "title": "MacOS",
             "url": "https://apple.com/macos",
-            "color": "#444444"
+            "textColor": "#FFFFFF",
+            "bgColor": "#444444"
         },
         {
             "title": "Visual Studio",
             "url": "https://visualstudio.microsoft.com",
-            "color": "#865FC5"
+            "textColor": "#FFFFFF",
+            "bgColor": "#865FC5"
         },
         {
             "title": "PHPStorm",
             "url": "https://jetbrains.com/phpstorm",
-            "color": "#8892BF"
+            "textColor": "#000000",
+            "bgColor": "#8892BF"
         },
         {
             "title": "CLion",
             "url": "https://jetbrains.com/clion",
-            "color": "#679CD0"
+            "textColor": "#000000",
+            "bgColor": "#679CD0"
         }
     ],
     "3D, CAD and Game Engines": [
         {
             "title": "Blender",
             "url": "https://blender.org",
-            "color": "#EB5E28"
+            "textColor": "#000000",
+            "bgColor": "#EB5E28"
         },
         {
             "title": "AutoCAD",
             "url": "https://autodesk.co.uk/products/autocad",
-            "color": "#D22D22"
+            "textColor": "#FFFFFF",
+            "bgColor": "#D22D22"
         },
         {
             "title": "3DSMax",
             "url": "https://autodesk.co.uk/products/3ds-max",
-            "color": "#32BCAD"
+            "textColor": "#000000",
+            "bgColor": "#32BCAD"
         },
         {
             "title": "Source Engine",
             "url": "https://developer.valvesoftware.com",
-            "color": "#F79A10"
+            "textColor": "#000000",
+            "bgColor": "#F79A10"
         },
         {
             "title": "Unreal Engine",
             "url": "https://unrealengine.com",
-            "color": "#000000"
+            "textColor": "#FFFFFF",
+            "bgColor": "#000000"
         }
     ],
     "Systems Administration": [
         {
             "title": "Virtualzation",
             "url": "https://en.wikipedia.org/wiki/Virtualization",
-            "color": "#AEFFD3"
+            "textColor": "#000000",
+            "bgColor": "#AEFFD3"
         },
         {
             "title": "Hyper-V",
             "url": "https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/hyper-v-technology-overview",
-            "color": "#0078D6"
+            "textColor": "#FFFFFF",
+            "bgColor": "#0078D6"
         },
         {
             "title": "VMWare",
             "url": "https://vmware.com",
-            "color": "#565656"
+            "textColor": "#FFFFFF",
+            "bgColor": "#565656"
         },
         {
             "title": "KVM",
             "url": "https://linux-kvm.org",
-            "color": "#AB0000"
+            "textColor": "#FFFFFF",
+            "bgColor": "#AB0000"
         },
         {
             "title": "Docker",
             "url": "https://docker.com",
-            "color": "#007BFF"
+            "textColor": "#000000",
+            "bgColor": "#007BFF"
         },
         {
             "title": "Windows Server",
             "url": "https://microsoft.com/en-gb/cloud-platform/windows-server",
-            "color": "#0078D6"
+            "textColor": "#FFFFFF",
+            "bgColor": "#0078D6"
         },
         {
             "title": "Linux Administration",
             "url": "https://kernel.org",
-            "color": "#FFD133"
+            "textColor": "#000000",
+            "bgColor": "#FFD133"
         },
         {
             "title": "Networking",
             "url": "https://en.wikipedia.org/wiki/Computer_network",
-            "color": "#D695E8"
+            "textColor": "#000000",
+            "bgColor": "#D695E8"
         },
         {
             "title": "Active Directory",
             "url": "https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview",
-            "color": "#FFE472"
+            "textColor": "#000000",
+            "bgColor": "#FFE472"
         }
     ],
     "IT Engineering": [
         {
             "title": "PC & Laptop Repair",
-            "color": "#EB2A1B"
+            "textColor": "#000000",
+            "bgColor": "#EB2A1B"
         },
         {
             "title": "IT Support",
-            "color": "#F5E549"
+            "textColor": "#000000",
+            "bgColor": "#F5E549"
         },
         {
             "title": "Field Engineering",
             "url": "https://jobhero.com/field-engineer-job-description",
-            "color": "#EA4AA9"
+            "textColor": "#000000",
+            "bgColor": "#EA4AA9"
         },
         {
             "title": "Structured Cabling",
             "url": "https://en.wikipedia.org/wiki/Structured_cabling",
-            "color": "#014DFF"
+            "textColor": "#FFFFFF",
+            "bgColor": "#014DFF"
         },
         {
             "title": "Installations",
-            "color": "#6DF5DD"
+            "textColor": "#000000",
+            "bgColor": "#6DF5DD"
         }
     ],
     "Life Skills": [
         {
             "title": "Accounting",
-            "color": "#827700"
+            "textColor": "#FFFFFF",
+            "bgColor": "#827700"
         },
         {
             "title": "Business Management",
-            "color": "#F5883D"
+            "textColor": "#000000",
+            "bgColor": "#F5883D"
         },
         {
             "title": "IT Consultation",
-            "color": "#A4A5A6"
+            "textColor": "#000000",
+            "bgColor": "#A4A5A6"
         },
         {
             "title": "Agile",
             "url": "https://en.wikipedia.org/wiki/Agile_software_development",
-            "color": "#00BBC4"
+            "textColor": "#000000",
+            "bgColor": "#00BBC4"
         },
         {
             "title": "SCRUM",
             "url": "https://scrum.org",
-            "color": "#4EABC0"
+            "textColor": "#000000",
+            "bgColor": "#4EABC0"
         }
     ],
     "Video Games": [
         {
             "title": "Half-Life",
             "url": "https://en.wikipedia.org/wiki/Half-Life_(series)",
-            "color": "#FB7E14"
+            "textColor": "#000000",
+            "bgColor": "#FB7E14"
         },
         {
             "title": "Counter-Strike",
             "url": "https://en.wikipedia.org/wiki/Counter-Strike",
-            "color": "#000000"
+            "textColor": "#FFFFFF",
+            "bgColor": "#000000"
         },
         {
             "title": "Team Fortress 2",
             "url": "https://en.wikipedia.org/wiki/Team_Fortress_2",
-            "color": "#F3A957"
+            "textColor": "#000000",
+            "bgColor": "#F3A957"
         },
         {
             "title": "Garry's Mod",
             "url": "https://en.wikipedia.org/wiki/Garry%27s_Mod",
-            "color": "#1194F0"
+            "textColor": "#000000",
+            "bgColor": "#1194F0"
         },
         {
             "title": "Doom",
             "url": "https://en.wikipedia.org/wiki/Doom_(franchise)",
-            "color": "#E12828"
+            "textColor": "#FFFFFF",
+            "bgColor": "#E12828"
         },
         {
             "title": "Age of Empires",
             "url": "https://en.wikipedia.org/wiki/Age_of_Empires",
-            "color": "#CC3300"
+            "textColor": "#FFFFFF",
+            "bgColor": "#CC3300"
         },
         {
             "title": "Uplink",
             "url": "https://en.wikipedia.org/wiki/Uplink_(video_game)",
-            "color": "#183152"
+            "textColor": "#FFFFFF",
+            "bgColor": "#183152"
         }
     ],
     "Hobbies": [
         {
             "title": "Formula 1",
             "url": "https://formula1.com",
-            "color": "#E10600"
+            "textColor": "#FFFFFF",
+            "bgColor": "#E10600"
         },
         {
             "title": "Mountain Bikes",
-            "color": "#949294"
+            "textColor": "#000000",
+            "bgColor": "#949294"
         },
         {
             "title": "Golf",
-            "color": "#117006"
+            "textColor": "#FFFFFF",
+            "bgColor": "#117006"
         },
         {
             "title": "Snooker",
             "url": "http://worldsnooker.com",
-            "color": "#00C000"
+            "textColor": "#000000",
+            "bgColor": "#00C000"
         },
         {
             "title": "Metal Music",
-            "color": "#000000"
+            "textColor": "#FFFFFF",
+            "bgColor": "#000000"
         },
         {
             "title": "Maker Movement",
             "url": "https://en.wikipedia.org/wiki/Maker_culture",
-            "color": "#6045FF"
+            "textColor": "#FFFFFF",
+            "bgColor": "#6045FF"
         },
         {
             "title": "Electronics",
-            "color": "#00A12E"
+            "textColor": "#000000",
+            "bgColor": "#00A12E"
         },
         {
             "title": "3D Printing",
             "url": "https://en.wikipedia.org/wiki/3D_printing",
-            "color": "#D5CCFC"
+            "textColor": "#000000",
+            "bgColor": "#D5CCFC"
         },
         {
             "title": "Mechanical Engineering",
             "url": "https://en.wikipedia.org/wiki/Mechanical_engineering",
-            "color": "#635F75"
+            "textColor": "#FFFFFF",
+            "bgColor": "#635F75"
         }
     ]
 }

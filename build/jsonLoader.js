@@ -10,8 +10,8 @@ module.exports = class JsonLoader {
         return JsonLoader.loadJson(buildConstants.templateConstantsJsonPath);
     }
 
-    static loadIcons () {
-        return JsonLoader.loadJson(buildConstants.headerIconsJsonPath);
+    static loadLinks () {
+        return JsonLoader.loadJson(buildConstants.headerLinksJsonPath);
     }
 
     static loadTags () {

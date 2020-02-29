@@ -4,8 +4,9 @@
 @import "constants";
 
 .tag-cloud {
-    p {
+    h3 {
         font-style: italic;
+        margin: 25px;
     }
 
     ul {
@@ -28,9 +29,7 @@
                 line-height:      30px;
                 padding:          0 1em 0 .75em;
                 border-radius:    5px;
-                color:            #FFFFFF;
                 text-decoration:  none;
-                text-shadow:      0 0 5px #000000;
             }
         }
     }

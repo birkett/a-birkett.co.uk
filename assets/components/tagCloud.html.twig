@@ -7,11 +7,11 @@
 {% block content %}
     {% for groupTitle, groupTags in tagGroups %}
         <div class="tag-cloud">
-            <p>{{ groupTitle }}</p>
+            <h3>{{ groupTitle }}</h3>
             <ul>
                 {% for tag in groupTags %}
                     <li>
-                        <a {% if tag.url is defined %} href="{{ tag.url }}" target="_blank" {% endif %} style="background-color: {{ tag.color }}">
+                        <a {% if tag.url is defined %} href="{{ tag.url }}" target="_blank" {% endif %} style="color: {{ tag.textColor }}; background-color: {{ tag.bgColor }};">
                             <span>{{ tag.title }}</span>
                         </a>
                     </li>

@@ -34,7 +34,7 @@ module.exports = {
 
     jsonInputDir: JSON_INPUT_DIR,
     templateConstantsJsonPath: JSON_INPUT_DIR + 'templateConstants' + JSON_EXTENSION,
-    headerIconsJsonPath: JSON_INPUT_DIR + 'headerIcons' + JSON_EXTENSION,
+    headerLinksJsonPath: JSON_INPUT_DIR + 'headerLinks' + JSON_EXTENSION,
     tagsJsonPath: JSON_INPUT_DIR + 'tagCloud' + JSON_EXTENSION,
 
     componentInputDir: COMPONENT_INPUT_DIR,

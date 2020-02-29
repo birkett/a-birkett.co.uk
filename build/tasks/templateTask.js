@@ -7,7 +7,7 @@ module.exports = function templateTask (callback) {
     const data = {
         buildConstants: buildConstants,
         constants: jsonLoader.loadTemplateConstants(),
-        icons: jsonLoader.loadIcons(),
+        links: jsonLoader.loadLinks(),
         tagGroups: jsonLoader.loadTags(),
     };
 

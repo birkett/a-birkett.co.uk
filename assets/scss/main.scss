@@ -2,7 +2,6 @@
  * Defines the main site style rules.
  */
 @import "constants";
-@import 'headerIcons';
 @import 'layout';
 @import 'layoutMobile';
 @import 'tagCloud';
@@ -46,6 +45,11 @@ a, a.visited {
 
 p {
     font-size: 1.25em;
+}
+
+p.nav-link {
+    display: inline-block;
+    margin:  0 25px 0 25px;
 }
 
 strong {

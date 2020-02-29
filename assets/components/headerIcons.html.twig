@@ -1,9 +1,0 @@
-{% extends 'contentBlock.html.twig' %}
-
-{% block content %}
-    {% for icon in icons %}
-        <a href="{{ icon.url }}" title="{{ icon.title }}" target="_blank">
-            <div class="nav-icon {{ icon.title|lower }}"></div>
-        </a>
-    {% endfor %}
-{% endblock %}
