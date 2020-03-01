@@ -4,21 +4,19 @@
 @import "constants";
 
 .container {
-    %transparent {
-        background-color: $transparent-black;;
-        text-align:       center;
-    }
+    width:      100%;
+    margin:     0;
+    background: url($bg-gradient-svg) 0 0%/100%,
+                url($bg-squares-svg)  0 0%/5%,
+                $background-color;
 
-    .header, .footer {
+    .header, .footer, .content-block {
         @extend %transparent;
-        width: 100%;
-    }
-
-    .footer {
-        p {
-            margin:  0;
-            padding: 0;
-        }
+        width:      50%;
+        overflow:   hidden;
+        margin:     0 auto;
+        padding:    1%;
+        box-sizing: border-box;
     }
 
     .top-avatar {
@@ -33,27 +31,4 @@
         background-image: url($avatar-svg);
         background-size:  $avatar-size $avatar-size;
     }
-
-    .content-wrapper {
-        img {
-            width:  80%;
-            height: 80%;
-        }
-
-        .content-block {
-            @extend %transparent;
-            margin:  0;
-            padding: 30px;
-        }
-
-        width:    50%;
-        overflow: hidden;
-        margin:   0 auto;
-    }
-
-    width:      100%;
-    margin:     0;
-    background: url($bg-gradient-svg)  0 0%/100%,
-                url($bg-triangles-svg) 0 0%/5%,
-                $background-color;
 }

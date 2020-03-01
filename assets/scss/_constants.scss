@@ -14,7 +14,7 @@ $link-color:            #87C2ED;
 $background-color:      #111111;
 $body-background-color: #000000;
 
-$avatar-size: 170px;
+$avatar-size: 15em;
 
 /**
  * Transparent elements.
@@ -35,8 +35,21 @@ $transition-scale: 1.1;
 }
 
 /**
+ * Common macros.
+ */
+%heading {
+    font-family:    $headings-font;
+    text-transform: uppercase;
+}
+
+%transparent {
+    background-color: $transparent-black;
+    text-align:       center;
+}
+
+/**
  * SVG paths.
  */
-$avatar-svg:        '../img/avatar.svg?v=#{$siteVersion}';
-$bg-gradient-svg:   '../img/bg_gradient.svg?v=#{$siteVersion}';
-$bg-triangles-svg:  '../img/bg_triangles.svg?v=#{$siteVersion}';
+$avatar-svg:      '../img/avatar.svg?v=#{$siteVersion}';
+$bg-gradient-svg: '../img/bg_gradient.svg?v=#{$siteVersion}';
+$bg-squares-svg:  '../img/bg_squares.svg?v=#{$siteVersion}';

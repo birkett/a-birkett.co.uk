@@ -3,15 +3,9 @@
  */
 @media (max-width: 800px) {
     .container {
-        .content-wrapper {
-            /** Make content the full width on small screens */
-            width: 100%;
-
-            /** Images in content slightly larger than normal */
-            img {
-                width: 90%;
-                height: 90%;
-            }
+        .header, .footer, .content-block {
+            width:   100%;
+            padding: 5%;
         }
     }
 }
