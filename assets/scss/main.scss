@@ -7,11 +7,13 @@
 @import 'tagCloud';
 
 body {
-    margin:           0;
-    padding:          0;
-    color:            $text-color;
-    font-family:      $paragraph-font;
-    background-color: $body-background-color;
+    margin:      0;
+    padding:     0;
+    color:       $text-color;
+    font-family: $paragraph-font;
+    background:  url($bg-gradient-svg) 0 0%/100%,
+                 url($bg-squares-svg)  0 0%/5%,
+                 $background-color;
 }
 
 h1 {
@@ -39,13 +41,16 @@ a, a.visited {
     color:           $link-color;
 }
 
+nav {
+    a {
+        display:   inline-block;
+        margin:    1.25em;
+        font-size: 1.25em;
+    }
+}
+
 p {
     font-size: 1.25em;
-
-    &.nav-link {
-        display: inline-block;
-        margin:  1.25em;
-    }
 }
 
 strong {

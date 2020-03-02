@@ -39,7 +39,7 @@ module.exports = {
 
     componentInputDir: COMPONENT_INPUT_DIR,
 
-    templateInputFileName: COMPONENT_INPUT_DIR + 'base.html.twig',
+    templateInputFileName: COMPONENT_INPUT_DIR + 'index.html.twig',
     templateOutputFileName: OUTPUT_DIR + 'index.html',
 
     webManifestInputFileName: COMPONENT_INPUT_DIR + 'webManifest.json.twig',

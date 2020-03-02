@@ -2,10 +2,10 @@
  * Defines the basic layout for mobile and small screens.
  */
 @media (max-width: 800px) {
-    .container {
-        .header, .footer, .content-block {
-            width:   100%;
-            padding: 5%;
-        }
+    header,
+    footer,
+    section {
+        width:   100%;
+        padding: 5%;
     }
 }

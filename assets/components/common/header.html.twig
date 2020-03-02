@@ -1,13 +1,13 @@
-<section class="header">
+<header>
     <div class="top-avatar"></div>
 
     <h1>{{ constants.firstName }} <strong>{{ constants.lastName }}</strong></h1>
 
-    {% for link in links %}
-        <p class="nav-link">
+    <nav>
+        {% for link in links %}
             <a href="{{ link.url }}" title="{{ link.title }}" target="_blank">
                 {{ link.title }}
             </a>
-        </p>
-    {% endfor %}
-</section>
+        {% endfor %}
+    </nav>
+</header>

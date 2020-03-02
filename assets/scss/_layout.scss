@@ -3,32 +3,26 @@
  */
 @import "constants";
 
-.container {
-    width:      100%;
-    margin:     0;
-    background: url($bg-gradient-svg) 0 0%/100%,
-                url($bg-squares-svg)  0 0%/5%,
-                $background-color;
+header,
+footer,
+section {
+    @extend %transparent;
+    width:      50%;
+    overflow:   hidden;
+    margin:     0 auto;
+    padding:    1%;
+    box-sizing: border-box;
+}
 
-    .header, .footer, .content-block {
-        @extend %transparent;
-        width:      50%;
-        overflow:   hidden;
-        margin:     0 auto;
-        padding:    1%;
-        box-sizing: border-box;
+.top-avatar {
+    &:hover {
+        @extend %default-transition;
     }
 
-    .top-avatar {
-        &:hover {
-            @extend %default-transition;
-        }
-
-        display:          inline-block;
-        width:            $avatar-size;
-        height:           $avatar-size;
-        border-radius:    50%;
-        background-image: url($avatar-svg);
-        background-size:  $avatar-size $avatar-size;
-    }
+    display:          inline-block;
+    width:            $avatar-size;
+    height:           $avatar-size;
+    border-radius:    50%;
+    background-image: url($avatar-svg);
+    background-size:  $avatar-size $avatar-size;
 }
