@@ -3,17 +3,12 @@
  */
 @import "constants";
 @import 'layout';
-@import 'layoutMobile';
 @import 'tagCloud';
 
 body {
     margin:      0;
     padding:     0;
-    color:       $text-color;
     font-family: $paragraph-font;
-    background:  url($bg-gradient-svg) 0 0%/100%,
-                 url($bg-squares-svg)  0 0%/5%,
-                 $background-color;
 }
 
 h1 {
@@ -55,4 +50,34 @@ p {
 
 strong {
     font-size: 1.25em;
+}
+
+@media screen {
+    body {
+        color:      $text-color;
+        background: url($bg-gradient-svg) 0 0%/100%,
+                    url($bg-squares-svg) 0 0%/5%,
+                    $background-color;
+    }
+
+    a, a.visited {
+        color: $link-color;
+    }
+}
+
+@media print {
+    body {
+        color:      $text-color-print;
+        background: $background-color-print;
+    }
+
+    header,
+    section,
+    footer {
+        background-color: $background-color-print;
+    }
+
+    a, a.visited {
+        color: $link-color-print;
+    }
 }

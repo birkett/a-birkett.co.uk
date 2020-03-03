@@ -9,10 +9,12 @@ $siteVersion: 'x' !default;
 $headings-font:  'Francois One', monospace;
 $paragraph-font: monospace;
 
-$text-color:            #CCCCCC;
-$link-color:            #87C2ED;
-$background-color:      #111111;
-$body-background-color: #000000;
+$text-color:             #CCCCCC;
+$text-color-print:       #000000;
+$link-color:             #87C2ED;
+$link-color-print:       #87C2ED;
+$background-color:       #111111;
+$background-color-print: #FFFFFF;
 
 $avatar-size: 15em;
 
@@ -46,6 +48,8 @@ $transition-scale: 1.1;
     background-color: $transparent-black;
     text-align:       center;
 }
+
+$mobile-breakpoint: 800px;
 
 /**
  * SVG paths.

@@ -26,3 +26,12 @@ section {
     background-image: url($avatar-svg);
     background-size:  $avatar-size $avatar-size;
 }
+
+@media (max-width: $mobile-breakpoint), print {
+    header,
+    footer,
+    section {
+        width:   100%;
+        padding: 5%;
+    }
+}
