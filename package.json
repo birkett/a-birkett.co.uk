@@ -6,11 +6,11 @@
   "devDependencies": {
     "del": "^5.1.0",
     "gulp": "^4.0.2",
-    "gulp-sass": "^4.0.2",
+    "gulp-sass": "^4.1.0",
     "gulp-sass-variables": "^1.2.0",
     "icon-gen": "^2.0.0",
-    "node-sass": "^4.13.1",
-    "twig": "^1.15.0"
+    "node-sass": "^4.14.1",
+    "twig": "^1.15.1"
   },
   "scripts": {
     "build": "gulp",

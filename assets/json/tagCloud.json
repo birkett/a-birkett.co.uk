@@ -111,6 +111,18 @@
             "bgColor": "#82E83E"
         },
         {
+            "title": "Webpack",
+            "url": "https://webpack.js.org",
+            "textColor": "#FFFFFF",
+            "bgColor": "#2B3A42"
+        },
+        {
+            "title": "React",
+            "url": "https://reactjs.org",
+            "textColor": "#FFFFFF",
+            "bgColor": "#282C34"
+        },
+        {
             "title": "OpenGL",
             "url": "https://opengl.org",
             "textColor": "#FFFFFF",
