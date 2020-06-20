@@ -9,10 +9,12 @@ const SCSS_EXTENSION = '.scss';
 const CSS_EXTENSION = '.css';
 const ICO_EXTENSION = '.ico';
 const JSON_EXTENSION = '.json';
+const FONT_EXTENSION = '.woff2';
 
 const SVG_INPUT_DIR = ASSETS_DIR + 'svg/';
 const JSON_INPUT_DIR = ASSETS_DIR + 'json/';
 const COMPONENT_INPUT_DIR = ASSETS_DIR + 'components/';
+const FONT_INPUT_DIR = ASSETS_DIR + 'fonts/';
 
 const WEB_MANIFEST_OUTPUT_FILE_NAME = 'site.webmanifest';
 const SAFARI_ICON_FILE_NAME = 'safari-pinned-tab' + SVG_EXTENSION;
@@ -25,12 +27,16 @@ module.exports = {
     scssExtension: SCSS_EXTENSION,
     cssExtension: CSS_EXTENSION,
     icoExtension: ICO_EXTENSION,
+    fontExtension: FONT_EXTENSION,
 
     scssInputDirectory: ASSETS_DIR + 'scss/',
     cssOutputDirectory: OUTPUT_DIR + 'css/',
 
     svgInputDirectory: SVG_INPUT_DIR,
     imgOutputDirectory: OUTPUT_DIR + 'img/',
+
+    fontInputDirectory: FONT_INPUT_DIR,
+    fontOutputDirectory: OUTPUT_DIR + 'fonts/',
 
     jsonInputDir: JSON_INPUT_DIR,
     templateConstantsJsonPath: JSON_INPUT_DIR + 'templateConstants' + JSON_EXTENSION,
@@ -52,6 +58,8 @@ module.exports = {
     faviconInputFile: SVG_INPUT_DIR + 'avatar' + SVG_EXTENSION,
     safariIconFileName: SAFARI_ICON_FILE_NAME,
     safariIconOutputFileName: OUTPUT_DIR + SAFARI_ICON_FILE_NAME,
+
+    fontFileName: 'francois-one-v14-latin-regular.woff2',
 
     faviconPrefix: 'favicon',
     appleIconPrefix: 'apple-touch-icon',

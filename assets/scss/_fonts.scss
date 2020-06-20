@@ -1,0 +1,15 @@
+/**
+ * Font definitions.
+ */
+@import 'constants';
+
+$font-file-path: '../fonts/francois-one-v14-latin-regular.woff2?v=#{$siteVersion}';
+
+@font-face {
+    font-family:  'Francois One';
+    font-style:   normal;
+    font-weight:  400;
+    font-display: swap;
+    src:          local('Francois One Regular'),
+                  url($font-file-path) format('woff2')
+}
