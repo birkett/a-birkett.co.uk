@@ -11,7 +11,7 @@
             <ul>
                 {% for tag in groupTags %}
                     <li>
-                        <a {% if tag.url is defined %} href="{{ tag.url }}" target="_blank" {% endif %} style="color: {{ tag.textColor }}; background-color: {{ tag.bgColor }};">
+                        <a {% if tag.url is defined %} href="{{ tag.url }}" target="_blank" rel="noopener"{% endif %} style="color: {{ tag.textColor }}; background-color: {{ tag.bgColor }};">
                             <span>{{ tag.title }}</span>
                         </a>
                     </li>

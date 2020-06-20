@@ -5,7 +5,7 @@
 
     <nav>
         {% for link in links %}
-            <a href="{{ link.url }}" title="{{ link.title }}" target="_blank">
+            <a href="{{ link.url }}" title="{{ link.title }}" target="_blank" rel="noopener">
                 {{ link.title }}
             </a>
         {% endfor %}
