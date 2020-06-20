@@ -15,7 +15,7 @@ server {
         try_files $uri $uri/ =404;
     }
 
-    location ~* \.(css|svg|png|ico)$ {
+    location ~* \.(css|svg|png|ico|woff2)$ {
         expires 7d;
         add_header Cache-Control "max-age=604800, public, no-transform";
     }
