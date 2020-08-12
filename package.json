@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Personal website of Anthony Birkett",
   "private": true,
-  "devDependencies": {
+  "dependencies": {
     "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-sass": "^4.1.0",
@@ -12,11 +12,15 @@
     "node-sass": "^4.14.1",
     "twig": "^1.15.1"
   },
+  "devDependencies": {
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0"
+  },
   "scripts": {
     "build": "gulp",
     "deploy": "cd deploy; ./deploy.sh"
   },
   "author": "Anthony Birkett",
-  "license": "MIT",
-  "dependencies": {}
+  "license": "MIT"
 }

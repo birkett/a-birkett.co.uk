@@ -1,3 +1,5 @@
+const { series } = require('gulp');
+
 const cleanTask = require('./build/tasks/cleanTask');
 const siteVersionTask = require('./build/tasks/siteVersionTask');
 const stylesTask = require('./build/tasks/stylesTask');
@@ -8,8 +10,6 @@ const favIconsTask = require('./build/tasks/favIcons/favIconsTask');
 const safariIconTask = require('./build/tasks/favIcons/safariIconTask');
 const webManifestTask = require('./build/tasks/favIcons/webManifestTask');
 const browserConfigTask = require('./build/tasks/favIcons/browserConfigTask');
-
-const { series } = require('gulp');
 
 const iconsGroupTask = series(favIconsTask, safariIconTask, webManifestTask, browserConfigTask);
 
@@ -26,4 +26,12 @@ exports.browserConfig = browserConfigTask;
 
 exports.icons = iconsGroupTask;
 
-exports.default = series(cleanTask, siteVersionTask, stylesTask, imagesTask, fontsTask, templateTask, iconsGroupTask);
+exports.default = series(
+    cleanTask,
+    siteVersionTask,
+    stylesTask,
+    imagesTask,
+    fontsTask,
+    templateTask,
+    iconsGroupTask,
+);

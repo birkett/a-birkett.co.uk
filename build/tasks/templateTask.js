@@ -1,18 +1,19 @@
-const buildConstants = require('../buildConstants');
-const jsonLoader = require('../jsonLoader');
 const fs = require('fs');
 const twig = require('twig');
+const buildConstants = require('../buildConstants');
 
-module.exports = function templateTask (callback) {
+module.exports = function templateTask(callback) {
     const data = {
-        buildConstants: buildConstants,
-        constants: jsonLoader.loadTemplateConstants(),
-        links: jsonLoader.loadLinks(),
-        tagGroups: jsonLoader.loadTags(),
+        buildConstants,
+        constants: buildConstants.loadJson(buildConstants.templateConstantsJsonPath),
+        links: buildConstants.loadJson(buildConstants.headerLinksJsonPath),
+        tagGroups: buildConstants.loadJson(buildConstants.tagsJsonPath),
     };
 
     twig.renderFile(buildConstants.templateInputFileName, data, (err, html) => {
-        if (err) { throw err; }
+        if (err) {
+            throw err;
+        }
 
         fs.writeFile(buildConstants.templateOutputFileName, html, callback);
     });

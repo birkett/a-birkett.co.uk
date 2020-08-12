@@ -1,16 +1,17 @@
-const buildConstants = require('../../buildConstants');
-const jsonLoader = require('../../jsonLoader');
 const fs = require('fs');
 const twig = require('twig');
+const buildConstants = require('../../buildConstants');
 
-module.exports = function webManifestTask (callback) {
+module.exports = function webManifestTask(callback) {
     const data = {
-        buildConstants: buildConstants,
-        constants: jsonLoader.loadTemplateConstants(),
+        buildConstants,
+        constants: buildConstants.loadJson(buildConstants.templateConstantsJsonPath),
     };
 
     twig.renderFile(buildConstants.webManifestInputFileName, data, (err, json) => {
-        if (err) { throw err; }
+        if (err) {
+            throw err;
+        }
 
         fs.writeFile(buildConstants.webManifestOutputFileName, json, callback);
     });

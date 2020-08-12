@@ -1,21 +1,21 @@
-const buildConstants = require('../../buildConstants');
 const fs = require('fs');
 const iconGen = require('icon-gen');
+const buildConstants = require('../../buildConstants');
 
 const SIZES_MAP = {
-    16: buildConstants.faviconPrefix + '-16x16',
-    32: buildConstants.faviconPrefix + '-32x32',
-    60: buildConstants.appleIconPrefix + '-60x60',
-    70: buildConstants.msTileIconPrefix + '-70x70',
-    76: buildConstants.appleIconPrefix + '-76x76',
-    120: buildConstants.appleIconPrefix + '-120x120',
-    144: buildConstants.msTileIconPrefix + '-144x144',
-    150: buildConstants.msTileIconPrefix + '-150x150',
-    152: buildConstants.appleIconPrefix + '-152x152',
-    180: buildConstants.appleIconPrefix + '-180x180',
-    192: buildConstants.androidIconPrefix + '-192x192',
-    310: buildConstants.msTileIconPrefix + '-310x310',
-    512: buildConstants.androidIconPrefix + '-512x512',
+    16: `${buildConstants.faviconPrefix}-16x16`,
+    32: `${buildConstants.faviconPrefix}-32x32`,
+    60: `${buildConstants.appleIconPrefix}-60x60`,
+    70: `${buildConstants.msTileIconPrefix}-70x70`,
+    76: `${buildConstants.appleIconPrefix}-76x76`,
+    120: `${buildConstants.appleIconPrefix}-120x120`,
+    144: `${buildConstants.msTileIconPrefix}-144x144`,
+    150: `${buildConstants.msTileIconPrefix}-150x150`,
+    152: `${buildConstants.appleIconPrefix}-152x152`,
+    180: `${buildConstants.appleIconPrefix}-180x180`,
+    192: `${buildConstants.androidIconPrefix}-192x192`,
+    310: `${buildConstants.msTileIconPrefix}-310x310`,
+    512: `${buildConstants.androidIconPrefix}-512x512`,
 };
 
 const FILES_TO_COPY = {
@@ -31,23 +31,21 @@ const OPTIONS = {
     },
     ico: {
         name: buildConstants.faviconPrefix,
-        sizes: ICO_SIZES
+        sizes: ICO_SIZES,
     },
 };
 
-function buildFilePath (path) {
-    return buildConstants.outputDirectory + path + buildConstants.pngExtension;
-}
-
-module.exports = function favIconsTask (callback) {
+module.exports = function favIconsTask(callback) {
     process.env.OPENSSL_CONF = '';
+
+    const buildFilePath = (path) => buildConstants.outputDirectory + path + buildConstants.pngExtension;
 
     iconGen(buildConstants.faviconInputFile, buildConstants.outputDirectory, OPTIONS)
         .then(() => {
             Object.keys(SIZES_MAP).forEach((key) => {
                 fs.renameSync(
                     buildFilePath(buildConstants.faviconPrefix + key),
-                    buildFilePath(SIZES_MAP[key])
+                    buildFilePath(SIZES_MAP[key]),
                 );
             });
 
@@ -55,11 +53,8 @@ module.exports = function favIconsTask (callback) {
                 fs.copyFile(
                     buildFilePath(key),
                     buildFilePath(FILES_TO_COPY[key]),
-                    callback
+                    callback,
                 );
             });
-        })
-        .catch((err) => {
-            console.error(err);
         });
 };
