@@ -3,31 +3,16 @@ const fs = require('fs');
 const ASSETS_DIR = './assets/';
 const OUTPUT_DIR = './dist/';
 
-const PNG_EXTENSION = '.png';
-const SVG_EXTENSION = '.svg';
-const SCSS_EXTENSION = '.scss';
-const CSS_EXTENSION = '.css';
-const ICO_EXTENSION = '.ico';
-const JSON_EXTENSION = '.json';
-const FONT_EXTENSION = '.woff2';
-
 const SVG_INPUT_DIR = `${ASSETS_DIR}svg/`;
 const JSON_INPUT_DIR = `${ASSETS_DIR}json/`;
 const COMPONENT_INPUT_DIR = `${ASSETS_DIR}components/`;
 const FONT_INPUT_DIR = `${ASSETS_DIR}fonts/`;
 
 const WEB_MANIFEST_OUTPUT_FILE_NAME = 'site.webmanifest';
-const SAFARI_ICON_FILE_NAME = `safari-pinned-tab${SVG_EXTENSION}`;
+const SAFARI_ICON_FILE_NAME = 'safari-pinned-tab.svg';
 
 module.exports = {
     outputDirectory: OUTPUT_DIR,
-
-    pngExtension: PNG_EXTENSION,
-    svgExtension: SVG_EXTENSION,
-    scssExtension: SCSS_EXTENSION,
-    cssExtension: CSS_EXTENSION,
-    icoExtension: ICO_EXTENSION,
-    fontExtension: FONT_EXTENSION,
 
     scssInputDirectory: `${ASSETS_DIR}scss/`,
     cssOutputDirectory: `${OUTPUT_DIR}css/`,
@@ -39,9 +24,9 @@ module.exports = {
     fontOutputDirectory: `${OUTPUT_DIR}fonts/`,
 
     jsonInputDir: JSON_INPUT_DIR,
-    templateConstantsJsonPath: `${JSON_INPUT_DIR}templateConstants${JSON_EXTENSION}`,
-    headerLinksJsonPath: `${JSON_INPUT_DIR}headerLinks${JSON_EXTENSION}`,
-    tagsJsonPath: `${JSON_INPUT_DIR}tagCloud${JSON_EXTENSION}`,
+    templateConstantsJsonPath: `${JSON_INPUT_DIR}templateConstants.json`,
+    headerLinksJsonPath: `${JSON_INPUT_DIR}headerLinks.json`,
+    tagsJsonPath: `${JSON_INPUT_DIR}tagCloud.json`,
 
     componentInputDir: COMPONENT_INPUT_DIR,
 
@@ -55,11 +40,12 @@ module.exports = {
     browserConfigInputFileName: `${COMPONENT_INPUT_DIR}browserConfig.xml.twig`,
     browserConfigOutputFileName: `${OUTPUT_DIR}browserconfig.xml`,
 
-    faviconInputFile: `${SVG_INPUT_DIR}avatar${SVG_EXTENSION}`,
+    faviconInputFile: `${SVG_INPUT_DIR}avatar.svg`,
     safariIconFileName: SAFARI_ICON_FILE_NAME,
     safariIconOutputFileName: `${OUTPUT_DIR}${SAFARI_ICON_FILE_NAME}`,
 
     fontFileName: 'francois-one-v14-latin-regular.woff2',
+    outputCssFileName: 'main.css',
 
     faviconPrefix: 'favicon',
     appleIconPrefix: 'apple-touch-icon',
@@ -70,13 +56,11 @@ module.exports = {
     msTileColor: '#2B5797',
 
     siteVersion: () => {
-        let siteVersion = '';
-
         if (fs.existsSync(`${OUTPUT_DIR}site.version`)) {
-            siteVersion = fs.readFileSync(`${OUTPUT_DIR}site.version`).toString();
+            return fs.readFileSync(`${OUTPUT_DIR}site.version`).toString();
         }
 
-        return siteVersion;
+        return '';
     },
 
     loadJson: (path) => JSON.parse(fs.readFileSync(path).toString()),

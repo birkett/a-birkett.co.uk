@@ -38,7 +38,7 @@ const OPTIONS = {
 module.exports = function favIconsTask(callback) {
     process.env.OPENSSL_CONF = '';
 
-    const buildFilePath = (path) => buildConstants.outputDirectory + path + buildConstants.pngExtension;
+    const buildFilePath = (path) => `${buildConstants.outputDirectory}${path}.png`;
 
     iconGen(buildConstants.faviconInputFile, buildConstants.outputDirectory, OPTIONS)
         .then(() => {

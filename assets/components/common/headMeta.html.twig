@@ -5,14 +5,14 @@
 <meta name="msapplication-TileColor" content="{{ constants.msTileColor }}">
 <meta name="theme-color" content="{{ constants.themeColor }}">
 
-<link rel="apple-touch-icon" sizes="180x180" href="{{ constants.appleIconPrefix }}{{ constants.pngExtension }}?v={{ constants.siteVersion }}">
-<link rel="icon" type="image/png" sizes="32x32" href="{{ constants.faviconPrefix }}-32x32{{ constants.pngExtension }}?v={{ constants.siteVersion }}">
-<link rel="icon" type="image/png" sizes="16x16" href="{{ constants.faviconPrefix }}-16x16{{ constants.pngExtension }}?v={{ constants.siteVersion }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ constants.appleIconPrefix }}.png?v={{ constants.siteVersion }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ constants.faviconPrefix }}-32x32.png?v={{ constants.siteVersion }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ constants.faviconPrefix }}-16x16.png?v={{ constants.siteVersion }}">
 <link rel="manifest" href="{{ constants.webManifestFileName }}?v={{ constants.siteVersion }}">
 <link rel="mask-icon" href="{{ constants.safariIconFileName }}?v={{ constants.siteVersion }}" color="{{ constants.themeColor }}">
-<link rel="shortcut icon" href="{{ constants.faviconPrefix }}{{ constants.icoExtension }}?v={{ constants.siteVersion }}">
+<link rel="shortcut icon" href="{{ constants.faviconPrefix }}.ico?v={{ constants.siteVersion }}">
 
 <link rel="preload" as="font" type="font/woff2" href="fonts/{{ constants.fontFileName }}?v={{ constants.siteVersion }}" crossorigin>
-<link rel="stylesheet" href="css/main{{ constants.cssExtension }}?v={{ constants.siteVersion }}">
+<link rel="stylesheet" href="css/{{ constants.outputCssFileName }}?v={{ constants.siteVersion }}">
 
 <link rel="canonical" href="{{ constants.baseUrl }}">
