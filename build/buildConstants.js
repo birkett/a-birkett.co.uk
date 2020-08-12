@@ -6,7 +6,6 @@ const OUTPUT_DIR = './dist/';
 const SVG_INPUT_DIR = `${ASSETS_DIR}svg/`;
 const JSON_INPUT_DIR = `${ASSETS_DIR}json/`;
 const COMPONENT_INPUT_DIR = `${ASSETS_DIR}components/`;
-const FONT_INPUT_DIR = `${ASSETS_DIR}fonts/`;
 
 const WEB_MANIFEST_OUTPUT_FILE_NAME = 'site.webmanifest';
 const SAFARI_ICON_FILE_NAME = 'safari-pinned-tab.svg';
@@ -20,15 +19,12 @@ module.exports = {
     svgInputDirectory: SVG_INPUT_DIR,
     imgOutputDirectory: `${OUTPUT_DIR}img/`,
 
-    fontInputDirectory: FONT_INPUT_DIR,
+    fontInputDirectory: `${ASSETS_DIR}fonts/`,
     fontOutputDirectory: `${OUTPUT_DIR}fonts/`,
 
-    jsonInputDir: JSON_INPUT_DIR,
     templateConstantsJsonPath: `${JSON_INPUT_DIR}templateConstants.json`,
     headerLinksJsonPath: `${JSON_INPUT_DIR}headerLinks.json`,
     tagsJsonPath: `${JSON_INPUT_DIR}tagCloud.json`,
-
-    componentInputDir: COMPONENT_INPUT_DIR,
 
     templateInputFileName: `${COMPONENT_INPUT_DIR}index.html.twig`,
     templateOutputFileName: `${OUTPUT_DIR}index.html`,
@@ -56,11 +52,15 @@ module.exports = {
     msTileColor: '#2B5797',
 
     siteVersion: () => {
-        if (fs.existsSync(`${OUTPUT_DIR}site.version`)) {
-            return fs.readFileSync(`${OUTPUT_DIR}site.version`).toString();
+        if (this.loadedVersion === undefined) {
+            this.loadedVersion = '';
         }
 
-        return '';
+        if (!this.loadedVersion && fs.existsSync(`${OUTPUT_DIR}site.version`)) {
+            this.loadedVersion = fs.readFileSync(`${OUTPUT_DIR}site.version`).toString();
+        }
+
+        return this.loadedVersion;
     },
 
     loadJson: (path) => JSON.parse(fs.readFileSync(path).toString()),

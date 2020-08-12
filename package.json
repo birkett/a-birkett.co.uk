@@ -19,7 +19,9 @@
   },
   "scripts": {
     "build": "gulp",
-    "deploy": "cd deploy; ./deploy.sh"
+    "clean": "gulp clean",
+    "deploy": "cd deploy; ./deploy.sh",
+    "lint": "eslint ."
   },
   "author": "Anthony Birkett",
   "license": "MIT"

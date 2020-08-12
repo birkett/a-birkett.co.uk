@@ -40,21 +40,44 @@ module.exports = function favIconsTask(callback) {
 
     const buildFilePath = (path) => `${buildConstants.outputDirectory}${path}.png`;
 
+    const renameFiles = (cb) => {
+        Object.keys(SIZES_MAP).forEach((key) => {
+            fs.rename(
+                buildFilePath(`${buildConstants.faviconPrefix}${key}`),
+                buildFilePath(SIZES_MAP[key]),
+                (err) => {
+                    if (err) {
+                        throw err;
+                    }
+
+                    cb();
+                },
+            );
+        });
+    };
+
+    const copyFiles = (cb) => {
+        Object.keys(FILES_TO_COPY).forEach((key) => {
+            fs.copyFile(
+                buildFilePath(key),
+                buildFilePath(FILES_TO_COPY[key]),
+                (err) => {
+                    if (err) {
+                        throw err;
+                    }
+
+                    cb();
+                },
+            );
+        });
+    };
+
     iconGen(buildConstants.faviconInputFile, buildConstants.outputDirectory, OPTIONS)
         .then(() => {
-            Object.keys(SIZES_MAP).forEach((key) => {
-                fs.renameSync(
-                    buildFilePath(buildConstants.faviconPrefix + key),
-                    buildFilePath(SIZES_MAP[key]),
-                );
-            });
-
-            Object.keys(FILES_TO_COPY).forEach((key) => {
-                fs.copyFile(
-                    buildFilePath(key),
-                    buildFilePath(FILES_TO_COPY[key]),
-                    callback,
-                );
+            renameFiles(() => {
+                copyFiles(() => {
+                    callback();
+                });
             });
         });
 };
