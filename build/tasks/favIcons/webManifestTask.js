@@ -4,8 +4,10 @@ const buildConstants = require('../../buildConstants');
 
 module.exports = function webManifestTask(callback) {
     const data = {
-        buildConstants,
-        constants: buildConstants.loadJson(buildConstants.templateConstantsJsonPath),
+        constants: {
+            ...buildConstants.loadJson(buildConstants.templateConstantsJsonPath),
+            ...buildConstants,
+        },
     };
 
     twig.renderFile(buildConstants.webManifestInputFileName, data, (err, json) => {

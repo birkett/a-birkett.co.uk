@@ -4,8 +4,10 @@ const buildConstants = require('../buildConstants');
 
 module.exports = function templateTask(callback) {
     const data = {
-        buildConstants,
-        constants: buildConstants.loadJson(buildConstants.templateConstantsJsonPath),
+        constants: {
+            ...buildConstants.loadJson(buildConstants.templateConstantsJsonPath),
+            ...buildConstants,
+        },
         links: buildConstants.loadJson(buildConstants.headerLinksJsonPath),
         tagGroups: buildConstants.loadJson(buildConstants.tagsJsonPath),
     };

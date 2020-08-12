@@ -11,7 +11,9 @@ const safariIconTask = require('./build/tasks/favIcons/safariIconTask');
 const webManifestTask = require('./build/tasks/favIcons/webManifestTask');
 const browserConfigTask = require('./build/tasks/favIcons/browserConfigTask');
 
-const iconsGroupTask = series(favIconsTask, safariIconTask, webManifestTask, browserConfigTask);
+const iconsGroupTask = series(safariIconTask, webManifestTask, browserConfigTask, favIconsTask);
+const fastTask = series(cleanTask, siteVersionTask, stylesTask, imagesTask, templateTask);
+const defaultTask = series(cleanTask, siteVersionTask, stylesTask, imagesTask, fontsTask, templateTask, iconsGroupTask);
 
 exports.clean = cleanTask;
 exports.siteVersion = siteVersionTask;
@@ -23,15 +25,6 @@ exports.favIcons = favIconsTask;
 exports.safariIcon = safariIconTask;
 exports.webManifest = webManifestTask;
 exports.browserConfig = browserConfigTask;
-
 exports.icons = iconsGroupTask;
-
-exports.default = series(
-    cleanTask,
-    siteVersionTask,
-    stylesTask,
-    imagesTask,
-    fontsTask,
-    templateTask,
-    iconsGroupTask,
-);
+exports.fast = fastTask;
+exports.default = defaultTask;

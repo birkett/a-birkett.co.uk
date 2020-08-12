@@ -4,8 +4,10 @@ const buildConstants = require('../../buildConstants');
 
 module.exports = function browserConfigTask(callback) {
     const data = {
-        buildConstants,
-        constants: buildConstants.loadJson(buildConstants.templateConstantsJsonPath),
+        constants: {
+            ...buildConstants.loadJson(buildConstants.templateConstantsJsonPath),
+            ...buildConstants,
+        },
     };
 
     twig.renderFile(buildConstants.browserConfigInputFileName, data, (err, json) => {
