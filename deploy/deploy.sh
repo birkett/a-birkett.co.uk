@@ -7,7 +7,14 @@ then
   echo "Runs on a local machine, copies code to the remote machine, and executes the deployment script on the remote.";
   echo "Usage: $0 <hostname>";
 
-  return;
+  return 1;
+fi
+
+if [ -n "$(git status --porcelain)" ]
+then
+  echo "Working directory not clean. Uncommitted changes?";
+
+  return 1;
 fi
 
 siteName="a-birkett.co.uk";
@@ -17,6 +24,9 @@ deployDirName=$siteName-$timestamp;
 
 echo "Running linter..."
 npm run lint
+
+echo "Building..."
+npm run build
 
 echo "Running tests..."
 npm run test
