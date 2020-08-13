@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 if [ -z $1 ]
 then
   echo "Runs on a local machine, copies code to the remote machine, and executes the deployment script on the remote.";
@@ -12,6 +14,12 @@ siteName="a-birkett.co.uk";
 timestamp=`date -Iseconds`;
 nginxConfigDir="etc/nginx/sites-available";
 deployDirName=$siteName-$timestamp;
+
+echo "Running linter..."
+npm run lint
+
+echo "Running tests..."
+npm run test
 
 echo "Copying code...";
 scp -r ../dist/ $1:/var/www/$deployDirName;
