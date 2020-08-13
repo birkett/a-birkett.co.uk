@@ -15,13 +15,15 @@
   "devDependencies": {
     "eslint": "^7.6.0",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-plugin-import": "^2.22.0"
+    "eslint-plugin-import": "^2.22.0",
+    "mocha": "^8.1.1"
   },
   "scripts": {
     "build": "gulp",
     "clean": "gulp clean",
     "deploy": "cd deploy; ./deploy.sh",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "mocha"
   },
   "author": "Anthony Birkett",
   "license": "MIT"

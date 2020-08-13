@@ -1,3 +1,4 @@
+const childProcess = require('child_process');
 const fs = require('fs');
 
 const ASSETS_DIR = './assets/';
@@ -9,6 +10,8 @@ const COMPONENT_INPUT_DIR = `${ASSETS_DIR}components/`;
 
 const WEB_MANIFEST_OUTPUT_FILE_NAME = 'site.webmanifest';
 const SAFARI_ICON_FILE_NAME = 'safari-pinned-tab.svg';
+
+const SITE_VERSION_FILE_NAME = `${OUTPUT_DIR}site.version`;
 
 module.exports = {
     outputDirectory: OUTPUT_DIR,
@@ -40,6 +43,8 @@ module.exports = {
     safariIconFileName: SAFARI_ICON_FILE_NAME,
     safariIconOutputFileName: `${OUTPUT_DIR}${SAFARI_ICON_FILE_NAME}`,
 
+    siteVersionFile: SITE_VERSION_FILE_NAME,
+
     fontFileName: 'francois-one-v14-latin-regular.woff2',
     outputCssFileName: 'main.css',
 
@@ -56,11 +61,25 @@ module.exports = {
             this.loadedVersion = '';
         }
 
-        if (!this.loadedVersion && fs.existsSync(`${OUTPUT_DIR}site.version`)) {
-            this.loadedVersion = fs.readFileSync(`${OUTPUT_DIR}site.version`).toString();
+        if (!this.loadedVersion && fs.existsSync(SITE_VERSION_FILE_NAME)) {
+            this.loadedVersion = fs.readFileSync(SITE_VERSION_FILE_NAME).toString();
         }
 
         return this.loadedVersion;
+    },
+
+    gitRevision: () => {
+        if (this.cachedRevision === undefined) {
+            this.cachedRevision = '';
+        }
+
+        if (!this.cachedRevision) {
+            const stdOut = childProcess.execSync('git rev-parse --short HEAD');
+
+            this.cachedRevision = stdOut.toString().split('\n').join('');
+        }
+
+        return this.cachedRevision;
     },
 
     loadJson: (path) => JSON.parse(fs.readFileSync(path).toString()),
