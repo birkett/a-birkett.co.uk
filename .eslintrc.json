@@ -2,7 +2,6 @@
     "env": {
         "browser": false,
         "node": true,
-        "commonjs": true,
         "es2020": true,
         "mocha": true
     },
@@ -13,7 +12,6 @@
         "ecmaVersion": 11
     },
     "rules": {
-        "max-len": ["error", 120],
         "indent": ["error", 4]
     }
 }

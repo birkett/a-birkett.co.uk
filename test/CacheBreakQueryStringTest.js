@@ -3,9 +3,9 @@ const fs = require('fs');
 const buildConstants = require('../build/buildConstants');
 
 const VERSION_QUERY_STRING_REGEX = /\?v=(\w{0,7})/g; // ?v=...
-const URL_TAG_REGEX = /url\(([^)]+)\)/g; // Selects url(...) tag contents from CSS.
-const XML_SRC_ATTRIBUTE_REGEX = /src="([^"]+)"/g; // Selects src="..." attribute contents from XML.
-const JSON_SRC_PROPERTY_REGEX = /src": "([^"]+)"/g; // Selects src: "..." property contents from JSON.
+const URL_TAG_REGEX = /url\(([^)]+)\)/g; // Selects url(...) tags from CSS.
+const XML_SRC_ATTRIBUTE_REGEX = /src="([^"]+)"/g; // Selects src="..." attributes from XML.
+const JSON_SRC_PROPERTY_REGEX = /src": "([^"]+)"/g; // Selects src: "..." properties from JSON.
 
 const genericVersionStringTest = (filename, regex) => {
     fs.readFile(filename, (err, fileContent) => {
@@ -50,11 +50,15 @@ describe('Cache breaker query strings', () => {
 
     describe('CSS', () => {
         it('Should contain valid cache break query strings on referenced resources', () => {
-            versionQueryStringTest(`${buildConstants.cssOutputDirectory}${buildConstants.outputCssFileName}`);
+            versionQueryStringTest(
+                `${buildConstants.cssOutputDirectory}${buildConstants.outputCssFileName}`,
+            );
         });
 
         it('All URL references should contains cache break query strings', () => {
-            urlResourceTest(`${buildConstants.cssOutputDirectory}${buildConstants.outputCssFileName}`);
+            urlResourceTest(
+                `${buildConstants.cssOutputDirectory}${buildConstants.outputCssFileName}`,
+            );
         });
     });
 
