@@ -4,10 +4,6 @@
   "description": "Personal website of Anthony Birkett",
   "private": true,
   "dependencies": {
-    "del": "^5.1.0",
-    "gulp": "^4.0.2",
-    "gulp-sass": "^4.1.0",
-    "gulp-sass-variables": "^1.2.0",
     "icon-gen": "^2.0.0",
     "node-sass": "^4.14.1",
     "twig": "^1.15.2"
@@ -19,8 +15,8 @@
     "mocha": "^8.1.1"
   },
   "scripts": {
-    "build": "gulp",
-    "clean": "gulp clean",
+    "build": "node build.js",
+    "clean": "node build.js clean",
     "deploy": "cd deploy; ./deploy.sh",
     "lint": "eslint .",
     "test": "mocha"
