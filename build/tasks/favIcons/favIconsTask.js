@@ -43,7 +43,10 @@ module.exports = function favIconsTask(resolve, reject) {
     iconGen(buildConstants.faviconInputFile, buildConstants.outputDirectory, OPTIONS)
         .then(() => {
             Object.keys(SIZES_MAP).forEach((key) => {
-                fs.promises.rename(buildFilePath(`${buildConstants.faviconPrefix}${key}`), buildFilePath(SIZES_MAP[key]))
+                const source = buildFilePath(`${buildConstants.faviconPrefix}${key}`);
+                const destination = buildFilePath(SIZES_MAP[key]);
+
+                fs.promises.rename(source, destination)
                     .catch((renameError) => reject(renameError));
             });
         })

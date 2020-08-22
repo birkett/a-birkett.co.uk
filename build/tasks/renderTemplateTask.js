@@ -25,7 +25,7 @@ function basicRenderTask(resolve, reject, source, destination, additionalData) {
 }
 
 module.exports = {
-    browserConfigTask: (resolve, reject) => {
+    browserConfig: (resolve, reject) => {
         basicRenderTask(
             resolve,
             reject,
@@ -34,7 +34,7 @@ module.exports = {
         );
     },
 
-    indexTemplateTask: (resolve, reject) => {
+    indexTemplate: (resolve, reject) => {
         basicRenderTask(
             resolve,
             reject,
@@ -47,7 +47,7 @@ module.exports = {
         );
     },
 
-    webManifestTask: (resolve, reject) => {
+    webManifest: (resolve, reject) => {
         basicRenderTask(
             resolve,
             reject,

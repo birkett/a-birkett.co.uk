@@ -21,9 +21,9 @@ module.exports = function stylesTask(resolve, reject) {
                 fs.promises.mkdir(buildConstants.cssOutputDirectory)
                     .catch(() => {})
                     .then(() => {
-                        const dest = `${buildConstants.cssOutputDirectory}/main.css`;
+                        const destination = `${buildConstants.cssOutputDirectory}/main.css`;
 
-                        fs.promises.writeFile(dest, result.css.toString())
+                        fs.promises.writeFile(destination, result.css.toString())
                             .then(resolve)
                             .catch((writeFileError) => reject(writeFileError));
                     });

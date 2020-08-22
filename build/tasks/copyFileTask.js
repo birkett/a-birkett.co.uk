@@ -19,7 +19,7 @@ function basicCopyTask(resolve, reject, source, destination) {
 }
 
 module.exports = {
-    fontsTask: (resolve, reject) => {
+    fonts: (resolve, reject) => {
         basicCopyTask(
             resolve,
             reject,
@@ -28,7 +28,7 @@ module.exports = {
         );
     },
 
-    imagesTask: (resolve, reject) => {
+    images: (resolve, reject) => {
         basicCopyTask(
             resolve,
             reject,
