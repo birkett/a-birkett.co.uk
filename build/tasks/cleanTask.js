@@ -1,7 +1,7 @@
 const fs = require('fs');
 const buildConstants = require('../buildConstants');
 
-module.exports = function cleanTask(resolve, reject) {
+const cleanTask = (resolve, reject) => {
     fs.promises.rmdir(buildConstants.outputDirectory, { recursive: true })
         .then(() => {
             fs.promises.mkdir(buildConstants.outputDirectory)
@@ -10,3 +10,5 @@ module.exports = function cleanTask(resolve, reject) {
         })
         .catch((rmdirError) => reject(rmdirError));
 };
+
+module.exports = cleanTask;

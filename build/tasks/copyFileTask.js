@@ -1,22 +1,23 @@
 const fs = require('fs');
 const buildConstants = require('../buildConstants');
 
-function basicCopyTask(resolve, reject, source, destination) {
+const basicCopyTask = (resolve, reject, source, destination) => {
     fs.promises.readdir(source)
         .then((files) => {
-            fs.promises.mkdir(destination)
-                .catch(() => {})
-                .then(() => {
-                    files.forEach((file) => {
-                        fs.promises.copyFile(`${source}/${file}`, `${destination}/${file}`)
-                            .catch((copyFileError) => reject(copyFileError));
-                    });
+            fs.promises.mkdir(destination).catch(() => {});
 
-                    resolve();
-                });
+            return files;
+        })
+        .then((files) => {
+            files.forEach((file) => {
+                fs.promises.copyFile(`${source}/${file}`, `${destination}/${file}`)
+                    .catch((copyFileError) => reject(copyFileError));
+            });
+
+            resolve();
         })
         .catch((readDirError) => reject(readDirError));
-}
+};
 
 module.exports = {
     fonts: (resolve, reject) => {

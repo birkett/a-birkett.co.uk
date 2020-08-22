@@ -37,7 +37,7 @@ scp -r ../dist/ $1:/var/www/$deployDirName;
 echo "Copying nginx config...";
 scp $nginxConfigDir/$siteName $1:/$nginxConfigDir/$siteName;
 
-echo "Runing remote deploy script...";
+echo "Running remote deploy script...";
 ssh $1 <<REMOTESCRIPT
   cd /var/www;
   echo "Removing symlink...";

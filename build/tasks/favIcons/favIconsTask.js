@@ -35,7 +35,7 @@ const OPTIONS = {
     },
 };
 
-module.exports = function favIconsTask(resolve, reject) {
+const favIconsTask = (resolve, reject) => {
     process.env.OPENSSL_CONF = '';
 
     const buildFilePath = (path) => `${buildConstants.outputDirectory}${path}.png`;
@@ -58,3 +58,5 @@ module.exports = function favIconsTask(resolve, reject) {
         })
         .then(resolve);
 };
+
+module.exports = favIconsTask;

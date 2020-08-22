@@ -8,21 +8,18 @@ const XML_SRC_ATTRIBUTE_REGEX = /src="([^"]+)"/g; // Selects src="..." attribute
 const JSON_SRC_PROPERTY_REGEX = /src": "([^"]+)"/g; // Selects src: "..." properties from JSON.
 
 const genericVersionStringTest = (filename, regex) => {
-    fs.readFile(filename, (err, fileContent) => {
-        if (err) {
-            throw err;
-        }
+    fs.promises.readFile(filename)
+        .then((fileContent) => {
+            const expectedRevisionHash = buildConstants.gitRevision();
+            const matches = fileContent.toString().match(regex);
 
-        const expectedRevisionHash = buildConstants.gitRevision();
-        const matches = fileContent.toString().match(regex);
+            assert.strictEqual(matches && matches.length > 0, true);
 
-        assert.strictEqual(matches && matches.length > 0, true);
-
-        // The string should contain the valid git hash.
-        matches.forEach((match) => {
-            assert.strictEqual(match.includes(`?v=${expectedRevisionHash}`), true);
+            // The string should contain the valid git hash.
+            matches.forEach((match) => {
+                assert.strictEqual(match.includes(`?v=${expectedRevisionHash}`), true);
+            });
         });
-    });
 };
 
 const versionQueryStringTest = (filename) => {

@@ -1,8 +1,9 @@
 const fs = require('fs');
 const twig = require('twig');
+const util = require('util');
 const buildConstants = require('../buildConstants');
 
-function basicRenderTask(resolve, reject, source, destination, additionalData) {
+const basicRenderTask = (resolve, reject, source, destination, additionalData) => {
     const data = {
         constants: {
             ...buildConstants.loadJson(buildConstants.templateConstantsJsonPath),
@@ -11,18 +12,14 @@ function basicRenderTask(resolve, reject, source, destination, additionalData) {
         ...additionalData,
     };
 
-    twig.renderFile(source, data, (renderFileError, renderedTemplate) => {
-        if (renderFileError) {
-            reject(renderFileError);
-
-            return;
-        }
-
-        fs.promises.writeFile(destination, renderedTemplate)
-            .then(resolve)
-            .catch((writeFileError) => reject(writeFileError));
-    });
-}
+    util.promisify(twig.renderFile)(source, data)
+        .then((renderedTemplate) => {
+            fs.promises.writeFile(destination, renderedTemplate)
+                .then(resolve)
+                .catch((writeFileError) => reject(writeFileError));
+        })
+        .catch((renderFileError) => reject(renderFileError));
+};
 
 module.exports = {
     browserConfig: (resolve, reject) => {

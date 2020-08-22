@@ -1,8 +1,9 @@
 const fs = require('fs');
 const sass = require('node-sass');
+const util = require('util');
 const buildConstants = require('../buildConstants');
 
-module.exports = function stylesTask(resolve, reject) {
+const stylesTask = (resolve, reject) => {
     fs.promises.readFile(`${buildConstants.scssInputDirectory}main.scss`)
         .then((scss) => {
             const sassOptions = {
@@ -11,25 +12,19 @@ module.exports = function stylesTask(resolve, reject) {
                 data: `$gitRevision: ${buildConstants.gitRevision()}; ${scss}`,
             };
 
-            const renderCallback = (renderError, result) => {
-                if (renderError) {
-                    reject(renderError);
+            return util.promisify(sass.render)(sassOptions);
+        })
+        .then((renderResult) => {
+            fs.promises.mkdir(buildConstants.cssOutputDirectory).catch(() => {});
 
-                    return;
-                }
-
-                fs.promises.mkdir(buildConstants.cssOutputDirectory)
-                    .catch(() => {})
-                    .then(() => {
-                        const destination = `${buildConstants.cssOutputDirectory}/main.css`;
-
-                        fs.promises.writeFile(destination, result.css.toString())
-                            .then(resolve)
-                            .catch((writeFileError) => reject(writeFileError));
-                    });
-            };
-
-            sass.render(sassOptions, renderCallback);
+            return renderResult.css.toString();
+        })
+        .then((css) => {
+            fs.promises.writeFile(`${buildConstants.cssOutputDirectory}main.css`, css)
+                .then(resolve)
+                .catch((writeFileError) => reject(writeFileError));
         })
         .catch((readFileError) => reject(readFileError));
 };
+
+module.exports = stylesTask;
