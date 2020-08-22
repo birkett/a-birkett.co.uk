@@ -1,7 +1,6 @@
 const { series } = require('gulp');
 
 const cleanTask = require('./build/tasks/cleanTask');
-const siteVersionTask = require('./build/tasks/siteVersionTask');
 const stylesTask = require('./build/tasks/stylesTask');
 const imagesTask = require('./build/tasks/imagesTask');
 const fontsTask = require('./build/tasks/fontsTask');
@@ -19,7 +18,6 @@ const iconsGroupTask = series(
 );
 
 const fastTask = series(
-    siteVersionTask,
     stylesTask,
     imagesTask,
     templateTask,
@@ -27,7 +25,6 @@ const fastTask = series(
 
 const defaultTask = series(
     cleanTask,
-    siteVersionTask,
     stylesTask,
     imagesTask,
     fontsTask,
@@ -36,7 +33,6 @@ const defaultTask = series(
 );
 
 exports.clean = cleanTask;
-exports.siteVersion = siteVersionTask;
 exports.styles = stylesTask;
 exports.images = imagesTask;
 exports.fonts = fontsTask;

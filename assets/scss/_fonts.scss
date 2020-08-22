@@ -3,7 +3,7 @@
  */
 @import 'constants';
 
-$font-file-path: '../fonts/francois-one-v14-latin-regular.woff2?v=#{$siteVersion}';
+$font-file-path: '../fonts/francois-one-v14-latin-regular.woff2?v=#{$gitRevision}';
 
 @font-face {
     font-family:  'Francois One';

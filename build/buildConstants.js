@@ -11,8 +11,6 @@ const COMPONENT_INPUT_DIR = `${ASSETS_DIR}components/`;
 const WEB_MANIFEST_OUTPUT_FILE_NAME = 'site.webmanifest';
 const SAFARI_ICON_FILE_NAME = 'safari-pinned-tab.svg';
 
-const SITE_VERSION_FILE_NAME = `${OUTPUT_DIR}site.version`;
-
 module.exports = {
     outputDirectory: OUTPUT_DIR,
 
@@ -43,8 +41,6 @@ module.exports = {
     safariIconFileName: SAFARI_ICON_FILE_NAME,
     safariIconOutputFileName: `${OUTPUT_DIR}${SAFARI_ICON_FILE_NAME}`,
 
-    siteVersionFile: SITE_VERSION_FILE_NAME,
-
     fontFileName: 'francois-one-v14-latin-regular.woff2',
     outputCssFileName: 'main.css',
 
@@ -55,18 +51,6 @@ module.exports = {
 
     themeColor: '#000000',
     msTileColor: '#2B5797',
-
-    siteVersion: () => {
-        if (this.loadedVersion === undefined) {
-            this.loadedVersion = '';
-        }
-
-        if (!this.loadedVersion && fs.existsSync(SITE_VERSION_FILE_NAME)) {
-            this.loadedVersion = fs.readFileSync(SITE_VERSION_FILE_NAME).toString();
-        }
-
-        return this.loadedVersion;
-    },
 
     gitRevision: () => {
         if (this.cachedRevision === undefined) {

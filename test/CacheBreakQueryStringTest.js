@@ -42,12 +42,6 @@ const jsonSrcPropertyTest = (filename) => {
 };
 
 describe('Cache breaker query strings', () => {
-    describe('Site Version', () => {
-        it('Should contain the current git revision hash', () => {
-            assert.strictEqual(buildConstants.siteVersion(), buildConstants.gitRevision());
-        });
-    });
-
     describe('CSS', () => {
         it('Should contain valid cache break query strings on referenced resources', () => {
             versionQueryStringTest(

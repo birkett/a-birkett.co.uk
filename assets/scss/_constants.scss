@@ -1,7 +1,7 @@
 /**
  * Overridden by the gulp task.
  */
-$siteVersion: 'x' !default;
+$gitRevision: 'x' !default;
 
 /**
  * Constants used throughout the style sheet.
@@ -54,6 +54,6 @@ $mobile-breakpoint: 800px;
 /**
  * SVG paths.
  */
-$avatar-svg:      '../img/avatar.svg?v=#{$siteVersion}';
-$bg-gradient-svg: '../img/bg_gradient.svg?v=#{$siteVersion}';
-$bg-squares-svg:  '../img/bg_squares.svg?v=#{$siteVersion}';
+$avatar-svg:      '../img/avatar.svg?v=#{$gitRevision}';
+$bg-gradient-svg: '../img/bg_gradient.svg?v=#{$gitRevision}';
+$bg-squares-svg:  '../img/bg_squares.svg?v=#{$gitRevision}';

@@ -6,7 +6,7 @@ const buildConstants = require('../buildConstants');
 module.exports = function stylesTask() {
     return src(`${buildConstants.scssInputDirectory}*.scss`)
         .pipe(sassVariables({
-            $siteVersion: buildConstants.siteVersion(),
+            $gitRevision: buildConstants.gitRevision(),
         }))
         .pipe(sass({ outputStyle: 'compressed' }))
         .pipe(dest(buildConstants.cssOutputDirectory));

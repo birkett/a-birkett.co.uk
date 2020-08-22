@@ -10,10 +10,10 @@
     "gulp-sass-variables": "^1.2.0",
     "icon-gen": "^2.0.0",
     "node-sass": "^4.14.1",
-    "twig": "^1.15.1"
+    "twig": "^1.15.2"
   },
   "devDependencies": {
-    "eslint": "^7.6.0",
+    "eslint": "^7.7.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
     "mocha": "^8.1.1"
