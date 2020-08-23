@@ -4,17 +4,19 @@ const buildConstants = require('../buildConstants');
 const basicCopyTask = (resolve, reject, source, destination) => {
     fs.promises.readdir(source)
         .then((files) => {
-            fs.promises.mkdir(destination).catch(() => {});
+            fs.promises.mkdir(destination)
+                .catch(() => {})
+                .then(() => {
+                    const reducer = async (previous, next) => {
+                        await previous;
 
-            return files;
-        })
-        .then((files) => {
-            files.forEach((file) => {
-                fs.promises.copyFile(`${source}/${file}`, `${destination}/${file}`)
-                    .catch((copyFileError) => reject(copyFileError));
-            });
+                        return fs.promises.copyFile(`${source}${next}`, `${destination}${next}`)
+                            .catch((copyFileError) => reject(copyFileError));
+                    };
 
-            resolve();
+                    files.reduce(reducer, Promise.resolve())
+                        .then(resolve);
+                });
         })
         .catch((readDirError) => reject(readDirError));
 };
