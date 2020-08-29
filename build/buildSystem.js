@@ -7,7 +7,7 @@ const runTask = async (task) => {
 
     writeLine(`Starting ${task.name}`);
 
-    await new Promise(task)
+    return new Promise(task)
         .catch((err) => {
             writeLine(err);
             process.exit(1);
@@ -15,13 +15,11 @@ const runTask = async (task) => {
         .then(() => writeLine(`Finished ${task.name} in ${Date.now() - startTime}ms`));
 };
 
-const runJobSeries = (tasks) => {
-    tasks.reduce(async (previous, next) => {
-        await previous;
+const runJobSeries = async (tasks) => tasks.reduce(async (previous, next) => {
+    await previous;
 
-        return runTask(next);
-    }, Promise.resolve());
-};
+    return runTask(next);
+}, Promise.resolve());
 
 const build = (availableJobs) => {
     const startTime = Date.now();
@@ -32,9 +30,8 @@ const build = (availableJobs) => {
 
     writeLine(`Running job ${jobName}`);
 
-    runJobSeries(availableJobs[jobName]);
-
-    writeLine(`Done in ${Date.now() - startTime}ms`);
+    runJobSeries(availableJobs[jobName])
+        .then(() => writeLine(`Done in ${Date.now() - startTime}ms`));
 };
 
 module.exports = build;
