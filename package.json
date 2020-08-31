@@ -16,8 +16,9 @@
   "scripts": {
     "build": "node build.js",
     "clean": "node build.js clean",
-    "deploy": "cd deploy; ./deploy.sh",
+    "deploy": "./deploy/deploy.sh",
     "lint": "eslint .",
+    "pre-deploy": "set -e; npm run lint; npm run build; npm test",
     "test": "node tests.js"
   },
   "author": "Anthony Birkett",

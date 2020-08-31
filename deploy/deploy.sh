@@ -22,20 +22,14 @@ timestamp=`date -Iseconds`;
 nginxConfigDir="etc/nginx/sites-available";
 deployDirName=$siteName-$timestamp;
 
-echo "Running linter..."
-npm run lint
-
-echo "Building..."
-npm run build
-
-echo "Running tests..."
-npm run test
+echo "Running pre-deploy..."
+npm run pre-deploy
 
 echo "Copying code...";
-scp -r ../dist/ $1:/var/www/$deployDirName;
+scp -r dist/ $1:/var/www/$deployDirName;
 
 echo "Copying nginx config...";
-scp $nginxConfigDir/$siteName $1:/$nginxConfigDir/$siteName;
+scp "deploy/"$nginxConfigDir/$siteName $1:/$nginxConfigDir/$siteName;
 
 echo "Running remote deploy script...";
 ssh $1 <<REMOTESCRIPT
