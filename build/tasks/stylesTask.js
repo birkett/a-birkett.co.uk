@@ -9,7 +9,7 @@ const stylesTask = (resolve, reject) => {
             const sassOptions = {
                 outputStyle: 'compressed',
                 includePaths: [buildConstants.scssInputDirectory],
-                data: `$gitRevision: ${buildConstants.gitRevision()}; ${scss}`,
+                data: `$gitRevision: '${buildConstants.gitRevision()}'; ${scss}`,
             };
 
             return util.promisify(sass.render)(sassOptions);
