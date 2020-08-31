@@ -1,18 +1,16 @@
-/* eslint-disable no-console */
-const writeLine = (line) => console.log(line);
-/* eslint-enable no-console */
+const { log } = console;
 
 const runTask = async (task) => {
     const startTime = Date.now();
 
-    writeLine(`Starting ${task.name}`);
+    log(`Starting ${task.name}`);
 
     return new Promise(task)
         .catch((err) => {
-            writeLine(err);
+            log(err);
             process.exit(1);
         })
-        .then(() => writeLine(`Finished ${task.name} in ${Date.now() - startTime}ms`));
+        .then(() => log(`Finished ${task.name} in ${Date.now() - startTime}ms`));
 };
 
 const runJobSeries = async (tasks) => tasks.reduce(async (previous, next) => {
@@ -28,10 +26,10 @@ const build = (availableJobs) => {
         ? process.argv[2]
         : 'default';
 
-    writeLine(`Running job ${jobName}`);
+    log(`Running job ${jobName}`);
 
     runJobSeries(availableJobs[jobName])
-        .then(() => writeLine(`Done in ${Date.now() - startTime}ms`));
+        .then(() => log(`Done in ${Date.now() - startTime}ms`));
 };
 
 module.exports = build;

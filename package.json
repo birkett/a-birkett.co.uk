@@ -11,15 +11,14 @@
   "devDependencies": {
     "eslint": "^7.7.0",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-plugin-import": "^2.22.0",
-    "mocha": "^8.1.1"
+    "eslint-plugin-import": "^2.22.0"
   },
   "scripts": {
     "build": "node build.js",
     "clean": "node build.js clean",
     "deploy": "cd deploy; ./deploy.sh",
     "lint": "eslint .",
-    "test": "mocha"
+    "test": "node tests.js"
   },
   "author": "Anthony Birkett",
   "license": "MIT"

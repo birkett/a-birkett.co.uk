@@ -1,6 +1,6 @@
-const assert = require('assert');
 const fs = require('fs');
 const buildConstants = require('../build/buildConstants');
+const { describe, expect, it } = require('./testSystem');
 
 const VERSION_QUERY_STRING_REGEX = /\?v=(\w{0,7})/g; // ?v=...
 const URL_TAG_REGEX = /url\(([^)]+)\)/g; // Selects url(...) tags from CSS.
@@ -8,18 +8,16 @@ const XML_SRC_ATTRIBUTE_REGEX = /src="([^"]+)"/g; // Selects src="..." attribute
 const JSON_SRC_PROPERTY_REGEX = /src": "([^"]+)"/g; // Selects src: "..." properties from JSON.
 
 const genericVersionStringTest = (filename, regex) => {
-    fs.promises.readFile(filename)
-        .then((fileContent) => {
-            const expectedRevisionHash = buildConstants.gitRevision();
-            const matches = fileContent.toString().match(regex);
+    const fileContent = fs.readFileSync(filename);
+    const expectedRevisionHash = buildConstants.gitRevision();
+    const matches = fileContent.toString().match(regex);
 
-            assert.strictEqual(matches && matches.length > 0, true);
+    expect(matches && matches.length > 0).equal(true);
 
-            // The string should contain the valid git hash.
-            matches.forEach((match) => {
-                assert.strictEqual(match.includes(`?v=${expectedRevisionHash}`), true);
-            });
-        });
+    // The string should contain the valid git hash.
+    matches.forEach((match) => {
+        expect(match.includes(`?v=${expectedRevisionHash}`)).equal(true);
+    });
 };
 
 const versionQueryStringTest = (filename) => {

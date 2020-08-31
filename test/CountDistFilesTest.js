@@ -1,21 +1,17 @@
-const assert = require('assert');
 const fs = require('fs');
 const buildConstants = require('../build/buildConstants');
+const { describe, expect, it } = require('./testSystem');
 
 const testFilesPresent = (folder, extension, expectedTotal, expectedMatches) => {
-    fs.readdir(folder, { withFileTypes: true }, (error, dirEntries) => {
-        if (error) {
-            throw error;
-        }
+    const dirEntries = fs.readdirSync(folder, { withFileTypes: true });
 
-        const allFiles = dirEntries.filter((entry) => entry.isFile());
+    const allFiles = dirEntries.filter((entry) => entry.isFile());
 
-        assert.strictEqual(allFiles.length, expectedTotal);
+    expect(allFiles.length).equal(expectedTotal);
 
-        const matches = allFiles.filter((file) => file.name.endsWith(extension));
+    const matches = allFiles.filter((file) => file.name.endsWith(extension));
 
-        assert.strictEqual(matches.length, expectedMatches);
-    });
+    expect(matches.length).equal(expectedMatches);
 };
 
 describe('Count files in the dist folder', () => {
