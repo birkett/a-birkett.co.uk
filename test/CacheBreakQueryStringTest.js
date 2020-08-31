@@ -1,6 +1,11 @@
 const fs = require('fs');
 const buildConstants = require('../build/buildConstants');
-const { describe, expect, it } = require('./testSystem');
+const {
+    describe,
+    expect,
+    it,
+    suite,
+} = require('../lib/test/testSystem');
 
 const VERSION_QUERY_STRING_REGEX = /\?v=(\w{0,7})/g; // ?v=...
 const URL_TAG_REGEX = /url\(([^)]+)\)/g; // Selects url(...) tags from CSS.
@@ -36,7 +41,7 @@ const jsonSrcPropertyTest = (filename) => {
     genericVersionStringTest(filename, JSON_SRC_PROPERTY_REGEX);
 };
 
-describe('Cache breaker query strings', () => {
+suite('Cache breaker query strings', () => {
     describe('CSS', () => {
         it('Should contain valid cache break query strings on referenced resources', () => {
             versionQueryStringTest(

@@ -1,3 +1,4 @@
-const { test } = require('./test/testSystem');
+const fs = require('fs');
+const { test } = require('./lib/test/testSystem');
 
-test('test/');
+test(fs.realpathSync('test'));

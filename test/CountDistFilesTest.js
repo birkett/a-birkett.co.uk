@@ -1,6 +1,11 @@
 const fs = require('fs');
 const buildConstants = require('../build/buildConstants');
-const { describe, expect, it } = require('./testSystem');
+const {
+    describe,
+    expect,
+    it,
+    suite,
+} = require('../lib/test/testSystem');
 
 const testFilesPresent = (folder, extension, expectedTotal, expectedMatches) => {
     const dirEntries = fs.readdirSync(folder, { withFileTypes: true });
@@ -14,7 +19,7 @@ const testFilesPresent = (folder, extension, expectedTotal, expectedMatches) => 
     expect(matches.length).equal(expectedMatches);
 };
 
-describe('Count files in the dist folder', () => {
+suite('Count files in the dist folder', () => {
     describe('CSS', () => {
         it('Should have 1 compiled style sheet', () => {
             testFilesPresent(buildConstants.cssOutputDirectory, '.css', 1, 1);
