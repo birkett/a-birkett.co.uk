@@ -1,4 +1,5 @@
 const childProcess = require('child_process');
+const memoize = require('../lib/memoize/memoize');
 
 const ASSETS_DIR = './assets/';
 const OUTPUT_DIR = './dist/';
@@ -51,17 +52,9 @@ module.exports = {
     themeColor: '#000000',
     msTileColor: '#2B5797',
 
-    gitRevision: () => {
-        if (this.cachedRevision === undefined) {
-            this.cachedRevision = '';
-        }
+    gitRevision: memoize(() => {
+        const stdOut = childProcess.execSync('git rev-parse --short HEAD');
 
-        if (!this.cachedRevision) {
-            const stdOut = childProcess.execSync('git rev-parse --short HEAD');
-
-            this.cachedRevision = stdOut.toString().split('\n').join('');
-        }
-
-        return this.cachedRevision;
-    },
+        return stdOut.toString().split('\n').join('');
+    }),
 };
