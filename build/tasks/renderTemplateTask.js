@@ -3,10 +3,12 @@ const twig = require('twig');
 const util = require('util');
 const buildConstants = require('../buildConstants');
 
+const loadJson = (path) => JSON.parse(fs.readFileSync(path).toString());
+
 const basicRenderTask = (resolve, reject, source, destination, additionalData) => {
     const data = {
         constants: {
-            ...buildConstants.loadJson(buildConstants.templateConstantsJsonPath),
+            ...loadJson(buildConstants.templateConstantsJsonPath),
             ...buildConstants,
         },
         ...additionalData,
@@ -38,8 +40,8 @@ module.exports = {
             buildConstants.templateInputFileName,
             buildConstants.templateOutputFileName,
             {
-                links: buildConstants.loadJson(buildConstants.headerLinksJsonPath),
-                tagGroups: buildConstants.loadJson(buildConstants.tagsJsonPath),
+                links: loadJson(buildConstants.headerLinksJsonPath),
+                tagGroups: loadJson(buildConstants.tagsJsonPath),
             },
         );
     },

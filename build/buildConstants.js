@@ -1,5 +1,4 @@
 const childProcess = require('child_process');
-const fs = require('fs');
 
 const ASSETS_DIR = './assets/';
 const OUTPUT_DIR = './dist/';
@@ -65,6 +64,4 @@ module.exports = {
 
         return this.cachedRevision;
     },
-
-    loadJson: (path) => JSON.parse(fs.readFileSync(path).toString()),
 };
