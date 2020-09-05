@@ -1,4 +1,5 @@
 const fs = require('fs');
+const promiseInOrder = require('../../lib/promise/inOrder');
 const buildConstants = require('../buildConstants');
 
 const basicCopyTask = (resolve, reject, source, destination) => {
@@ -7,14 +8,15 @@ const basicCopyTask = (resolve, reject, source, destination) => {
             fs.promises.mkdir(destination)
                 .catch(() => {})
                 .then(() => {
-                    const reducer = async (previous, next) => {
-                        await previous;
+                    const promiseFunction = (previous, next) => {
+                        const copySource = `${source}${next}`;
+                        const copyDest = `${destination}${next}`;
 
-                        return fs.promises.copyFile(`${source}${next}`, `${destination}${next}`)
+                        return fs.promises.copyFile(copySource, copyDest)
                             .catch((copyFileError) => reject(copyFileError));
                     };
 
-                    files.reduce(reducer, Promise.resolve())
+                    promiseInOrder(files, promiseFunction)
                         .then(resolve);
                 });
         })

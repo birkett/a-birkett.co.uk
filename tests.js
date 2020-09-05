@@ -1,3 +1,1 @@
-const { test } = require('./lib/test/testSystem');
-
-test(process.argv[2]);
+require('./lib/test/testSystem').test();
