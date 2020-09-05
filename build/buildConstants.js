@@ -27,14 +27,14 @@ module.exports = {
     headerLinksJsonPath: `${JSON_INPUT_DIR}headerLinks.json`,
     tagsJsonPath: `${JSON_INPUT_DIR}tagCloud.json`,
 
-    templateInputFileName: `${COMPONENT_INPUT_DIR}index.html.twig`,
+    templateInputFileName: `${COMPONENT_INPUT_DIR}index.html.njk`,
     templateOutputFileName: `${OUTPUT_DIR}index.html`,
 
-    webManifestInputFileName: `${COMPONENT_INPUT_DIR}webManifest.json.twig`,
+    webManifestInputFileName: `${COMPONENT_INPUT_DIR}webManifest.json.njk`,
     webManifestFileName: WEB_MANIFEST_OUTPUT_FILE_NAME,
     webManifestOutputFileName: `${OUTPUT_DIR}${WEB_MANIFEST_OUTPUT_FILE_NAME}`,
 
-    browserConfigInputFileName: `${COMPONENT_INPUT_DIR}browserConfig.xml.twig`,
+    browserConfigInputFileName: `${COMPONENT_INPUT_DIR}browserConfig.xml.njk`,
     browserConfigOutputFileName: `${OUTPUT_DIR}browserconfig.xml`,
 
     faviconInputFile: `${SVG_INPUT_DIR}avatar.svg`,
