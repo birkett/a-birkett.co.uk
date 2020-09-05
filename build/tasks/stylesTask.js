@@ -1,5 +1,5 @@
 const fs = require('fs');
-const sass = require('node-sass');
+const sass = require('sass');
 const util = require('util');
 const buildConstants = require('../buildConstants');
 
