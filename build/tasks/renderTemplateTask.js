@@ -1,5 +1,5 @@
 const fs = require('fs');
-const twig = require('twig');
+const nunjucks = require('nunjucks');
 const util = require('util');
 const buildConstants = require('../buildConstants');
 
@@ -14,7 +14,7 @@ const basicRenderTask = (resolve, reject, source, destination, additionalData) =
         ...additionalData,
     };
 
-    util.promisify(twig.renderFile)(source, data)
+    util.promisify(nunjucks.render)(source, data)
         .then((renderedTemplate) => {
             fs.promises.writeFile(destination, renderedTemplate)
                 .then(resolve)

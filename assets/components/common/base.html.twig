@@ -3,14 +3,14 @@
     <head>
         <title>{{ constants.firstName }} {{ constants.lastName }}</title>
 
-        {% include 'headMeta.html.twig' %}
+        {% include './headMeta.html.twig' %}
     </head>
     <body>
-        {% include 'header.html.twig' %}
+        {% include './header.html.twig' %}
 
         {% block contentBlocks %}
         {% endblock %}
 
-        {% include 'footer.html.twig' %}
+        {% include './footer.html.twig' %}
     </body>
 </html>
