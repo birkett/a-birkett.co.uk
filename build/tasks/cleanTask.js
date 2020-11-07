@@ -2,13 +2,21 @@ const fs = require('fs');
 const buildConstants = require('../buildConstants');
 
 const cleanTask = (resolve, reject) => {
-    fs.promises.rmdir(buildConstants.outputDirectory, { recursive: true })
+    const recreatedOutputDirectory = (res, rej) => {
+        fs.promises.mkdir(buildConstants.outputDirectory)
+            .then(res)
+            .catch((mkdirError) => rej(mkdirError));
+    };
+
+    fs.promises.stat(buildConstants.outputDirectory)
         .then(() => {
-            fs.promises.mkdir(buildConstants.outputDirectory)
-                .then(resolve)
-                .catch((mkdirError) => reject(mkdirError));
+            fs.promises.rmdir(buildConstants.outputDirectory, { recursive: true })
+                .then(() => recreatedOutputDirectory(resolve, reject))
+                .catch((rmdirError) => reject(rmdirError));
         })
-        .catch((rmdirError) => reject(rmdirError));
+        .catch(() => {
+            recreatedOutputDirectory(resolve, reject);
+        });
 };
 
 module.exports = cleanTask;
