@@ -4,6 +4,7 @@ const safariIconTask = require('./build/tasks/favIcons/safariIconTask');
 const copyFiles = require('./build/tasks/copyFileTask');
 const stylesTask = require('./build/tasks/stylesTask');
 const cleanTask = require('./build/tasks/cleanTask');
+const serviceWorkerTask = require('./build/tasks/serviceWorkerTask');
 const build = require('./lib/build/buildSystem');
 
 build({
@@ -17,6 +18,7 @@ build({
         renderTemplate.webManifest,
         renderTemplate.browserConfig,
         favIconsTask,
+        serviceWorkerTask,
     ],
 
     fast: [

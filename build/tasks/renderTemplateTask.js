@@ -54,4 +54,6 @@ module.exports = {
             buildConstants.webManifestOutputFileName,
         );
     },
+
+    basicRenderTask,
 };

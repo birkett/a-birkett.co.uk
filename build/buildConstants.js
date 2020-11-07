@@ -30,6 +30,9 @@ module.exports = {
     templateInputFileName: `${COMPONENT_INPUT_DIR}index.html.njk`,
     templateOutputFileName: `${OUTPUT_DIR}index.html`,
 
+    serviceWorkerInputFileName: `${COMPONENT_INPUT_DIR}serviceWorker.js.njk`,
+    serviceWorkerOutputFileName: `${OUTPUT_DIR}serviceWorker.js`,
+
     webManifestInputFileName: `${COMPONENT_INPUT_DIR}webManifest.json.njk`,
     webManifestFileName: WEB_MANIFEST_OUTPUT_FILE_NAME,
     webManifestOutputFileName: `${OUTPUT_DIR}${WEB_MANIFEST_OUTPUT_FILE_NAME}`,

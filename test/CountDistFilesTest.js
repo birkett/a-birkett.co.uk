@@ -38,17 +38,23 @@ suite('Count files in the dist folder', () => {
         });
     });
 
+    describe('JS', () => {
+        it('Should have 1 JS file', () => {
+            testFilesPresent(buildConstants.outputDirectory, '.js', 20, 1);
+        });
+    });
+
     describe('Favicons', () => {
         it('Should have 13 PNG favicons', () => {
-            testFilesPresent(buildConstants.outputDirectory, '.png', 19, 14);
+            testFilesPresent(buildConstants.outputDirectory, '.png', 20, 14);
         });
 
         it('Should have 1 SVG favicon', () => {
-            testFilesPresent(buildConstants.outputDirectory, '.svg', 19, 1);
+            testFilesPresent(buildConstants.outputDirectory, '.svg', 20, 1);
         });
 
         it('Should have 1 ICO favicon', () => {
-            testFilesPresent(buildConstants.outputDirectory, '.ico', 19, 1);
+            testFilesPresent(buildConstants.outputDirectory, '.ico', 20, 1);
         });
     });
 });
