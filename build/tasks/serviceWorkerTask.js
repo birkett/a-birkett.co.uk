@@ -24,7 +24,15 @@ const getFiles = (baseDirectory) => {
     const trimmedFiles = [];
 
     foundFiles.forEach((file) => {
-        trimmedFiles.push(`./${file.substring(file.indexOf('/') + 1)}`);
+        // Skip over most favicons, the browser should have already cached what it needs.
+        if (file.includes('.png')) {
+            return;
+        }
+
+        const trimmedRootPath = file.substring(file.indexOf('/') + 1);
+        const fileName = `./${trimmedRootPath}?v=${buildConstants.gitRevision()}`;
+
+        trimmedFiles.push(fileName);
     });
 
     return trimmedFiles;
