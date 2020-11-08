@@ -30,7 +30,7 @@ const getFiles = (baseDirectory) => {
         }
 
         const trimmedRootPath = file.substring(file.indexOf('/') + 1);
-        const fileName = `./${trimmedRootPath}?v=${buildConstants.gitRevision()}`;
+        const fileName = `${trimmedRootPath}?v=${buildConstants.gitRevision()}`;
 
         trimmedFiles.push(fileName);
     });
