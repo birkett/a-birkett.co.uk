@@ -3,16 +3,8 @@
   "version": "1.0.0",
   "description": "Personal website of Anthony Birkett",
   "private": true,
-  "dependencies": {
-    "icon-gen": "^2.0.0",
-    "nunjucks": "^3.2.2",
-    "sass": "^1.29.0"
-  },
-  "devDependencies": {
-    "eslint": "^7.12.1",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-plugin-import": "^2.22.1"
-  },
+  "author": "Anthony Birkett",
+  "license": "MIT",
   "scripts": {
     "build": "node build.js",
     "clean": "node build.js clean",
@@ -21,6 +13,14 @@
     "pre-deploy": "set -e; npm run lint; npm run build; npm test",
     "test": "node tests.js"
   },
-  "author": "Anthony Birkett",
-  "license": "MIT"
+  "dependencies": {
+    "icon-gen": "^2.0.0",
+    "nunjucks": "^3.2.3",
+    "sass": "^1.42.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.2"
+  }
 }

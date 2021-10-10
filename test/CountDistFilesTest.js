@@ -45,7 +45,7 @@ suite('Count files in the dist folder', () => {
     });
 
     describe('Favicons', () => {
-        it('Should have 13 PNG favicons', () => {
+        it('Should have 14 PNG favicons', () => {
             testFilesPresent(buildConstants.outputDirectory, '.png', 20, 14);
         });
 
