@@ -6,12 +6,15 @@
   "author": "Anthony Birkett",
   "license": "MIT",
   "scripts": {
-    "build": "node build.js",
-    "clean": "node build.js clean",
+    "build": "ts-node build.ts",
+    "clean": "ts-node build.ts clean",
     "deploy": "./deploy/deploy.sh",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "pre-deploy": "set -e; npm run lint; npm run build; npm test",
-    "test": "node tests.js"
+    "prettier": "prettier -c .",
+    "prettier:fix": "prettier -w .",
+    "test": "ts-node tests.ts"
   },
   "dependencies": {
     "icon-gen": "^2.0.0",
@@ -19,8 +22,18 @@
     "sass": "^1.42.1"
   },
   "devDependencies": {
+    "@types/node": "^16.10.3",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
     "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.24.2"
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-config-airbnb-typescript": "^14.0.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.26.1",
+    "prettier": "^2.4.1",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
   }
 }
