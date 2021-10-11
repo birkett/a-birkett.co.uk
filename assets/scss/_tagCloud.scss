@@ -1,12 +1,12 @@
 /**
  * Style for the tag cloud.
  */
-@import "constants";
+@import 'constants';
 
 .tag-cloud {
     ul {
-        margin:     0;
-        padding:    0;
+        margin: 0;
+        padding: 0;
         list-style: none;
 
         li {
@@ -19,14 +19,14 @@
                     -webkit-backface-visibility: hidden;
                 }
 
-                position:        relative;
-                display:         inline-block;
-                line-height:     2em;
-                padding:         0 1em 0 .75em;
-                border-radius:   0.5em;
+                position: relative;
+                display: inline-block;
+                line-height: 2em;
+                padding: 0 1em 0 0.75em;
+                border-radius: 0.5em;
                 text-decoration: none;
-                font-size:       1.25em;
-                font-weight:     600;
+                font-size: 1.25em;
+                font-weight: 600;
             }
         }
     }

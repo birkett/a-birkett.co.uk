@@ -9,21 +9,23 @@ const basicCopyTask = (
     source: string,
     destination: string,
 ) => {
-    fs.promises.readdir(source)
+    fs.promises
+        .readdir(source)
         .then((files) => {
-            fs.promises.mkdir(destination)
+            fs.promises
+                .mkdir(destination)
                 .catch(() => {})
                 .then(() => {
                     const promiseFunction = (previous: Promise<void>, next: string): any => {
                         const copySource = `${source}${next}`;
                         const copyDest = `${destination}${next}`;
 
-                        return fs.promises.copyFile(copySource, copyDest)
+                        return fs.promises
+                            .copyFile(copySource, copyDest)
                             .catch((copyFileError) => reject(copyFileError));
                     };
 
-                    promiseInOrder(files, promiseFunction)
-                        .then(resolve);
+                    promiseInOrder(files, promiseFunction).then(resolve);
                 });
         })
         .catch((readDirError) => reject(readDirError));

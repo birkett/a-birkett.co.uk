@@ -1,4 +1,4 @@
-import { BuildJob, BuildTask } from "./types/BuildJob";
+import { BuildJob, BuildTask } from './types/BuildJob';
 import promiseInOrder from '../promise/inOrder';
 import Logger from '../logger/Logger';
 import ControlCode from '../logger/enum/ControlCode';
@@ -14,11 +14,13 @@ const runTask = async (previous: BuildTask, task: BuildTask) => {
             Logger.writeLine(err, undefined, Colour.Red);
             process.exit(1);
         })
-        .then(() => Logger.writeLine(
-            `\t\tFinished ${task.name} in ${Date.now() - startTime}ms`,
-            undefined,
-            Colour.Green,
-        ));
+        .then(() => {
+            Logger.writeLine(
+                `\t\tFinished ${task.name} in ${Date.now() - startTime}ms`,
+                undefined,
+                Colour.Green,
+            );
+        });
 };
 
 const build = (availableJobs: BuildJob) => {
@@ -30,12 +32,9 @@ const build = (availableJobs: BuildJob) => {
 
     Logger.writeLine(`Running job ${jobName}`, ControlCode.Bold, Colour.Blue);
 
-    promiseInOrder(availableJobs[jobName], runTask)
-        .then(() => Logger.writeLine(
-            `Done in ${Date.now() - startTime}ms`,
-            ControlCode.Bold,
-            Colour.Green,
-        ));
+    promiseInOrder(availableJobs[jobName], runTask).then(() => {
+        Logger.writeLine(`Done in ${Date.now() - startTime}ms`, ControlCode.Bold, Colour.Green);
+    });
 };
 
 export default build;

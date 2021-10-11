@@ -6,7 +6,8 @@ import { PromiseRejectFn, PromiseResolveFn } from '../../lib/build/types/Promise
 const sass = require('sass');
 
 const stylesTask = (resolve: PromiseResolveFn, reject: PromiseRejectFn) => {
-    fs.promises.readFile(`${BuildConstants.scssInputDirectory}main.scss`)
+    fs.promises
+        .readFile(`${BuildConstants.scssInputDirectory}main.scss`)
         .then((scss) => {
             const sassOptions = {
                 outputStyle: 'compressed',
@@ -22,7 +23,8 @@ const stylesTask = (resolve: PromiseResolveFn, reject: PromiseRejectFn) => {
             return renderResult.css.toString();
         })
         .then((css) => {
-            fs.promises.writeFile(`${BuildConstants.cssOutputDirectory}main.css`, css)
+            fs.promises
+                .writeFile(`${BuildConstants.cssOutputDirectory}main.css`, css)
                 .then(resolve)
                 .catch((writeFileError) => reject(writeFileError));
         })

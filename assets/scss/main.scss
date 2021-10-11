@@ -7,23 +7,23 @@
 @import 'tagCloud';
 
 body {
-    margin:      0;
-    padding:     0;
+    margin: 0;
+    padding: 0;
     font-family: $paragraph-font;
 }
 
 h1 {
     @extend %heading;
-    font-size:   4em;
+    font-size: 4em;
     font-weight: 300;
-    margin:      0;
-    display:     block;
+    margin: 0;
+    display: block;
 }
 
 h2 {
     @extend %heading;
     font-size: 2.5em;
-    margin:    0 0 5% 0;
+    margin: 0 0 5% 0;
 }
 
 h3 {
@@ -31,16 +31,17 @@ h3 {
     font-size: 1.5em;
 }
 
-a, a.visited {
+a,
+a.visited {
     text-decoration: none;
-    border-style:    none;
-    color:           $link-color;
+    border-style: none;
+    color: $link-color;
 }
 
 nav {
     a {
-        display:   inline-block;
-        margin:    1.25em;
+        display: inline-block;
+        margin: 1.25em;
         font-size: 1.25em;
     }
 }
@@ -55,20 +56,19 @@ strong {
 
 @media screen {
     body {
-        color:      $text-color;
-        background: url($bg-gradient-svg) 0 0%/100%,
-                    url($bg-squares-svg) 0 0%/5%,
-                    $background-color;
+        color: $text-color;
+        background: url($bg-gradient-svg) 0 0%/100%, url($bg-squares-svg) 0 0%/5%, $background-color;
     }
 
-    a, a.visited {
+    a,
+    a.visited {
         color: $link-color;
     }
 }
 
 @media print {
     body {
-        color:      $text-color-print;
+        color: $text-color-print;
         background: $background-color-print;
     }
 
@@ -78,7 +78,8 @@ strong {
         background-color: $background-color-print;
     }
 
-    a, a.visited {
+    a,
+    a.visited {
         color: $link-color-print;
     }
 }

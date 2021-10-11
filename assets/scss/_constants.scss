@@ -6,15 +6,15 @@ $gitRevision: 'x' !default;
 /**
  * Constants used throughout the style sheet.
  */
-$headings-font:  'Francois One', monospace;
+$headings-font: 'Francois One', monospace;
 $paragraph-font: monospace;
 
-$text-color:             #CCCCCC;
-$text-color-print:       #000000;
-$link-color:             #87C2ED;
-$link-color-print:       #87C2ED;
-$background-color:       #111111;
-$background-color-print: #FFFFFF;
+$text-color: #cccccc;
+$text-color-print: #000000;
+$link-color: #87c2ed;
+$link-color-print: #87c2ed;
+$background-color: #111111;
+$background-color-print: #ffffff;
 
 $avatar-size: 15em;
 
@@ -27,12 +27,12 @@ $transparent-black: rgba(0, 0, 0, $opacity);
 /**
  * Transitions.
  */
-$transition-type:  ease;
-$transition-time:  1s;
+$transition-type: ease;
+$transition-time: 1s;
 $transition-scale: 1.1;
 
 %default-transition {
-    transform:  scale($transition-scale);
+    transform: scale($transition-scale);
     transition: $transition-type $transition-time;
 }
 
@@ -40,13 +40,13 @@ $transition-scale: 1.1;
  * Common macros.
  */
 %heading {
-    font-family:    $headings-font;
+    font-family: $headings-font;
     text-transform: uppercase;
 }
 
 %transparent {
     background-color: $transparent-black;
-    text-align:       center;
+    text-align: center;
 }
 
 $mobile-breakpoint: 800px;
@@ -54,6 +54,6 @@ $mobile-breakpoint: 800px;
 /**
  * SVG paths.
  */
-$avatar-svg:      '../img/avatar.svg?v=#{$gitRevision}';
+$avatar-svg: '../img/avatar.svg?v=#{$gitRevision}';
 $bg-gradient-svg: '../img/bg_gradient.svg?v=#{$gitRevision}';
-$bg-squares-svg:  '../img/bg_squares.svg?v=#{$gitRevision}';
+$bg-squares-svg: '../img/bg_squares.svg?v=#{$gitRevision}';

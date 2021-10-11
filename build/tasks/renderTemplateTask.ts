@@ -24,7 +24,8 @@ export const basicRenderTask = (
 
     util.promisify(nunjucks.render)(source, data)
         .then((renderedTemplate: string) => {
-            fs.promises.writeFile(destination, renderedTemplate)
+            fs.promises
+                .writeFile(destination, renderedTemplate)
                 .then(resolve)
                 .catch((writeFileError) => reject(writeFileError));
         })

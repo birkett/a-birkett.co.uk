@@ -4,14 +4,17 @@ import { PromiseRejectFn, PromiseResolveFn } from '../../lib/build/types/Promise
 
 const cleanTask = (resolve: PromiseResolveFn, reject: PromiseRejectFn) => {
     const recreatedOutputDirectory = (res: PromiseResolveFn, rej: PromiseRejectFn) => {
-        fs.promises.mkdir(BuildConstants.outputDirectory)
+        fs.promises
+            .mkdir(BuildConstants.outputDirectory)
             .then(res)
             .catch((mkdirError) => rej(mkdirError));
     };
 
-    fs.promises.stat(BuildConstants.outputDirectory)
+    fs.promises
+        .stat(BuildConstants.outputDirectory)
         .then(() => {
-            fs.promises.rmdir(BuildConstants.outputDirectory, { recursive: true })
+            fs.promises
+                .rmdir(BuildConstants.outputDirectory, { recursive: true })
                 .then(() => recreatedOutputDirectory(resolve, reject))
                 .catch((rmdirError) => reject(rmdirError));
         })

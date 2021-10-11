@@ -21,13 +21,7 @@ build({
         serviceWorkerTask,
     ],
 
-    fast: [
-        stylesTask,
-        images,
-        indexTemplate,
-    ],
+    fast: [stylesTask, images, indexTemplate],
 
-    clean: [
-        cleanTask,
-    ],
+    clean: [cleanTask],
 });

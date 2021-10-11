@@ -59,13 +59,13 @@ const favIconsTask = (resolve: PromiseResolveFn, reject: PromiseRejectFn) => {
                 const source = buildFilePath(`${BuildConstants.faviconPrefix}${size.size}`);
                 const destination = buildFilePath(size.output);
 
-                fs.promises.rename(source, destination)
-                    .catch((renameError) => reject(renameError));
+                fs.promises.rename(source, destination).catch((renameError) => reject(renameError));
             });
         })
         .then(() => {
             FILES_TO_COPY.forEach((toCopy) => {
-                fs.promises.copyFile(buildFilePath(toCopy.input), buildFilePath(toCopy.output))
+                fs.promises
+                    .copyFile(buildFilePath(toCopy.input), buildFilePath(toCopy.output))
                     .catch((copyError) => reject(copyError));
             });
         })

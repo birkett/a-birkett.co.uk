@@ -1,16 +1,16 @@
 /**
  * Defines the basic layout.
  */
-@import "constants";
+@import 'constants';
 
 header,
 footer,
 section {
     @extend %transparent;
-    width:      50%;
-    overflow:   hidden;
-    margin:     0 auto;
-    padding:    1%;
+    width: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    padding: 1%;
     box-sizing: border-box;
 }
 
@@ -19,19 +19,19 @@ section {
         @extend %default-transition;
     }
 
-    display:          inline-block;
-    width:            $avatar-size;
-    height:           $avatar-size;
-    border-radius:    50%;
+    display: inline-block;
+    width: $avatar-size;
+    height: $avatar-size;
+    border-radius: 50%;
     background-image: url($avatar-svg);
-    background-size:  $avatar-size $avatar-size;
+    background-size: $avatar-size $avatar-size;
 }
 
 @media (max-width: $mobile-breakpoint), print {
     header,
     footer,
     section {
-        width:   100%;
+        width: 100%;
         padding: 5%;
     }
 }

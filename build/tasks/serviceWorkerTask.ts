@@ -14,9 +14,7 @@ const getFiles = (baseDirectory: string) => {
             const absolute = path.join(directory, file);
             const fileEnt = fs.statSync(absolute);
 
-            return fileEnt.isDirectory()
-                ? recurseDirectory(absolute)
-                : foundFiles.push(absolute);
+            return fileEnt.isDirectory() ? recurseDirectory(absolute) : foundFiles.push(absolute);
         });
     };
 
