@@ -1,10 +1,6 @@
-const {
-    suite,
-    describe,
-    it,
-    expect,
-} = require('../lib/test/testSystem');
-const memoize = require('../lib/memoize/memoize');
+import { suite, describe, it } from '../lib/test/TestSystem';
+import expect from '../lib/test/src/Expect';
+import memoize from '../lib/memoize/memoize';
 
 suite('Memoize', () => {
     describe('Basic functionality', () => {

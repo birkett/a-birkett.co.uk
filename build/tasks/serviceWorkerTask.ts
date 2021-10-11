@@ -1,12 +1,13 @@
-const fs = require('fs');
-const path = require('path');
-const { basicRenderTask } = require('./renderTemplateTask');
-const buildConstants = require('../buildConstants');
+import * as fs from 'fs';
+import * as path from 'path';
+import BuildConstants from '../buildConstants';
+import { PromiseRejectFn, PromiseResolveFn } from '../../lib/build/types/PromiseRejectResolve';
+import { basicRenderTask } from './renderTemplateTask';
 
-const getFiles = (baseDirectory) => {
-    const foundFiles = [];
+const getFiles = (baseDirectory: string) => {
+    const foundFiles: string[] = [];
 
-    const recurseDirectory = (directory) => {
+    const recurseDirectory = (directory: string) => {
         const files = fs.readdirSync(directory);
 
         files.forEach((file) => {
@@ -21,7 +22,7 @@ const getFiles = (baseDirectory) => {
 
     recurseDirectory(baseDirectory);
 
-    const trimmedFiles = [];
+    const trimmedFiles: string[] = [];
 
     foundFiles.forEach((file) => {
         // Skip over most favicons, the browser should have already cached what it needs.
@@ -30,7 +31,7 @@ const getFiles = (baseDirectory) => {
         }
 
         const trimmedRootPath = file.substring(file.indexOf('/') + 1);
-        const fileName = `${trimmedRootPath}?v=${buildConstants.gitRevision()}`;
+        const fileName = `${trimmedRootPath}?v=${BuildConstants.gitRevision()}`;
 
         trimmedFiles.push(fileName);
     });
@@ -38,16 +39,16 @@ const getFiles = (baseDirectory) => {
     return trimmedFiles;
 };
 
-const serviceWorkerTask = (resolve, reject) => {
-    const files = getFiles(buildConstants.outputDirectory);
+const serviceWorkerTask = (resolve: PromiseResolveFn, reject: PromiseRejectFn) => {
+    const files = getFiles(BuildConstants.outputDirectory);
 
     basicRenderTask(
         resolve,
         reject,
-        buildConstants.serviceWorkerInputFileName,
-        buildConstants.serviceWorkerOutputFileName,
+        BuildConstants.serviceWorkerInputFileName,
+        BuildConstants.serviceWorkerOutputFileName,
         { files },
     );
 };
 
-module.exports = serviceWorkerTask;
+export default serviceWorkerTask;

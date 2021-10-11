@@ -1,7 +1,10 @@
-const promiseInOrder = async (tasks, promiseFunction) => tasks.reduce(async (previous, next) => {
+const promiseInOrder = async (
+    tasks: any[],
+    promiseFunction: (arg0: any, arg1: any) => any,
+) => tasks.reduce(async (previous, next) => {
     await previous;
 
     return promiseFunction(previous, next);
 }, Promise.resolve());
 
-module.exports = promiseInOrder;
+export default promiseInOrder;

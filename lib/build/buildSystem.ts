@@ -1,38 +1,41 @@
-const { writeLine, controlCodes, colours } = require('../logger/consoleWrapper');
-const promiseInOrder = require('../promise/inOrder');
+import { BuildJob, BuildTask } from "./types/BuildJob";
+import promiseInOrder from '../promise/inOrder';
+import Logger from '../logger/Logger';
+import ControlCode from '../logger/enum/ControlCode';
+import Colour from '../logger/enum/Colour';
 
-const runTask = async (previous, task) => {
+const runTask = async (previous: BuildTask, task: BuildTask) => {
     const startTime = Date.now();
 
-    writeLine(`\tStarting ${task.name}`, controlCodes.bold, colours.cyan);
+    Logger.writeLine(`\tStarting ${task.name}`, ControlCode.Bold, Colour.Cyan);
 
     return new Promise(task)
         .catch((err) => {
-            writeLine(err, undefined, colours.red);
+            Logger.writeLine(err, undefined, Colour.Red);
             process.exit(1);
         })
-        .then(() => writeLine(
+        .then(() => Logger.writeLine(
             `\t\tFinished ${task.name} in ${Date.now() - startTime}ms`,
             undefined,
-            colours.green,
+            Colour.Green,
         ));
 };
 
-const build = (availableJobs) => {
+const build = (availableJobs: BuildJob) => {
     const startTime = Date.now();
 
     const jobName = Object.keys(availableJobs).includes(process.argv[2])
         ? process.argv[2]
         : 'default';
 
-    writeLine(`Running job ${jobName}`, controlCodes.bold, colours.blue);
+    Logger.writeLine(`Running job ${jobName}`, ControlCode.Bold, Colour.Blue);
 
     promiseInOrder(availableJobs[jobName], runTask)
-        .then(() => writeLine(
+        .then(() => Logger.writeLine(
             `Done in ${Date.now() - startTime}ms`,
-            controlCodes.bold,
-            colours.green,
+            ControlCode.Bold,
+            Colour.Green,
         ));
 };
 
-module.exports = build;
+export default build;

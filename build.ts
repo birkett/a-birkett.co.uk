@@ -1,30 +1,30 @@
-const renderTemplate = require('./build/tasks/renderTemplateTask');
-const favIconsTask = require('./build/tasks/favIcons/favIconsTask');
-const safariIconTask = require('./build/tasks/favIcons/safariIconTask');
-const copyFiles = require('./build/tasks/copyFileTask');
-const stylesTask = require('./build/tasks/stylesTask');
-const cleanTask = require('./build/tasks/cleanTask');
-const serviceWorkerTask = require('./build/tasks/serviceWorkerTask');
-const build = require('./lib/build/buildSystem');
+import build from './lib/build/buildSystem';
+import { indexTemplate, webManifest, browserConfig } from './build/tasks/renderTemplateTask';
+import favIconsTask from './build/tasks/favIcons/favIconsTask';
+import safariIconTask from './build/tasks/favIcons/safariIconTask';
+import { images, fonts } from './build/tasks/copyFileTask';
+import stylesTask from './build/tasks/stylesTask';
+import cleanTask from './build/tasks/cleanTask';
+import serviceWorkerTask from './build/tasks/serviceWorkerTask';
 
 build({
     default: [
         cleanTask,
         stylesTask,
-        copyFiles.images,
-        copyFiles.fonts,
-        renderTemplate.indexTemplate,
+        images,
+        fonts,
+        indexTemplate,
         safariIconTask,
-        renderTemplate.webManifest,
-        renderTemplate.browserConfig,
+        webManifest,
+        browserConfig,
         favIconsTask,
         serviceWorkerTask,
     ],
 
     fast: [
         stylesTask,
-        copyFiles.images,
-        renderTemplate.indexTemplate,
+        images,
+        indexTemplate,
     ],
 
     clean: [

@@ -1,16 +1,17 @@
-const fs = require('fs');
-const buildConstants = require('../buildConstants');
+import * as fs from 'fs';
+import BuildConstants from '../buildConstants';
+import { PromiseRejectFn, PromiseResolveFn } from '../../lib/build/types/PromiseRejectResolve';
 
-const cleanTask = (resolve, reject) => {
-    const recreatedOutputDirectory = (res, rej) => {
-        fs.promises.mkdir(buildConstants.outputDirectory)
+const cleanTask = (resolve: PromiseResolveFn, reject: PromiseRejectFn) => {
+    const recreatedOutputDirectory = (res: PromiseResolveFn, rej: PromiseRejectFn) => {
+        fs.promises.mkdir(BuildConstants.outputDirectory)
             .then(res)
             .catch((mkdirError) => rej(mkdirError));
     };
 
-    fs.promises.stat(buildConstants.outputDirectory)
+    fs.promises.stat(BuildConstants.outputDirectory)
         .then(() => {
-            fs.promises.rmdir(buildConstants.outputDirectory, { recursive: true })
+            fs.promises.rmdir(BuildConstants.outputDirectory, { recursive: true })
                 .then(() => recreatedOutputDirectory(resolve, reject))
                 .catch((rmdirError) => reject(rmdirError));
         })
@@ -19,4 +20,4 @@ const cleanTask = (resolve, reject) => {
         });
 };
 
-module.exports = cleanTask;
+export default cleanTask;

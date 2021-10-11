@@ -6,5 +6,5 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true
   },
-  "include": ["src/**/*", "test/**/*"]
+  "include": ["build/**/*", "test/**/*"]
 }

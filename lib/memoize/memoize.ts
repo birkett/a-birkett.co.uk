@@ -1,5 +1,5 @@
-const memoize = (func) => {
-    const memoized = () => {
+const memoize = (func: () => any): any => {
+    const memoized: any = () => {
         if (memoized.cache) {
             return memoized.cache;
         }
@@ -12,4 +12,4 @@ const memoize = (func) => {
     return memoized;
 };
 
-module.exports = memoize;
+export default memoize;

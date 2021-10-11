@@ -1,30 +1,32 @@
-const fs = require('fs');
-const sass = require('sass');
-const util = require('util');
-const buildConstants = require('../buildConstants');
+import * as fs from 'fs';
+import * as util from 'util';
+import BuildConstants from '../buildConstants';
+import { PromiseRejectFn, PromiseResolveFn } from '../../lib/build/types/PromiseRejectResolve';
 
-const stylesTask = (resolve, reject) => {
-    fs.promises.readFile(`${buildConstants.scssInputDirectory}main.scss`)
+const sass = require('sass');
+
+const stylesTask = (resolve: PromiseResolveFn, reject: PromiseRejectFn) => {
+    fs.promises.readFile(`${BuildConstants.scssInputDirectory}main.scss`)
         .then((scss) => {
             const sassOptions = {
                 outputStyle: 'compressed',
-                includePaths: [buildConstants.scssInputDirectory],
-                data: `$gitRevision: '${buildConstants.gitRevision()}'; ${scss}`,
+                includePaths: [BuildConstants.scssInputDirectory],
+                data: `$gitRevision: '${BuildConstants.gitRevision()}'; ${scss}`,
             };
 
             return util.promisify(sass.render)(sassOptions);
         })
         .then((renderResult) => {
-            fs.promises.mkdir(buildConstants.cssOutputDirectory).catch(() => {});
+            fs.promises.mkdir(BuildConstants.cssOutputDirectory).catch(() => {});
 
             return renderResult.css.toString();
         })
         .then((css) => {
-            fs.promises.writeFile(`${buildConstants.cssOutputDirectory}main.css`, css)
+            fs.promises.writeFile(`${BuildConstants.cssOutputDirectory}main.css`, css)
                 .then(resolve)
                 .catch((writeFileError) => reject(writeFileError));
         })
         .catch((readFileError) => reject(readFileError));
 };
 
-module.exports = stylesTask;
+export default stylesTask;

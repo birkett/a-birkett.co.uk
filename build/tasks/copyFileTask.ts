@@ -1,14 +1,20 @@
-const fs = require('fs');
-const promiseInOrder = require('../../lib/promise/inOrder');
-const buildConstants = require('../buildConstants');
+import * as fs from 'fs';
+import BuildConstants from '../buildConstants';
+import promiseInOrder from '../../lib/promise/inOrder';
+import { PromiseRejectFn, PromiseResolveFn } from '../../lib/build/types/PromiseRejectResolve';
 
-const basicCopyTask = (resolve, reject, source, destination) => {
+const basicCopyTask = (
+    resolve: PromiseResolveFn,
+    reject: PromiseRejectFn,
+    source: string,
+    destination: string,
+) => {
     fs.promises.readdir(source)
         .then((files) => {
             fs.promises.mkdir(destination)
                 .catch(() => {})
                 .then(() => {
-                    const promiseFunction = (previous, next) => {
+                    const promiseFunction = (previous: Promise<void>, next: string): any => {
                         const copySource = `${source}${next}`;
                         const copyDest = `${destination}${next}`;
 
@@ -23,22 +29,20 @@ const basicCopyTask = (resolve, reject, source, destination) => {
         .catch((readDirError) => reject(readDirError));
 };
 
-module.exports = {
-    fonts: (resolve, reject) => {
-        basicCopyTask(
-            resolve,
-            reject,
-            buildConstants.fontInputDirectory,
-            buildConstants.fontOutputDirectory,
-        );
-    },
+export const fonts = (resolve: PromiseResolveFn, reject: PromiseRejectFn) => {
+    basicCopyTask(
+        resolve,
+        reject,
+        BuildConstants.fontInputDirectory,
+        BuildConstants.fontOutputDirectory,
+    );
+};
 
-    images: (resolve, reject) => {
-        basicCopyTask(
-            resolve,
-            reject,
-            buildConstants.svgInputDirectory,
-            buildConstants.imgOutputDirectory,
-        );
-    },
+export const images = (resolve: PromiseResolveFn, reject: PromiseRejectFn) => {
+    basicCopyTask(
+        resolve,
+        reject,
+        BuildConstants.svgInputDirectory,
+        BuildConstants.imgOutputDirectory,
+    );
 };

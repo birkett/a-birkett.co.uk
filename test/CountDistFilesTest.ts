@@ -1,13 +1,14 @@
-const fs = require('fs');
-const buildConstants = require('../build/buildConstants');
-const {
-    describe,
-    expect,
-    it,
-    suite,
-} = require('../lib/test/testSystem');
+import * as fs from 'fs';
+import BuildConstants from '../build/buildConstants';
+import { describe, it, suite } from '../lib/test/TestSystem';
+import expect from '../lib/test/src/Expect';
 
-const testFilesPresent = (folder, extension, expectedTotal, expectedMatches) => {
+const testFilesPresent = (
+    folder: string,
+    extension: string,
+    expectedTotal: number,
+    expectedMatches: number,
+): void => {
     const dirEntries = fs.readdirSync(folder, { withFileTypes: true });
 
     const allFiles = dirEntries.filter((entry) => entry.isFile());
@@ -22,39 +23,39 @@ const testFilesPresent = (folder, extension, expectedTotal, expectedMatches) => 
 suite('Count files in the dist folder', () => {
     describe('CSS', () => {
         it('Should have 1 compiled style sheet', () => {
-            testFilesPresent(buildConstants.cssOutputDirectory, '.css', 1, 1);
+            testFilesPresent(BuildConstants.cssOutputDirectory, '.css', 1, 1);
         });
     });
 
     describe('Fonts', () => {
         it('Should have 1 font', () => {
-            testFilesPresent(buildConstants.fontOutputDirectory, '.woff2', 1, 1);
+            testFilesPresent(BuildConstants.fontOutputDirectory, '.woff2', 1, 1);
         });
     });
 
     describe('Images', () => {
         it('Should have 3 SVG images', () => {
-            testFilesPresent(buildConstants.imgOutputDirectory, '.svg', 3, 3);
+            testFilesPresent(BuildConstants.imgOutputDirectory, '.svg', 3, 3);
         });
     });
 
     describe('JS', () => {
         it('Should have 1 JS file', () => {
-            testFilesPresent(buildConstants.outputDirectory, '.js', 20, 1);
+            testFilesPresent(BuildConstants.outputDirectory, '.js', 20, 1);
         });
     });
 
     describe('Favicons', () => {
         it('Should have 14 PNG favicons', () => {
-            testFilesPresent(buildConstants.outputDirectory, '.png', 20, 14);
+            testFilesPresent(BuildConstants.outputDirectory, '.png', 20, 14);
         });
 
         it('Should have 1 SVG favicon', () => {
-            testFilesPresent(buildConstants.outputDirectory, '.svg', 20, 1);
+            testFilesPresent(BuildConstants.outputDirectory, '.svg', 20, 1);
         });
 
         it('Should have 1 ICO favicon', () => {
-            testFilesPresent(buildConstants.outputDirectory, '.ico', 20, 1);
+            testFilesPresent(BuildConstants.outputDirectory, '.ico', 20, 1);
         });
     });
 });

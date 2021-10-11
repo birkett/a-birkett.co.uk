@@ -1,28 +1,35 @@
-const fs = require('fs');
-const iconGen = require('icon-gen');
-const buildConstants = require('../../buildConstants');
+import * as fs from 'fs';
+import BuildConstants from '../../buildConstants';
+import { PromiseRejectFn, PromiseResolveFn } from '../../../lib/build/types/PromiseRejectResolve';
 
-const PNG_MAP = [
-    { size: 16, output: `${buildConstants.faviconPrefix}-16x16` },
-    { size: 32, output: `${buildConstants.faviconPrefix}-32x32` },
-    { size: 60, output: `${buildConstants.appleIconPrefix}-60x60` },
-    { size: 70, output: `${buildConstants.msTileIconPrefix}-70x70` },
-    { size: 76, output: `${buildConstants.appleIconPrefix}-76x76` },
-    { size: 120, output: `${buildConstants.appleIconPrefix}-120x120` },
-    { size: 144, output: `${buildConstants.msTileIconPrefix}-144x144` },
-    { size: 150, output: `${buildConstants.msTileIconPrefix}-150x150` },
-    { size: 152, output: `${buildConstants.appleIconPrefix}-152x152` },
-    { size: 180, output: `${buildConstants.appleIconPrefix}-180x180` },
-    { size: 192, output: `${buildConstants.androidIconPrefix}-192x192` },
-    { size: 310, output: `${buildConstants.msTileIconPrefix}-310x310` },
-    { size: 512, output: `${buildConstants.androidIconPrefix}-512x512` },
+interface PngSize {
+    size: number;
+    output: string;
+}
+
+const iconGen = require('icon-gen');
+
+const PNG_MAP: PngSize[] = [
+    { size: 16, output: `${BuildConstants.faviconPrefix}-16x16` },
+    { size: 32, output: `${BuildConstants.faviconPrefix}-32x32` },
+    { size: 60, output: `${BuildConstants.appleIconPrefix}-60x60` },
+    { size: 70, output: `${BuildConstants.msTileIconPrefix}-70x70` },
+    { size: 76, output: `${BuildConstants.appleIconPrefix}-76x76` },
+    { size: 120, output: `${BuildConstants.appleIconPrefix}-120x120` },
+    { size: 144, output: `${BuildConstants.msTileIconPrefix}-144x144` },
+    { size: 150, output: `${BuildConstants.msTileIconPrefix}-150x150` },
+    { size: 152, output: `${BuildConstants.appleIconPrefix}-152x152` },
+    { size: 180, output: `${BuildConstants.appleIconPrefix}-180x180` },
+    { size: 192, output: `${BuildConstants.androidIconPrefix}-192x192` },
+    { size: 310, output: `${BuildConstants.msTileIconPrefix}-310x310` },
+    { size: 512, output: `${BuildConstants.androidIconPrefix}-512x512` },
 ];
 
 const FILES_TO_COPY = [
-    { input: 'apple-touch-icon-180x180', output: buildConstants.appleIconPrefix },
+    { input: 'apple-touch-icon-180x180', output: BuildConstants.appleIconPrefix },
 ];
 
-const getUniqueSizes = (sizesArray) => {
+const getUniqueSizes = (sizesArray: PngSize[]) => {
     const sizes = sizesArray.map((size) => size.size);
 
     return sizes.filter((value, index) => sizes.indexOf(value) === index);
@@ -32,24 +39,24 @@ const ICO_SIZES = [16, 24, 32, 48, 64];
 
 const OPTIONS = {
     favicon: {
-        name: buildConstants.faviconPrefix,
+        name: BuildConstants.faviconPrefix,
         sizes: getUniqueSizes(PNG_MAP),
     },
     ico: {
-        name: buildConstants.faviconPrefix,
+        name: BuildConstants.faviconPrefix,
         sizes: ICO_SIZES,
     },
 };
 
-const favIconsTask = (resolve, reject) => {
+const favIconsTask = (resolve: PromiseResolveFn, reject: PromiseRejectFn) => {
     process.env.OPENSSL_CONF = '';
 
-    const buildFilePath = (path) => `${buildConstants.outputDirectory}${path}.png`;
+    const buildFilePath = (path: string) => `${BuildConstants.outputDirectory}${path}.png`;
 
-    iconGen(buildConstants.faviconInputFile, buildConstants.outputDirectory, OPTIONS)
+    iconGen(BuildConstants.faviconInputFile, BuildConstants.outputDirectory, OPTIONS)
         .then(() => {
             PNG_MAP.forEach((size) => {
-                const source = buildFilePath(`${buildConstants.faviconPrefix}${size.size}`);
+                const source = buildFilePath(`${BuildConstants.faviconPrefix}${size.size}`);
                 const destination = buildFilePath(size.output);
 
                 fs.promises.rename(source, destination)
@@ -65,4 +72,4 @@ const favIconsTask = (resolve, reject) => {
         .then(resolve);
 };
 
-module.exports = favIconsTask;
+export default favIconsTask;

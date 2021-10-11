@@ -1,1 +1,3 @@
-require('./lib/test/testSystem').test();
+import { testSuite } from './lib/test/TestSystem';
+
+testSuite();

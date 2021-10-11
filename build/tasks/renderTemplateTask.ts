@@ -1,59 +1,63 @@
-const fs = require('fs');
+import * as fs from 'fs';
+import * as util from 'util';
+import BuildConstants from '../buildConstants';
+import { PromiseRejectFn, PromiseResolveFn } from '../../lib/build/types/PromiseRejectResolve';
+
 const nunjucks = require('nunjucks');
-const util = require('util');
-const buildConstants = require('../buildConstants');
 
-const loadJson = (path) => JSON.parse(fs.readFileSync(path).toString());
+const loadJson = (path: string) => JSON.parse(fs.readFileSync(path).toString());
 
-const basicRenderTask = (resolve, reject, source, destination, additionalData) => {
+export const basicRenderTask = (
+    resolve: PromiseResolveFn,
+    reject: PromiseRejectFn,
+    source: string,
+    destination: string,
+    additionalData?: {},
+) => {
     const data = {
         constants: {
-            ...loadJson(buildConstants.templateConstantsJsonPath),
-            ...buildConstants,
+            ...loadJson(BuildConstants.templateConstantsJsonPath),
+            ...BuildConstants,
         },
         ...additionalData,
     };
 
     util.promisify(nunjucks.render)(source, data)
-        .then((renderedTemplate) => {
+        .then((renderedTemplate: string) => {
             fs.promises.writeFile(destination, renderedTemplate)
                 .then(resolve)
                 .catch((writeFileError) => reject(writeFileError));
         })
-        .catch((renderFileError) => reject(renderFileError));
+        .catch((renderFileError: string) => reject(renderFileError));
 };
 
-module.exports = {
-    browserConfig: (resolve, reject) => {
-        basicRenderTask(
-            resolve,
-            reject,
-            buildConstants.browserConfigInputFileName,
-            buildConstants.browserConfigOutputFileName,
-        );
-    },
+export const browserConfig = (resolve: PromiseResolveFn, reject: PromiseRejectFn) => {
+    basicRenderTask(
+        resolve,
+        reject,
+        BuildConstants.browserConfigInputFileName,
+        BuildConstants.browserConfigOutputFileName,
+    );
+};
 
-    indexTemplate: (resolve, reject) => {
-        basicRenderTask(
-            resolve,
-            reject,
-            buildConstants.templateInputFileName,
-            buildConstants.templateOutputFileName,
-            {
-                links: loadJson(buildConstants.headerLinksJsonPath),
-                tagGroups: loadJson(buildConstants.tagsJsonPath),
-            },
-        );
-    },
+export const indexTemplate = (resolve: PromiseResolveFn, reject: PromiseRejectFn) => {
+    basicRenderTask(
+        resolve,
+        reject,
+        BuildConstants.templateInputFileName,
+        BuildConstants.templateOutputFileName,
+        {
+            links: loadJson(BuildConstants.headerLinksJsonPath),
+            tagGroups: loadJson(BuildConstants.tagsJsonPath),
+        },
+    );
+};
 
-    webManifest: (resolve, reject) => {
-        basicRenderTask(
-            resolve,
-            reject,
-            buildConstants.webManifestInputFileName,
-            buildConstants.webManifestOutputFileName,
-        );
-    },
-
-    basicRenderTask,
+export const webManifest = (resolve: PromiseResolveFn, reject: PromiseRejectFn) => {
+    basicRenderTask(
+        resolve,
+        reject,
+        BuildConstants.webManifestInputFileName,
+        BuildConstants.webManifestOutputFileName,
+    );
 };
