@@ -1,8 +1,7 @@
 import * as fs from 'fs';
+import iconGen from 'icon-gen';
 import BuildConstants from '../../BuildConstants';
 import AbstractTask from '../../../lib/build/classes/AbstractTask';
-
-const iconGen = require('icon-gen');
 
 interface PngSize {
     size: number;

@@ -1,8 +1,7 @@
 import * as fs from 'fs';
+import * as sass from 'sass';
 import BuildConstants from '../BuildConstants';
 import AbstractTask from '../../lib/build/classes/AbstractTask';
-
-const sass = require('sass');
 
 class StylesTask extends AbstractTask {
     public readonly name: string = 'Build Styles';
@@ -11,13 +10,12 @@ class StylesTask extends AbstractTask {
 
     private readonly outputCss = 'main.css';
 
-    private readonly outputStyle = 'compressed';
-
     public run(): void {
         const scss = fs.readFileSync(`${BuildConstants.scssInputDirectory}${this.inputScss}`);
+        const outputStyle = 'compressed' as 'compressed';
 
         const sassOptions = {
-            outputStyle: this.outputStyle,
+            outputStyle,
             includePaths: [BuildConstants.scssInputDirectory],
             data: `$gitRevision: '${BuildConstants.gitRevision()}'; ${scss}`,
         };
