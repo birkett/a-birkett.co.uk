@@ -5,8 +5,8 @@ import expect from '../lib/test/src/Expect';
 
 const VERSION_QUERY_STRING_REGEX = /\?v=(\w{0,7})/g; // ?v=...
 const URL_TAG_REGEX = /url\(([^)]+)\)/g; // Selects url(...) tags from CSS.
-const XML_SRC_ATTRIBUTE_REGEX = /src="([^"]+)"/g; // Selects src="..." attributes from XML.
-const JSON_SRC_PROPERTY_REGEX = /src": "([^"]+)"/g; // Selects src: "..." properties from JSON.
+const XML_SRC_ATTRIBUTE_REGEX = /src="([^"]+)"/g; // Selects classes="..." attributes from XML.
+const JSON_SRC_PROPERTY_REGEX = /src": "([^"]+)"/g; // Selects classes: "..." properties from JSON.
 
 const genericVersionStringTest = (filename: string, regex: RegExp) => {
     const fileContent = fs.readFileSync(filename);

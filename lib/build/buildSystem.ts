@@ -1,26 +1,32 @@
-import { BuildJob, BuildTask } from './types/BuildJob';
-import promiseInOrder from '../promise/inOrder';
 import Logger from '../logger/Logger';
 import ControlCode from '../logger/enum/ControlCode';
 import Colour from '../logger/enum/Colour';
+import AbstractTask from './classes/AbstractTask';
 
-const runTask = async (previous: BuildTask, task: BuildTask) => {
+type BuildJob = Record<string, AbstractTask[]>;
+
+const runTask = async (job: AbstractTask) => {
     const startTime = Date.now();
 
-    Logger.writeLine(`\tStarting ${task.name}`, ControlCode.Bold, Colour.Cyan);
+    Logger.writeLine(`\tStarting ${job.name}`, ControlCode.Bold, Colour.Cyan);
 
-    return new Promise(task)
-        .catch((err) => {
-            Logger.writeLine(err, undefined, Colour.Red);
-            process.exit(1);
-        })
-        .then(() => {
-            Logger.writeLine(
-                `\t\tFinished ${task.name} in ${Date.now() - startTime}ms`,
-                undefined,
-                Colour.Green,
-            );
-        });
+    try {
+        if (job.isAsync) {
+            await job.run();
+        } else {
+            job.run();
+        }
+    } catch (exception) {
+        Logger.error(exception as string);
+
+        process.exit(1);
+    }
+
+    Logger.writeLine(
+        `\t\tFinished ${job.name} in ${Date.now() - startTime}ms`,
+        undefined,
+        Colour.Green,
+    );
 };
 
 const build = (availableJobs: BuildJob) => {
@@ -32,7 +38,9 @@ const build = (availableJobs: BuildJob) => {
 
     Logger.writeLine(`Running job ${jobName}`, ControlCode.Bold, Colour.Blue);
 
-    promiseInOrder(availableJobs[jobName], runTask).then(() => {
+    availableJobs[jobName].forEach((job) => runTask(job));
+
+    process.on('exit', () => {
         Logger.writeLine(`Done in ${Date.now() - startTime}ms`, ControlCode.Bold, Colour.Green);
     });
 };

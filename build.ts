@@ -1,27 +1,30 @@
 import build from './lib/build/buildSystem';
-import { indexTemplate, webManifest, browserConfig } from './build/tasks/renderTemplateTask';
-import favIconsTask from './build/tasks/favIcons/favIconsTask';
-import safariIconTask from './build/tasks/favIcons/safariIconTask';
-import { images, fonts } from './build/tasks/copyFileTask';
-import stylesTask from './build/tasks/stylesTask';
-import cleanTask from './build/tasks/cleanTask';
-import serviceWorkerTask from './build/tasks/serviceWorkerTask';
+import CleanTask from './build/tasks/CleanTask';
+import CopyImagesTask from './build/tasks/copy/CopyImagesTask';
+import CopyFontsTask from './build/tasks/copy/CopyFontsTask';
+import RenderBrowserConfigTask from './build/tasks/render/RenderBrowserConfigTask';
+import RenderIndexTask from './build/tasks/render/RenderIndexTask';
+import RenderWebManifestTask from './build/tasks/render/RenderWebManifestTask';
+import RenderServiceWorkerTask from './build/tasks/render/RenderServiceWorkerTask';
+import StylesTask from './build/tasks/StylesTask';
+import SafariIconTask from './build/tasks/favIcons/SafariIconTask';
+import FaviconsTask from './build/tasks/favIcons/FaviconsTask';
 
 build({
     default: [
-        cleanTask,
-        stylesTask,
-        images,
-        fonts,
-        indexTemplate,
-        safariIconTask,
-        webManifest,
-        browserConfig,
-        favIconsTask,
-        serviceWorkerTask,
+        new CleanTask(),
+        new StylesTask(),
+        new CopyImagesTask(),
+        new CopyFontsTask(),
+        new RenderIndexTask(),
+        new SafariIconTask(),
+        new RenderWebManifestTask(),
+        new RenderBrowserConfigTask(),
+        new RenderServiceWorkerTask(),
+        new FaviconsTask(),
     ],
 
-    fast: [stylesTask, images, indexTemplate],
+    fast: [new StylesTask(), new CopyImagesTask(), new RenderIndexTask()],
 
-    clean: [cleanTask],
+    clean: [new CleanTask()],
 });
