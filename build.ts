@@ -1,4 +1,4 @@
-import build from './lib/build/buildSystem';
+import build from './lib/build/BuildSystem';
 import CleanTask from './build/tasks/CleanTask';
 import CopyImagesTask from './build/tasks/copy/CopyImagesTask';
 import CopyFontsTask from './build/tasks/copy/CopyFontsTask';

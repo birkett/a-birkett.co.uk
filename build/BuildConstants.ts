@@ -1,5 +1,5 @@
 import * as childProcess from 'child_process';
-import memoize from '../lib/memoize/memoize';
+import memoize from '../lib/memoize/Memoize';
 
 const ASSETS_DIR = './assets/';
 const OUTPUT_DIR = './dist/';

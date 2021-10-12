@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import BuildConstants from '../../buildConstants';
+import BuildConstants from '../../BuildConstants';
 import AbstractRenderTask from './AbstractRenderTask';
 
 class RenderServiceWorkerTask extends AbstractRenderTask {

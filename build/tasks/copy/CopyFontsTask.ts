@@ -1,5 +1,5 @@
 import AbstractCopyFilesTask from './AbstractCopyFilesTask';
-import BuildConstants from '../../buildConstants';
+import BuildConstants from '../../BuildConstants';
 
 class CopyFontsTask extends AbstractCopyFilesTask {
     public readonly name: string = 'Copy Fonts';

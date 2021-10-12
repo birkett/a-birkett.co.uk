@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import BuildConstants from '../build/buildConstants';
+import BuildConstants from '../build/BuildConstants';
 import { describe, it, suite } from '../lib/test/TestSystem';
 import expect from '../lib/test/src/Expect';
 

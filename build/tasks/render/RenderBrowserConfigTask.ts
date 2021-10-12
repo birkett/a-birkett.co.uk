@@ -1,5 +1,5 @@
 import AbstractRenderTask from './AbstractRenderTask';
-import BuildConstants from '../../buildConstants';
+import BuildConstants from '../../BuildConstants';
 
 class RenderBrowserConfigTask extends AbstractRenderTask {
     public readonly name: string = 'Render Browser Config';

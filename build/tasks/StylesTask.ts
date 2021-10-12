@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import BuildConstants from '../buildConstants';
+import BuildConstants from '../BuildConstants';
 import AbstractTask from '../../lib/build/classes/AbstractTask';
 
 const sass = require('sass');
