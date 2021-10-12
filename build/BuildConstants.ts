@@ -48,9 +48,6 @@ const BuildConstants = {
     outputCssFileName: 'main.css',
 
     faviconPrefix: 'favicon',
-    appleIconPrefix: 'apple-touch-icon',
-    androidIconPrefix: 'android-chrome',
-    msTileIconPrefix: 'mstile',
 
     themeColor: '#000000',
     msTileColor: '#2B5797',

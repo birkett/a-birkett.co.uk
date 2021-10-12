@@ -14,23 +14,16 @@ class FaviconsTask extends AbstractTask {
     public readonly isAsync: boolean = true;
 
     private readonly pngMap: PngSize[] = [
-        { size: 16, output: `${BuildConstants.faviconPrefix}-16x16` },
         { size: 32, output: `${BuildConstants.faviconPrefix}-32x32` },
-        { size: 60, output: `${BuildConstants.appleIconPrefix}-60x60` },
-        { size: 70, output: `${BuildConstants.msTileIconPrefix}-70x70` },
-        { size: 76, output: `${BuildConstants.appleIconPrefix}-76x76` },
-        { size: 120, output: `${BuildConstants.appleIconPrefix}-120x120` },
-        { size: 144, output: `${BuildConstants.msTileIconPrefix}-144x144` },
-        { size: 150, output: `${BuildConstants.msTileIconPrefix}-150x150` },
-        { size: 152, output: `${BuildConstants.appleIconPrefix}-152x152` },
-        { size: 180, output: `${BuildConstants.appleIconPrefix}-180x180` },
-        { size: 192, output: `${BuildConstants.androidIconPrefix}-192x192` },
-        { size: 310, output: `${BuildConstants.msTileIconPrefix}-310x310` },
-        { size: 512, output: `${BuildConstants.androidIconPrefix}-512x512` },
-    ];
-
-    private readonly filesToCopy = [
-        { input: 'apple-touch-icon-180x180', output: BuildConstants.appleIconPrefix },
+        { size: 57, output: `${BuildConstants.faviconPrefix}-57x57` },
+        { size: 72, output: `${BuildConstants.faviconPrefix}-72x72` },
+        { size: 96, output: `${BuildConstants.faviconPrefix}-96x96` },
+        { size: 120, output: `${BuildConstants.faviconPrefix}-120x120` },
+        { size: 128, output: `${BuildConstants.faviconPrefix}-128x128` },
+        { size: 144, output: `${BuildConstants.faviconPrefix}-144x144` },
+        { size: 152, output: `${BuildConstants.faviconPrefix}-152x152` },
+        { size: 195, output: `${BuildConstants.faviconPrefix}-195x195` },
+        { size: 228, output: `${BuildConstants.faviconPrefix}-228x228` },
     ];
 
     private readonly icoSizes = [16, 24, 32, 48, 64];
@@ -44,6 +37,7 @@ class FaviconsTask extends AbstractTask {
             name: BuildConstants.faviconPrefix,
             sizes: this.icoSizes,
         },
+        report: false,
     };
 
     public run(): Promise<void> {
@@ -62,13 +56,6 @@ class FaviconsTask extends AbstractTask {
                 const destination = FaviconsTask.buildFilePath(size.output);
 
                 fs.renameSync(source, destination);
-            });
-
-            this.filesToCopy.forEach((toCopy) => {
-                fs.copyFileSync(
-                    FaviconsTask.buildFilePath(toCopy.input),
-                    FaviconsTask.buildFilePath(toCopy.output),
-                );
             });
         });
     }

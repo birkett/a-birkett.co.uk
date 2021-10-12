@@ -17,12 +17,11 @@
         "test": "ts-node tests.ts"
     },
     "dependencies": {
-        "icon-gen": "^2.0.0",
+        "icon-gen": "^2.1.0",
         "nunjucks": "^3.2.3",
         "sass": "^1.42.1"
     },
     "devDependencies": {
-        "@types/icon-gen": "^2.0.0",
         "@types/node": "^16.10.3",
         "@types/nunjucks": "^3.2.0",
         "@types/sass": "^1.16.1",
