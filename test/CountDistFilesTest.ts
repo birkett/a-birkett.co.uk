@@ -41,21 +41,21 @@ suite('Count files in the dist folder', () => {
 
     describe('JS', () => {
         it('Should have 1 JS file', () => {
-            testFilesPresent(BuildConstants.outputDirectory, '.js', 20, 1);
+            testFilesPresent(BuildConstants.outputDirectory, '.js', 24, 1);
         });
     });
 
     describe('Favicons', () => {
         it('Should have 10 PNG favicons', () => {
-            testFilesPresent(BuildConstants.outputDirectory, '.png', 20, 14);
+            testFilesPresent(BuildConstants.outputDirectory, '.png', 24, 18);
         });
 
         it('Should have 1 SVG favicon', () => {
-            testFilesPresent(BuildConstants.outputDirectory, '.svg', 20, 1);
+            testFilesPresent(BuildConstants.outputDirectory, '.svg', 24, 1);
         });
 
         it('Should have 1 ICO favicon', () => {
-            testFilesPresent(BuildConstants.outputDirectory, '.ico', 20, 1);
+            testFilesPresent(BuildConstants.outputDirectory, '.ico', 24, 1);
         });
     });
 });

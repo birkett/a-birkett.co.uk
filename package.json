@@ -17,8 +17,8 @@
         "test": "ts-node tests.ts"
     },
     "dependencies": {
-        "icon-gen": "^2.1.0",
         "nunjucks": "^3.2.3",
+        "png-to-ico": "^2.1.2",
         "sass": "^1.42.1",
         "svg2img": "^0.9.4"
     },
