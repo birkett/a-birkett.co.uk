@@ -5,17 +5,13 @@ import AbstractTask from './classes/AbstractTask';
 
 type BuildJob = Record<string, AbstractTask[]>;
 
-const runTask = async (job: AbstractTask) => {
+const runTask = (job: AbstractTask) => {
     const startTime = Date.now();
 
     Logger.writeLine(`\tStarting ${job.name}`, ControlCode.Bold, Colour.Cyan);
 
     try {
-        if (job.isAsync) {
-            await job.run();
-        } else {
-            job.run();
-        }
+        job.run();
     } catch (exception) {
         Logger.error(exception as string);
 
