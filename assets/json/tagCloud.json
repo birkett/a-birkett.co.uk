@@ -193,6 +193,24 @@
             "bgColor": "#32BCAD"
         },
         {
+            "title": "Pro/ENGINEER",
+            "url": "https://www.ptc.com/en/products/creo/pro-engineer",
+            "textColor": "#FFFFFF",
+            "bgColor": "#40434A"
+        },
+        {
+            "title": "SolidWorks",
+            "url": "https://www.solidworks.com",
+            "textColor": "#FFFFFF",
+            "bgColor": "#E31818"
+        },
+        {
+            "title": "Sketchup",
+            "url": "https://sketchup.com",
+            "textColor": "#FFFFFF",
+            "bgColor": "#0063A3"
+        },
+        {
             "title": "Source Engine",
             "url": "https://developer.valvesoftware.com",
             "textColor": "#000000",
@@ -203,6 +221,12 @@
             "url": "https://unrealengine.com",
             "textColor": "#FFFFFF",
             "bgColor": "#222222"
+        },
+        {
+            "title": "Unity 3D",
+            "url": "https://unity.com",
+            "textColor": "#FFFFFF",
+            "bgColor": "#565656"
         }
     ],
     "Systems Administration": [
@@ -235,6 +259,12 @@
             "url": "https://docker.com",
             "textColor": "#000000",
             "bgColor": "#007BFF"
+        },
+        {
+            "title": "Amazon AWS",
+            "url": "https://aws.amazon.com",
+            "textColor": "#FFFFFF",
+            "bgColor": "#EC7211"
         },
         {
             "title": "Windows Server",
@@ -308,7 +338,7 @@
         },
         {
             "title": "Agile",
-            "url": "https://en.wikipedia.org/wiki/Agile_software_development",
+            "url": "https://agilemanifesto.org",
             "textColor": "#000000",
             "bgColor": "#00BBC4"
         },
@@ -317,6 +347,11 @@
             "url": "https://scrum.org",
             "textColor": "#000000",
             "bgColor": "#4EABC0"
+        },
+        {
+            "title": "Team Management",
+            "textColor": "#000000",
+            "bgColor": "#7DF4F5"
         }
     ],
     "Content Creation": [
