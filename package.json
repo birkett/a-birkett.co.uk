@@ -8,7 +8,6 @@
     "scripts": {
         "build": "ts-node build.ts",
         "clean": "ts-node build.ts clean",
-        "deploy": "./deploy/deploy.sh",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",
         "pre-deploy": "set -e; npm run lint; npm run prettier; npm run build; npm test",
@@ -18,25 +17,25 @@
     },
     "dependencies": {
         "nunjucks": "^3.2.3",
-        "png-to-ico": "^2.1.2",
-        "sass": "^1.42.1",
+        "png-to-ico": "^2.1.4",
+        "sass": "^1.54.1",
         "svg2img": "^0.9.4"
     },
     "devDependencies": {
-        "@types/node": "^16.10.4",
-        "@types/nunjucks": "^3.2.0",
-        "@types/sass": "^1.16.1",
-        "@typescript-eslint/eslint-plugin": "^4.33.0",
-        "@typescript-eslint/parser": "^4.33.0",
-        "eslint": "^7.32.0",
-        "eslint-config-airbnb": "^18.2.1",
-        "eslint-config-airbnb-base": "^14.2.1",
-        "eslint-config-airbnb-typescript": "^14.0.0",
-        "eslint-plugin-import": "^2.24.2",
-        "eslint-plugin-jsx-a11y": "^6.4.1",
-        "eslint-plugin-react": "^7.26.1",
-        "prettier": "^2.4.1",
-        "ts-node": "^10.3.0",
-        "typescript": "^4.4.4"
+        "@types/node": "^16.11.47",
+        "@types/nunjucks": "^3.2.1",
+        "@types/sass": "^1.43.1",
+        "@typescript-eslint/eslint-plugin": "^5.32.0",
+        "@typescript-eslint/parser": "^5.32.0",
+        "eslint": "^8.21.0",
+        "eslint-config-airbnb": "^19.0.4",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-airbnb-typescript": "^17.0.0",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-jsx-a11y": "^6.6.1",
+        "eslint-plugin-react": "^7.30.1",
+        "prettier": "^2.7.1",
+        "ts-node": "^10.9.1",
+        "typescript": "^4.7.4"
     }
 }
