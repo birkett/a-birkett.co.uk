@@ -3,6 +3,7 @@ import Base, { BaseProps } from '../../../assets/components/tsx/Base';
 import AbstractRenderTask from './AbstractRenderTask';
 import BuildConstants from '../../BuildConstants';
 import { LinkProps } from '../../../assets/components/tsx/Header';
+import { TagGroups } from '../../../assets/components/tsx/TagCloud';
 
 class RenderTsxIndex extends AbstractRenderTask {
     public readonly name: string = 'Render TSX Index';
@@ -29,7 +30,7 @@ class RenderTsxIndex extends AbstractRenderTask {
             BuildConstants.headerLinksJsonPath,
         ) as LinkProps[];
 
-        // AbstractRenderTask.loadJson(BuildConstants.tagsJsonPath);
+        const tagGroups = AbstractRenderTask.loadJson(BuildConstants.tagsJsonPath) as TagGroups;
 
         const props = {
             firstName: templateConstants.firstName,
@@ -45,6 +46,7 @@ class RenderTsxIndex extends AbstractRenderTask {
             fontFileName: buildConstants.fontFileName,
             outputCssFileName: buildConstants.outputCssFileName,
             baseUrl: templateConstants.baseUrl,
+            tagGroups,
         };
 
         return tsxParser(Base, props) as string;

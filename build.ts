@@ -27,4 +27,6 @@ build({
     fast: [new StylesTask(), new CopyImagesTask(), new RenderTsxIndex()],
 
     clean: [new CleanTask()],
+
+    tsx: [new RenderTsxIndex()],
 });

@@ -2,7 +2,7 @@ import h from '../../../lib/tsx/TsxParser';
 import Footer from './Footer';
 import { Header, LinkProps } from './Header';
 import About from './About';
-import TagCloud from './TagCloud';
+import TagCloud, { TagGroups } from './TagCloud';
 import HeadMeta from './HeadMeta';
 
 export interface BaseProps {
@@ -19,6 +19,7 @@ export interface BaseProps {
     fontFileName: string;
     outputCssFileName: string;
     baseUrl: string;
+    tagGroups: TagGroups;
 }
 
 function Base(props: Partial<BaseProps>): JSX.Element {
@@ -36,6 +37,7 @@ function Base(props: Partial<BaseProps>): JSX.Element {
         fontFileName,
         outputCssFileName,
         baseUrl,
+        tagGroups,
     } = props as BaseProps;
 
     return (
@@ -59,7 +61,7 @@ function Base(props: Partial<BaseProps>): JSX.Element {
 
                 <About firstName={firstName} />
 
-                <TagCloud firstName={firstName} title="Test" tags={[]} />
+                <TagCloud firstName={firstName} tagGroups={tagGroups} />
 
                 <Footer
                     firstName={firstName}

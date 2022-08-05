@@ -1,39 +1,31 @@
 import h from '../../../lib/tsx/TsxParser';
 
-interface TagCloudTitleProps {
-    firstName: string;
-}
-
-export function TagCloudTitle(props: Partial<TagCloudTitleProps>): JSX.Element {
-    const { firstName } = props as TagCloudTitleProps;
-
-    return <h2>{firstName} in words</h2>;
-}
-
 interface TagProps {
     title: string;
-    url?: string;
+    href?: string;
     textColor: string;
     bgColor: string;
 }
 
 function Tag(props: Partial<TagProps>): JSX.Element {
-    const { title, url, textColor, bgColor } = props as TagProps;
+    const { title, href, textColor, bgColor } = props as TagProps;
 
     const style = {
         color: textColor,
         backgroundColor: bgColor,
     };
 
+    const linkElement = (
+        <a href={href} target="_blank" rel="noopener" style={style}>
+            {title}
+        </a>
+    );
+
+    const element = href ? linkElement : title;
+
     return (
         <li>
-            <span style={style}>
-                props.url &&{' '}
-                <a href={url} target="_blank" rel="noopener" style={style}>
-                    {title}
-                    props.utl &&{' '}
-                </a>
-            </span>
+            <span style={style}>{element}</span>
         </li>
     );
 }
@@ -47,28 +39,37 @@ export function TagCloudContent(props: Partial<TagCloudContentProps>): JSX.Eleme
     const { tags, title } = props as TagCloudContentProps;
 
     const tagElements = tags.map((tag: TagProps) => (
-        <Tag title={tag.title} url={tag.url} bgColor={tag.bgColor} textColor={tag.textColor} />
+        <Tag title={tag.title} href={tag.href} bgColor={tag.bgColor} textColor={tag.textColor} />
     ));
 
     return (
         <div className="tag-cloud">
             <h3>{title}</h3>
-            <ul>{tagElements}</ul>
+            <ul>{tagElements.join('')}</ul>
         </div>
     );
 }
 
+export interface TagGroups {
+    [key: string]: TagProps[];
+}
+
 export interface TagCloudProps extends TagCloudContentProps {
     firstName: string;
+    tagGroups: TagGroups;
 }
 
 function TagCloud(props: Partial<TagCloudProps>): JSX.Element {
-    const { firstName, title, tags } = props as TagCloudProps;
+    const { firstName, tagGroups } = props as TagCloudProps;
+
+    const elements = Object.keys(tagGroups).map((group) => (
+        <TagCloudContent title={group} tags={tagGroups[group]} />
+    ));
 
     return (
         <section>
-            <TagCloudTitle firstName={firstName} />
-            <TagCloudContent title={title} tags={tags} />
+            <h2>{firstName} in words</h2>
+            {elements.join('')}
         </section>
     );
 }

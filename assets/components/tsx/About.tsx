@@ -17,9 +17,8 @@ function About(props: AboutProps): JSX.Element {
                 packages for customers.
             </p>
             <p>
-                When not working on something electronic or covered in engine
-                oil, {firstName} enjoys all things Mountain Bike related, Golf
-                and has an obsession with Formula 1.
+                When not working on something electronic or covered in engine oil, {firstName}{' '}
+                enjoys all things Mountain Bike related, Golf and has an obsession with Formula 1.
             </p>
             <p>
                 He builds, fabricates, takes apart, fixes and tweaks - be it cars, furniture,
