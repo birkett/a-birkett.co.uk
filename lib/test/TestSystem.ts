@@ -3,8 +3,6 @@ import { getFailedExpectations, getPassedExpectations } from './src/PassFail';
 import Output from './src/Output';
 import readDirSyncDeep from '../fs/src/readDirDeep';
 
-type VoidFunction = () => void;
-
 export const suite = (description: string, fn: VoidFunction) => {
     Output.suiteDescription(description);
 
