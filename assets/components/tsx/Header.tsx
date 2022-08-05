@@ -36,7 +36,7 @@ export function Header(props: Partial<HeaderProps>): JSX.Element {
                 {firstName} <strong>{lastName}</strong>
             </h1>
 
-            <nav>{linkElements}</nav>
+            <nav>{linkElements.join('')}</nav>
         </header>
     );
 }
