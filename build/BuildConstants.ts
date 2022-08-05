@@ -27,7 +27,6 @@ const BuildConstants = {
     headerLinksJsonPath: `${JSON_INPUT_DIR}headerLinks.json`,
     tagsJsonPath: `${JSON_INPUT_DIR}tagCloud.json`,
 
-    templateInputFileName: `${COMPONENT_INPUT_DIR}index.html.njk`,
     templateOutputFileName: `${OUTPUT_DIR}index.html`,
 
     serviceWorkerInputFileName: `${COMPONENT_INPUT_DIR}serviceWorker.js.njk`,

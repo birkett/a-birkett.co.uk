@@ -21,6 +21,10 @@ abstract class AbstractRenderTask extends AbstractTask {
 
         const renderedTemplate = nunjucks.render(source, data);
 
+        AbstractRenderTask.writeOutput(destination, renderedTemplate);
+    }
+
+    protected static writeOutput(destination: string, renderedTemplate: string): void {
         fs.writeFileSync(destination, renderedTemplate);
     }
 }
