@@ -1,26 +1,26 @@
 [
     {
         "title": "Twitter",
-        "url": "https://twitter.com/birkett26"
+        "href": "https://twitter.com/birkett26"
     },
     {
         "title": "Instagram",
-        "url": "https://instagram.com/birkett26"
+        "href": "https://instagram.com/birkett26"
     },
     {
         "title": "LinkedIn",
-        "url": "https://linkedin.com/in/anthony-birkett"
+        "href": "https://linkedin.com/in/anthony-birkett"
     },
     {
         "title": "GitHub",
-        "url": "https://github.com/birkett"
+        "href": "https://github.com/birkett"
     },
     {
         "title": "Steam",
-        "url": "https://steamcommunity.com/id/birkett"
+        "href": "https://steamcommunity.com/id/birkett"
     },
     {
         "title": "Email",
-        "url": "mailto:anthonyATa-birkett.coDOTuk"
+        "href": "mailto:anthonyATa-birkett.coDOTuk"
     }
 ]
