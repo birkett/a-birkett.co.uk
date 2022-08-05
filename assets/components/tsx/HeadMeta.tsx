@@ -86,7 +86,7 @@ function HeadMeta(props: Partial<HeadMetaProps>): JSX.Element {
                 rel="icon"
                 type="image/png"
                 sizes="57x57"
-                href={`{${faviconPrefix}-57.png?v=${gitRevision}`}
+                href={`${faviconPrefix}-57.png?v=${gitRevision}`}
             />
 
             <link
@@ -174,7 +174,7 @@ function HeadMeta(props: Partial<HeadMetaProps>): JSX.Element {
                 crossOrigin=""
             />
 
-            <link rel="stylesheet" href={`css/${outputCssFileName}}?v=${gitRevision}`} />
+            <link rel="stylesheet" href={`css/${outputCssFileName}?v=${gitRevision}`} />
 
             <link rel="canonical" href={baseUrl} />
         </head>
