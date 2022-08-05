@@ -1,6 +1,11 @@
 import { suite, describe, it } from '../../../lib/test/TestSystem';
-import tsxParser, { textAddSpaces } from '../../../lib/tsx/TsxParser';
-import { componentWithProps, simpleMockComponent } from './MockComponents';
+import tsxParser from '../../../lib/tsx/TsxParser';
+import {
+    componentWithProps,
+    componentWithVoidElements,
+    simpleMockComponent,
+    styledComponent,
+} from './MockComponents';
 import expect from '../../../lib/test/src/Expect';
 
 suite('TsxParser', () => {
@@ -18,11 +23,17 @@ suite('TsxParser', () => {
         });
     });
 
-    describe('Text padding', () => {
-        it('Should add non breaking space tags to strings', () => {
-            const string = textAddSpaces('Test');
+    describe('Void element handling', () => {
+        it('Void elements should be self closing', () => {
+            const metaComponent = tsxParser(componentWithVoidElements);
 
-            expect(string).equal('&nbspTest&nbsp');
+            expect(metaComponent).equal('<meta http-equiv="Content-Type" />');
+        });
+
+        it('Styled components should be parsed', () => {
+            const component = tsxParser(styledComponent);
+
+            expect(component).equal('<p style="color:#000;background-color:#FFF;">Test</p>');
         });
     });
 });
