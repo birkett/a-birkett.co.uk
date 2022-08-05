@@ -9,5 +9,5 @@
         "forceConsistentCasingInFileNames": true,
         "strict": true
     },
-    "include": ["build/**/*", "lib/**/*", "test/**/*"]
+    "include": ["assets/components/**/*.tsx", "build/**/*", "lib/**/*", "test/**/*"]
 }
