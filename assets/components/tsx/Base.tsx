@@ -4,6 +4,7 @@ import { Header, LinkProps } from './Header';
 import About from './About';
 import TagCloud, { TagGroups } from './TagCloud';
 import HeadMeta from './HeadMeta';
+import ServiceWorkerUrchin from './ServiceWorkerUrchin';
 
 export interface BaseProps {
     firstName: string;
@@ -69,6 +70,8 @@ function Base(props: Partial<BaseProps>): JSX.Element {
                     gitRevision={gitRevision}
                     githubLink={githubLink}
                 />
+
+                <ServiceWorkerUrchin gitRevision={gitRevision} />
             </body>
         </html>
     );

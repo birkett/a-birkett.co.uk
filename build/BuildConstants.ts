@@ -29,6 +29,8 @@ const BuildConstants = {
 
     templateOutputFileName: `${OUTPUT_DIR}index.html`,
 
+    serviceWorkerUrchinFileName: `${COMPONENT_INPUT_DIR}ServiceWorkerUrchin.template.js`,
+
     serviceWorkerInputFileName: `${COMPONENT_INPUT_DIR}serviceWorker.js.njk`,
     serviceWorkerOutputFileName: `${OUTPUT_DIR}serviceWorker.js`,
 
