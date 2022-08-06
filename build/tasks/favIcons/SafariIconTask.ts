@@ -1,8 +1,8 @@
 import * as fs from 'fs';
-import BuildConstants from '../../BuildConstants';
-import AbstractTask from '../../../lib/build/classes/AbstractTask';
+import { BuildConstants } from '../../BuildConstants';
+import { AbstractTask } from '../../../lib/build/classes/AbstractTask';
 
-class SafariIconTask extends AbstractTask {
+export class SafariIconTask extends AbstractTask {
     public readonly name: string = 'Safari Icon';
 
     private readonly fillRegex = 'fill="#(.*?)"';
@@ -17,5 +17,3 @@ class SafariIconTask extends AbstractTask {
         fs.writeFileSync(BuildConstants.safariIconOutputFileName, outputData);
     }
 }
-
-export default SafariIconTask;

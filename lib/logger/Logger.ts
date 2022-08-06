@@ -1,7 +1,7 @@
-import ControlCode from './enum/ControlCode';
-import Colour from './enum/Colour';
+import { ControlCode } from './enum/ControlCode';
+import { Colour } from './enum/Colour';
 
-class Logger {
+export class Logger {
     public static writeLine(
         message: string,
         controlCode: ControlCode | null = null,
@@ -28,5 +28,3 @@ class Logger {
         Logger.writeLine(message, bold ? ControlCode.Bold : null);
     }
 }
-
-export default Logger;

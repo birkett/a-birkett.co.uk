@@ -1,10 +1,10 @@
 import h, { FunctionComponent } from '../../../lib/tsx/TsxParser';
-import Footer from './Footer';
-import Header, { LinkProps } from './Header';
-import About from './About';
-import TagCloud, { TagGroups } from './TagCloud';
-import HeadMeta from './HeadMeta';
-import ServiceWorkerUrchin from './ServiceWorkerUrchin';
+import { Footer } from './Footer';
+import { Header, LinkProps } from './Header';
+import { About } from './About';
+import { TagCloud, TagGroups } from './TagCloud';
+import { HeadMeta } from './HeadMeta';
+import { ServiceWorkerUrchin } from './ServiceWorkerUrchin';
 
 export interface BaseProps {
     firstName: string;
@@ -23,7 +23,7 @@ export interface BaseProps {
     tagGroups: TagGroups;
 }
 
-const Base: FunctionComponent<BaseProps> = (props: BaseProps) => {
+export const Base: FunctionComponent<BaseProps> = (props: BaseProps) => {
     const {
         firstName,
         lastName,
@@ -76,5 +76,3 @@ const Base: FunctionComponent<BaseProps> = (props: BaseProps) => {
         </html>
     );
 };
-
-export default Base;

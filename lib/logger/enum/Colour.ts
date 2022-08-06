@@ -1,4 +1,4 @@
-enum Colour {
+export enum Colour {
     Black = '\x1b[30m',
     Red = '\x1b[31m',
     Green = '\x1b[32m',
@@ -8,5 +8,3 @@ enum Colour {
     Cyan = '\x1b[36m',
     White = '\x1b[37m',
 }
-
-export default Colour;

@@ -1,9 +1,9 @@
 import fs from 'fs';
 import * as nunjucks from 'nunjucks';
-import BuildConstants from '../../BuildConstants';
-import AbstractTask from '../../../lib/build/classes/AbstractTask';
+import { BuildConstants } from '../../BuildConstants';
+import { AbstractTask } from '../../../lib/build/classes/AbstractTask';
 
-abstract class AbstractRenderTask extends AbstractTask {
+export abstract class AbstractRenderTask extends AbstractTask {
     protected readonly templateConstantsPath = BuildConstants.templateConstantsJsonPath;
 
     protected static loadJson(path: string): object {
@@ -28,5 +28,3 @@ abstract class AbstractRenderTask extends AbstractTask {
         fs.writeFileSync(destination, renderedTemplate);
     }
 }
-
-export default AbstractRenderTask;

@@ -1,7 +1,7 @@
 import fs from 'fs';
-import AbstractTask from '../../../lib/build/classes/AbstractTask';
+import { AbstractTask } from '../../../lib/build/classes/AbstractTask';
 
-abstract class AbstractCopyFilesTask extends AbstractTask {
+export abstract class AbstractCopyFilesTask extends AbstractTask {
     protected copiedFiles = 0;
 
     protected copyFiles(sourceDir: string, destinationDir: string) {
@@ -19,5 +19,3 @@ abstract class AbstractCopyFilesTask extends AbstractTask {
         });
     }
 }
-
-export default AbstractCopyFilesTask;

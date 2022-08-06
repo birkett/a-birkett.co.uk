@@ -1,10 +1,10 @@
 import * as fs from 'fs';
 import pngToIco from 'png-to-ico';
 import svg2img from 'svg2img';
-import BuildConstants from '../../BuildConstants';
-import AbstractTask from '../../../lib/build/classes/AbstractTask';
+import { BuildConstants } from '../../BuildConstants';
+import { AbstractTask } from '../../../lib/build/classes/AbstractTask';
 
-class FaviconsTask extends AbstractTask {
+export class FaviconsTask extends AbstractTask {
     public readonly name: string = 'Favicons';
 
     private readonly pngMap = [
@@ -44,5 +44,3 @@ class FaviconsTask extends AbstractTask {
         return `${BuildConstants.outputDirectory}${BuildConstants.faviconPrefix}-${size}.png`;
     }
 }
-
-export default FaviconsTask;

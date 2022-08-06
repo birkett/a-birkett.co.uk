@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import { getFailedExpectations, getPassedExpectations } from './src/PassFail';
-import Output from './src/Output';
-import readDirSyncDeep from '../fs/src/readDirDeep';
+import { Output } from './src/Output';
+import { readDirSyncDeep } from '../fs/src/readDirDeep';
 
 export const suite = (description: string, fn: VoidFunction) => {
     Output.suiteDescription(description);

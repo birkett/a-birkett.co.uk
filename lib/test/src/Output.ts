@@ -1,8 +1,8 @@
-import Logger from '../../logger/Logger';
-import ControlCode from '../../logger/enum/ControlCode';
-import Colour from '../../logger/enum/Colour';
+import { Logger } from '../../logger/Logger';
+import { ControlCode } from '../../logger/enum/ControlCode';
+import { Colour } from '../../logger/enum/Colour';
 
-class Output {
+export class Output {
     public static passedExpectation(): void {
         Logger.write('√ ', ControlCode.Bold, Colour.Green);
     }
@@ -31,5 +31,3 @@ class Output {
         Logger.writeLine(summary, ControlCode.Bold, failed > 0 ? Colour.Red : Colour.Green);
     }
 }
-
-export default Output;

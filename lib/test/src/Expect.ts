@@ -1,7 +1,7 @@
 import { equalObjects, equalPrimitives, isObject } from './Equals';
 import { failedExpectation, passExpectation } from './PassFail';
 
-const expect = (value: any) => ({
+export const expect = (value: any) => ({
     equal: (expected: any) => {
         const areBothObjects = isObject(value) && isObject(expected);
         const result = areBothObjects
@@ -17,5 +17,3 @@ const expect = (value: any) => ({
         failedExpectation(expected, value);
     },
 });
-
-export default expect;

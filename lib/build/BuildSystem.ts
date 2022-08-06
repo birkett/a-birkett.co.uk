@@ -1,7 +1,7 @@
-import Logger from '../logger/Logger';
-import ControlCode from '../logger/enum/ControlCode';
-import Colour from '../logger/enum/Colour';
-import AbstractTask from './classes/AbstractTask';
+import { Logger } from '../logger/Logger';
+import { ControlCode } from '../logger/enum/ControlCode';
+import { Colour } from '../logger/enum/Colour';
+import { AbstractTask } from './classes/AbstractTask';
 
 type BuildJob = Record<string, AbstractTask[]>;
 
@@ -25,7 +25,7 @@ const runTask = (job: AbstractTask) => {
     );
 };
 
-const build = (availableJobs: BuildJob) => {
+export const build = (availableJobs: BuildJob) => {
     const startTime = Date.now();
 
     const jobName = Object.keys(availableJobs).includes(process.argv[2])
@@ -40,5 +40,3 @@ const build = (availableJobs: BuildJob) => {
         Logger.writeLine(`Done in ${Date.now() - startTime}ms`, ControlCode.Bold, Colour.Green);
     });
 };
-
-export default build;

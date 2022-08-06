@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import * as sass from 'sass';
-import BuildConstants from '../BuildConstants';
-import AbstractTask from '../../lib/build/classes/AbstractTask';
+import { BuildConstants } from '../BuildConstants';
+import { AbstractTask } from '../../lib/build/classes/AbstractTask';
 
-class StylesTask extends AbstractTask {
+export class StylesTask extends AbstractTask {
     public readonly name: string = 'Build Styles';
 
     private readonly inputScss = 'main.scss';
@@ -29,5 +29,3 @@ class StylesTask extends AbstractTask {
         fs.writeFileSync(`${BuildConstants.cssOutputDirectory}${this.outputCss}`, css);
     }
 }
-
-export default StylesTask;

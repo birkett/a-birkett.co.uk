@@ -56,7 +56,7 @@ const parseNode = <PropsType>(element: string, properties: PropsType, children: 
     return elementString;
 };
 
-const tsxParser = <PropsType>(
+export const tsxParser = <PropsType>(
     element: string | FunctionComponent<PropsType>,
     properties: PropsType,
     ...children: string[]

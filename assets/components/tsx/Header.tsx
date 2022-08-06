@@ -21,7 +21,7 @@ interface HeaderProps {
     links: LinkProps[];
 }
 
-const Header: FunctionComponent<HeaderProps> = (props: HeaderProps) => {
+export const Header: FunctionComponent<HeaderProps> = (props: HeaderProps) => {
     const { firstName, lastName, links } = props;
 
     const linkElements = links.map((link: LinkProps) => (
@@ -40,5 +40,3 @@ const Header: FunctionComponent<HeaderProps> = (props: HeaderProps) => {
         </header>
     );
 };
-
-export default Header;

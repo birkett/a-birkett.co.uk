@@ -59,7 +59,7 @@ export interface TagCloudProps {
     tagGroups: TagGroups;
 }
 
-const TagCloud: FunctionComponent<TagCloudProps> = (props: TagCloudProps) => {
+export const TagCloud: FunctionComponent<TagCloudProps> = (props: TagCloudProps) => {
     const { firstName, tagGroups } = props;
 
     const elements = Object.keys(tagGroups).map((group) => (
@@ -73,5 +73,3 @@ const TagCloud: FunctionComponent<TagCloudProps> = (props: TagCloudProps) => {
         </section>
     );
 };
-
-export default TagCloud;

@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import BuildConstants from '../../BuildConstants';
-import AbstractRenderTask from './AbstractRenderTask';
+import { BuildConstants } from '../../BuildConstants';
+import { AbstractRenderTask } from './AbstractRenderTask';
 
-class RenderServiceWorkerTask extends AbstractRenderTask {
+export class RenderServiceWorkerTask extends AbstractRenderTask {
     public readonly name: string = 'Render Service Worker';
 
     public run(): void {
@@ -51,5 +51,3 @@ class RenderServiceWorkerTask extends AbstractRenderTask {
         return trimmedFiles;
     }
 }
-
-export default RenderServiceWorkerTask;

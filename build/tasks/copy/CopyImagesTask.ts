@@ -1,7 +1,7 @@
-import AbstractCopyFilesTask from './AbstractCopyFilesTask';
-import BuildConstants from '../../BuildConstants';
+import { AbstractCopyFilesTask } from './AbstractCopyFilesTask';
+import { BuildConstants } from '../../BuildConstants';
 
-class CopyFontsTask extends AbstractCopyFilesTask {
+export class CopyImagesTask extends AbstractCopyFilesTask {
     public readonly name: string = 'Copy Images';
 
     public run(): void {
@@ -10,5 +10,3 @@ class CopyFontsTask extends AbstractCopyFilesTask {
         this.logger.writeLine(`\t\tCopied ${this.copiedFiles} files`);
     }
 }
-
-export default CopyFontsTask;

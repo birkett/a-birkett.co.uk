@@ -1,5 +1,5 @@
 import * as childProcess from 'child_process';
-import memoize from '../lib/memoize/Memoize';
+import { memoize } from '../lib/memoize/Memoize';
 
 const ASSETS_DIR = './assets/';
 const OUTPUT_DIR = './dist/';
@@ -11,7 +11,7 @@ const COMPONENT_INPUT_DIR = `${ASSETS_DIR}components/`;
 const WEB_MANIFEST_OUTPUT_FILE_NAME = 'site.webmanifest';
 const SAFARI_ICON_FILE_NAME = 'safari-pinned-tab.svg';
 
-const BuildConstants = {
+export const BuildConstants = {
     outputDirectory: OUTPUT_DIR,
 
     scssInputDirectory: `${ASSETS_DIR}scss/`,
@@ -59,5 +59,3 @@ const BuildConstants = {
         return stdOut.toString().split('\n').join('');
     }),
 };
-
-export default BuildConstants;

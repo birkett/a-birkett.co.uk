@@ -4,7 +4,7 @@ interface AboutProps {
     firstName: string;
 }
 
-const About: FunctionComponent<AboutProps> = (props: AboutProps) => {
+export const About: FunctionComponent<AboutProps> = (props: AboutProps) => {
     const { firstName } = props;
 
     return (
@@ -31,5 +31,3 @@ const About: FunctionComponent<AboutProps> = (props: AboutProps) => {
         </section>
     );
 };
-
-export default About;

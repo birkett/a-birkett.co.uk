@@ -1,4 +1,4 @@
-import Output from './Output';
+import { Output } from './Output';
 
 const getFailedExpectation = () => new Error().stack!.split('at ')[4].trim();
 

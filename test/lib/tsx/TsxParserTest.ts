@@ -1,12 +1,12 @@
 import { suite, describe, it } from '../../../lib/test/TestSystem';
-import tsxParser from '../../../lib/tsx/TsxParser';
+import { tsxParser } from '../../../lib/tsx/TsxParser';
+import { expect } from '../../../lib/test/src/Expect';
 import {
     componentWithProps,
     componentWithVoidElements,
     simpleMockComponent,
     styledComponent,
 } from './MockComponents';
-import expect from '../../../lib/test/src/Expect';
 
 suite('TsxParser', () => {
     describe('Basic functionality', () => {

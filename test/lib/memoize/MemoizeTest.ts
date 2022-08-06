@@ -1,6 +1,6 @@
 import { suite, describe, it } from '../../../lib/test/TestSystem';
-import expect from '../../../lib/test/src/Expect';
-import memoize from '../../../lib/memoize/Memoize';
+import { expect } from '../../../lib/test/src/Expect';
+import { memoize } from '../../../lib/memoize/Memoize';
 
 suite('Memoize', () => {
     describe('Basic functionality', () => {

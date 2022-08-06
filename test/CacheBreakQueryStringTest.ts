@@ -1,7 +1,7 @@
 import * as fs from 'fs';
-import BuildConstants from '../build/BuildConstants';
+import { BuildConstants } from '../build/BuildConstants';
 import { describe, it, suite } from '../lib/test/TestSystem';
-import expect from '../lib/test/src/Expect';
+import { expect } from '../lib/test/src/Expect';
 
 const VERSION_QUERY_STRING_REGEX = /\?v=(\w{0,7})/g; // ?v=...
 const URL_TAG_REGEX = /url\(([^)]+)\)/g; // Selects url(...) tags from CSS.

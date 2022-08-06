@@ -1,8 +1,8 @@
 import * as fs from 'fs';
-import BuildConstants from '../BuildConstants';
-import AbstractTask from '../../lib/build/classes/AbstractTask';
+import { BuildConstants } from '../BuildConstants';
+import { AbstractTask } from '../../lib/build/classes/AbstractTask';
 
-class CleanTask extends AbstractTask {
+export class CleanTask extends AbstractTask {
     public readonly name: string = 'Clean';
 
     public run(): void {
@@ -21,5 +21,3 @@ class CleanTask extends AbstractTask {
         fs.mkdirSync(BuildConstants.outputDirectory);
     }
 }
-
-export default CleanTask;

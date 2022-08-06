@@ -14,7 +14,7 @@ interface HeadMetaProps {
     baseUrl: string;
 }
 
-const HeadMeta: FunctionComponent<HeadMetaProps> = (props: HeadMetaProps) => {
+export const HeadMeta: FunctionComponent<HeadMetaProps> = (props: HeadMetaProps) => {
     const {
         firstName,
         lastName,
@@ -180,5 +180,3 @@ const HeadMeta: FunctionComponent<HeadMetaProps> = (props: HeadMetaProps) => {
         </head>
     );
 };
-
-export default HeadMeta;

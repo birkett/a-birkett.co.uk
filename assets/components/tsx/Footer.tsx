@@ -7,7 +7,7 @@ interface FooterProps {
     githubLink: string;
 }
 
-const Footer: FunctionComponent<FooterProps> = (props: FooterProps) => {
+export const Footer: FunctionComponent<FooterProps> = (props: FooterProps) => {
     const { firstName, lastName, gitRevision, githubLink } = props;
 
     return (
@@ -24,5 +24,3 @@ const Footer: FunctionComponent<FooterProps> = (props: FooterProps) => {
         </footer>
     );
 };
-
-export default Footer;

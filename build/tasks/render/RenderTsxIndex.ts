@@ -1,11 +1,11 @@
-import tsxParser from '../../../lib/tsx/TsxParser';
-import Base, { BaseProps } from '../../../assets/components/tsx/Base';
-import AbstractRenderTask from './AbstractRenderTask';
-import BuildConstants from '../../BuildConstants';
+import { tsxParser } from '../../../lib/tsx/TsxParser';
+import { Base, BaseProps } from '../../../assets/components/tsx/Base';
+import { AbstractRenderTask } from './AbstractRenderTask';
+import { BuildConstants } from '../../BuildConstants';
 import { LinkProps } from '../../../assets/components/tsx/Header';
 import { TagGroups } from '../../../assets/components/tsx/TagCloud';
 
-class RenderTsxIndex extends AbstractRenderTask {
+export class RenderTsxIndex extends AbstractRenderTask {
     public readonly name: string = 'Render TSX Index';
 
     private readonly contentType: string = '<!DOCTYPE html>';
@@ -54,5 +54,3 @@ class RenderTsxIndex extends AbstractRenderTask {
         return `${this.contentType}${content}`;
     }
 }
-
-export default RenderTsxIndex;

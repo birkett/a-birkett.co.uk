@@ -1,7 +1,7 @@
-import AbstractRenderTask from './AbstractRenderTask';
-import BuildConstants from '../../BuildConstants';
+import { AbstractRenderTask } from './AbstractRenderTask';
+import { BuildConstants } from '../../BuildConstants';
 
-class RenderBrowserConfigTask extends AbstractRenderTask {
+export class RenderBrowserConfigTask extends AbstractRenderTask {
     public readonly name: string = 'Render Browser Config';
 
     public run(): void {
@@ -11,5 +11,3 @@ class RenderBrowserConfigTask extends AbstractRenderTask {
         );
     }
 }
-
-export default RenderBrowserConfigTask;

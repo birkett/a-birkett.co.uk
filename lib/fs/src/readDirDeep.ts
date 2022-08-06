@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-const readDirSyncDeep = (directory: string): string[] => {
+export const readDirSyncDeep = (directory: string): string[] => {
     let fileList: string[] = [];
 
     const files = fs.readdirSync(directory);
@@ -21,5 +21,3 @@ const readDirSyncDeep = (directory: string): string[] => {
 
     return fileList;
 };
-
-export default readDirSyncDeep;
