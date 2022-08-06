@@ -1,4 +1,5 @@
-type StringIndexedObject = { [index: string]: any };
+type StringIndexedObject = Record<string, any>;
+type Primitive = number | string | boolean;
 
 export const isObject = (object: any): boolean => object !== null && typeof object === 'object';
 
@@ -21,7 +22,4 @@ const deepEqual = (objectA: StringIndexedObject, objectB: StringIndexedObject): 
 
 export const equalObjects = (a: object, b: object): boolean => deepEqual(a, b);
 
-export const equalPrimitives = (
-    primitiveA: number | string | boolean,
-    primitiveB: number | string | boolean,
-): boolean => primitiveA === primitiveB;
+export const equalPrimitives = (a: Primitive, b: Primitive): boolean => a === b;

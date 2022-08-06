@@ -1,4 +1,4 @@
-import { Output } from './Output';
+import { Output, Stringable } from './Output';
 
 const getFailedExpectation = () => new Error().stack!.split('at ')[4].trim();
 
@@ -10,7 +10,7 @@ export const passExpectation = (): void => {
     passedExpectations += 1;
 };
 
-export const failedExpectation = (expected: any, value: any): void => {
+export const failedExpectation = (expected: Stringable, value: Stringable): void => {
     Output.failedExpectation(getFailedExpectation(), expected, value);
 
     failedExpectations += 1;

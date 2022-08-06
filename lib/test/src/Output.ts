@@ -2,12 +2,16 @@ import { Logger } from '../../logger/Logger';
 import { ControlCode } from '../../logger/enum/ControlCode';
 import { Colour } from '../../logger/enum/Colour';
 
+export interface Stringable {
+    toString: () => string;
+}
+
 export class Output {
     public static passedExpectation(): void {
         Logger.write('√ ', ControlCode.Bold, Colour.Green);
     }
 
-    public static failedExpectation(trace: string, expected: any, value: any): void {
+    public static failedExpectation(trace: string, expected: Stringable, value: Stringable): void {
         Logger.write('X \n\n', ControlCode.Bold, Colour.Red);
 
         Logger.error(`Expectation failed: ${expected} does not equal ${value}`);

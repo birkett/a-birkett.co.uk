@@ -1,10 +1,10 @@
-export const memoize = (func: () => any): any => {
-    const memoized: any = () => {
+export const memoize = <T>(fn: () => T) => {
+    const memoized: any = (): T => {
         if (memoized.cache) {
             return memoized.cache;
         }
 
-        memoized.cache = func();
+        memoized.cache = fn();
 
         return memoized.cache;
     };

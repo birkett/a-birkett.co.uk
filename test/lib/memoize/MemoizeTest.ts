@@ -7,13 +7,13 @@ suite('Memoize', () => {
         it('Should cache the result of a function across multiple calls', () => {
             let numberOfRawFuncCalls = 0;
 
-            const rawFunc = () => {
+            const rawFunc = (): number => {
                 numberOfRawFuncCalls += 1;
 
                 return 1337;
             };
 
-            const cachedCall = memoize(() => rawFunc());
+            const cachedCall = memoize<number>((): number => rawFunc());
 
             const result1 = cachedCall();
             const result2 = cachedCall();

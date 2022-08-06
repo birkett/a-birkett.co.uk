@@ -53,7 +53,7 @@ export const BuildConstants = {
     themeColor: '#000000',
     msTileColor: '#2B5797',
 
-    gitRevision: memoize(() => {
+    gitRevision: memoize<string>((): string => {
         const stdOut = childProcess.execSync('git rev-parse --short HEAD');
 
         return stdOut.toString().split('\n').join('');

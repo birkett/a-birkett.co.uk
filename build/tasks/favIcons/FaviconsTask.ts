@@ -19,7 +19,7 @@ export class FaviconsTask extends AbstractTask {
         this.pngMap.forEach((size, index) => {
             const options = { width: size, height: size };
 
-            svg2img(BuildConstants.faviconInputFile, options, (error, buffer) => {
+            svg2img(BuildConstants.faviconInputFile, options, (_, buffer) => {
                 fs.writeFileSync(FaviconsTask.buildFilePath(size), buffer);
 
                 if (index === this.pngMap.length - 1) {
