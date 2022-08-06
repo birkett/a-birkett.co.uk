@@ -1,6 +1,6 @@
-import h from '../../../lib/tsx/TsxParser';
+import h, { FunctionComponent } from '../../../lib/tsx/TsxParser';
 import Footer from './Footer';
-import { Header, LinkProps } from './Header';
+import Header, { LinkProps } from './Header';
 import About from './About';
 import TagCloud, { TagGroups } from './TagCloud';
 import HeadMeta from './HeadMeta';
@@ -23,7 +23,7 @@ export interface BaseProps {
     tagGroups: TagGroups;
 }
 
-function Base(props: Partial<BaseProps>): JSX.Element {
+const Base: FunctionComponent<BaseProps> = (props: BaseProps) => {
     const {
         firstName,
         lastName,
@@ -39,7 +39,7 @@ function Base(props: Partial<BaseProps>): JSX.Element {
         outputCssFileName,
         baseUrl,
         tagGroups,
-    } = props as BaseProps;
+    } = props;
 
     return (
         <html lang="en">
@@ -75,6 +75,6 @@ function Base(props: Partial<BaseProps>): JSX.Element {
             </body>
         </html>
     );
-}
+};
 
 export default Base;

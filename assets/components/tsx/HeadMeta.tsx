@@ -1,4 +1,4 @@
-import h from '../../../lib/tsx/TsxParser';
+import h, { FunctionComponent } from '../../../lib/tsx/TsxParser';
 
 interface HeadMetaProps {
     firstName: string;
@@ -14,7 +14,7 @@ interface HeadMetaProps {
     baseUrl: string;
 }
 
-function HeadMeta(props: Partial<HeadMetaProps>): JSX.Element {
+const HeadMeta: FunctionComponent<HeadMetaProps> = (props: HeadMetaProps) => {
     const {
         firstName,
         lastName,
@@ -27,7 +27,7 @@ function HeadMeta(props: Partial<HeadMetaProps>): JSX.Element {
         fontFileName,
         outputCssFileName,
         baseUrl,
-    } = props as HeadMetaProps;
+    } = props;
 
     const description = `Personal website of ${firstName} ${lastName}, IT guy and Engineer.`;
 
@@ -179,6 +179,6 @@ function HeadMeta(props: Partial<HeadMetaProps>): JSX.Element {
             <link rel="canonical" href={baseUrl} />
         </head>
     );
-}
+};
 
 export default HeadMeta;

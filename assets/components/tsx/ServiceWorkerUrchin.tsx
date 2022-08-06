@@ -1,8 +1,8 @@
 import fs from 'fs';
-import h from '../../../lib/tsx/TsxParser';
+import h, { FunctionComponent } from '../../../lib/tsx/TsxParser';
 import BuildConstants from '../../../build/BuildConstants';
 
-interface ServiceWorkerUrchinProps {
+interface UrchinProps {
     gitRevision: string;
 }
 
@@ -15,12 +15,12 @@ const getSerivceWorkerUrchinScript = (gitRevision: string): string => {
     return replaceContent.replace(/\/\*.+?\*\/|\/\/.*(?=[\n\r])/g, '');
 };
 
-function ServiceWorkerUrchin(props: ServiceWorkerUrchinProps): JSX.Element {
+const ServiceWorkerUrchin: FunctionComponent<UrchinProps> = (props: UrchinProps) => {
     const { gitRevision } = props;
 
     const scriptContent = getSerivceWorkerUrchinScript(gitRevision);
 
     return <script type="text/javascript">{scriptContent}</script>;
-}
+};
 
 export default ServiceWorkerUrchin;

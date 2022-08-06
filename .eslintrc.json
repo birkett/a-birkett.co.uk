@@ -21,7 +21,14 @@
         "react/jsx-one-expression-per-line": "off",
         "react/jsx-indent-props": ["ERROR", 4],
         "react/jsx-no-target-blank": "off",
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
+        "react/function-component-definition": [
+            "ERROR",
+            {
+                "namedComponents": "arrow-function",
+                "unnamedComponents": "arrow-function"
+            }
+        ]
     },
     "ignorePatterns": ["build.ts", "tests.ts", "dist/**"]
 }

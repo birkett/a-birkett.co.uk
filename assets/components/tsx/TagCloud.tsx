@@ -1,4 +1,4 @@
-import h from '../../../lib/tsx/TsxParser';
+import h, { FunctionComponent } from '../../../lib/tsx/TsxParser';
 
 interface TagProps {
     title: string;
@@ -7,8 +7,8 @@ interface TagProps {
     bgColor: string;
 }
 
-function Tag(props: Partial<TagProps>): JSX.Element {
-    const { title, href, textColor, bgColor } = props as TagProps;
+const Tag: FunctionComponent<TagProps> = (props: TagProps) => {
+    const { title, href, textColor, bgColor } = props;
 
     const style = {
         color: textColor,
@@ -28,15 +28,15 @@ function Tag(props: Partial<TagProps>): JSX.Element {
             <span style={style}>{element}</span>
         </li>
     );
-}
+};
 
 interface TagCloudContentProps {
     title: string;
     tags: TagProps[];
 }
 
-export function TagCloudContent(props: Partial<TagCloudContentProps>): JSX.Element {
-    const { tags, title } = props as TagCloudContentProps;
+const TagCloudContent: FunctionComponent<TagCloudContentProps> = (props: TagCloudContentProps) => {
+    const { tags, title } = props;
 
     const tagElements = tags.map((tag: TagProps) => (
         <Tag title={tag.title} href={tag.href} bgColor={tag.bgColor} textColor={tag.textColor} />
@@ -48,19 +48,19 @@ export function TagCloudContent(props: Partial<TagCloudContentProps>): JSX.Eleme
             <ul>{tagElements.join('')}</ul>
         </div>
     );
-}
+};
 
 export interface TagGroups {
     [key: string]: TagProps[];
 }
 
-export interface TagCloudProps extends TagCloudContentProps {
+export interface TagCloudProps {
     firstName: string;
     tagGroups: TagGroups;
 }
 
-function TagCloud(props: Partial<TagCloudProps>): JSX.Element {
-    const { firstName, tagGroups } = props as TagCloudProps;
+const TagCloud: FunctionComponent<TagCloudProps> = (props: TagCloudProps) => {
+    const { firstName, tagGroups } = props;
 
     const elements = Object.keys(tagGroups).map((group) => (
         <TagCloudContent title={group} tags={tagGroups[group]} />
@@ -72,6 +72,6 @@ function TagCloud(props: Partial<TagCloudProps>): JSX.Element {
             {elements.join('')}
         </section>
     );
-}
+};
 
 export default TagCloud;

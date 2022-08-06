@@ -22,9 +22,7 @@ class RenderTsxIndex extends AbstractRenderTask {
     private renderTsx(): string {
         const templateConstants = AbstractRenderTask.loadJson(
             this.templateConstantsPath,
-        ) as Partial<BaseProps>;
-
-        const buildConstants = BuildConstants as Partial<BaseProps>;
+        ) as BaseProps;
 
         const links = AbstractRenderTask.loadJson(
             BuildConstants.headerLinksJsonPath,
@@ -32,19 +30,19 @@ class RenderTsxIndex extends AbstractRenderTask {
 
         const tagGroups = AbstractRenderTask.loadJson(BuildConstants.tagsJsonPath) as TagGroups;
 
-        const props = {
+        const props: BaseProps = {
             firstName: templateConstants.firstName,
             lastName: templateConstants.lastName,
             gitRevision: BuildConstants.gitRevision(),
             githubLink: templateConstants.githubLink,
             links: links as [],
-            msTileColor: buildConstants.msTileColor,
-            faviconPrefix: buildConstants.faviconPrefix,
-            themeColor: buildConstants.themeColor,
-            webManifestFileName: buildConstants.webManifestFileName,
-            safariIconFileName: buildConstants.safariIconFileName,
-            fontFileName: buildConstants.fontFileName,
-            outputCssFileName: buildConstants.outputCssFileName,
+            msTileColor: BuildConstants.msTileColor,
+            faviconPrefix: BuildConstants.faviconPrefix,
+            themeColor: BuildConstants.themeColor,
+            webManifestFileName: BuildConstants.webManifestFileName,
+            safariIconFileName: BuildConstants.safariIconFileName,
+            fontFileName: BuildConstants.fontFileName,
+            outputCssFileName: BuildConstants.outputCssFileName,
             baseUrl: templateConstants.baseUrl,
             tagGroups,
         };

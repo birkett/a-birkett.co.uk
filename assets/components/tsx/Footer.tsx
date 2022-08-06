@@ -1,4 +1,4 @@
-import h from '../../../lib/tsx/TsxParser';
+import h, { FunctionComponent } from '../../../lib/tsx/TsxParser';
 
 interface FooterProps {
     firstName: string;
@@ -7,8 +7,8 @@ interface FooterProps {
     githubLink: string;
 }
 
-function Footer(props: Partial<FooterProps>): JSX.Element {
-    const { firstName, lastName, gitRevision, githubLink } = props as FooterProps;
+const Footer: FunctionComponent<FooterProps> = (props: FooterProps) => {
+    const { firstName, lastName, gitRevision, githubLink } = props;
 
     return (
         <footer>
@@ -23,6 +23,6 @@ function Footer(props: Partial<FooterProps>): JSX.Element {
             </p>
         </footer>
     );
-}
+};
 
 export default Footer;

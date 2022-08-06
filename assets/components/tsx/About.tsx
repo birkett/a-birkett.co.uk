@@ -1,10 +1,10 @@
-import h from '../../../lib/tsx/TsxParser';
+import h, { FunctionComponent } from '../../../lib/tsx/TsxParser';
 
 interface AboutProps {
     firstName: string;
 }
 
-function About(props: AboutProps): JSX.Element {
+const About: FunctionComponent<AboutProps> = (props: AboutProps) => {
     const { firstName } = props;
 
     return (
@@ -30,6 +30,6 @@ function About(props: AboutProps): JSX.Element {
             <p>He also has no problem speaking of himself in the third person.</p>
         </section>
     );
-}
+};
 
 export default About;

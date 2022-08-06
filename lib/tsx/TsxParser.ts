@@ -1,35 +1,19 @@
-type FunctionalComponent = (props: Partial<Props>) => JSX.Element;
-type TsxElement = string | FunctionalComponent;
+export type FunctionComponent<PropsType> = (props: PropsType) => JSX.Element;
+type StringRecord = Record<string, string>;
 
-export interface Props {
-    [key: string]: string | [] | object | ComponentStyles;
-}
-
-interface PropertyRewrites {
-    [key: string]: string;
-}
-
-const propertyRewrites: PropertyRewrites = {
+const propertyRewrites: StringRecord = {
     httpEquiv: 'http-equiv',
     className: 'class',
     backgroundColor: 'background-color',
 };
 
-interface VoidElements {
-    [key: string]: string;
-}
-
-const voidElements: VoidElements = {
+const voidElements: StringRecord = {
     meta: 'meta',
     link: 'link',
     br: 'br',
 };
 
-interface ComponentStyles {
-    [key: string]: string;
-}
-
-const parseStyledComponent = (styles: ComponentStyles): string => {
+const parseStyledComponent = (styles: StringRecord): string => {
     let styleString = '';
 
     Object.keys(styles).forEach((styleKey) => {
@@ -39,20 +23,25 @@ const parseStyledComponent = (styles: ComponentStyles): string => {
     return styleString;
 };
 
-const parseNode = (element: string, properties: Partial<Props>, children: string[]) => {
+const parseNode = <PropsType>(element: string, properties: PropsType, children: string[]) => {
     let elementString = `<${element}`;
+    const typedProperties = properties as unknown as StringRecord;
 
-    Object.keys(properties).forEach((property) => {
-        if (property === 'style') {
-            elementString += ` style="${parseStyledComponent(
-                properties[property] as ComponentStyles,
-            )}"`;
+    if (properties) {
+        Object.keys(properties).forEach((property) => {
+            if (property === 'style') {
+                elementString += ` style="${parseStyledComponent(
+                    typedProperties[property] as unknown as StringRecord,
+                )}"`;
 
-            return;
-        }
+                return;
+            }
 
-        elementString += ` ${propertyRewrites[property] || property}="${properties[property]}" `;
-    });
+            const replacedProperty = propertyRewrites[property] || property;
+
+            elementString += ` ${replacedProperty}="${typedProperties[property]}" `;
+        });
+    }
 
     elementString += voidElements[element] ? '/>' : '>';
 
@@ -67,12 +56,16 @@ const parseNode = (element: string, properties: Partial<Props>, children: string
     return elementString;
 };
 
-const tsxParser = (element: TsxElement, properties: Partial<Props> = {}, ...children: string[]) => {
+const tsxParser = <PropsType>(
+    element: string | FunctionComponent<PropsType>,
+    properties: PropsType,
+    ...children: string[]
+) => {
     if (typeof element === 'function') {
         return element(properties);
     }
 
-    return parseNode(element, properties || {}, children);
+    return parseNode(element, properties, children);
 };
 
 export default tsxParser;

@@ -11,7 +11,7 @@ import expect from '../../../lib/test/src/Expect';
 suite('TsxParser', () => {
     describe('Basic functionality', () => {
         it('Should parse a simple functional component', () => {
-            const componentString = tsxParser(simpleMockComponent);
+            const componentString = tsxParser(simpleMockComponent, {});
 
             expect(componentString).equal('<h1>It Works!</h1>');
         });
@@ -25,13 +25,13 @@ suite('TsxParser', () => {
 
     describe('Void element handling', () => {
         it('Void elements should be self closing', () => {
-            const metaComponent = tsxParser(componentWithVoidElements);
+            const metaComponent = tsxParser(componentWithVoidElements, {});
 
             expect(metaComponent).equal('<meta http-equiv="Content-Type" />');
         });
 
         it('Styled components should be parsed', () => {
-            const component = tsxParser(styledComponent);
+            const component = tsxParser(styledComponent, {});
 
             expect(component).equal('<p style="color:#000;background-color:#FFF;">Test</p>');
         });
