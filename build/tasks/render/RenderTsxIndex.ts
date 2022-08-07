@@ -2,7 +2,7 @@ import { tsxParser } from '../../../lib/tsx/TsxParser';
 import { Base, BaseProps } from '../../../assets/components/tsx/Base';
 import { AbstractRenderTask } from './AbstractRenderTask';
 import { BuildConstants } from '../../BuildConstants';
-import { LinkProps } from '../../../assets/components/tsx/Header';
+import { LinkProps } from '../../../assets/components/tsx/Link';
 import { TagGroups } from '../../../assets/components/tsx/TagCloud';
 
 export class RenderTsxIndex extends AbstractRenderTask {

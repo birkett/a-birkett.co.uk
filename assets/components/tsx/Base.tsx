@@ -1,10 +1,11 @@
 import h, { FunctionComponent } from '../../../lib/tsx/TsxParser';
 import { Footer } from './Footer';
-import { Header, LinkProps } from './Header';
+import { Header } from './Header';
 import { About } from './About';
 import { TagCloud, TagGroups } from './TagCloud';
 import { HeadMeta } from './HeadMeta';
 import { ServiceWorkerUrchin } from './ServiceWorkerUrchin';
+import { LinkProps } from './Link';
 
 export interface BaseProps {
     firstName: string;

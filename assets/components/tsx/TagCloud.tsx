@@ -1,4 +1,5 @@
 import h, { FunctionComponent } from '../../../lib/tsx/TsxParser';
+import { Link } from './Link';
 
 interface TagProps {
     title: string;
@@ -15,11 +16,7 @@ const Tag: FunctionComponent<TagProps> = (props: TagProps) => {
         backgroundColor: bgColor,
     };
 
-    const linkElement = (
-        <a href={href} target="_blank" rel="noopener" style={style}>
-            {title}
-        </a>
-    );
+    const linkElement = <Link href={href} title={title} content={title} style={style} />;
 
     const element = href ? linkElement : title;
 
@@ -30,12 +27,12 @@ const Tag: FunctionComponent<TagProps> = (props: TagProps) => {
     );
 };
 
-interface TagCloudContentProps {
+interface TagCloudGroupProps {
     title: string;
     tags: TagProps[];
 }
 
-const TagCloudContent: FunctionComponent<TagCloudContentProps> = (props: TagCloudContentProps) => {
+const TagCloudGroup: FunctionComponent<TagCloudGroupProps> = (props: TagCloudGroupProps) => {
     const { tags, title } = props;
 
     const tagElements = tags.map((tag: TagProps) => (
@@ -54,7 +51,7 @@ export interface TagGroups {
     [key: string]: TagProps[];
 }
 
-export interface TagCloudProps {
+interface TagCloudProps {
     firstName: string;
     tagGroups: TagGroups;
 }
@@ -62,14 +59,14 @@ export interface TagCloudProps {
 export const TagCloud: FunctionComponent<TagCloudProps> = (props: TagCloudProps) => {
     const { firstName, tagGroups } = props;
 
-    const elements = Object.keys(tagGroups).map((group) => (
-        <TagCloudContent title={group} tags={tagGroups[group]} />
+    const groups = Object.keys(tagGroups).map((group) => (
+        <TagCloudGroup title={group} tags={tagGroups[group]} />
     ));
 
     return (
         <section>
             <h2>{firstName} in words</h2>
-            {elements.join('')}
+            {groups.join('')}
         </section>
     );
 };

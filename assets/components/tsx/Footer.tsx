@@ -1,4 +1,5 @@
 import h, { FunctionComponent } from '../../../lib/tsx/TsxParser';
+import { Link } from './Link';
 
 interface FooterProps {
     firstName: string;
@@ -17,9 +18,7 @@ export const Footer: FunctionComponent<FooterProps> = (props: FooterProps) => {
             </p>
             <p>
                 This site is Open Source. Current revision {gitRevision}.
-                <a href={githubLink} target="_blank" rel="noopener">
-                    Code available on GitHub.
-                </a>
+                <Link href={githubLink} title="GitHub" content="Code available on GitHub." />
             </p>
         </footer>
     );
