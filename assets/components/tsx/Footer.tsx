@@ -17,7 +17,7 @@ export const Footer: FunctionComponent<FooterProps> = (props: FooterProps) => {
                 &copy; {firstName} {lastName}
             </p>
             <p>
-                This site is Open Source. Current revision {gitRevision}.
+                This site is Open Source. Current revision {gitRevision}.&nbsp;
                 <Link href={githubLink} title="GitHub" content="Code available on GitHub." />
             </p>
         </footer>
