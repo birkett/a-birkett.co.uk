@@ -9,17 +9,21 @@ export const About: FunctionComponent<AboutProps> = (props: AboutProps) => {
 
     return (
         <section>
-            <h2>A driven individual with a deep interest in the IT Industry from a young age</h2>
+            <h2>
+                A driven individual with a deep interest in multiple areas of the the IT Industry
+            </h2>
 
             <p>
-                Currently enjoying working as a multilingual Developer for a large company.
-                Previously ran his own IT services company, building custom solutions and support
-                packages for customers.
+                Currently enjoying working as a multilingual Developer and Development Manager for a
+                large company. {firstName} previously ran his own IT services company, building
+                custom solutions and support packages for customers.
             </p>
+
             <p>
-                When not working on something electronic or covered in engine oil, {firstName}{' '}
-                enjoys all things Mountain Bike related, Golf and has an obsession with Formula 1.
+                When not working on something electronic or covered in engine oil, he enjoys all
+                things Mountain Bike related, Golf and has an obsession with Formula 1.
             </p>
+
             <p>
                 He builds, fabricates, takes apart, fixes and tweaks - be it cars, furniture,
                 buildings, or anything in between.
