@@ -289,6 +289,18 @@
             "href": "https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview",
             "textColor": "#000000",
             "bgColor": "#FFE472"
+        },
+        {
+            "title": "Grafana",
+            "href": "https://grafana.com",
+            "textColor": "#FFFFFF",
+            "bgColor": "#EE5435"
+        },
+        {
+            "title": "InfluxDB",
+            "href": "https://influxdata.com",
+            "textColor": "#020A47",
+            "bgColor": "#FFFFFF"
         }
     ],
     "IT Engineering": [
