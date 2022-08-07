@@ -20,5 +20,5 @@ export const ServiceWorkerUrchin: FunctionComponent<UrchinProps> = (props: Urchi
 
     const scriptContent = getSerivceWorkerUrchinScript(gitRevision);
 
-    return <script type="text/javascript">{scriptContent}</script>;
+    return <script>{scriptContent}</script>;
 };
