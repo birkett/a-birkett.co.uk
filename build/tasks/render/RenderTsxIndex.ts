@@ -45,6 +45,7 @@ export class RenderTsxIndex extends AbstractRenderTask {
             outputCssFileName: BuildConstants.outputCssFileName,
             baseUrl: templateConstants.baseUrl,
             tagGroups,
+            serviceWorkerUrchinFileName: BuildConstants.serviceWorkerUrchinOutputFileName,
         };
 
         return tsxParser(Base, props) as string;

@@ -3,6 +3,8 @@ import { BuildConstants } from '../build/BuildConstants';
 import { describe, it, suite } from '../lib/test/TestSystem';
 import { expect } from '../lib/test/src/Expect';
 
+const EXPECTED_TOTAL_FILES_IN_ROOT = 25;
+
 const testFilesPresent = (
     folder: string,
     extension: string,
@@ -40,22 +42,42 @@ suite('Count files in the dist folder', () => {
     });
 
     describe('JS', () => {
-        it('Should have 1 JS file', () => {
-            testFilesPresent(BuildConstants.outputDirectory, '.js', 24, 1);
+        it('Should have 2 JS files', () => {
+            testFilesPresent(
+                BuildConstants.outputDirectory,
+                '.js',
+                EXPECTED_TOTAL_FILES_IN_ROOT,
+                2,
+            );
         });
     });
 
     describe('Favicons', () => {
-        it('Should have 10 PNG favicons', () => {
-            testFilesPresent(BuildConstants.outputDirectory, '.png', 24, 18);
+        it('Should have 18 PNG favicons', () => {
+            testFilesPresent(
+                BuildConstants.outputDirectory,
+                '.png',
+                EXPECTED_TOTAL_FILES_IN_ROOT,
+                18,
+            );
         });
 
         it('Should have 1 SVG favicon', () => {
-            testFilesPresent(BuildConstants.outputDirectory, '.svg', 24, 1);
+            testFilesPresent(
+                BuildConstants.outputDirectory,
+                '.svg',
+                EXPECTED_TOTAL_FILES_IN_ROOT,
+                1,
+            );
         });
 
         it('Should have 1 ICO favicon', () => {
-            testFilesPresent(BuildConstants.outputDirectory, '.ico', 24, 1);
+            testFilesPresent(
+                BuildConstants.outputDirectory,
+                '.ico',
+                EXPECTED_TOTAL_FILES_IN_ROOT,
+                1,
+            );
         });
     });
 });

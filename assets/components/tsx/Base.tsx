@@ -22,6 +22,7 @@ export interface BaseProps {
     outputCssFileName: string;
     baseUrl: string;
     tagGroups: TagGroups;
+    serviceWorkerUrchinFileName: string;
 }
 
 export const Base: FunctionComponent<BaseProps> = (props: BaseProps) => {
@@ -40,6 +41,7 @@ export const Base: FunctionComponent<BaseProps> = (props: BaseProps) => {
         outputCssFileName,
         baseUrl,
         tagGroups,
+        serviceWorkerUrchinFileName,
     } = props;
 
     return (
@@ -72,7 +74,10 @@ export const Base: FunctionComponent<BaseProps> = (props: BaseProps) => {
                     githubLink={githubLink}
                 />
 
-                <ServiceWorkerUrchin gitRevision={gitRevision} />
+                <ServiceWorkerUrchin
+                    serviceWorkerUrchinFileName={serviceWorkerUrchinFileName}
+                    gitRevision={gitRevision}
+                />
             </body>
         </html>
     );

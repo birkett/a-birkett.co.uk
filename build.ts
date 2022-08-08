@@ -9,6 +9,7 @@ import { StylesTask } from './build/tasks/StylesTask';
 import { SafariIconTask } from './build/tasks/favIcons/SafariIconTask';
 import { FaviconsTask } from './build/tasks/favIcons/FaviconsTask';
 import { RenderTsxIndex } from './build/tasks/render/RenderTsxIndex';
+import { RenderServiceWorkerUrchinTask } from './build/tasks/render/RenderServiceWorkerUrchinTask';
 
 build({
     default: [
@@ -20,6 +21,7 @@ build({
         new SafariIconTask(),
         new RenderWebManifestTask(),
         new RenderBrowserConfigTask(),
+        new RenderServiceWorkerUrchinTask(),
         new RenderServiceWorkerTask(),
         new FaviconsTask(),
     ],

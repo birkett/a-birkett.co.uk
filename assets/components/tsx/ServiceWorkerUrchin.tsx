@@ -1,24 +1,12 @@
-import fs from 'fs';
 import h, { FunctionComponent } from '../../../lib/tsx/TsxParser';
-import { BuildConstants } from '../../../build/BuildConstants';
 
 interface UrchinProps {
     gitRevision: string;
+    serviceWorkerUrchinFileName: string;
 }
 
-const getSerivceWorkerUrchinScript = (gitRevision: string): string => {
-    const content = fs.readFileSync(BuildConstants.serviceWorkerUrchinFileName);
-
-    const replaceContent = content.toString().replace('{ gitRevision }', gitRevision);
-
-    // Remove comments from the script.
-    return replaceContent.replace(/\/\*.+?\*\/|\/\/.*(?=[\n\r])/g, '');
-};
-
 export const ServiceWorkerUrchin: FunctionComponent<UrchinProps> = (props: UrchinProps) => {
-    const { gitRevision } = props;
+    const { gitRevision, serviceWorkerUrchinFileName } = props;
 
-    const scriptContent = getSerivceWorkerUrchinScript(gitRevision);
-
-    return <script async>{scriptContent}</script>;
+    return <script defer src={`${serviceWorkerUrchinFileName}?v=${gitRevision}`} />;
 };

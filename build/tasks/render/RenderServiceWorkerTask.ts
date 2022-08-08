@@ -11,7 +11,7 @@ export class RenderServiceWorkerTask extends AbstractRenderTask {
 
         this.renderFile(
             BuildConstants.serviceWorkerInputFileName,
-            BuildConstants.serviceWorkerOutputFileName,
+            BuildConstants.serviceWorkerOutputPath,
             { files },
         );
     }

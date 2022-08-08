@@ -11,6 +11,9 @@ const COMPONENT_INPUT_DIR = `${ASSETS_DIR}components/`;
 const WEB_MANIFEST_OUTPUT_FILE_NAME = 'site.webmanifest';
 const SAFARI_ICON_FILE_NAME = 'safari-pinned-tab.svg';
 
+const SERVICE_WORKER_OUTPUT_FILE_NAME = 'serviceWorker.js';
+const SERVICE_WORKER_URCHIN_OUTPUT_FILE_NAME = 'serviceWorkerUrchin.js';
+
 export const BuildConstants = {
     outputDirectory: OUTPUT_DIR,
 
@@ -29,10 +32,13 @@ export const BuildConstants = {
 
     templateOutputFileName: `${OUTPUT_DIR}index.html`,
 
-    serviceWorkerUrchinFileName: `${COMPONENT_INPUT_DIR}ServiceWorkerUrchin.template.js`,
-
+    serviceWorkerOutputFileName: `${SERVICE_WORKER_OUTPUT_FILE_NAME}`,
     serviceWorkerInputFileName: `${COMPONENT_INPUT_DIR}serviceWorker.js.njk`,
-    serviceWorkerOutputFileName: `${OUTPUT_DIR}serviceWorker.js`,
+    serviceWorkerOutputPath: `${OUTPUT_DIR}${SERVICE_WORKER_OUTPUT_FILE_NAME}`,
+
+    serviceWorkerUrchinOutputFileName: `${SERVICE_WORKER_URCHIN_OUTPUT_FILE_NAME}`,
+    serviceWorkerUrchinInputFileName: `${COMPONENT_INPUT_DIR}serviceWorkerUrchin.js.njk`,
+    serviceWorkerUrchinOutputPath: `${OUTPUT_DIR}${SERVICE_WORKER_URCHIN_OUTPUT_FILE_NAME}`,
 
     webManifestInputFileName: `${COMPONENT_INPUT_DIR}webManifest.json.njk`,
     webManifestFileName: WEB_MANIFEST_OUTPUT_FILE_NAME,
