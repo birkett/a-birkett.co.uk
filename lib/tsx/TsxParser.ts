@@ -42,7 +42,13 @@ const parseNode = <PropsType>(element: string, properties: PropsType, children: 
 
             const replacedProperty = propertyRewrites[property] || property;
 
-            props.push(`${replacedProperty}="${typedProperties[property]}"`);
+            if (typeof typedProperties[property] === 'string') {
+                props.push(`${replacedProperty}="${typedProperties[property]}"`);
+
+                return;
+            }
+
+            props.push(replacedProperty);
         });
 
         elementString += props.join(' ');

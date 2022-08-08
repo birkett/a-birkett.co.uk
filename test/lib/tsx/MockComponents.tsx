@@ -39,3 +39,5 @@ export const styledLinkComponent = (props: ComponentProps): JSX.Element => {
         </a>
     );
 };
+
+export const valuelessPropertyComponent = (): JSX.Element => <script async />;

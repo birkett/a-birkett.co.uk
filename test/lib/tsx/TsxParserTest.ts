@@ -7,6 +7,7 @@ import {
     simpleMockComponent,
     styledComponent,
     styledLinkComponent,
+    valuelessPropertyComponent,
 } from './MockComponents';
 
 suite('TsxParser', () => {
@@ -30,6 +31,12 @@ suite('TsxParser', () => {
 
             expect(metaComponent).equal('<meta http-equiv="Content-Type" />');
         });
+
+        it('Properties with no value should be handled', () => {
+            const component = tsxParser(valuelessPropertyComponent, {});
+
+            expect(component).equal('<script async></script>');
+        });
     });
 
     describe('Styled components', () => {
@@ -40,10 +47,10 @@ suite('TsxParser', () => {
         });
 
         it('Multiple props should be correctly spaced', () => {
-            const component = tsxParser(styledLinkComponent, { environment: 'Test' });
+            const component = tsxParser(styledLinkComponent, { environment: '#' });
 
             expect(component).equal(
-                '<a href="Test" style="color:#000;background-color:#FFF;">Test</a>',
+                '<a href="#" style="color:#000;background-color:#FFF;">Test</a>',
             );
         });
     });
