@@ -33,9 +33,11 @@ const parseNode = <PropsType>(element: string, properties: PropsType, children: 
 
         Object.keys(properties).forEach((property) => {
             if (property === 'style') {
-                props.push(
-                    parseStyledComponent(typedProperties[property] as unknown as StringRecord),
-                );
+                const styles = typedProperties[property] as unknown as StringRecord;
+
+                if (Object.keys(styles).length) {
+                    props.push(parseStyledComponent(styles));
+                }
 
                 return;
             }
