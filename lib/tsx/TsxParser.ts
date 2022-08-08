@@ -20,7 +20,7 @@ const parseStyledComponent = (styles: StringRecord): string => {
         styleString += `${propertyRewrites[styleKey] || styleKey}:${styles[styleKey]};`;
     });
 
-    return styleString;
+    return `style="${styleString}"`;
 };
 
 const parseNode = <PropsType>(element: string, properties: PropsType, children: string[]) => {
@@ -28,22 +28,27 @@ const parseNode = <PropsType>(element: string, properties: PropsType, children: 
     const typedProperties = properties as unknown as StringRecord;
 
     if (properties) {
+        const props: string[] = [];
+        elementString += ' ';
+
         Object.keys(properties).forEach((property) => {
             if (property === 'style') {
-                elementString += ` style="${parseStyledComponent(
-                    typedProperties[property] as unknown as StringRecord,
-                )}"`;
+                props.push(
+                    parseStyledComponent(typedProperties[property] as unknown as StringRecord),
+                );
 
                 return;
             }
 
             const replacedProperty = propertyRewrites[property] || property;
 
-            elementString += ` ${replacedProperty}="${typedProperties[property]}" `;
+            props.push(`${replacedProperty}="${typedProperties[property]}"`);
         });
+
+        elementString += props.join(' ');
     }
 
-    elementString += voidElements[element] ? '/>' : '>';
+    elementString += voidElements[element] ? ' />' : '>';
 
     children.forEach((child) => {
         elementString += child;

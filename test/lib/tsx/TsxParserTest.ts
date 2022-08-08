@@ -6,6 +6,7 @@ import {
     componentWithVoidElements,
     simpleMockComponent,
     styledComponent,
+    styledLinkComponent,
 } from './MockComponents';
 
 suite('TsxParser', () => {
@@ -29,11 +30,21 @@ suite('TsxParser', () => {
 
             expect(metaComponent).equal('<meta http-equiv="Content-Type" />');
         });
+    });
 
+    describe('Styled components', () => {
         it('Styled components should be parsed', () => {
             const component = tsxParser(styledComponent, {});
 
             expect(component).equal('<p style="color:#000;background-color:#FFF;">Test</p>');
+        });
+
+        it('Multiple props should be correctly spaced', () => {
+            const component = tsxParser(styledLinkComponent, { environment: 'Test' });
+
+            expect(component).equal(
+                '<a href="Test" style="color:#000;background-color:#FFF;">Test</a>',
+            );
         });
     });
 });

@@ -24,3 +24,18 @@ export const styledComponent = (): JSX.Element => {
 
     return <p style={style}>Test</p>;
 };
+
+export const styledLinkComponent = (props: ComponentProps): JSX.Element => {
+    const { environment } = props;
+
+    const style = {
+        color: '#000',
+        backgroundColor: '#FFF',
+    };
+
+    return (
+        <a href={environment} style={style}>
+            Test
+        </a>
+    );
+};
