@@ -1,5 +1,6 @@
 import h, { FunctionComponent } from '../../../lib/tsx/TsxParser';
 import { Link } from './Link';
+import { ElementArray } from '../../../lib/tsx/ElementArray';
 
 interface TagProps {
     title: string;
@@ -35,14 +36,23 @@ interface TagCloudGroupProps {
 const TagCloudGroup: FunctionComponent<TagCloudGroupProps> = (props: TagCloudGroupProps) => {
     const { tags, title } = props;
 
-    const tagElements = tags.map((tag: TagProps) => (
-        <Tag title={tag.title} href={tag.href} bgColor={tag.bgColor} textColor={tag.textColor} />
-    ));
+    const tagElements = new ElementArray<JSX.Element>();
+
+    tags.forEach((tag: TagProps) => {
+        tagElements.push(
+            <Tag
+                title={tag.title}
+                href={tag.href}
+                bgColor={tag.bgColor}
+                textColor={tag.textColor}
+            />,
+        );
+    });
 
     return (
         <div className="tag-cloud">
             <h3>{title}</h3>
-            <ul>{tagElements.join('')}</ul>
+            <ul>{tagElements}</ul>
         </div>
     );
 };
@@ -59,14 +69,16 @@ interface TagCloudProps {
 export const TagCloud: FunctionComponent<TagCloudProps> = (props: TagCloudProps) => {
     const { firstName, tagGroups } = props;
 
-    const groups = Object.keys(tagGroups).map((group) => (
-        <TagCloudGroup title={group} tags={tagGroups[group]} />
-    ));
+    const groups = new ElementArray<JSX.Element>();
+
+    Object.keys(tagGroups).forEach((group) => {
+        groups.push(<TagCloudGroup title={group} tags={tagGroups[group]} />);
+    });
 
     return (
         <section>
             <h2>{firstName} in words</h2>
-            {groups.join('')}
+            {groups}
         </section>
     );
 };
