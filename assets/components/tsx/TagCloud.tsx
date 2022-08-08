@@ -18,14 +18,11 @@ const Tag: FunctionComponent<TagProps> = (props: TagProps) => {
     };
 
     const linkElement = <Link href={href} title={title} content={title} style={style} />;
+    const spanElement = <span style={style}>{title}</span>;
 
-    const element = href ? linkElement : title;
+    const element = href ? linkElement : spanElement;
 
-    return (
-        <li>
-            <span style={style}>{element}</span>
-        </li>
-    );
+    return <li>{element}</li>;
 };
 
 interface TagCloudGroupProps {
