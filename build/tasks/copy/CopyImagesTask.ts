@@ -1,5 +1,5 @@
-import { AbstractCopyFilesTask } from './AbstractCopyFilesTask';
-import { BuildConstants } from '../../BuildConstants';
+import { AbstractCopyFilesTask } from '@build/tasks/copy/AbstractCopyFilesTask';
+import { BuildConstants } from '@build/BuildConstants';
 
 export class CopyImagesTask extends AbstractCopyFilesTask {
     public readonly name: string = 'Copy Images';

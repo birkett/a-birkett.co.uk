@@ -1,4 +1,4 @@
-import { Output, Stringable } from './Output';
+import { Output, Stringable } from '@test/Output';
 
 const getFailedExpectation = () => new Error().stack!.split('at ')[4].trim();
 

@@ -11,13 +11,24 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true
+        "noFallthroughCasesInSwitch": true,
+        "paths": {
+            "@build/*": ["./build/*", "./lib/build/*"],
+            "@components/*": ["./assets/components/tsx/*"],
+            "@fs/*": ["./lib/fs/*"],
+            "@logger/*": ["./lib/logger/*", "./lib/logger/enum/*"],
+            "@memoize/*": ["./lib/memoize/*"],
+            "@test/*": ["./lib/test/*", "./lib/test/src/*", "./test/*"],
+            "@tsx/*": ["./lib/tsx/*"]
+        }
     },
     "include": [
         "assets/components/*.js",
         "assets/components/**/*.tsx",
         "build/**/*",
         "lib/**/*",
-        "test/**/*"
+        "test/**/*",
+        "build.ts",
+        "tests.ts"
     ]
 }

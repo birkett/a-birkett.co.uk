@@ -1,4 +1,4 @@
-import h, { FunctionComponent } from '../../../lib/tsx/TsxParser';
+import h, { FunctionComponent } from '@tsx/TsxParser';
 
 export interface LinkProps {
     href?: string;

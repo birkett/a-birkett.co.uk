@@ -1,4 +1,4 @@
-import h from '../../../lib/tsx/TsxParser';
+import h from '@tsx/TsxParser';
 
 export const simpleMockComponent = (): JSX.Element => <h1>It Works!</h1>;
 

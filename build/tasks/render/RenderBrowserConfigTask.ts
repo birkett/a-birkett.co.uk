@@ -1,5 +1,5 @@
-import { AbstractRenderTask } from './AbstractRenderTask';
-import { BuildConstants } from '../../BuildConstants';
+import { AbstractRenderTask } from '@build/tasks/render/AbstractRenderTask';
+import { BuildConstants } from '@build/BuildConstants';
 
 export class RenderBrowserConfigTask extends AbstractRenderTask {
     public readonly name: string = 'Render Browser Config';

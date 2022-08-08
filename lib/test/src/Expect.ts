@@ -1,5 +1,5 @@
-import { equalObjects, equalPrimitives, isObject } from './Equals';
-import { failedExpectation, passExpectation } from './PassFail';
+import { equalObjects, equalPrimitives, isObject } from '@test/Equals';
+import { failedExpectation, passExpectation } from '@test/PassFail';
 
 export const expect = (value: any) => ({
     equal: (expected: any) => {

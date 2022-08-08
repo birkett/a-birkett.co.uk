@@ -1,6 +1,6 @@
-import { Logger } from '../../logger/Logger';
-import { ControlCode } from '../../logger/enum/ControlCode';
-import { Colour } from '../../logger/enum/Colour';
+import { Logger } from '@logger/Logger';
+import { ControlCode } from '@logger/ControlCode';
+import { Colour } from '@logger/Colour';
 
 export interface Stringable {
     toString: () => string;

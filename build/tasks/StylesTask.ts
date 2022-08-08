@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as sass from 'sass';
-import { BuildConstants } from '../BuildConstants';
-import { AbstractTask } from '../../lib/build/classes/AbstractTask';
+import { BuildConstants } from '@build/BuildConstants';
+import { AbstractTask } from '@build/AbstractTask';
 
 export class StylesTask extends AbstractTask {
     public readonly name: string = 'Build Styles';

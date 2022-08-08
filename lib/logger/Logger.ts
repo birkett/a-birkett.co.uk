@@ -1,5 +1,5 @@
-import { ControlCode } from './enum/ControlCode';
-import { Colour } from './enum/Colour';
+import { ControlCode } from '@logger/ControlCode';
+import { Colour } from '@logger/Colour';
 
 export class Logger {
     public static writeLine(

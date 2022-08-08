@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import pngToIco from 'png-to-ico';
 import svg2img from 'svg2img';
-import { BuildConstants } from '../../BuildConstants';
-import { AbstractTask } from '../../../lib/build/classes/AbstractTask';
+import { BuildConstants } from '@build/BuildConstants';
+import { AbstractTask } from '@build/AbstractTask';
 
 export class FaviconsTask extends AbstractTask {
     public readonly name: string = 'Favicons';

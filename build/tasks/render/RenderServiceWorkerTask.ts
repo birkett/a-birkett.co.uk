@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { BuildConstants } from '../../BuildConstants';
-import { AbstractRenderTask } from './AbstractRenderTask';
+import { BuildConstants } from '@build/BuildConstants';
+import { AbstractRenderTask } from '@build/tasks/render/AbstractRenderTask';
 
 export class RenderServiceWorkerTask extends AbstractRenderTask {
     public readonly name: string = 'Render Service Worker';

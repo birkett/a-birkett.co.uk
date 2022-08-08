@@ -1,7 +1,7 @@
 import * as fs from 'fs';
-import { BuildConstants } from '../build/BuildConstants';
-import { describe, it, suite } from '../lib/test/TestSystem';
-import { expect } from '../lib/test/src/Expect';
+import { BuildConstants } from '@build/BuildConstants';
+import { describe, it, suite } from '@test/TestSystem';
+import { expect } from '@test/Expect';
 
 const EXPECTED_TOTAL_FILES_IN_ROOT = 25;
 

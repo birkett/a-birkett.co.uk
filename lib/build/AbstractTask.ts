@@ -1,4 +1,4 @@
-import { Logger } from '../../logger/Logger';
+import { Logger } from '@logger/Logger';
 
 export abstract class AbstractTask {
     public readonly name: string = 'Abstract Task';

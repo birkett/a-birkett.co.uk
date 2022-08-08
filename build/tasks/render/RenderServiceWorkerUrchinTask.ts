@@ -1,5 +1,5 @@
-import { BuildConstants } from '../../BuildConstants';
-import { AbstractRenderTask } from './AbstractRenderTask';
+import { BuildConstants } from '@build/BuildConstants';
+import { AbstractRenderTask } from '@build/tasks/render/AbstractRenderTask';
 
 export class RenderServiceWorkerUrchinTask extends AbstractRenderTask {
     public readonly name: string = 'Render Service Worker Urchin';

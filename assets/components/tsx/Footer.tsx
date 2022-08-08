@@ -1,5 +1,5 @@
-import h, { FunctionComponent } from '../../../lib/tsx/TsxParser';
-import { Link } from './Link';
+import h, { FunctionComponent } from '@tsx/TsxParser';
+import { Link } from '@components/Link';
 
 interface FooterProps {
     firstName: string;

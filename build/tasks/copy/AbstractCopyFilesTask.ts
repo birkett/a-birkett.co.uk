@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { AbstractTask } from '../../../lib/build/classes/AbstractTask';
+import { AbstractTask } from '@build/AbstractTask';
 
 export abstract class AbstractCopyFilesTask extends AbstractTask {
     protected copiedFiles = 0;

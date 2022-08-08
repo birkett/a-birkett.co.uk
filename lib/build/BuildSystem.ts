@@ -1,7 +1,7 @@
-import { Logger } from '../logger/Logger';
-import { ControlCode } from '../logger/enum/ControlCode';
-import { Colour } from '../logger/enum/Colour';
-import { AbstractTask } from './classes/AbstractTask';
+import { Logger } from '@logger/Logger';
+import { ControlCode } from '@logger/enum/ControlCode';
+import { Colour } from '@logger/enum/Colour';
+import { AbstractTask } from '@build/AbstractTask';
 
 type BuildJob = Record<string, AbstractTask[]>;
 

@@ -1,7 +1,7 @@
-import { suite, describe, it } from '../../../lib/test/TestSystem';
-import { expect } from '../../../lib/test/src/Expect';
-import { ElementArray } from '../../../lib/tsx/ElementArray';
-import { simpleMockComponent } from './MockComponents';
+import { suite, describe, it } from '@test/TestSystem';
+import { expect } from '@test/Expect';
+import { ElementArray } from '@tsx/ElementArray';
+import { simpleMockComponent } from '@test/lib/tsx/MockComponents';
 
 suite('ElementArray', () => {
     describe('Basic functionality', () => {

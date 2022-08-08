@@ -1,6 +1,6 @@
-import h, { FunctionComponent } from '../../../lib/tsx/TsxParser';
-import { Link, LinkProps } from './Link';
-import { ElementArray } from '../../../lib/tsx/ElementArray';
+import h, { FunctionComponent } from '@tsx/TsxParser';
+import { Link, LinkProps } from '@components/Link';
+import { ElementArray } from '@tsx/ElementArray';
 
 interface HeaderProps {
     firstName: string;

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import * as nunjucks from 'nunjucks';
-import { BuildConstants } from '../../BuildConstants';
-import { AbstractTask } from '../../../lib/build/classes/AbstractTask';
+import { BuildConstants } from '@build/BuildConstants';
+import { AbstractTask } from '@build/AbstractTask';
 
 export abstract class AbstractRenderTask extends AbstractTask {
     protected readonly templateConstantsPath = BuildConstants.templateConstantsJsonPath;
