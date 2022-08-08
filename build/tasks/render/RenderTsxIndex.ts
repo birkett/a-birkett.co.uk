@@ -35,7 +35,7 @@ export class RenderTsxIndex extends AbstractRenderTask {
             lastName: templateConstants.lastName,
             gitRevision: BuildConstants.gitRevision(),
             githubLink: templateConstants.githubLink,
-            links: links as [],
+            links,
             msTileColor: BuildConstants.msTileColor,
             faviconPrefix: BuildConstants.faviconPrefix,
             themeColor: BuildConstants.themeColor,

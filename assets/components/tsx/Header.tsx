@@ -14,7 +14,7 @@ export const Header: FunctionComponent<HeaderProps> = (props: HeaderProps) => {
     const linkElements = new ElementArray<JSX.Element>();
 
     links.forEach((link: LinkProps) => {
-        linkElements.push(<Link href={link.href} title={link.title} content={link.title} />);
+        linkElements.push(<Link href={link.href} title={link.title} />);
     });
 
     return (

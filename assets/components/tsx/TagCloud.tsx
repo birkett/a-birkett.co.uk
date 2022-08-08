@@ -17,7 +17,7 @@ const Tag: FunctionComponent<TagProps> = (props: TagProps) => {
         backgroundColor: bgColor,
     };
 
-    const linkElement = <Link href={href} title={title} content={title} style={style} />;
+    const linkElement = <Link href={href} title={title} style={style} />;
     const spanElement = <span style={style}>{title}</span>;
 
     const element = href ? linkElement : spanElement;
