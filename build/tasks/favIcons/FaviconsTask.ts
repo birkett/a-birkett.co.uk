@@ -1,6 +1,6 @@
 import * as fs from 'fs';
+import * as resvg from '@resvg/resvg-js';
 import pngToIco from 'png-to-ico';
-import svg2img from 'svg2img';
 import { BuildConstants } from '@build/BuildConstants';
 import { AbstractTask } from '@build/AbstractTask';
 
@@ -14,29 +14,43 @@ export class FaviconsTask extends AbstractTask {
     private readonly icoSizes = [16, 24, 32, 48, 64];
 
     public run(): void {
-        process.env.OPENSSL_CONF = '';
+        this.renderPngs();
+        this.renderIco();
+    }
 
-        this.pngMap.forEach((size, index) => {
-            const options = { width: size, height: size };
+    private renderPngs(): void {
+        const svg = fs.readFileSync(BuildConstants.faviconInputFile);
 
-            svg2img(BuildConstants.faviconInputFile, options, (_, buffer) => {
-                fs.writeFileSync(FaviconsTask.buildFilePath(size), buffer);
-
-                if (index === this.pngMap.length - 1) {
-                    const icoFileNames: string[] = [];
-
-                    this.icoSizes.forEach((icoSize) => {
-                        icoFileNames.push(FaviconsTask.buildFilePath(icoSize));
-                    });
-
-                    pngToIco(icoFileNames).then((output) => {
-                        fs.writeFileSync(
-                            `${BuildConstants.outputDirectory}${BuildConstants.faviconPrefix}.ico`,
-                            output,
-                        );
-                    });
-                }
+        this.pngMap.forEach((size) => {
+            const parser = new resvg.Resvg(svg, {
+                fitTo: {
+                    mode: 'width',
+                    value: size,
+                },
+                font: {
+                    loadSystemFonts: false,
+                },
+                background: 'rgba(0, 0, 0, 0)',
             });
+
+            const pngBuffer = parser.render().asPng();
+
+            fs.writeFileSync(FaviconsTask.buildFilePath(size), pngBuffer);
+        });
+    }
+
+    private renderIco(): void {
+        const icoFileNames: string[] = [];
+
+        this.icoSizes.forEach((icoSize) => {
+            icoFileNames.push(FaviconsTask.buildFilePath(icoSize));
+        });
+
+        pngToIco(icoFileNames).then((output) => {
+            fs.writeFileSync(
+                `${BuildConstants.outputDirectory}${BuildConstants.faviconPrefix}.ico`,
+                output,
+            );
         });
     }
 

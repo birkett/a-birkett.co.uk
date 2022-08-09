@@ -16,10 +16,10 @@
         "test": "ts-node -r tsconfig-paths/register tests.ts"
     },
     "dependencies": {
+        "@resvg/resvg-js": "^2.1.0",
         "nunjucks": "^3.2.3",
         "png-to-ico": "^2.1.4",
-        "sass": "^1.54.1",
-        "svg2img": "^0.9.4"
+        "sass": "^1.54.1"
     },
     "devDependencies": {
         "@types/node": "^16.11.47",
