@@ -15,18 +15,20 @@ export const About: FunctionComponent<AboutProps> = (props: AboutProps) => {
 
             <p>
                 Currently enjoying working as a multilingual Developer and Development Manager for a
-                large company. {firstName} previously ran his own IT services company, building
-                custom solutions and support packages for customers.
+                large company; building bespoke CAD software, CRM and other internal applications.
+                {firstName} previously ran his own IT services company, building custom solutions
+                and support packages for customers.
             </p>
 
             <p>
-                When not working on something electronic or covered in engine oil, he enjoys all
-                things Mountain Bike related, Golf and has an obsession with Formula 1.
+                When not working on something electronic or mechanical, he enjoys all things
+                Mountain Bike related, has an obsession with Formula 1, and considers Heist movies
+                the genre of choice.
             </p>
 
             <p>
-                He builds, fabricates, takes apart, fixes and tweaks - be it cars, furniture,
-                buildings, or anything in between.
+                He builds, fabricates, takes apart, modifies, fixes and tweaks - be it computers,
+                cars, furniture, buildings, or anything in between.
             </p>
 
             <br />
